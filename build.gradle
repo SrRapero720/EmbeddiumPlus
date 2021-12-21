@@ -8,17 +8,19 @@ buildscript {
             name 'parchment'
             url 'https://maven.parchmentmc.org'
         }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forgegradle_version}", changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: "${mixingradle_version}"
         classpath 'org.parchmentmc:librarian:1.+'
+        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
     }
 }
-plugins {
-    id 'com.github.johnrengelman.shadow' version "${shadow_version}"
-    id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
-}
+
+apply plugin: "com.matthewprenger.cursegradle"
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
@@ -52,7 +54,7 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
-                templatemod {
+                magnesium_extras {
                     source sourceSets.main
                 }
             }
@@ -65,7 +67,7 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
-                templatemod {
+                magnesium_extras {
                     source sourceSets.main
                 }
             }
@@ -80,7 +82,7 @@ minecraft {
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             args '--mod', String.valueOf(mod_id), '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
             mods {
-                templatemod {
+                magnesium_extras {
                     source sourceSets.main
                 }
             }
@@ -109,11 +111,10 @@ repositories {
     maven {
         url = "https://www.cursemaven.com"
     }
+    maven {
+        url = "https://www.cursemaven.com"
+    }
     mavenCentral()
-}
-
-configurations {
-    shade
 }
 
 dependencies {
@@ -125,19 +126,36 @@ dependencies {
 
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    def registrate = "com.tterrag.registrate:Registrate:MC1.16.5-${registrate_version}"
-    implementation fg.deobf(registrate)
-    shade registrate
+    compileOnly fg.deobf("curse.maven:magnesium-532724:3526076")
+    runtimeOnly fg.deobf("curse.maven:magnesium-532724:3526076")
 
     runtimeOnly fg.deobf("curse.maven:jei-238222:3438494")
     runtimeOnly fg.deobf("curse.maven:jer-240630:3066754")
-    runtimeOnly fg.deobf("curse.maven:hwyla-253449:3033593")
+    runtimeOnly fg.deobf("curse.maven:jade-324717:3467445")
+    runtimeOnly fg.deobf("curse.maven:spark-361579:3337641")
+    runtimeOnly fg.deobf("curse.maven:lazydfu-433518:3209972")
+    runtimeOnly fg.deobf("curse.maven:smoothboot-420913:3224252")
+    runtimeOnly fg.deobf("curse.maven:alltheores-405593:3405905")
+    runtimeOnly fg.deobf("curse.maven:cofh-69162:3407019")
+    runtimeOnly fg.deobf("curse.maven:thermalfoundation-222880:3412300")
+    runtimeOnly fg.deobf("curse.maven:thermalexpansion-69163:3404884")
+    runtimeOnly fg.deobf("curse.maven:engineers-313866:3390489")
+    runtimeOnly fg.deobf("curse.maven:immersive-231951:3497359")
+    runtimeOnly fg.deobf("curse.maven:patchouli-306770:3459118")
+    //runtimeOnly fg.deobf("curse.maven:kotrt-543308:3571155")
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+    compileOnly fg.deobf("curse.maven:ftbchunks-314906:3509329")
+    compileOnly fg.deobf("curse.maven:ftblibrary-404465:3514173")
+
+    runtimeOnly fg.deobf("curse.maven:ftbchunks-314906:3509329")
+    runtimeOnly fg.deobf("curse.maven:architectury-419699:3500014")
+    runtimeOnly fg.deobf("curse.maven:ftblibrary-404465:3514173")
+    runtimeOnly fg.deobf("curse.maven:ftbteams-404468:3492657")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }
 
 jar {
-    classifier = 'slim'
     manifest {
         attributes([
                 "Specification-Title": "${mod_id}",
@@ -152,16 +170,7 @@ jar {
     }
 }
 
-shadowJar {
-    classifier = ''
-    configurations = [project.configurations.shade]
-    relocate 'com.tterrag.registrate', 'com.tterrag.' + String.valueOf(mod_id) + '.repack.registrate'
-}
-
-reobf {
-    shadowJar {}
-}
-
+jar.finalizedBy('reobfJar')
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
@@ -176,16 +185,14 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
-    archives jar, shadowJar, sourcesJar, javadocJar
+    archives jar, sourcesJar, javadocJar
 }
 
 publishing {
     tasks.publish.dependsOn 'build'
     publications {
         mavenJava(MavenPublication) {
-            artifact shadowJar
-            artifact sourcesJar
-            artifact javadocJar
+            artifact jar
         }
     }
 
