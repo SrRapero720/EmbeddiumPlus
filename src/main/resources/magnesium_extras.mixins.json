@@ -17,6 +17,8 @@
   ],
   "minVersion": "0.8",
   "client": [
+    "BorderlessFullscreen.MainWindowAccessor",
+    "BorderlessFullscreen.WindowMixin",
     "CloudHeight.CloudHeightMixin",
     "EntityDistance.MaxDistanceEntity",
     "EntityDistance.MaxDistanceTileEntity",

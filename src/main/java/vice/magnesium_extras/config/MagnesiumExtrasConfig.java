@@ -38,6 +38,8 @@ public class MagnesiumExtrasConfig
     public static ConfigValue<Boolean> zoomScrolling;
     public static ConfigValue<Boolean> zoomOverlay;
 
+    public static ForgeConfigSpec.EnumValue<FullscreenMode> fullScreenMode;
+
     public static ZoomValues zoomValues = new ZoomValues();
 
     static
@@ -48,6 +50,7 @@ public class MagnesiumExtrasConfig
             cloudHeight = b.define("Cloud Height [Raw, Default 196]", 196);
             fadeInQuality =  b.define("Chunk Fade In Quality (OFF, FAST, FANCY)", "FANCY");
             fog = b.define("Render Fog", true);
+            fullScreenMode = b.defineEnum("Use Borderless Fullscreen", FullscreenMode.FULLSCREEN);
         });
 
         builder.Block("FPS Counter", b -> {
@@ -119,6 +122,12 @@ public class MagnesiumExtrasConfig
         public String getLocalizedName() {
             return this.name;
         }
+    }
+
+    public enum FullscreenMode {
+        WINDOWED,
+        BORDERLESS,
+        FULLSCREEN
     }
 
     public enum ZoomTransitionOptions {
