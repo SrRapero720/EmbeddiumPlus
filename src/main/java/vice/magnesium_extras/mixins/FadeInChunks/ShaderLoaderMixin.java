@@ -3,6 +3,7 @@ package vice.magnesium_extras.mixins.FadeInChunks;
 import me.jellysquid.mods.sodium.client.SodiumClientMod;
 import me.jellysquid.mods.sodium.client.gl.shader.ShaderLoader;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
+import me.jellysquid.mods.sodium.client.render.chunk.backends.multidraw.MultidrawChunkRenderBackend;
 import me.jellysquid.mods.sodium.common.config.SodiumConfig;
 import net.minecraft.util.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +21,7 @@ public abstract class ShaderLoaderMixin {
 
     @Inject(method = "getShaderSource", at = @At("RETURN"), cancellable = true)
     private static void modifyShaderForFadeInEffect(String path, CallbackInfoReturnable<String> cir) {
-        if (!SodiumClientMod.options().advanced.useChunkMultidraw)
+        if (!SodiumClientMod.options().advanced.useChunkMultidraw || !MultidrawChunkRenderBackend.isSupported(false))
         {
             return;
         }

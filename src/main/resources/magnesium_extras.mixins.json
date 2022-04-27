@@ -26,6 +26,11 @@
     "FrameCounter.FrameCounterMixin",
     "performance.RenderTypeLookupMixin",
     "SodiumConfig.ZoomSettingsPage",
+    "TotalDarkness.MixinGameRenderer",
+    "TotalDarkness.MixinLightmapTextureManager",
+    "TotalDarkness.MixinNativeImageBackedTexture",
+    "TotalDarkness.MixinTheEndDimension",
+    "TotalDarkness.MixinTheNetherDimension",
     "Zoom.GameRendererMixin"
   ]
 }

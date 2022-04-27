@@ -129,6 +129,8 @@ dependencies {
     compileOnly fg.deobf("curse.maven:magnesium-532724:3526076")
     runtimeOnly fg.deobf("curse.maven:magnesium-532724:3526076")
 
+    runtimeOnly fg.deobf("curse.maven:dynlights-551736:3574974")
+
     runtimeOnly fg.deobf("curse.maven:jei-238222:3438494")
     runtimeOnly fg.deobf("curse.maven:jer-240630:3066754")
     runtimeOnly fg.deobf("curse.maven:jade-324717:3467445")

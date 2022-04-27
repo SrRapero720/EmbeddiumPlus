@@ -82,6 +82,38 @@ public class SodiumGameOptionsMixin
                 .add(displayFpsPos)
                 .build());
 
+
+
+
+        OptionImpl<SodiumGameOptions, Boolean> totalDarkness = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
+                .setName("True Darkness")
+                .setTooltip("Makes the rest of the world more realistically dark. Does not effect daytime or torch light.")
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (options, value) -> MagnesiumExtrasConfig.trueDarknessEnabled.set(value),
+                        (options) -> MagnesiumExtrasConfig.trueDarknessEnabled.get())
+                .setImpact(OptionImpact.LOW)
+                .build();
+
+        Option<MagnesiumExtrasConfig.DarknessOption> totalDarknessSetting =  OptionImpl.createBuilder(MagnesiumExtrasConfig.DarknessOption.class, sodiumOpts)
+                .setName("True Darkness Mode")
+                .setTooltip("Controls how dark is considered true darkness.")
+                .setControl((option) -> new CyclingControl<>(option, MagnesiumExtrasConfig.DarknessOption.class, new String[] { "Pitch Black", "Really Dark", "Dark", "Dim"}))
+                .setBinding(
+                        (opts, value) -> MagnesiumExtrasConfig.darknessOption.set(value),
+                        (opts) -> MagnesiumExtrasConfig.darknessOption.get())
+                .setImpact(OptionImpact.LOW)
+                .build();
+
+        groups.add(OptionGroup.createBuilder()
+                .add(totalDarkness)
+                .add(totalDarknessSetting)
+                .build());
+
+
+
+
+
         Option<MagnesiumExtrasConfig.Quality> fadeInQuality =  OptionImpl.createBuilder(MagnesiumExtrasConfig.Quality.class, sodiumOpts)
                 .setName("Chunk Fade In Quality")
                 .setTooltip("Controls how fast chunks fade in. No performance hit, Fancy simply takes longer, but looks a bit cooler.")
@@ -121,6 +153,10 @@ public class SodiumGameOptionsMixin
                 .add(cloudHeight)
                 .build());
 
+
+
+
+
         OptionImpl<SodiumGameOptions, Boolean> enableDistanceChecks = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
                 .setName("Enable Max Entity Distance")
                 .setTooltip("Toggles off entity culling.")
@@ -137,6 +173,10 @@ public class SodiumGameOptionsMixin
                 .add(enableDistanceChecks)
                 .build()
         );
+
+
+
+
 
         OptionImpl<SodiumGameOptions, Integer> maxEntityDistance = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName("Max Entity Distance")
@@ -165,6 +205,10 @@ public class SodiumGameOptionsMixin
                 .add(maxEntityDistanceVertical)
                 .build()
         );
+
+
+
+
 
         OptionImpl<SodiumGameOptions, Integer> maxTileEntityDistance = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName("Max Tile Distance")

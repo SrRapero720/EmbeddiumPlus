@@ -29,18 +29,38 @@ public class MagnesiumExtrasConfig
     public static ConfigValue<Boolean> enableDistanceChecks;
 
 
+    // Ok Zoomer
+    public static ZoomValues zoomValues = new ZoomValues();
     public static ConfigValue<Boolean> lowerZoomSensitivity;
-
     public static ConfigValue<String> zoomTransition;
     public static ConfigValue<String> zoomMode;
     public static ConfigValue<String> cinematicCameraMode;
-
     public static ConfigValue<Boolean> zoomScrolling;
     public static ConfigValue<Boolean> zoomOverlay;
 
+
     public static ForgeConfigSpec.EnumValue<FullscreenMode> fullScreenMode;
 
-    public static ZoomValues zoomValues = new ZoomValues();
+
+    // Total Darkness
+    public static double darkNetherFogEffective;
+    public static double darkEndFogEffective;
+    public static ForgeConfigSpec.BooleanValue trueDarknessEnabled;
+    public static ForgeConfigSpec.EnumValue<DarknessOption> darknessOption;
+    //advanced
+    public static ForgeConfigSpec.DoubleValue darkNetherFogConfigured;
+    public static ForgeConfigSpec.BooleanValue darkEnd;
+    public static ForgeConfigSpec.DoubleValue darkEndFogConfigured;
+    public static ForgeConfigSpec.BooleanValue darkSkyless;
+    public static ForgeConfigSpec.BooleanValue blockLightOnly;
+    public static ForgeConfigSpec.BooleanValue ignoreMoonPhase;
+    public static ForgeConfigSpec.DoubleValue minimumMoonLevel;
+    public static ForgeConfigSpec.DoubleValue maximumMoonLevel;
+    public static ForgeConfigSpec.BooleanValue darkOverworld;
+    public static ForgeConfigSpec.BooleanValue darkDefault;
+    public static ForgeConfigSpec.BooleanValue darkNether;
+
+
 
     static
     {
@@ -68,7 +88,6 @@ public class MagnesiumExtrasConfig
             maxEntityRenderDistanceY = b.define("(Entity) Max Vertical Render Distance [Raw, Default 32]", 32);
         });
 
-
         builder.Block("Zoom", b -> {
             lowerZoomSensitivity = b.define("Lower Zoom Sensitivity", true);
             zoomScrolling = b.define("Zoom Scrolling Enabled", true);
@@ -77,6 +96,28 @@ public class MagnesiumExtrasConfig
             cinematicCameraMode = b.define("Cinematic Camera Mode (OFF, VANILLA, MULTIPLIED)", CinematicCameraOptions.OFF.toString());
             zoomOverlay = b.define("Zoom Overlay?", true);
             //zoomValues = b.define("Zoom Advanced Values", new ZoomValues());
+        });
+
+        builder.Block("True Darkness", b -> {
+            trueDarknessEnabled = b.define("Use True Darkness", true);
+            darknessOption = b.defineEnum("Darkness Setting (PITCH_BLACK, REALLY_DARK, DARK, DIM)", DarknessOption.DARK);
+
+            builder.Block("Advanced", b2 -> {
+                blockLightOnly = b2.define("Only Effect Block Lighting", false);
+                ignoreMoonPhase = b2.define("Ignore Moon Light", false);
+                minimumMoonLevel = b2.defineInRange("Minimum Moon Brightness (0->1)", 0, 0, 1d);
+                maximumMoonLevel = b2.defineInRange("Maximum Moon Brightness (0->1)", 0.25d, 0, 1d);
+            });
+
+            builder.Block("Dimension Settings", b2 -> {
+                darkOverworld = b2.define("Dark Overworld?", true);
+                darkDefault = b2.define("Dark By Default?", false);
+                darkNether = b2.define("Dark Nether?", false);
+                darkNetherFogConfigured = b2.defineInRange("Dark Nether Fog Brightness (0->1)", .5, 0, 1d);
+                darkEnd = b2.define("Dark End?", false);
+                darkEndFogConfigured = b.defineInRange("Dark End Fog Brightness (0->1)", 0, 0, 1d);
+                darkSkyless = b2.define("Dark If No Skylight?", false);
+            });
         });
 
         ConfigSpec = builder.Save();
@@ -121,6 +162,19 @@ public class MagnesiumExtrasConfig
 
         public String getLocalizedName() {
             return this.name;
+        }
+    }
+
+    public enum DarknessOption {
+        PITCH_BLACK(0f),
+        REALLY_DARK (0.04f),
+        DARK(0.08f),
+        DIM(0.12f);
+
+        public final float value;
+
+        private DarknessOption(float value) {
+            this.value = value;
         }
     }
 

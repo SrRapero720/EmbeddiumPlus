@@ -8,6 +8,8 @@ import me.jellysquid.mods.sodium.client.render.chunk.backends.multidraw.ChunkDra
 import me.jellysquid.mods.sodium.client.render.chunk.backends.multidraw.MultidrawGraphicsState;
 import me.jellysquid.mods.sodium.client.render.chunk.lists.ChunkRenderListIterator;
 import me.jellysquid.mods.sodium.client.render.chunk.passes.BlockRenderPass;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,8 +28,22 @@ public abstract class GL43ChunkRenderBackendMixin extends ChunkRenderShaderBacke
     @Inject(method = "setupDrawBatches",
             at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/render/chunk/backends/multidraw/ChunkDrawParamsVector;pushChunkDrawParams(FFF)V", shift = At.Shift.AFTER))
     private void pushChunkDrawParamFadeInProgress(CommandList i, ChunkRenderListIterator<MultidrawGraphicsState> it, ChunkCameraContext visible, CallbackInfo ci) {
-        float progress = ext(it.getGraphicsState()).getFadeInProgress(this.currentTime);
-        ext(this.uniformBufferBuilder).pushChunkDrawParamFadeIn(progress);
+        ClientPlayerEntity player = Minecraft.getInstance().player;
+        if (player == null)
+            return;
+
+        ChunkGraphicsState state = it.getGraphicsState();
+        float progress = ext(state).getFadeInProgress(this.currentTime);
+
+        double x = player.getX() - 16 - state.getX();
+        double z = player.getZ() - 16 - state.getZ();
+
+        if(x * x + z * z < 576) {
+            ext(this.uniformBufferBuilder).pushChunkDrawParamFadeIn(1.0f);
+        }
+        else {
+            ext(this.uniformBufferBuilder).pushChunkDrawParamFadeIn(progress);
+        }
     }
 
     @ModifyArg(method = "upload", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/render/chunk/ChunkRenderContainer;setGraphicsState(Lme/jellysquid/mods/sodium/client/render/chunk/passes/BlockRenderPass;Lme/jellysquid/mods/sodium/client/render/chunk/ChunkGraphicsState;)V", ordinal = 0))
