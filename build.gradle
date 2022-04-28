@@ -13,7 +13,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forgegradle_version}", changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: "${mixingradle_version}"
         classpath 'org.parchmentmc:librarian:1.+'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
@@ -28,6 +28,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 boolean dev = System.getenv('RELEASE') == null || System.getenv('RELEASE').equals('false');
 
@@ -38,7 +39,7 @@ version = "mc${minecraft_version}_v${mod_version}" + (dev && !buildnumber.equals
 group = 'vice.' + String.valueOf(mod_id)
 archivesBaseName = String.valueOf(mod_id)
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: "${mappings_channel}", version: "${mappings_version}"
@@ -54,7 +55,7 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
-                magnesium_extras {
+                rubidium_extras {
                     source sourceSets.main
                 }
             }
@@ -67,7 +68,7 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
-                magnesium_extras {
+                rubidium_extras {
                     source sourceSets.main
                 }
             }
@@ -82,7 +83,7 @@ minecraft {
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             args '--mod', String.valueOf(mod_id), '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
             mods {
-                magnesium_extras {
+                rubidium_extras {
                     source sourceSets.main
                 }
             }
@@ -118,41 +119,13 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.22'
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
-
-    testCompileOnly 'org.projectlombok:lombok:1.18.22'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
-
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compileOnly fg.deobf("curse.maven:magnesium-532724:3526076")
-    runtimeOnly fg.deobf("curse.maven:magnesium-532724:3526076")
-
-    runtimeOnly fg.deobf("curse.maven:dynlights-551736:3574974")
-
-    runtimeOnly fg.deobf("curse.maven:jei-238222:3438494")
-    runtimeOnly fg.deobf("curse.maven:jer-240630:3066754")
-    runtimeOnly fg.deobf("curse.maven:jade-324717:3467445")
-    runtimeOnly fg.deobf("curse.maven:spark-361579:3337641")
-    runtimeOnly fg.deobf("curse.maven:lazydfu-433518:3209972")
-    runtimeOnly fg.deobf("curse.maven:smoothboot-420913:3224252")
-    runtimeOnly fg.deobf("curse.maven:alltheores-405593:3405905")
-    runtimeOnly fg.deobf("curse.maven:cofh-69162:3407019")
-    runtimeOnly fg.deobf("curse.maven:thermalfoundation-222880:3412300")
-    runtimeOnly fg.deobf("curse.maven:thermalexpansion-69163:3404884")
-    runtimeOnly fg.deobf("curse.maven:engineers-313866:3390489")
-    runtimeOnly fg.deobf("curse.maven:immersive-231951:3497359")
-    runtimeOnly fg.deobf("curse.maven:patchouli-306770:3459118")
-    //runtimeOnly fg.deobf("curse.maven:kotrt-543308:3571155")
-
-    compileOnly fg.deobf("curse.maven:ftbchunks-314906:3509329")
-    compileOnly fg.deobf("curse.maven:ftblibrary-404465:3514173")
-
-    runtimeOnly fg.deobf("curse.maven:ftbchunks-314906:3509329")
-    runtimeOnly fg.deobf("curse.maven:architectury-419699:3500014")
-    runtimeOnly fg.deobf("curse.maven:ftblibrary-404465:3514173")
-    runtimeOnly fg.deobf("curse.maven:ftbteams-404468:3492657")
+    implementation fg.deobf("curse.maven:rubidium-574856:3749094")
+    //runtimeOnly fg.deobf("curse.maven:oculus-581495:3770744")
+    runtimeOnly fg.deobf("curse.maven:create-328085:3737418")
+    runtimeOnly fg.deobf("curse.maven:flywheel-486392:3737402")
+    runtimeOnly fg.deobf("curse.maven:jei-238222:3758750")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }

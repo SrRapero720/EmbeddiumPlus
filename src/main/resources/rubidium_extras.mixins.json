@@ -1,0 +1,29 @@
+{
+  "required": true,
+  "package": "vice.rubidium_extras.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "rubidium_extras.refmap.json",
+  "mixins": [
+    "fog.MixinSodiumWorldRenderer",
+    "SodiumConfig.SodiumGameOptionsMixin",
+    "Zoom.PlayerInventoryMixin"
+  ],
+  "minVersion": "0.8",
+  "client": [
+    "BorderlessFullscreen.MainWindowAccessor",
+    "BorderlessFullscreen.WindowMixin",
+    "CloudHeight.CloudHeightMixin",
+    "EntityDistance.MaxDistanceEntity",
+    "EntityDistance.MaxDistanceTileEntity",
+    "FrameCounter.FpsAccessorMixin",
+    "FrameCounter.FrameCounterMixin",
+    "SodiumConfig.SodiumGUIMixin",
+    "TotalDarkness.MixinGameRenderer",
+    "TotalDarkness.MixinLightmapTextureManager",
+    "TotalDarkness.MixinNativeImageBackedTexture",
+    "TotalDarkness.MixinTheEndDimension",
+    "TotalDarkness.MixinTheNetherDimension",
+    "Zoom.GameRendererMixin",
+    "Zoom.MouseMixin"
+  ]
+}
