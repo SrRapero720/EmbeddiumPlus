@@ -25,7 +25,7 @@ public class MagnesiumExtras
 
         ModLoadingContext.get()
                 .registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
- 
+
 
     }
 

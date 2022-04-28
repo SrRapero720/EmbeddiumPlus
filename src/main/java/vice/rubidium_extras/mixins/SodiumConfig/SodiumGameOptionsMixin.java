@@ -303,11 +303,12 @@ public class SodiumGameOptionsMixin
 
         for (OptionGroup optionGroup : groups)
         {
+
             OptionGroup.Builder builder = OptionGroup.createBuilder();
 
             for (Option<?> option : optionGroup.getOptions())
             {
-                builder.add(Objects.equals(option.getName(), new TranslatableComponent(name)) ? replaceOption : option);
+                builder.add(Objects.equals(option.getName().getString(), name) ? replaceOption : option);
             }
 
             newList.add(builder.build());
