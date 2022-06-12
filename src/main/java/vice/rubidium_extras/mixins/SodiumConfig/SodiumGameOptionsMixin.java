@@ -149,6 +149,16 @@ public class SodiumGameOptionsMixin
                 .setImpact(OptionImpact.LOW)
                 .build();
 
+        OptionImpl<SodiumGameOptions, Boolean> hideJEI = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
+                .setName(Component.nullToEmpty("Hide JEI Until Searching"))
+                .setTooltip(Component.nullToEmpty("Toggles off JEI items unless you search for something. Press space to search for everything."))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (options, value) -> MagnesiumExtrasConfig.hideJEI.set(value),
+                        (options) -> MagnesiumExtrasConfig.hideJEI.get())
+                .setImpact(OptionImpact.LOW)
+                .build();
+
         OptionImpl<SodiumGameOptions, Integer> cloudHeight = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.nullToEmpty("Cloud Height"))
                 .setTooltip(Component.nullToEmpty("Raises cloud height."))

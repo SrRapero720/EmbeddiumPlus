@@ -35,7 +35,7 @@ boolean dev = System.getenv('RELEASE') == null || System.getenv('RELEASE').equal
 ext.buildnumber = 0
 project.buildnumber = System.getenv('BUILD_NUMBER') != null ? System.getenv('BUILD_NUMBER') : "custom"
 
-version = "mc${minecraft_version}_v${mod_version}" + (dev && !buildnumber.equals("custom") ? "+${buildnumber}" : '')
+version = "${minecraft_version}_v${mod_version}" + (dev && !buildnumber.equals("custom") ? "+${buildnumber}" : '')
 group = 'vice.' + String.valueOf(mod_id)
 archivesBaseName = String.valueOf(mod_id)
 
@@ -125,7 +125,7 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:oculus-581495:3770744")
     runtimeOnly fg.deobf("curse.maven:create-328085:3737418")
     runtimeOnly fg.deobf("curse.maven:flywheel-486392:3737402")
-    runtimeOnly fg.deobf("curse.maven:jei-238222:3758750")
+    implementation fg.deobf("curse.maven:jei-238222:3758750")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }

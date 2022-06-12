@@ -5,6 +5,7 @@
   "refmap": "rubidium_extras.refmap.json",
   "mixins": [
     "fog.MixinSodiumWorldRenderer",
+    "JEI.IngredientListOverlayMixin",
     "SodiumConfig.SodiumGameOptionsMixin",
     "Zoom.PlayerInventoryMixin"
   ],
