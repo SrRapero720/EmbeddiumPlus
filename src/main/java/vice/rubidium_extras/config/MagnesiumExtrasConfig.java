@@ -4,7 +4,6 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import me.jellysquid.mods.sodium.client.gui.options.TextProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import java.nio.file.Path;
 
@@ -135,7 +134,7 @@ public class MagnesiumExtrasConfig
     }
 
 
-    public static enum Complexity implements TextProvider
+    public enum Complexity
     {
         OFF("Off"),
         SIMPLE("Simple"),
@@ -146,13 +145,9 @@ public class MagnesiumExtrasConfig
         private Complexity(String name) {
             this.name = name;
         }
-
-        public Component getLocalizedName() {
-            return new TextComponent(this.name);
-        }
     }
 
-    public static enum Quality implements TextProvider
+    public enum Quality
     {
         OFF("Off"),
         FAST("Fast"),
@@ -162,11 +157,6 @@ public class MagnesiumExtrasConfig
 
         private Quality(String name) {
             this.name = name;
-        }
-
-        public Component getLocalizedName() {
-
-            return new TextComponent(this.name);
         }
     }
 

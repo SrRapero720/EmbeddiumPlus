@@ -4,10 +4,10 @@ buildscript {
         mavenCentral()
         jcenter()
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        maven {
-            name 'parchment'
-            url 'https://maven.parchmentmc.org'
-        }
+        //maven {
+        //    name 'parchment'
+        //    url 'https://maven.parchmentmc.org'
+        //}
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -15,14 +15,14 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: "${mixingradle_version}"
-        classpath 'org.parchmentmc:librarian:1.+'
+        //classpath 'org.parchmentmc:librarian:1.+'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
     }
 }
 
 apply plugin: "com.matthewprenger.cursegradle"
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
+//apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
@@ -119,13 +119,14 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.minecraftforge:forge:1.18.2-40.1.73"
 
-    implementation fg.deobf("curse.maven:rubidium-574856:3749094")
+    implementation fg.deobf("curse.maven:rubidium-574856:3822494")
     //runtimeOnly fg.deobf("curse.maven:oculus-581495:3770744")
-    runtimeOnly fg.deobf("curse.maven:create-328085:3737418")
-    runtimeOnly fg.deobf("curse.maven:flywheel-486392:3737402")
-    implementation fg.deobf("curse.maven:jei-238222:3758750")
+    //runtimeOnly fg.deobf("curse.maven:create-328085:3737418")
+    //runtimeOnly fg.deobf("curse.maven:flywheel-486392:3737402")
+
+    //implementation fg.deobf("curse.maven:jei-238222:3758750")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }
