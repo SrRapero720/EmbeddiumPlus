@@ -13,6 +13,12 @@ public class WindowMixin
     @Redirect(method = {"setMode"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
     private void glfwSetWindowMonitor(long window, long monitor, int xpos, int ypos, int width, int height, int refreshRate)
     {
+        if (!MagnesiumExtrasConfig.ConfigSpec.isLoaded())
+        {
+            GLFW.glfwSetWindowMonitor(window, monitor, xpos, ypos, width, height, refreshRate);
+            return;
+        }
+
         if (MagnesiumExtrasConfig.fullScreenMode.get() == MagnesiumExtrasConfig.FullscreenMode.BORDERLESS)
         {
             if (monitor != 0L)

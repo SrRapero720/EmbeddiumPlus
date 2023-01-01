@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://files.minecraftforge.net/maven' }
         mavenCentral()
         jcenter()
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
@@ -42,7 +42,7 @@ archivesBaseName = String.valueOf(mod_id)
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: "${mappings_channel}", version: "${mappings_version}"
+    mappings channel: 'official', version: '1.19.2'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -119,9 +119,9 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:1.18.2-40.1.73"
+    minecraft 'net.minecraftforge:forge:1.19.2-43.2.3'
 
-    implementation fg.deobf("curse.maven:rubidium-574856:3822494")
+    implementation fg.deobf("curse.maven:rubidium-574856:3973894")
     //runtimeOnly fg.deobf("curse.maven:oculus-581495:3770744")
     //runtimeOnly fg.deobf("curse.maven:create-328085:3737418")
     //runtimeOnly fg.deobf("curse.maven:flywheel-486392:3737402")

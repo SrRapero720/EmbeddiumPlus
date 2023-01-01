@@ -19,6 +19,7 @@ package vice.rubidium_extras.features.TotalDarkness;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
@@ -150,7 +151,7 @@ public class Darkness
 				float min = Math.max(skyFactor * 0.05f, MagnesiumExtrasConfig.darknessOption.get().value);
 				final float rawAmbient = ambient * skyFactor;
 				final float minAmbient = rawAmbient * (1 - min) + min;
-				final float skyBase = dim.brightness(skyIndex) * minAmbient;
+				final float skyBase = LightTexture.getBrightness(dim, skyIndex) * minAmbient;
 
 				min = Math.max(0.35f * skyFactor, MagnesiumExtrasConfig.darknessOption.get().value);
 				float v = skyBase * (rawAmbient * (1 - min) + min);
@@ -172,7 +173,7 @@ public class Darkness
 						blockFactor = 1 - blockFactor * blockFactor * blockFactor * blockFactor;
 					}
 
-					final float blockBase = blockFactor * dim.brightness(blockIndex) * (prevFlicker * 0.1F + 1.5F);
+					final float blockBase = blockFactor * LightTexture.getBrightness(dim, blockIndex) * (prevFlicker * 0.1F + 1.5F);
 					min = 0.4f * blockFactor;
 					final float blockGreen = blockBase * ((blockBase * (1 - min) + min) * (1 - min) + min);
 					final float blockBlue = blockBase * (blockBase * blockBase * (1 - min) + min);
@@ -206,7 +207,7 @@ public class Darkness
 						blue = 1.0F;
 					}
 
-					final float gamma = (float) client.options.gamma * f;
+					final float gamma = (float) client.options.gamma().get().floatValue() * f;
 					float invRed = 1.0F - red;
 					float invGreen = 1.0F - green;
 					float invBlue = 1.0F - blue;

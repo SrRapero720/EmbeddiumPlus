@@ -1,6 +1,7 @@
 package vice.rubidium_extras;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;
 import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
@@ -18,7 +19,7 @@ public enum WiZoom
 
     public double changeFovBasedOnZoom(double fov)
     {
-        Options gameOptions = MC.options;
+        OptionInstance<Double> mouseSensitivitySetting = MC.options.sensitivity();
 
         if(currentLevel == null)
             currentLevel = defaultLevel;
@@ -29,7 +30,7 @@ public enum WiZoom
 
             if(defaultMouseSensitivity != null)
             {
-                gameOptions.sensitivity = defaultMouseSensitivity;
+                mouseSensitivitySetting.set(defaultMouseSensitivity);
                 defaultMouseSensitivity = null;
             }
 
@@ -37,13 +38,13 @@ public enum WiZoom
         }
 
         if(defaultMouseSensitivity == null)
-            defaultMouseSensitivity = gameOptions.sensitivity;
+            defaultMouseSensitivity = mouseSensitivitySetting.get();
 
         // Adjust mouse sensitivity in relation to zoom level.
-        // (fov / currentLevel) / fov is a value between 0.02 (50x zoom)
+        // 1.0 / currentLevel is a value between 0.02 (50x zoom)
         // and 1 (no zoom).
-        gameOptions.sensitivity =
-                defaultMouseSensitivity * (fov / currentLevel / fov);
+        mouseSensitivitySetting
+                .set(defaultMouseSensitivity * (1.0 / currentLevel));
 
         return fov / currentLevel;
     }

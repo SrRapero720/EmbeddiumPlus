@@ -2,7 +2,7 @@ package vice.rubidium_extras.features.FrameCounter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -10,8 +10,8 @@ import net.minecraftforge.fml.common.Mod;
 public class DebugOverlayImprovements
 {
     @SubscribeEvent
-    public static void onRenderDebugText(RenderGameOverlayEvent.Pre event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.DEBUG)
+    public static void onRenderDebugText(RenderGuiOverlayEvent.Pre event) {
+        if (!event.getOverlay().id().getPath().equals("debug_text"))
             return;
 
         // cancel rendering text if chart is displaying

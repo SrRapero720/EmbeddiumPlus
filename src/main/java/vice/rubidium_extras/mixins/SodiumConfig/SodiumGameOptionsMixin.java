@@ -13,7 +13,6 @@ import net.minecraft.client.Options;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -284,17 +283,17 @@ public class SodiumGameOptionsMixin
                 .setBinding(
                         (opts, value) -> {
                             MagnesiumExtrasConfig.fullScreenMode.set(value);
-                            opts.fullscreen = value != MagnesiumExtrasConfig.FullscreenMode.WINDOWED;
+                            opts.fullscreen.set(value != MagnesiumExtrasConfig.FullscreenMode.WINDOWED);
 
                             Minecraft client = Minecraft.getInstance();
                             Window window = client.getWindow();
-                            if (window != null && window.isFullscreen() != opts.fullscreen)
+                            if (window != null && window.isFullscreen() != opts.fullscreen.get())
                             {
                                 window.toggleFullScreen();
-                                opts.fullscreen = window.isFullscreen();
+                                opts.fullscreen.set(window.isFullscreen());
                             }
 
-                            if (window != null && opts.fullscreen)
+                            if (window != null && opts.fullscreen.get())
                             {
                                 ((MainWindowAccessor) (Object) window).setDirty(true);
                                 window.changeFullscreenVideoMode();
