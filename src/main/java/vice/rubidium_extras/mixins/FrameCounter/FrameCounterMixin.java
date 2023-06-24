@@ -2,6 +2,7 @@ package vice.rubidium_extras.mixins.FrameCounter;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +24,7 @@ public class FrameCounterMixin
     private final Queue<Integer> fpsRunningAverageQueue = new LinkedList<Integer>();
 
     @Inject(at = @At("HEAD"), method = "render")
-    public void render(PoseStack matrixStack, float tickDelta, CallbackInfo info)
+    public void render(GuiGraphics matrixStack, float tickDelta, CallbackInfo info)
     {
         if (Objects.equals(MagnesiumExtrasConfig.fpsCounterMode.get(), "OFF"))
             return;
@@ -69,7 +70,7 @@ public class FrameCounterMixin
 //        }
 //        else
 //        {
-            client.font.drawShadow(matrixStack, displayString, textPos, textPos, drawColor);
+            matrixStack.drawString(client.font, displayString, textPos, textPos, drawColor, true);
         //}
     }
 
