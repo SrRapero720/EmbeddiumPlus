@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "rubidium_extras.refmap.json",
   "mixins": [
-    "fog.MixinSodiumWorldRenderer",
     "SodiumConfig.SodiumGameOptionsMixin",
     "Zoom.PlayerInventoryMixin"
   ],
@@ -15,6 +14,8 @@
     "CloudHeight.CloudHeightMixin",
     "EntityDistance.MaxDistanceEntity",
     "EntityDistance.MaxDistanceTileEntity",
+    "ExtendedServerViewDistance.ExtendedServerViewDistanceMixin",
+    "fog.BackgroundRendererMixin",
     "FrameCounter.FpsAccessorMixin",
     "FrameCounter.FrameCounterMixin",
     "SodiumConfig.SodiumGUIMixin",

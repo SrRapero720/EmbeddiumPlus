@@ -2,8 +2,6 @@ package vice.rubidium_extras.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import me.jellysquid.mods.sodium.client.gui.options.TextProvider;
-import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeConfigSpec;
 import java.nio.file.Path;
 
@@ -28,6 +26,7 @@ public class MagnesiumExtrasConfig
 
     public static ConfigValue<Boolean> fog;
     public static ConfigValue<Boolean> enableDistanceChecks;
+    public static ConfigValue<Boolean> enableExtendedServerViewDistance;
 
     public static ConfigValue<Boolean> hideJEI;
 
@@ -72,6 +71,7 @@ public class MagnesiumExtrasConfig
             cloudHeight = b.define("Cloud Height [Raw, Default 256]", 256);
             fadeInQuality =  b.define("Chunk Fade In Quality (OFF, FAST, FANCY)", "FANCY");
             fog = b.define("Render Fog", true);
+            enableExtendedServerViewDistance = b.define("Enable Extended Server View Distance", true);
             hideJEI = b.define("Hide JEI Until Searching", true);
             fullScreenMode = b.defineEnum("Use Borderless Fullscreen", FullscreenMode.FULLSCREEN);
         });
@@ -80,6 +80,8 @@ public class MagnesiumExtrasConfig
             fpsCounterMode = b.define("Display FPS Counter (OFF, SIMPLE, ADVANCED)", "ADVANCED");
             fpsCounterPosition = b.define("FPS Counter Distance", 12);
         });
+
+
 
         builder.Block("Entity Distance", b -> {
             enableDistanceChecks = b.define("Enable Max Distance Checks", true);
