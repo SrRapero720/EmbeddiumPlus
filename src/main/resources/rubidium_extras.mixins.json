@@ -3,6 +3,7 @@
   "package": "vice.rubidium_extras.mixins",
   "compatibilityLevel": "JAVA_8",
   "refmap": "rubidium_extras.refmap.json",
+  "plugin": "vice.rubidium_extras.MixinConfigPlugin",
   "mixins": [
     "SodiumConfig.SodiumGameOptionsMixin",
     "Zoom.PlayerInventoryMixin"
