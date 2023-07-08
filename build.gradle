@@ -13,7 +13,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: forgegradle_version, changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: "${mixingradle_version}"
         //classpath 'org.parchmentmc:librarian:1.+'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
