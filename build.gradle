@@ -123,7 +123,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:rubidium-574856:4573226")
     //runtimeOnly fg.deobf("curse.maven:oculus-581495:3770744")
-    //runtimeOnly fg.deobf("curse.maven:create-328085:3737418")
+    runtimeOnly fg.deobf("curse.maven:create-328085:4625534")
     //runtimeOnly fg.deobf("curse.maven:flywheel-486392:3737402")
 
     //implementation fg.deobf("curse.maven:jei-238222:3758750")
