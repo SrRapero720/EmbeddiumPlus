@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "JJJ",
+    "JXJ",
+    "JJJ"
+  ],
+  "key": {
+    "J": {
+      "item": "minecraft:dirt"
+    },
+    "X": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "item": "templatemod:exampleblock"
+  }
+}

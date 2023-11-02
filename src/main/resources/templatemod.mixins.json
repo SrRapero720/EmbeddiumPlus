@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "vice.templatemod.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "templatemod.refmap.json",
+  "mixins": [
+  ],
+  "minVersion": "0.8"
+}
