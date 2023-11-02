@@ -5,25 +5,25 @@ license="WTFPL"
 modId="embeddium_extras"
 version="${file.jarVersion}"
 displayName="Embeddium Extras"
-logoFile="templatemod.png" #optional
+logoFile="icon.png" #optional
 authors="SrRapero720" #optional
 credits="TeamDeusVult is the original author"
 description='''
 Adds Extra Settings to Embeddium.
 '''
-[[dependencies.rubidium_extras]]
+[[dependencies.embeddium_extras]]
     modId="forge"
     mandatory=true
     versionRange="[41,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.rubidium_extras]]
+[[dependencies.embeddium_extras]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.19,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.rubidium_extras]]
+[[dependencies.embeddium_extras]]
     modId="embeddium"
     mandatory=true
     versionRange="[0.2.6,)"
