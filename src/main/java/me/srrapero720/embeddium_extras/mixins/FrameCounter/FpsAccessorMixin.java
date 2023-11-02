@@ -7,8 +7,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(Minecraft.class)
 public interface FpsAccessorMixin {
     @Accessor("fps")
-    public static int getFPS()
-    {
+    static int getFPS() {
         return 0;
     }
 }

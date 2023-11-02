@@ -22,9 +22,9 @@ public class FrameCounterMixin {
     @Unique
     private String embeddiumExtras$runningAverageFPS;
     @Unique
-    private final Queue<Integer> embeddiumExtras$fpsRunningAverageQueue = new LinkedList<Integer>();
+    private final LinkedList<Integer> embeddiumExtras$fpsRunningAverageQueue = new LinkedList<>();
 
-    @Inject(at = @At("HEAD"), method = "render")
+    @Inject(method = "render", at = @At("HEAD"))
     public void render(GuiGraphics matrixStack, float tickDelta, CallbackInfo info) {
         if (Objects.equals(EmbeddiumExtrasConfig.fpsCounterMode.get(), "OFF")) return;
 
