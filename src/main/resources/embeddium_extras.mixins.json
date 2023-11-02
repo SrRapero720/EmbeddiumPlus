@@ -6,7 +6,7 @@
   "plugin": "me.srrapero720.embeddium_extras.MixinConfigPlugin",
   "minVersion": "0.8",
   "client": [
-    "SodiumConfig.SodiumGameOptionsMixin",
+    "EmbeddiumConfig.EmbedGameOptionsMixin",
     "BorderlessFullscreen.MainWindowAccessor",
     "BorderlessFullscreen.WindowMixin",
     "CloudHeight.CloudHeightMixin",
@@ -16,7 +16,7 @@
     "fog.BackgroundRendererMixin",
     "FrameCounter.FpsAccessorMixin",
     "FrameCounter.FrameCounterMixin",
-    "SodiumConfig.SodiumGUIMixin",
+    "EmbeddiumConfig.EmbedGUIMixin",
     "TotalDarkness.MixinGameRenderer",
     "TotalDarkness.MixinLightmapTextureManager",
     "TotalDarkness.MixinNativeImageBackedTexture",

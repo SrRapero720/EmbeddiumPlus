@@ -1,4 +1,4 @@
-package me.srrapero720.embeddium_extras.mixins.SodiumConfig;
+package me.srrapero720.embeddium_extras.mixins.EmbeddiumConfig;
 
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptionPages;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Mixin(SodiumGameOptionPages.class)
-public class SodiumGameOptionsMixin {
+public class EmbedGameOptionsMixin {
     @Shadow @Final private static SodiumOptionsStorage sodiumOpts;
 
     //@Inject(at = @At("HEAD"), method = "experimental", remap = false, cancellable = true)
