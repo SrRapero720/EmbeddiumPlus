@@ -7,6 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.monster.Ghast;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -26,7 +27,7 @@ public class MaxDistanceEntity {
         if (name.startsWith("com.simibubi.create.content.contraptions")) return;
         if (name.startsWith("com.github.alexthe666.iceandfire.entity") && name.contains("dragon")) return;
 
-        if (!entityWhitelisted(entity.getType().getDefaultLootTable()) && !DistanceUtility.isEntityWithinDistance(
+        if (!embeddiumExtras$entityWhitelisted(entity.getType().getDefaultLootTable()) && !DistanceUtility.isEntityWithinDistance(
                 entity,
                 cameraX,
                 cameraY,
@@ -38,7 +39,8 @@ public class MaxDistanceEntity {
         }
     }
 
-    private boolean entityWhitelisted(ResourceLocation s) {
+    @Unique
+    private boolean embeddiumExtras$entityWhitelisted(ResourceLocation s) {
         return s != null && EmbeddiumExtrasConfig.entityWhitelist.get().stream().anyMatch(s.toString()::equals);
     }
 }
