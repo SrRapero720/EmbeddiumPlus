@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[47,)"
+loaderVersion="${fgrange}"
 license="${modlicense}"
 issueTrackerURL="https://github.com/${github_project}/issues"
 [[mods]]
