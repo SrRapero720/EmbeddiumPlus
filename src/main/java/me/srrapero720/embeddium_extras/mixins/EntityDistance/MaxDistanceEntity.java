@@ -2,6 +2,7 @@ package me.srrapero720.embeddium_extras.mixins.EntityDistance;
 
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.monster.Ghast;
@@ -25,7 +26,7 @@ public class MaxDistanceEntity {
         if (name.startsWith("com.simibubi.create.content.contraptions")) return;
         if (name.startsWith("com.github.alexthe666.iceandfire.entity") && name.contains("dragon")) return;
 
-        if (!DistanceUtility.isEntityWithinDistance(
+        if (!entityWhitelisted(entity.getType().getDefaultLootTable()) && !DistanceUtility.isEntityWithinDistance(
                 entity,
                 cameraX,
                 cameraY,
@@ -35,5 +36,9 @@ public class MaxDistanceEntity {
         )) {
             cir.cancel();
         }
+    }
+
+    private boolean entityWhitelisted(ResourceLocation s) {
+        return s != null && EmbeddiumExtrasConfig.entityWhitelist.get().stream().anyMatch(s.toString()::equals);
     }
 }
