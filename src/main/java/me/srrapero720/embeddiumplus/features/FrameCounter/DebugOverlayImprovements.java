@@ -1,5 +1,6 @@
 package me.srrapero720.embeddiumplus.features.FrameCounter;
 
+import me.srrapero720.embeddiumplus.EmbeddiumPlus;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
