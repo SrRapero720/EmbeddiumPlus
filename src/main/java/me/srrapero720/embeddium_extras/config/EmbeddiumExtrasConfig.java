@@ -2,8 +2,11 @@ package me.srrapero720.embeddium_extras.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import java.nio.file.Path;
+import java.util.Collections;
+import java.util.List;
 
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
@@ -22,6 +25,7 @@ public class EmbeddiumExtrasConfig {
 
     public static ConfigValue<Integer> maxEntityRenderDistanceSquare;
     public static ConfigValue<Integer> maxEntityRenderDistanceY;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> entityWhitelist;
 
     public static ConfigValue<Boolean> fog;
     public static ConfigValue<Boolean> enableDistanceChecks;
@@ -77,6 +81,10 @@ public class EmbeddiumExtrasConfig {
 
             maxEntityRenderDistanceSquare = b.define("(Entity) Max Horizontal Render Distance [Squared, Default 64^2]", 4096);
             maxEntityRenderDistanceY = b.define("(Entity) Max Vertical Render Distance [Raw, Default 32]", 32);
+            entityWhitelist = b
+                    .comment("List of entities to not cull based on distance.")
+                    .comment("Example: \"minecraft:bat\"")
+                    .defineListAllowEmpty(Collections.singletonList("Entity Whitelist"), Collections::emptyList, (s) -> ResourceLocation.tryParse((String) s) != null);
         });
 
         builder.block("True Darkness", b -> {
