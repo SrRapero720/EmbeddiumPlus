@@ -52,7 +52,7 @@ public class EmbeddiumExtrasConfig {
 
 
     static {
-        var builder = new ConfigBuilder("Dynamic Lights Settings");
+        ConfigBuilder builder = new ConfigBuilder("Dynamic Lights Settings");
 
         builder.block("Misc", b -> {
             cloudHeight = b.define("Cloud Height [Raw, Default 256]", 256);
