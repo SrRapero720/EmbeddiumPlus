@@ -7,9 +7,9 @@ import net.minecraft.util.Mth;
 
 public class MinFrameProvider {
 
-    public static int getLastMinFrame() { return lastMinFrame; }
-
     private static int lastMinFrame = 0;
+
+    public static int getLastMinFrame() { return lastMinFrame; }
 
     public static void recalculate() {
         var client = Minecraft.getInstance();

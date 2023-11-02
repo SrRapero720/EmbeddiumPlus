@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 
 @Mixin(Window.class)
 public interface MainWindowAccessor {
-    @Accessor("dirty")
+    @Accessor()
     void setDirty(boolean value);
 }
