@@ -20,13 +20,6 @@ pluginManagement {
     }
 }
 
-buildscript {
-    dependencies {
-        //classpath 'org.parchmentmc:librarian:1.+'
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-    }
-}
-
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }

@@ -1,5 +1,3 @@
-import groovy.json.JsonOutput
-
 plugins {
     id 'java'
     id 'idea'
@@ -8,55 +6,30 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
-version = "${mcversion}_v${modversion}"
+version = "${mcversion}-v${modversion}"
 group = "me.srrapero720"
-archivesBaseName = String.valueOf(modid)
+archivesBaseName = modid
 
 java {
-    targetCompatibility = sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 minecraft {
-    mappings channel: 'parchment', version: "${mappings_version}-${mcversion}"
+    mappings channel: "${mappingsch}", version: "${mappings_version}-${mcversion}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
+    copyIdeResources = true
     runs {
         client {
+            taskName "runClient-${mcversion}"
             workingDirectory project.file('run')
             arg '-mixin.config=' + String.valueOf(modid) + '.mixins.json'
             //jvmArgs '-XX:+UnlockCommercialFeatures' // uncomment for profiling
             property 'forge.logging.console.level', 'info'
+            property 'terminal.jline', 'true'
             property 'fml.earlyprogresswindow', 'false'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods {
-                "${modid}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run/server')
-            arg '-mixin.config=' + String.valueOf(modid) + '.mixins.json'
-            property 'forge.logging.console.level', 'info'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods {
-                "${modid}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            property 'fml.earlyprogresswindow', 'false'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            args '--mod', String.valueOf(modid), '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
             mods {
                 "${modid}" {
                     source sourceSets.main
@@ -66,31 +39,23 @@ minecraft {
     }
 }
 
-compileJava {
-    options.compilerArgs = ["-Xdiags:verbose"]
-}
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-sourceSets.main.resources {
-    srcDir 'src/generated/resources'
-}
-
-mixin {
-    add sourceSets.main, "${modid}.refmap.json"
-}
 
 repositories {
-    maven {
-        // Location of the maven for mixed mappings, Registrate, and Flywheel
-        name = "tterrag maven"
-        url = "https://maven.tterrag.com/"
-    }
-    maven {
-        url = "https://www.cursemaven.com"
-    }
-    maven {
-        url = "https://www.cursemaven.com"
-    }
     mavenCentral()
+    maven { url "https://repo.spongepowered.org/maven" }
+    maven { url "https://maven.tterrag.com/" }
+    maven {
+        url 'https://www.cursemaven.com'
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    maven { url 'https://jitpack.io' }
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
@@ -98,10 +63,17 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("curse.maven:embeddium-908741:4819807")
-    //runtimeOnly fg.deobf("curse.maven:oculus-581495:3770744")
-    runtimeOnly fg.deobf("curse.maven:create-328085:4625534")
-    //runtimeOnly fg.deobf("curse.maven:flywheel-486392:3737402")
+    runtimeOnly fg.deobf("curse.maven:oculus-581495:4767500")
     //implementation fg.deobf("curse.maven:jei-238222:3758750")
+
+    // MOD SUPPORT
+    implementation fg.deobf("com.simibubi.create:create-${mcversion}:${createversion}:slim") { transitive = false }
+    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${mcversion}:${flywheelversion}")
+    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrateversion}")
+}
+
+mixin {
+    add sourceSets.main, "${modid}.refmap.json"
 }
 
 jar {
@@ -120,6 +92,7 @@ jar {
 }
 
 // Process target resources with mod info
+tasks.processResources.outputs.upToDateWhen { false }
 processResources {
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         expand(rootProject.properties)
@@ -127,21 +100,6 @@ processResources {
 }
 
 jar.finalizedBy('reobfJar')
-
-tasks.processResources.outputs.upToDateWhen { false }
-tasks.register('sourcesJar', Jar) {
-    from sourceSets.main.allSource
-    archiveBaseName.set(project.archivesBaseName)
-    archiveVersion.set("${project.version}")
-    archiveClassifier.set('sources')
-}
-
-tasks.register('javadocJar', Jar) {
-    dependsOn javadoc
-    from javadoc.destinationDir
-    archiveClassifier.set('javadoc')
-}
-
-artifacts {
-    archives jar, sourcesJar, javadocJar
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
 }
