@@ -31,11 +31,11 @@ import java.util.Objects;
 
 @Mixin(SodiumGameOptionPages.class)
 public class EmbedGameOptionsMixin {
-    @Shadow @Final private static SodiumOptionsStorage sodiumOpts;
+    @Shadow(remap = false) @Final private static SodiumOptionsStorage sodiumOpts;
 
     //@Inject(at = @At("HEAD"), method = "experimental", remap = false, cancellable = true)
 
-    @Shadow @Final private static MinecraftOptionsStorage vanillaOpts;
+    @Shadow(remap = false) @Final private static MinecraftOptionsStorage vanillaOpts;
 
     //private static void experimental(CallbackInfoReturnable<OptionPage> cir)
     @Inject(
