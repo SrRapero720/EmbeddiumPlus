@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-
+// FIXME: This mixin causes a memory leak and i have no idea why, i need do some research
 @Mixin(ClientPacketListener.class)
 public class ExtendedServerViewDistanceMixin {
     @Inject(method = "handleForgetLevelChunk", at = @At("HEAD"), cancellable = true)
