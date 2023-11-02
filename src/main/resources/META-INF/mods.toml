@@ -1,31 +1,31 @@
 modLoader="javafml" #mandatory
 loaderVersion="[47,)"
-license="WTFPL"
+license="${modlicense}"
+issueTrackerURL="https://github.com/${github_project}/issues"
 [[mods]]
-modId="embeddium_extras"
-version="${file.jarVersion}"
-displayName="Embeddium Extras"
-logoFile="icon.png" #optional
-authors="SrRapero720" #optional
-credits="TeamDeusVult is the original author"
-description='''
-Adds Extra Settings to Embeddium.
-'''
-[[dependencies.embeddium_extras]]
+    modId="${modid}"
+    version="${modversion}"
+    displayName="${modname}"
+    logoFile="icon.png" #optional
+    authors="${modauthor}" #optional
+    credits="${modcredits}"
+    displayURL="https://legacy.curseforge.com/minecraft/mc-mods/embeddium-plus"
+    description='''${mod_description}'''
+[[dependencies.${modid}]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="${fgrange}"
     ordering="NONE"
-    side="BOTH"
-[[dependencies.embeddium_extras]]
+    side="CLIENT"
+[[dependencies.${modid}]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,)"
+    versionRange="${mcrange}"
     ordering="NONE"
-    side="BOTH"
-[[dependencies.embeddium_extras]]
+    side="CLIENT"
+[[dependencies.${modid}]]
     modId="embeddium"
     mandatory=true
-    versionRange="[0.2.6,)"
+    versionRange="${embeddiumrange}"
     ordering="AFTER"
-    side="BOTH"
+    side="CLIENT"

@@ -1,19 +1,20 @@
+import groovy.json.JsonOutput
+
 plugins {
     id 'java'
     id 'idea'
-    id "com.matthewprenger.cursegradle"
-
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.spongepowered.mixin' version '0.7.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 version = "${minecraft_version}_v${mod_version}"
 group = "me.srrapero720"
 archivesBaseName = String.valueOf(mod_id)
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java {
+    targetCompatibility = sourceCompatibility = JavaVersion.VERSION_17
+}
 
 minecraft {
     mappings channel: 'parchment', version: "${mappings_version}-${minecraft_version}"
@@ -94,41 +95,55 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("curse.maven:embeddium-908741:4819807")
     //runtimeOnly fg.deobf("curse.maven:oculus-581495:3770744")
     runtimeOnly fg.deobf("curse.maven:create-328085:4625534")
     //runtimeOnly fg.deobf("curse.maven:flywheel-486392:3737402")
-
     //implementation fg.deobf("curse.maven:jei-238222:3758750")
 }
 
 jar {
     manifest {
         attributes([
-                "Specification-Title": "${mod_id}",
-                "Specification-Vendor": "vice",
-                "Specification-Version": "1",
-                "Implementation-Title": project.name,
-                "Implementation-Version": "${version}",
-                "Implementation-Vendor" :"vice",
+                "Specification-Title": "${modid}",
+                "Specification-Vendor": "${modauthor}",
+                "Specification-Version": "${modversion}",
+                "Implementation-Title": "${modname}",
+                "Implementation-Version": "${modversion}",
+                "Implementation-Vendor" : "${modauthor}",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "${mod_id}.mixins.json"
+                "MixinConfigs": "${modid}.mixins.json"
         ])
+    }
+}
+
+// Process target resources with mod info
+processResources {
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        def combinedMap = [:]
+        combinedMap.putAll(rootProject.properties)
+        combinedMap.putAll([
+                modauthorlist: JsonOutput.toJson(modauthor.trim().replaceAll(" ", "").split(","))
+        ])
+
+        expand(combinedMap)
     }
 }
 
 jar.finalizedBy('reobfJar')
 
-task sourcesJar(type: Jar) {
+tasks.processResources.outputs.upToDateWhen { false }
+tasks.register('sourcesJar', Jar) {
     from sourceSets.main.allSource
     archiveBaseName.set(project.archivesBaseName)
     archiveVersion.set("${project.version}")
     archiveClassifier.set('sources')
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
+tasks.register('javadocJar', Jar) {
+    dependsOn javadoc
     from javadoc.destinationDir
     archiveClassifier.set('javadoc')
 }
