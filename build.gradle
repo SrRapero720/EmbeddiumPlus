@@ -8,29 +8,29 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
-version = "${minecraft_version}_v${mod_version}"
+version = "${mcversion}_v${modversion}"
 group = "me.srrapero720"
-archivesBaseName = String.valueOf(mod_id)
+archivesBaseName = String.valueOf(modid)
 
 java {
     targetCompatibility = sourceCompatibility = JavaVersion.VERSION_17
 }
 
 minecraft {
-    mappings channel: 'parchment', version: "${mappings_version}-${minecraft_version}"
+    mappings channel: 'parchment', version: "${mappings_version}-${mcversion}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
             workingDirectory project.file('run')
-            arg '-mixin.config=' + String.valueOf(mod_id) + '.mixins.json'
+            arg '-mixin.config=' + String.valueOf(modid) + '.mixins.json'
             //jvmArgs '-XX:+UnlockCommercialFeatures' // uncomment for profiling
             property 'forge.logging.console.level', 'info'
             property 'fml.earlyprogresswindow', 'false'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
-                "${mod_id}" {
+                "${modid}" {
                     source sourceSets.main
                 }
             }
@@ -38,12 +38,12 @@ minecraft {
 
         server {
             workingDirectory project.file('run/server')
-            arg '-mixin.config=' + String.valueOf(mod_id) + '.mixins.json'
+            arg '-mixin.config=' + String.valueOf(modid) + '.mixins.json'
             property 'forge.logging.console.level', 'info'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
-                "${mod_id}" {
+                "${modid}" {
                     source sourceSets.main
                 }
             }
@@ -56,9 +56,9 @@ minecraft {
             property 'fml.earlyprogresswindow', 'false'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            args '--mod', String.valueOf(mod_id), '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
+            args '--mod', String.valueOf(modid), '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
             mods {
-                "${mod_id}" {
+                "${modid}" {
                     source sourceSets.main
                 }
             }
@@ -75,7 +75,7 @@ sourceSets.main.resources {
 }
 
 mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
+    add sourceSets.main, "${modid}.refmap.json"
 }
 
 repositories {
@@ -94,7 +94,7 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.minecraftforge:forge:${mcversion}-${fgversion}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("curse.maven:embeddium-908741:4819807")
@@ -122,13 +122,7 @@ jar {
 // Process target resources with mod info
 processResources {
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
-        def combinedMap = [:]
-        combinedMap.putAll(rootProject.properties)
-        combinedMap.putAll([
-                modauthorlist: JsonOutput.toJson(modauthor.trim().replaceAll(" ", "").split(","))
-        ])
-
-        expand(combinedMap)
+        expand(rootProject.properties)
     }
 }
 
