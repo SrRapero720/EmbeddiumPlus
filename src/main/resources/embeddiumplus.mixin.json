@@ -2,7 +2,7 @@
   "required": true,
   "package": "me.srrapero720.embeddiumplus.mixins",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "rubidium_extras.refmap.json",
+  "refmap": "embeddiumplus.mixin-refmap.json",
   "plugin": "me.srrapero720.embeddiumplus.MixinConfigPlugin",
   "minVersion": "0.8",
   "client": [

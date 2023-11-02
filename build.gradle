@@ -23,7 +23,7 @@ minecraft {
         client {
             taskName "runClient-${mcversion}"
             workingDirectory project.file('run')
-            arg '-mixin.config=' + String.valueOf(modid) + '.mixins.json'
+            arg '-mixin.config=' + String.valueOf(modid) + '.mixin.json'
             //jvmArgs '-XX:+UnlockCommercialFeatures' // uncomment for profiling
             property 'forge.logging.console.level', 'info'
             property 'terminal.jline', 'true'
@@ -73,7 +73,7 @@ dependencies {
 }
 
 mixin {
-    add sourceSets.main, "${modid}.refmap.json"
+    add sourceSets.main, "${modid}.mixin-refmap.json"
 }
 
 jar {
@@ -86,7 +86,7 @@ jar {
                 "Implementation-Version": "${modversion}",
                 "Implementation-Vendor" : "${modauthor}",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "${modid}.mixins.json"
+                "MixinConfigs": "${modid}.mixin.json"
         ])
     }
 }
