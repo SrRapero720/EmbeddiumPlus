@@ -1,45 +1,22 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        mavenCentral()
-        jcenter()
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        maven {
-            name 'parchment'
-            url 'https://maven.parchmentmc.org'
-        }
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forgegradle_version}", changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: "${mixingradle_version}"
-        classpath 'org.parchmentmc:librarian:1.+'
-    }
-}
 plugins {
-    id 'com.github.johnrengelman.shadow' version "${shadow_version}"
-    id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
+    id 'java'
+    id 'idea'
+    id "com.matthewprenger.cursegradle"
+
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
-
-boolean dev = System.getenv('RELEASE') == null || System.getenv('RELEASE').equals('false');
-
-ext.buildnumber = 0
-project.buildnumber = System.getenv('BUILD_NUMBER') != null ? System.getenv('BUILD_NUMBER') : "custom"
-
-version = "mc${minecraft_version}_v${mod_version}" + (dev && !buildnumber.equals("custom") ? "+${buildnumber}" : '')
-group = 'vice.' + String.valueOf(mod_id)
+version = "${minecraft_version}_v${mod_version}"
+group = "me.srrapero720"
 archivesBaseName = String.valueOf(mod_id)
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: "${mappings_channel}", version: "${mappings_version}"
+    mappings channel: 'parchment', version: "${mappings_version}-${minecraft_version}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -52,7 +29,7 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
-                templatemod {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -65,7 +42,7 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
-                templatemod {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -80,7 +57,7 @@ minecraft {
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             args '--mod', String.valueOf(mod_id), '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
             mods {
-                templatemod {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -109,35 +86,25 @@ repositories {
     maven {
         url = "https://www.cursemaven.com"
     }
+    maven {
+        url = "https://www.cursemaven.com"
+    }
     mavenCentral()
 }
 
-configurations {
-    shade
-}
-
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.22'
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
-
-    testCompileOnly 'org.projectlombok:lombok:1.18.22'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
-
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 
-    def registrate = "com.tterrag.registrate:Registrate:MC1.16.5-${registrate_version}"
-    implementation fg.deobf(registrate)
-    shade registrate
+    implementation fg.deobf("curse.maven:embeddium-908741:4819807")
+    //runtimeOnly fg.deobf("curse.maven:oculus-581495:3770744")
+    runtimeOnly fg.deobf("curse.maven:create-328085:4625534")
+    //runtimeOnly fg.deobf("curse.maven:flywheel-486392:3737402")
 
-    runtimeOnly fg.deobf("curse.maven:jei-238222:3438494")
-    runtimeOnly fg.deobf("curse.maven:jer-240630:3066754")
-    runtimeOnly fg.deobf("curse.maven:hwyla-253449:3033593")
-
-    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+    //implementation fg.deobf("curse.maven:jei-238222:3758750")
 }
 
 jar {
-    classifier = 'slim'
     manifest {
         attributes([
                 "Specification-Title": "${mod_id}",
@@ -152,16 +119,7 @@ jar {
     }
 }
 
-shadowJar {
-    classifier = ''
-    configurations = [project.configurations.shade]
-    relocate 'com.tterrag.registrate', 'com.tterrag.' + String.valueOf(mod_id) + '.repack.registrate'
-}
-
-reobf {
-    shadowJar {}
-}
-
+jar.finalizedBy('reobfJar')
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
@@ -176,22 +134,5 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
-    archives jar, shadowJar, sourcesJar, javadocJar
-}
-
-publishing {
-    tasks.publish.dependsOn 'build'
-    publications {
-        mavenJava(MavenPublication) {
-            artifact shadowJar
-            artifact sourcesJar
-            artifact javadocJar
-        }
-    }
-
-    repositories {
-        if (project.hasProperty('mavendir')) {
-            maven { url mavendir }
-        }
-    }
+    archives jar, sourcesJar, javadocJar
 }
