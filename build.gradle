@@ -62,8 +62,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mcversion}-${fgversion}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    implementation fg.deobf("curse.maven:embeddium-908741:4819807")
-    runtimeOnly fg.deobf("curse.maven:oculus-581495:4767500")
+    implementation fg.deobf("curse.maven:embeddium-908741:${embeddiumversion}")
+    runtimeOnly fg.deobf("curse.maven:oculus-581495:${oculusversion}")
     //implementation fg.deobf("curse.maven:jei-238222:3758750")
 
     // MOD SUPPORT
