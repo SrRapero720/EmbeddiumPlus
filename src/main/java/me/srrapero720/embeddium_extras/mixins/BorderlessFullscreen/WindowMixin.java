@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import me.srrapero720.embeddium_extras.config.EmbeddiumExtrasConfig;
 
-@Mixin({Window.class})
+@Mixin(Window.class)
 public class WindowMixin {
-    @Redirect(method = {"setMode"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
+    @Redirect(method = "setMode", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
     private void glfwSetWindowMonitor(long window, long monitor, int xpos, int ypos, int width, int height, int refreshRate) {
         if (!EmbeddiumExtrasConfig.ConfigSpec.isLoaded()) {
             GLFW.glfwSetWindowMonitor(window, monitor, xpos, ypos, width, height, refreshRate);
