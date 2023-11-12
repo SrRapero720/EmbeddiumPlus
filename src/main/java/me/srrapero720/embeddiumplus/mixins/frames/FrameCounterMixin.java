@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.FrameCounter;
+package me.srrapero720.embeddiumplus.mixins.frames;
 
 import me.srrapero720.embeddiumplus.features.FrameCounter.MinFrameProvider;
 import net.minecraft.client.Minecraft;

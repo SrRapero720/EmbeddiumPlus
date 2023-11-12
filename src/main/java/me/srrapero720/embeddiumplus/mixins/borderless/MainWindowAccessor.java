@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.BorderlessFullscreen;
+package me.srrapero720.embeddiumplus.mixins.borderless;
 
 import com.mojang.blaze3d.platform.Window;
 import org.spongepowered.asm.mixin.Mixin;

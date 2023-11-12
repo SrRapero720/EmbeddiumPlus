@@ -14,7 +14,7 @@
  * the License.
  ******************************************************************************/
 
-package me.srrapero720.embeddiumplus.mixins.TotalDarkness;
+package me.srrapero720.embeddiumplus.mixins.darkness;
 
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.world.phys.Vec3;
@@ -26,18 +26,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
 import me.srrapero720.embeddiumplus.features.TotalDarkness.Darkness;
 
-@Mixin(DimensionSpecialEffects.NetherEffects.class)
-public class MixinTheNetherDimension {
+@Mixin(DimensionSpecialEffects.EndEffects.class)
+public class MixinTheEndDimension {
 
 	@Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
 	private void onAdjustSkyColor(CallbackInfoReturnable<Vec3> ci) {
 		if (!EmbeddiumPlusConfig.trueDarknessEnabled.get())
 			return;
 
-		if (!EmbeddiumPlusConfig.darkNether.get())
+		if (!EmbeddiumPlusConfig.darkEnd.get())
 			return;
 
-		final double factor = Darkness.darkNetherFog();
+		final double factor = Darkness.darkEndFog();
 
 		Darkness.getDarkenedFogColor(ci, factor);
 	}

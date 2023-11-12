@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.FrameCounter;
+package me.srrapero720.embeddiumplus.mixins.frames;
 
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;

@@ -14,43 +14,41 @@
  * the License.
  ******************************************************************************/
 
-package me.srrapero720.embeddiumplus.mixins.TotalDarkness;
+package me.srrapero720.embeddiumplus.mixins.darkness;
 
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import me.srrapero720.embeddiumplus.features.TotalDarkness.Darkness;
-import me.srrapero720.embeddiumplus.features.TotalDarkness.TextureAccess;
+import me.srrapero720.embeddiumplus.features.TotalDarkness.LightmapAccess;
 
-@Mixin(DynamicTexture.class)
-public class MixinNativeImageBackedTexture implements TextureAccess {
+
+@Mixin(GameRenderer.class)
+public class MixinGameRenderer {
+	@Final
 	@Shadow
-	private NativeImage pixels;
+	Minecraft minecraft;
 
-	@Unique
-	private boolean embeddiumExtras$enableHook = false;
+	@Final
+	@Shadow
+	private LightTexture lightTexture;
 
-	@Inject(method = "upload", at = @At(value = "HEAD"))
-	private void onRenderWorld(CallbackInfo ci) {
-		if (embeddiumExtras$enableHook && Darkness.enabled) {
-			final NativeImage img = pixels;
-			for (int b = 0; b < 16; b++) {
-				for (int s = 0; s < 16; s++) {
-					final int color = Darkness.darken(img.getPixelRGBA(b, s), b, s);
-					img.setPixelRGBA(b, s, color);
-				}
-			}
+	@Inject(method = "renderLevel", at = @At(value = "HEAD"))
+	private void onRenderWorld(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
+		final LightmapAccess lightmap = (LightmapAccess) lightTexture;
+
+		if (lightmap.darkness_isDirty()) {
+			minecraft.getProfiler().push("lightTex");
+			Darkness.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.darkness_prevFlicker());
+			minecraft.getProfiler().pop();
 		}
-	}
-
-	@Override
-	public void darkness_enableUploadHook() {
-		embeddiumExtras$enableHook = true;
 	}
 }

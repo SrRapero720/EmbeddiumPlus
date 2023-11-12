@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.EmbeddiumConfig;
+package me.srrapero720.embeddiumplus.mixins.embeddium;
 
 import me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI;
 import net.minecraft.client.gui.components.events.GuiEventListener;

@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.EntityDistance;
+package me.srrapero720.embeddiumplus.mixins.entitydistance;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;

@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.ExtendedServerViewDistance;
+package me.srrapero720.embeddiumplus.mixins.viewdistance;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
