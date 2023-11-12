@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.EntityDistance;
+package me.srrapero720.embeddiumplus.mixins.entitydistance;
 
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;

@@ -13,13 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
+package me.srrapero720.embeddiumplus.mixins.darkness;
 
-package me.srrapero720.embeddiumplus.mixins.TotalDarkness;
-
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,28 +26,31 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import me.srrapero720.embeddiumplus.features.TotalDarkness.Darkness;
 import me.srrapero720.embeddiumplus.features.TotalDarkness.LightmapAccess;
+import me.srrapero720.embeddiumplus.features.TotalDarkness.TextureAccess;
 
-
-@Mixin(GameRenderer.class)
-public class MixinGameRenderer {
+@Mixin(LightTexture.class)
+public class MixinLightmapTextureManager implements LightmapAccess {
 	@Final
 	@Shadow
-	Minecraft minecraft;
-
-	@Final
+	private DynamicTexture lightTexture;
 	@Shadow
-	private LightTexture lightTexture;
+	private float blockLightRedFlicker;
+	@Shadow
+	private boolean updateLightTexture;
 
-	@Inject(method = "renderLevel", at = @At(value = "HEAD"))
-	private void onRenderWorld(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
-		final LightmapAccess lightmap = (LightmapAccess) lightTexture;
+	@Inject(method = "<init>*", at = @At(value = "RETURN"))
+	private void afterInit(GameRenderer gameRenderer, Minecraft minecraftClient, CallbackInfo ci) {
+		((TextureAccess) lightTexture).darkness_enableUploadHook();
+	}
 
-		if (lightmap.darkness_isDirty()) {
-			minecraft.getProfiler().push("lightTex");
-			Darkness.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.darkness_prevFlicker());
-			minecraft.getProfiler().pop();
-		}
+	@Override
+	public float darkness_prevFlicker() {
+		return blockLightRedFlicker;
+	}
+
+	@Override
+	public boolean darkness_isDirty() {
+		return updateLightTexture;
 	}
 }

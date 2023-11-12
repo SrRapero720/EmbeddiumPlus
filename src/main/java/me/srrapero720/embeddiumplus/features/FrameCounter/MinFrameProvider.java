@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.features.FrameCounter;
 
-import me.srrapero720.embeddiumplus.mixins.FrameCounter.FpsAccessorMixin;
+import me.srrapero720.embeddiumplus.mixins.frames.FpsAccessorMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.FrameTimer;
 import net.minecraft.util.Mth;

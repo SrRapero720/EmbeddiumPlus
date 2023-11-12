@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.EmbeddiumConfig;
+package me.srrapero720.embeddiumplus.mixins.embeddium;
 
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptionPages;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
-import me.srrapero720.embeddiumplus.mixins.BorderlessFullscreen.MainWindowAccessor;
+import me.srrapero720.embeddiumplus.mixins.borderless.MainWindowAccessor;
 
 import java.util.ArrayList;
 import java.util.List;

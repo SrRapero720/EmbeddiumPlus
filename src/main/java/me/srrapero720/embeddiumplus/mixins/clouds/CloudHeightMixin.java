@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.CloudHeight;
+package me.srrapero720.embeddiumplus.mixins.clouds;
 
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import org.spongepowered.asm.mixin.Final;
