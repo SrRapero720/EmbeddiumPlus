@@ -21,6 +21,7 @@
     "darkness.MixinLightmapTextureManager",
     "darkness.MixinNativeImageBackedTexture",
     "darkness.MixinTheEndDimension",
-    "darkness.MixinTheNetherDimension"
+    "darkness.MixinTheNetherDimension",
+    "EntityDistance.EntityCullingMixin"
   ]
 }

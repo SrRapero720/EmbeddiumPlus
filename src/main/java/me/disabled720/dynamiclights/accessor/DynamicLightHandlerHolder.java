@@ -17,6 +17,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantLock;
+
 @ApiStatus.Internal
 @ApiStatus.NonExtendable
 public interface DynamicLightHandlerHolder<T> {
@@ -31,6 +34,7 @@ public interface DynamicLightHandlerHolder<T> {
 
 	@SuppressWarnings("unchecked")
 	static <T extends BlockEntity> DynamicLightHandlerHolder<T> cast(BlockEntityType<T> entityType) {
+
 		return (DynamicLightHandlerHolder<T>) entityType;
 	}
 }
