@@ -2,14 +2,16 @@ modLoader="javafml" #mandatory
 loaderVersion="${fgrange}"
 license="${modlicense}"
 issueTrackerURL="https://github.com/${github_project}/issues"
+displayTest="IGNORE_SERVER_VERSION"
 [[mods]]
     modId="${modid}"
     version="${modversion}"
     displayName="${modname}"
+    displayTest="IGNORE_SERVER_VERSION"
     logoFile="icon.png" #optional
     authors="${modauthor}" #optional
     credits="${modcredits}"
-    displayURL="https://legacy.curseforge.com/minecraft/mc-mods/embeddium-plus"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/embeddium-plus"
     description='''${mod_description}'''
 [[dependencies.${modid}]]
     modId="forge"

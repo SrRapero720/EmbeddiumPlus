@@ -18,7 +18,5 @@ public class EmbeddiumPlus {
     public EmbeddiumPlus() {
         MinecraftForge.EVENT_BUS.register(this);
         EmbeddiumPlusConfig.loadConfig(FMLPaths.CONFIGDIR.get().resolve("embeddiumplus.toml"));
-        //MinecraftForge.EVENT_BUS.register(this);
-        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
     }
 }
