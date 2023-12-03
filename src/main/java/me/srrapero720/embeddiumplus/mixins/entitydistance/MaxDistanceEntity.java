@@ -1,5 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.entitydistance;
 
+import me.srrapero720.embeddiumplus.features.entity_distance.IEntityTypeAccess;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.resources.ResourceLocation;
@@ -23,11 +24,12 @@ public class MaxDistanceEntity {
         if (entity instanceof EnderDragon) return;
         if (entity instanceof Ghast) return;
 
+
         String name = entity.getClass().getName().toLowerCase();
         if (name.startsWith("com.simibubi.create.content.contraptions")) return;
         if (name.startsWith("com.github.alexthe666.iceandfire.entity") && name.contains("dragon")) return;
 
-        if (!embeddiumExtras$entityWhitelisted(entity.getType().getDefaultLootTable()) && !DistanceUtility.isEntityWithinDistance(
+        if (!((IEntityTypeAccess) entity.getType()).embeddiumPlus$isWhitelisted() && !DistanceUtility.isEntityWithinDistance(
                 entity,
                 cameraX,
                 cameraY,
@@ -37,10 +39,5 @@ public class MaxDistanceEntity {
         )) {
             cir.cancel();
         }
-    }
-
-    @Unique
-    private boolean embeddiumExtras$entityWhitelisted(ResourceLocation s) {
-        return s != null && EmbeddiumPlusConfig.entityWhitelist.get().stream().anyMatch(s.toString()::equals);
     }
 }
