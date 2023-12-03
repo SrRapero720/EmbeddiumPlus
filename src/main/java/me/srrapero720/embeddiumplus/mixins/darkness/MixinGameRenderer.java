@@ -33,13 +33,8 @@ import me.srrapero720.embeddiumplus.features.TotalDarkness.LightmapAccess;
 
 @Mixin(GameRenderer.class)
 public class MixinGameRenderer {
-	@Final
-	@Shadow
-	Minecraft minecraft;
-
-	@Final
-	@Shadow
-	private LightTexture lightTexture;
+	@Shadow @Final public Minecraft minecraft;
+	@Shadow @Final public LightTexture lightTexture;
 
 	@Inject(method = "renderLevel", at = @At(value = "HEAD"))
 	private void onRenderWorld(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
