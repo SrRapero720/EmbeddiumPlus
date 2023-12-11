@@ -1,9 +1,9 @@
 {
   "required": true,
-  "package": "me.srrapero720.embeddiumplus.mixins",
+  "package": "me.srrapero720.embeddiumplus.mixins.impl",
   "compatibilityLevel": "JAVA_17",
   "refmap": "embeddiumplus.mixin-refmap.json",
-  "plugin": "me.srrapero720.embeddiumplus.MixinConfigPlugin",
+  "plugin": "me.srrapero720.embeddiumplus.mixins.MixinConfigPlugin",
   "minVersion": "0.8",
   "client": [
     "embeddium.EmbedGameOptionsMixin",
@@ -22,6 +22,6 @@
     "darkness.MixinNativeImageBackedTexture",
     "darkness.MixinTheEndDimension",
     "darkness.MixinTheNetherDimension",
-    "EntityDistance.EntityCullingMixin"
+    "entitydistance.EntityCullingMixin"
   ]
 }
