@@ -63,7 +63,7 @@ public class EmbeddiumPlusConfig {
             fadeInQuality =  b.define("Chunk Fade In Quality (OFF, FAST, FANCY)", "FANCY");
             fog = b.define("Render Fog", true);
             enableExtendedServerViewDistance = b.define("Enable Extended Server View Distance", true);
-            hideJEI = b.define("Hide JEI Until Searching", true);
+            hideJEI = b.define("Hide JEI Until Searching", false);
             fullScreenMode = b.defineEnum("Use Borderless Fullscreen", FullscreenMode.FULLSCREEN);
         });
 
@@ -88,7 +88,7 @@ public class EmbeddiumPlusConfig {
         });
 
         builder.block("True Darkness", b -> {
-            trueDarknessEnabled = b.define("Use True Darkness", true);
+            trueDarknessEnabled = b.define("Use True Darkness", false);
             darknessOption = b.defineEnum("Darkness Setting (PITCH_BLACK, REALLY_DARK, DARK, DIM)", DarknessOption.DARK);
 
             builder.block("Advanced", b2 -> {

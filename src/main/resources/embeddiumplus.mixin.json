@@ -6,22 +6,23 @@
   "plugin": "me.srrapero720.embeddiumplus.mixins.MixinConfigPlugin",
   "minVersion": "0.8",
   "client": [
-    "embeddium.EmbedGameOptionsMixin",
     "borderless.MainWindowAccessor",
     "borderless.WindowMixin",
     "clouds.CloudHeightMixin",
-    "entitydistance.MaxDistanceEntity",
-    "entitydistance.MaxDistanceTileEntity",
-    "viewdistance.ExtendedServerViewDistanceMixin",
-    "fog.BackgroundRendererMixin",
-    "frames.FpsAccessorMixin",
-    "frames.FrameCounterMixin",
-    "embeddium.EmbedGUIMixin",
     "darkness.MixinGameRenderer",
     "darkness.MixinLightmapTextureManager",
     "darkness.MixinNativeImageBackedTexture",
     "darkness.MixinTheEndDimension",
     "darkness.MixinTheNetherDimension",
-    "entitydistance.EntityCullingMixin"
+    "embeddium.EmbedGameOptionsMixin",
+    "embeddium.EmbedGUIMixin",
+    "entitydistance.EntityCullingMixin",
+    "entitydistance.MaxDistanceEntity",
+    "entitydistance.MaxDistanceTileEntity",
+    "fog.BackgroundRendererMixin",
+    "frames.FpsAccessorMixin",
+    "frames.FrameCounterMixin",
+    "viewdistance.ExtendedServerViewDistanceMixin",
+    "jei.IngredientListOverlayMixin"
   ]
 }
