@@ -23,6 +23,6 @@
     "frames.FpsAccessorMixin",
     "frames.FrameCounterMixin",
     "viewdistance.ExtendedServerViewDistanceMixin",
-    "jei.IngredientListOverlayMixin"
+    "jei.JeiOverlayMixin"
   ]
 }
