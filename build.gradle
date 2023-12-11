@@ -52,6 +52,9 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        url "https://maven.blamejared.com"
+    }
     maven { url 'https://jitpack.io' }
     flatDir {
         dirs 'libs'
@@ -62,9 +65,11 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mcversion}-${fgversion}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    implementation fg.deobf("curse.maven:embeddium-908741:${embeddiumversion}")
+
+//    implementation fg.deobf("curse.maven:embeddium-908741:${embeddiumversion}")
+    implementation fg.deobf("org.embeddedt:embeddium-${mcversion}:${embeddiumversion}")
     runtimeOnly fg.deobf("curse.maven:oculus-581495:${oculusversion}")
-    //implementation fg.deobf("curse.maven:jei-238222:3758750")
+    implementation fg.deobf("curse.maven:jei-238222:3758750")
 
     // MOD SUPPORT
     implementation fg.deobf("com.simibubi.create:create-${mcversion}:${createversion}:slim") { transitive = false }
