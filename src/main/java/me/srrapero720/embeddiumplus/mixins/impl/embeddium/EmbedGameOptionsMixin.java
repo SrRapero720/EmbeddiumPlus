@@ -71,8 +71,8 @@ public class EmbedGameOptionsMixin {
 
 
         OptionImpl<SodiumGameOptions, Boolean> totalDarkness = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.truedarkness.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.truedarkness.desc"))
+                .setName(Component.translatable("embeddium.plus.options.darkness.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.darkness.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> EmbeddiumPlusConfig.trueDarknessEnabled.set(value),
@@ -167,14 +167,6 @@ public class EmbedGameOptionsMixin {
                 .setImpact(OptionImpact.LOW)
                 .build();
 
-
-        groups.add(OptionGroup
-                .createBuilder()
-                .add(enableDistanceChecks)
-                .build()
-        );
-
-
         OptionImpl<SodiumGameOptions, Integer> maxEntityDistance = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.entity.distance.h.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.distance.h.desc"))
@@ -198,6 +190,7 @@ public class EmbedGameOptionsMixin {
 
         groups.add(OptionGroup
                 .createBuilder()
+                .add(enableDistanceChecks)
                 .add(maxEntityDistance)
                 .add(maxEntityDistanceVertical)
                 .build()
@@ -283,7 +276,7 @@ public class EmbedGameOptionsMixin {
         return ImmutableList.copyOf(groups);
     }
 
-    @Redirect(method = "advanced", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;"))
+    @Redirect(method = "advanced", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;", ordinal = 6))
     private static MutableComponent ChangeCategoryName(String old) {
         return Component.translatable("embeddium.plus.options.plus");
     }

@@ -60,7 +60,7 @@ class ExecutorHelper {
 }
 
 
-@Mod("dynamiclightsreforged")
+//@Mod("dynamiclightsreforged")
 public class LambDynLights {
 
 	public static final String MODID = "dynamiclightsreforged";
