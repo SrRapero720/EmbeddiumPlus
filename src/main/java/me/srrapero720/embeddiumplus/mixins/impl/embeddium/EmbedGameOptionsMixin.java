@@ -233,13 +233,6 @@ public class EmbedGameOptionsMixin {
         return ImmutableList.copyOf(groups);
     }
 
-//    @Redirect(method = "general", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;add(Lme/jellysquid/mods/sodium/client/gui/options/Option;)Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;"))
-//    private static OptionGroup.Builder redirectGeneral$fullscreenOption(OptionGroup.Builder instance, Option<?> option) {
-//
-//        return null;
-//    }
-
-
     @Redirect(method = "general", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableList;copyOf(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;"))
     private static ImmutableList<OptionGroup> redirectGeneralOptions(Collection<OptionGroup> groups) {
         OptionImpl<Options, EmbeddiumPlusConfig.FullscreenMode> fullscreenMode = OptionImpl.createBuilder( EmbeddiumPlusConfig.FullscreenMode.class, vanillaOpts)
