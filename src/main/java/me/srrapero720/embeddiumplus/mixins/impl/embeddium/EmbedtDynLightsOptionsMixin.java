@@ -39,22 +39,14 @@ public abstract class EmbedtDynLightsOptionsMixin {
         List<OptionGroup> groups = new ArrayList<>();
 
         OptionImpl<SodiumGameOptions, DynamicLightsQuality> qualityMode = OptionImpl.createBuilder(DynamicLightsQuality.class, embeddiumPlus$dynLightsOpts)
-                .setName(Component.nullToEmpty("Dynamic Lights Speed"))
-                .setTooltip(Component.nullToEmpty("""
-                        Controls how often dynamic lights will update.\s
-
-                        Lighting recalculation can be expensive, so slower values will give better performance.
-
-                        Off - Self explanatory
-                        Slow - Twice a second
-                        Fast - Five times a second
-                        Realtime - Every tick"""))
+                .setName(Component.translatable("embeddium.plus.options.dynlights.speed.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.dynlights.speed.desc"))
                 .setControl((option) -> new CyclingControl<>(option, DynamicLightsQuality.class, new Component[] {
-                                Component.nullToEmpty("Off"),
-                                Component.nullToEmpty("Slow"),
-                                Component.nullToEmpty("Fast"),
-                                Component.nullToEmpty("Fastest"),
-                                Component.nullToEmpty("Realtime")
+                                Component.translatable("embeddium.plus.options.common.off"),
+                                Component.translatable("embeddium.plus.options.common.slow"),
+                                Component.translatable("embeddium.plus.options.common.fast"),
+                                Component.translatable("embeddium.plus.options.common.faster"),
+                                Component.translatable("embeddium.plus.options.common.realtime")
                         }))
                 .setBinding((options, value) -> {
                             EmbeddiumPlusConfig.dynQuality.set(DynamicLightsQuality.valueOf(value.toString()));
@@ -66,11 +58,8 @@ public abstract class EmbedtDynLightsOptionsMixin {
 
 
         OptionImpl<SodiumGameOptions, Boolean> entityLighting = OptionImpl.createBuilder(Boolean.class, embeddiumPlus$dynLightsOpts)
-                .setName(Component.nullToEmpty("Dynamic Entity Lights"))
-                .setTooltip(Component.nullToEmpty("""
-                        Turning this on will show dynamic lighting on entities (dropped items, mobs, etc).\s
-
-                        This can drastically increase the amount of lighting updates, even when you're not holding a torch."""))
+                .setName(Component.translatable("embeddium.plus.options.dynlights.entities.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.dynlights.entities.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> EmbeddiumPlusConfig.entityLighting.set(value),
@@ -79,11 +68,8 @@ public abstract class EmbedtDynLightsOptionsMixin {
                 .build();
 
         OptionImpl<SodiumGameOptions, Boolean> tileEntityLighting = OptionImpl.createBuilder(Boolean.class, embeddiumPlus$dynLightsOpts)
-                .setName(Component.nullToEmpty("Dynamic Block Lights"))
-                .setTooltip(Component.nullToEmpty("""
-                        Turning this on will show dynamic lighting on tile entities (furnaces, modded machines, etc).\s
-
-                        This can drastically increase the amount of lighting updates, even when you're not holding a torch."""))
+                .setName(Component.translatable("embeddium.plus.options.dynlights.blockentities.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.dynlights.blockentities.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> EmbeddiumPlusConfig.tileEntityLighting.set(value),
@@ -99,8 +85,6 @@ public abstract class EmbedtDynLightsOptionsMixin {
                 .build()
         );
 
-        pages.add(new OptionPage(Component.nullToEmpty("Dynamic Lights"), ImmutableList.copyOf(groups)));
+        pages.add(new OptionPage(Component.translatable("embeddium.plus.options.dynlights.group"), ImmutableList.copyOf(groups)));
     }
-
-
 }
