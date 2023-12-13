@@ -12,10 +12,8 @@ package me.disabled720.dynamiclights.mixin.lightsource;
 import me.disabled720.dynamiclights.DynamicLightSource;
 import me.disabled720.dynamiclights.LambDynLights;
 import me.disabled720.dynamiclights.api.DynamicLightHandlers;
-import me.disabled720.dynamiclights.config.QualityMode;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig.DynamicLightsQuality;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
@@ -32,8 +30,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Objects;
 
 @Mixin(BlockEntity.class)
 public abstract class BlockEntityMixin implements DynamicLightSource {
@@ -107,6 +103,7 @@ public abstract class BlockEntityMixin implements DynamicLightSource {
 		return this.luminance;
 	}
 
+	@Unique
 	private static long lambdynlights_lastUpdate = 0;
 
 	@Override
