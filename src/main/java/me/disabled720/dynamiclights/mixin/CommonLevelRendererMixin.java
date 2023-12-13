@@ -10,8 +10,8 @@
 package me.disabled720.dynamiclights.mixin;
 
 import me.disabled720.dynamiclights.LambDynLights;
-import me.disabled720.dynamiclights.config.DynamicLightsConfig;
-import me.disabled720.dynamiclights.config.QualityMode;
+import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig.DynamicLightsQuality;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -30,7 +30,7 @@ public abstract class CommonLevelRendererMixin {
 			cancellable = true
 	)
 	private static void onGetLightmapCoordinates(BlockAndTintGetter world, BlockState j, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-		if (!world.getBlockState(pos).isSolidRender(world, pos) && DynamicLightsConfig.Quality.get() != QualityMode.OFF)
+		if (!world.getBlockState(pos).isSolidRender(world, pos) && EmbeddiumPlusConfig.dynQuality.get() != DynamicLightsQuality.OFF)
 		{
 			int vanilla = cir.getReturnValue();
 			int value = LambDynLights.get().getLightmapWithDynamicLight(pos, vanilla);

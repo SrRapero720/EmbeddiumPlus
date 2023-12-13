@@ -20,7 +20,7 @@ public abstract class EntityCullingMixin implements IEntityTypeAccess {
     @Override
     @Unique
     public boolean embeddiumPlus$isWhitelisted() {
-        if (!EmbeddiumPlusConfig.ConfigSpec.isLoaded()) return false;
+        if (!EmbeddiumPlusConfig.SPECS.isLoaded()) return false;
         if (embeddiumPlus$checked) return embeddiumPlus$whitelisted;
 
         List<?> entityWhitelist = EmbeddiumPlusConfig.entityWhitelist.get();

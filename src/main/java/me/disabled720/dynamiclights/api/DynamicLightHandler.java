@@ -10,7 +10,7 @@
 package me.disabled720.dynamiclights.api;
 
 import me.disabled720.dynamiclights.LambDynLights;
-import me.disabled720.dynamiclights.config.DynamicLightsConfig;
+import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -98,7 +98,7 @@ public interface DynamicLightHandler<T> {
 				int luminance = 0;
 
 				if (entity.getSwelling(0.f) > 0.001) {
-					luminance = switch (DynamicLightsConfig.Quality.get()) {
+					luminance = switch (EmbeddiumPlusConfig.dynQuality.get()) {
 						case OFF -> 0;
 						case SLOW, FAST -> 10;
 						case REALTIME -> (int) (entity.getSwelling(0.f) * 10.0);

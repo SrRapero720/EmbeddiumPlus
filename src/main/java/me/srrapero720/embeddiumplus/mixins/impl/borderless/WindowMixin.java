@@ -11,7 +11,7 @@ import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
 public class WindowMixin {
     @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
     private void glfwSetWindowMonitor(long window, long monitor, int xpos, int ypos, int width, int height, int refreshRate) {
-        if (!EmbeddiumPlusConfig.ConfigSpec.isLoaded()) {
+        if (!EmbeddiumPlusConfig.SPECS.isLoaded()) {
             GLFW.glfwSetWindowMonitor(window, monitor, xpos, ypos, width, height, refreshRate);
             return;
         }
