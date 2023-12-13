@@ -48,8 +48,8 @@ public class EmbedGameOptionsMixin {
                         Component.translatable("embeddium.plus.options.common.advanced")
                 }))
                 .setBinding(
-                        (opts, value) -> EmbeddiumPlusConfig.fpsCounterMode.set(value.toString()),
-                        (opts) -> EmbeddiumPlusConfig.Complexity.valueOf(EmbeddiumPlusConfig.fpsCounterMode.get()))
+                        (opts, value) -> EmbeddiumPlusConfig.fpsCounterMode.set(value),
+                        (opts) -> EmbeddiumPlusConfig.fpsCounterMode.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -110,8 +110,8 @@ public class EmbedGameOptionsMixin {
                         Component.translatable("options.graphics.fancy")
                 }))
                 .setBinding(
-                        (opts, value) -> EmbeddiumPlusConfig.fadeInQuality.set(value.toString()),
-                        (opts) -> EmbeddiumPlusConfig.Quality.valueOf(EmbeddiumPlusConfig.fadeInQuality.get()))
+                        (opts, value) -> EmbeddiumPlusConfig.fadeInQuality.set(value),
+                        (opts) -> EmbeddiumPlusConfig.fadeInQuality.get())
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(false)
                 .build();
