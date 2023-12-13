@@ -2,7 +2,6 @@ package me.srrapero720.embeddiumplus.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -13,9 +12,9 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 public class EmbeddiumPlusConfig {
     public static ForgeConfigSpec ConfigSpec;
 
-    public static ConfigValue<String> fadeInQuality;
+    public static ForgeConfigSpec.EnumValue<Quality> fadeInQuality;
 
-    public static ConfigValue<String> fpsCounterMode;
+    public static ForgeConfigSpec.EnumValue<Complexity> fpsCounterMode;
     public static ConfigValue<Integer> fpsCounterPosition;
     public static ForgeConfigSpec.ConfigValue<Integer> cloudHeight;
 
@@ -56,57 +55,89 @@ public class EmbeddiumPlusConfig {
 
 
     static {
-        ConfigBuilder builder = new ConfigBuilder("Dynamic Lights Settings");
+        ConfigBuilder builder = new ConfigBuilder("EmbeddiumPlus");
+
+
+        builder.comment("You can configure FPS overlay at the corner")
+                .block("fps_overlay", b -> {
+            fpsCounterMode = b.defineEnum("DisplayMode", Complexity.ADVANCED);
+            fpsCounterPosition = b.define("OverlayMargin", 12);
+        });
+
+        builder.comment("Configure max Entity distance")
+                .block("entity_distance_limit", b -> {
+                    enableDistanceChecks = b
+                            .comment("Turn on this feature")
+                            .define("Enable", true);
+
+                    maxEntityRenderDistanceSquare = b
+                            .comment("Max horizontal render distance")
+                            .comment("Value is squared, default was 64^2 (or 64x64)")
+                            .define("maxHorizontalDistance", 4096);
+
+                    maxEntityRenderDistanceY = b
+                            .comment("Max vertical render distance")
+                            .comment("Value is raw")
+                            .define("maxVerticalDistance", 32);
+
+                    entityWhitelist = b
+                            .comment("List of entities to not be ignored when are out of configured radius.")
+                            .comment("Accepts ResourceLocation and Mod IDs")
+                            .comment("Example: \"minecraft:bat\" for specific entity or \"alexmobs:*\" for all mod specific entities")
+                            .defineListAllowEmpty("entityWhitelist", Collections::emptyList, (s) -> s.toString().contains(":"));
+        });
+
+        builder.comment("Configure max BlockEntity distance")
+                .block("block_entity_distance", b -> {
+                    maxTileEntityRenderDistanceSquare = b
+                            .comment("Max horizontal render distance")
+                            .comment("Value is squared, default was 64^2 (or 64x64)")
+                            .define("maxHorizontalDistance", 4096);
+                    maxTileEntityRenderDistanceY = b
+                            .comment("Max vertical render distance")
+                            .comment("Value is raw")
+                            .define("maxVerticalDistance", 32);
+                });
+
+        builder.comment("Configure TrueDarkness feature")
+                .comment("Section deprecated and removed soon (in favor of rework)")
+                .block("true_darkness", b -> {
+
+                    trueDarknessEnabled = b
+                            .comment("Turn on this feature")
+                            .define("Enable", false);
+
+                    darknessOption = b
+                            .comment("Sets darkness mode")
+                            .comment("Depending of the option darkness can be less or more aggressive")
+                            .defineEnum("DarknessMode", DarknessOption.DARK);
+
+                    builder.block("Advanced", ignored -> {
+                        blockLightOnly = b.define("BlockLightingOnly", false);
+                        ignoreMoonPhase = b.define("IgnoreMoonPhase", false);
+                        minimumMoonLevel = b.defineInRange("MinimumMoonBrightness", 0, 0, 1d);
+                        maximumMoonLevel = b.defineInRange("MaximumMoonBrightness", 0.25d, 0, 1d);
+                    });
+
+                    builder.comment("Configure what dimension should use TrueDarkness")
+                            .block("DimensionSettings", ignored -> {
+                                darkDefault = b.define("DefaultSetting", false);
+                                darkOverworld = b.define("Overworld", true);
+                                darkNether = b.define("Nether", false);
+                                darkNetherFogConfigured = b.defineInRange("DarkNetherFogBrightness", .5, 0, 1d);
+                                darkEnd = b.define("Dark End?", false);
+                                darkEndFogConfigured = b.defineInRange("DarkEndFogBrightness", 0, 0, 1d);
+                                darkSkyless = b.define("DarkWhenNoSkylight", false);
+                    });
+        });
 
         builder.block("Misc", b -> {
-            cloudHeight = b.define("Cloud Height [Raw, Default 256]", 256);
-            fadeInQuality =  b.define("Chunk Fade In Quality (OFF, FAST, FANCY)", "FANCY");
-            fog = b.define("Render Fog", true);
-            enableExtendedServerViewDistance = b.define("Enable Extended Server View Distance", true);
-            hideJEI = b.define("Hide JEI Until Searching", false);
-            fullScreenMode = b.defineEnum("Use Borderless Fullscreen", FullscreenMode.FULLSCREEN);
-        });
-
-        builder.block("FPS Counter", b -> {
-            fpsCounterMode = b.define("Display FPS Counter (OFF, SIMPLE, ADVANCED)", "ADVANCED");
-            fpsCounterPosition = b.define("FPS Counter Distance", 12);
-        });
-
-
-        builder.block("Entity Distance", b -> {
-            enableDistanceChecks = b.define("Enable Max Distance Checks", true);
-
-            maxTileEntityRenderDistanceSquare = b.define("(TileEntity) Max Horizontal Render Distance [Squared, Default 64^2]", 4096);
-            maxTileEntityRenderDistanceY = b.define("(TileEntity) Max Vertical Render Distance [Raw, Default 32]", 32);
-
-            maxEntityRenderDistanceSquare = b.define("(Entity) Max Horizontal Render Distance [Squared, Default 64^2]", 4096);
-            maxEntityRenderDistanceY = b.define("(Entity) Max Vertical Render Distance [Raw, Default 32]", 32);
-            entityWhitelist = b
-                    .comment("List of entities to not cull based on distance.")
-                    .comment("Example: \"minecraft:bat\"")
-                    .defineListAllowEmpty(Collections.singletonList("Entity Whitelist"), Collections::emptyList, (s) -> ResourceLocation.tryParse((String) s) != null);
-        });
-
-        builder.block("True Darkness", b -> {
-            trueDarknessEnabled = b.define("Use True Darkness", false);
-            darknessOption = b.defineEnum("Darkness Setting (PITCH_BLACK, REALLY_DARK, DARK, DIM)", DarknessOption.DARK);
-
-            builder.block("Advanced", b2 -> {
-                blockLightOnly = b2.define("Only Effect Block Lighting", false);
-                ignoreMoonPhase = b2.define("Ignore Moon Light", false);
-                minimumMoonLevel = b2.defineInRange("Minimum Moon Brightness (0->1)", 0, 0, 1d);
-                maximumMoonLevel = b2.defineInRange("Maximum Moon Brightness (0->1)", 0.25d, 0, 1d);
-            });
-
-            builder.block("Dimension Settings", b2 -> {
-                darkOverworld = b2.define("Dark Overworld?", true);
-                darkDefault = b2.define("Dark By Default?", false);
-                darkNether = b2.define("Dark Nether?", false);
-                darkNetherFogConfigured = b2.defineInRange("Dark Nether Fog Brightness (0->1)", .5, 0, 1d);
-                darkEnd = b2.define("Dark End?", false);
-                darkEndFogConfigured = b.defineInRange("Dark End Fog Brightness (0->1)", 0, 0, 1d);
-                darkSkyless = b2.define("Dark If No Skylight?", false);
-            });
+            cloudHeight = b.define("CloudHeight", 128);
+            fadeInQuality =  b.defineEnum("ChunkFadeInQuality", Quality.FANCY);
+            fog = b.define("RenderFog", true);
+            enableExtendedServerViewDistance = b.define("ExtendedServerViewDistance", true);
+            hideJEI = b.define("HideJEI", false);
+            fullScreenMode = b.defineEnum("BorderlessFullscreen", FullscreenMode.FULLSCREEN);
         });
 
         ConfigSpec = builder.save();
@@ -120,29 +151,11 @@ public class EmbeddiumPlusConfig {
     }
 
 
-    public enum Complexity {
-        OFF("Off"),
-        SIMPLE("Simple"),
-        ADVANCED("Advanced");
+    public enum FullscreenMode { WINDOWED, BORDERLESS, FULLSCREEN }
 
-        private final String name;
+    public enum Complexity { OFF, SIMPLE, ADVANCED; }
 
-        private Complexity(String name) {
-            this.name = name;
-        }
-    }
-
-    public enum Quality {
-        OFF("Off"),
-        FAST("Fast"),
-        FANCY("Fancy");
-
-        private final String name;
-
-        private Quality(String name) {
-            this.name = name;
-        }
-    }
+    public enum Quality { OFF, FAST, FANCY; }
 
     public enum DarknessOption {
         PITCH_BLACK(0f),
@@ -151,15 +164,9 @@ public class EmbeddiumPlusConfig {
         DIM(0.12f);
 
         public final float value;
-
         private DarknessOption(float value) {
             this.value = value;
         }
-    }
 
-    public enum FullscreenMode {
-        WINDOWED,
-        BORDERLESS,
-        FULLSCREEN
     }
 }

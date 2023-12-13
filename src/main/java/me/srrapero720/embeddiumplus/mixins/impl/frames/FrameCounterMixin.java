@@ -25,20 +25,25 @@ public class FrameCounterMixin {
 
     @Inject(method = "render", at = @At("HEAD"))
     public void render(GuiGraphics matrixStack, float tickDelta, CallbackInfo info) {
-        if (Objects.equals(EmbeddiumPlusConfig.fpsCounterMode.get(), "OFF")) return;
+        String displayString;
+        switch (EmbeddiumPlusConfig.fpsCounterMode.get()) {
+            case SIMPLE -> {
+                int fps = FpsAccessorMixin.getFps();
+                displayString = String.valueOf(fps);
+            }
+
+            case ADVANCED -> {
+                int fps = FpsAccessorMixin.getFps();
+                displayString = GetAdvancedFPSString(fps);
+            }
+
+            default -> {
+                return;
+            }
+        }
 
         Minecraft client = Minecraft.getInstance();
-
-        // return if F3 menu open and graph not displayed
-        if (client.options.renderDebug && !client.options.renderFpsChart) return;
-
-        String displayString = null;
-        int fps = FpsAccessorMixin.getFps();
-
-        if (Objects.equals(EmbeddiumPlusConfig.fpsCounterMode.get(), "ADVANCED"))
-            displayString = GetAdvancedFPSString(fps);
-        else
-            displayString = String.valueOf(fps);
+        if (client.options.renderDebug && !client.options.renderFpsChart) return; // No render when F3 is open
 
         float textPos = EmbeddiumPlusConfig.fpsCounterPosition.get();
 
@@ -48,7 +53,7 @@ public class FrameCounterMixin {
 
         double guiScale = client.getWindow().getGuiScale();
         if (guiScale > 0) {
-            textPos /= guiScale;
+            textPos /= (float) guiScale;
         }
 
         // Prevent FPS-Display to render outside screenspace

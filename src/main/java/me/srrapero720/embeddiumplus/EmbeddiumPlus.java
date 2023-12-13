@@ -17,6 +17,6 @@ public class EmbeddiumPlus {
 
     public EmbeddiumPlus() {
         MinecraftForge.EVENT_BUS.register(this);
-        EmbeddiumPlusConfig.loadConfig(FMLPaths.CONFIGDIR.get().resolve("embeddiumplus.toml"));
+        EmbeddiumPlusConfig.loadConfig(FMLPaths.CONFIGDIR.get().resolve("embeddium++.toml"));
     }
 }
