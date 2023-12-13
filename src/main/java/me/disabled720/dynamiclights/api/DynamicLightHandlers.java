@@ -11,7 +11,7 @@ package me.disabled720.dynamiclights.api;
 
 import me.disabled720.dynamiclights.LambDynLights;
 import me.disabled720.dynamiclights.accessor.DynamicLightHandlerHolder;
-import me.disabled720.dynamiclights.config.DynamicLightsConfig;
+import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -36,6 +36,7 @@ public final class DynamicLightHandlers {
 			int luminance = 0;
 			if (entity.getCarriedBlock() != null)
 				luminance = entity.getCarriedBlock().getLightEmission();
+	//			luminance = entity.getCarriedBlock().getLightEmission(entity.level(), entity.blockPosition());
 			return luminance;
 		});
 		registerDynamicLightHandler(EntityType.ITEM,
@@ -120,7 +121,7 @@ public final class DynamicLightHandlers {
 	 * @return {@code true} if the entity can light up, otherwise {@code false}
 	 */
 	public static <T extends Entity> boolean canLightUp(T entity) {
-		return DynamicLightsConfig.EntityLighting.get();
+		return EmbeddiumPlusConfig.entityLighting.get();
 	}
 
 	/**
@@ -131,7 +132,7 @@ public final class DynamicLightHandlers {
 	 * @return {@code true} if the block entity can light up, otherwise {@code false}
 	 */
 	public static <T extends BlockEntity> boolean canLightUp(T entity) {
-		return DynamicLightsConfig.TileEntityLighting.get();
+		return EmbeddiumPlusConfig.tileEntityLighting.get();
 	}
 
 	/**
@@ -143,7 +144,7 @@ public final class DynamicLightHandlers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Entity> int getLuminanceFrom(T entity) {
-		if (!DynamicLightsConfig.EntityLighting.get())
+		if (!EmbeddiumPlusConfig.entityLighting.get())
 			return 0;
 
 		var handler = (DynamicLightHandler<T>) getDynamicLightHandler(entity.getType());
@@ -166,7 +167,7 @@ public final class DynamicLightHandlers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends BlockEntity> int getLuminanceFrom(T entity) {
-		if (!DynamicLightsConfig.TileEntityLighting.get())
+		if (!EmbeddiumPlusConfig.tileEntityLighting.get())
 			return 0;
 		DynamicLightHandler<T> handler = (DynamicLightHandler<T>) getDynamicLightHandler(entity.getType());
 		if (handler == null)

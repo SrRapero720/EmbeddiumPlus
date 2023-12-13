@@ -14,15 +14,16 @@
     "darkness.MixinNativeImageBackedTexture",
     "darkness.MixinTheEndDimension",
     "darkness.MixinTheNetherDimension",
-    "embeddium.EmbedGameOptionsMixin",
-    "embeddium.EmbedGUIMixin",
+    "embeddium.EmbedtCoreOptionsMixin",
+    "embeddium.EmbedtDynLightsOptionsMixin",
+    "embeddium.EmbedtGUIMixin",
     "entitydistance.EntityCullingMixin",
     "entitydistance.MaxDistanceEntity",
     "entitydistance.MaxDistanceTileEntity",
     "fog.BackgroundRendererMixin",
     "frames.FpsAccessorMixin",
     "frames.FrameCounterMixin",
-    "viewdistance.ExtendedServerViewDistanceMixin",
-    "jei.JeiOverlayMixin"
+    "jei.JeiOverlayMixin",
+    "viewdistance.ExtendedServerViewDistanceMixin"
   ]
 }

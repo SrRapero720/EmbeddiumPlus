@@ -12,9 +12,8 @@ package me.disabled720.dynamiclights.mixin.lightsource;
 import me.disabled720.dynamiclights.DynamicLightSource;
 import me.disabled720.dynamiclights.LambDynLights;
 import me.disabled720.dynamiclights.api.DynamicLightHandlers;
-import me.disabled720.dynamiclights.config.DynamicLightsConfig;
-import me.disabled720.dynamiclights.config.QualityMode;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
@@ -32,8 +31,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Objects;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements DynamicLightSource {
@@ -88,7 +85,7 @@ public abstract class EntityMixin implements DynamicLightSource {
 				this.tdv$setDynamicLightEnabled(false);
 			} else {
 				this.tdv$dynamicLightTick();
-				if ((!DynamicLightsConfig.TileEntityLighting.get() && this.getType() != EntityType.PLAYER)
+				if ((!EmbeddiumPlusConfig.tileEntityLighting.get() && this.getType() != EntityType.PLAYER)
 						|| !DynamicLightHandlers.canLightUp((Entity) (Object) this))
 					this.lambdynlights$luminance = 0;
 				LambDynLights.updateTracking(this);
@@ -131,22 +128,19 @@ public abstract class EntityMixin implements DynamicLightSource {
 	private static long lambdynlights_lastUpdate = 0;
 
 	@Override
+	// TODO: fuze with me.disabled720.dynamiclights.mixin.lightsource.BlockEntityMixin.tdv$shouldUpdateDynamicLight
 	public boolean tdv$shouldUpdateDynamicLight() {
-		var mode = DynamicLightsConfig.Quality.get();
-		if (Objects.equals(mode, QualityMode.OFF))
-			return false;
-
 		long currentTime = System.currentTimeMillis();
-
-		if (Objects.equals(mode, QualityMode.SLOW) && currentTime < lambdynlights_lastUpdate + 500)
-			return false;
-
-
-		if (Objects.equals(mode, QualityMode.FAST) && currentTime < lambdynlights_lastUpdate + 200)
-			return false;
-
-		lambdynlights_lastUpdate = currentTime;
-		return true;
+		return switch (EmbeddiumPlusConfig.dynQuality.get()) {
+			case OFF -> false;
+			case SLOW -> currentTime < lambdynlights_lastUpdate + 500;
+			case FAST -> currentTime < lambdynlights_lastUpdate + 200;
+			case FASTEST -> currentTime < lambdynlights_lastUpdate + 100;
+			default -> {
+				lambdynlights_lastUpdate = currentTime;
+				yield true;
+			}
+		};
 	}
 
 	@Override

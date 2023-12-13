@@ -25,7 +25,7 @@ import me.srrapero720.embeddiumplus.mixins.impl.borderless.MainWindowAccessor;
 import java.util.*;
 
 @Mixin(value = SodiumGameOptionPages.class, remap = false)
-public class EmbedGameOptionsMixin {
+public class EmbedtCoreOptionsMixin {
     @Shadow(remap = false)
     @Final
     private static SodiumOptionsStorage sodiumOpts;
@@ -80,10 +80,10 @@ public class EmbedGameOptionsMixin {
                 .setImpact(OptionImpact.LOW)
                 .build();
 
-        Option<EmbeddiumPlusConfig.DarknessOption> totalDarknessSetting = OptionImpl.createBuilder(EmbeddiumPlusConfig.DarknessOption.class, sodiumOpts)
+        Option<EmbeddiumPlusConfig.DarknessMode> totalDarknessSetting = OptionImpl.createBuilder(EmbeddiumPlusConfig.DarknessMode.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.darkness.mode.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.darkness.mode.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbeddiumPlusConfig.DarknessOption.class, new Component[]{
+                .setControl((option) -> new CyclingControl<>(option, EmbeddiumPlusConfig.DarknessMode.class, new Component[]{
                         Component.translatable("embeddium.plus.options.darkness.mode.pitchblack"),
                         Component.translatable("embeddium.plus.options.darkness.mode.reallydark"),
                         Component.translatable("embeddium.plus.options.darkness.mode.dark"),
@@ -101,10 +101,10 @@ public class EmbedGameOptionsMixin {
                 .build());
 
 
-        Option<EmbeddiumPlusConfig.Quality> fadeInQuality = OptionImpl.createBuilder(EmbeddiumPlusConfig.Quality.class, sodiumOpts)
+        Option<EmbeddiumPlusConfig.FadeInQuality> fadeInQuality = OptionImpl.createBuilder(EmbeddiumPlusConfig.FadeInQuality.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.chunkfadeinquality.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.chunkfadeinquality.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbeddiumPlusConfig.Quality.class, new Component[]{
+                .setControl((option) -> new CyclingControl<>(option, EmbeddiumPlusConfig.FadeInQuality.class, new Component[]{
                         Component.translatable("options.off"),
                         Component.translatable("options.graphics.fast"),
                         Component.translatable("options.graphics.fancy")

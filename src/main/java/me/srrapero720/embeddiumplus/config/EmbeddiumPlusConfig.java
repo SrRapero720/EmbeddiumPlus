@@ -2,17 +2,20 @@ package me.srrapero720.embeddiumplus.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeConfigSpec;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 
 public class EmbeddiumPlusConfig {
-    public static ForgeConfigSpec ConfigSpec;
+    public static final ForgeConfigSpec SPECS;
 
-    public static ForgeConfigSpec.EnumValue<Quality> fadeInQuality;
+    public static ForgeConfigSpec.EnumValue<FadeInQuality> fadeInQuality;
 
     public static ForgeConfigSpec.EnumValue<Complexity> fpsCounterMode;
     public static ConfigValue<Integer> fpsCounterPosition;
@@ -39,7 +42,7 @@ public class EmbeddiumPlusConfig {
     public static double darkNetherFogEffective;
     public static double darkEndFogEffective;
     public static ForgeConfigSpec.BooleanValue trueDarknessEnabled;
-    public static ForgeConfigSpec.EnumValue<DarknessOption> darknessOption;
+    public static ForgeConfigSpec.EnumValue<DarknessMode> darknessOption;
     //advanced
     public static ForgeConfigSpec.DoubleValue darkNetherFogConfigured;
     public static ForgeConfigSpec.BooleanValue darkEnd;
@@ -52,6 +55,11 @@ public class EmbeddiumPlusConfig {
     public static ForgeConfigSpec.BooleanValue darkOverworld;
     public static ForgeConfigSpec.BooleanValue darkDefault;
     public static ForgeConfigSpec.BooleanValue darkNether;
+    //dynamic lights
+    public static ForgeConfigSpec.EnumValue<DynamicLightsQuality> dynQuality;
+    public static ForgeConfigSpec.ConfigValue<Boolean> entityLighting;
+    public static ForgeConfigSpec.ConfigValue<Boolean> tileEntityLighting;
+    public static ForgeConfigSpec.ConfigValue<Boolean> onlyUpdateOnPositionChange;
 
 
     static {
@@ -110,7 +118,7 @@ public class EmbeddiumPlusConfig {
                     darknessOption = b
                             .comment("Sets darkness mode")
                             .comment("Depending of the option darkness can be less or more aggressive")
-                            .defineEnum("DarknessMode", DarknessOption.DARK);
+                            .defineEnum("DarknessMode", DarknessMode.DARK);
 
                     builder.block("Advanced", ignored -> {
                         blockLightOnly = b.define("BlockLightingOnly", false);
@@ -133,21 +141,32 @@ public class EmbeddiumPlusConfig {
 
         builder.block("Misc", b -> {
             cloudHeight = b.define("CloudHeight", 128);
-            fadeInQuality =  b.defineEnum("ChunkFadeInQuality", Quality.FANCY);
+            fadeInQuality =  b.defineEnum("ChunkFadeInQuality", FadeInQuality.FANCY);
             fog = b.define("RenderFog", true);
             enableExtendedServerViewDistance = b.define("ExtendedServerViewDistance", true);
             hideJEI = b.define("HideJEI", false);
             fullScreenMode = b.defineEnum("BorderlessFullscreen", FullscreenMode.FULLSCREEN);
         });
 
-        ConfigSpec = builder.save();
+        builder.block("DynamicLights", b -> {
+            dynQuality = b.defineEnum("QualityMode", DynamicLightsQuality.REALTIME);
+            entityLighting = b.define("DynamicEntityLighting", true);
+            tileEntityLighting = b.define("DynamicTileEntityLighting", true);
+            onlyUpdateOnPositionChange = b.define("OnlyUpdateOnPositionChange", true);
+        });
+
+        SPECS = builder.save();
+    }
+
+    public static void loadConfig() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SPECS, "embeddium++.toml");
     }
 
     public static void loadConfig(Path path) {
         final CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
 
         configData.load();
-        ConfigSpec.setConfig(configData);
+        SPECS.setConfig(configData);
     }
 
 
@@ -155,18 +174,35 @@ public class EmbeddiumPlusConfig {
 
     public enum Complexity { OFF, SIMPLE, ADVANCED; }
 
-    public enum Quality { OFF, FAST, FANCY; }
+    public enum FadeInQuality { OFF, FAST, FANCY; }
 
-    public enum DarknessOption {
+    public enum DarknessMode {
         PITCH_BLACK(0f),
         REALLY_DARK (0.04f),
         DARK(0.08f),
         DIM(0.12f);
 
         public final float value;
-        private DarknessOption(float value) {
+        DarknessMode(float value) {
             this.value = value;
         }
+    }
 
+    public enum DynamicLightsQuality {
+        OFF("Off"),
+        SLOW("Slow"),
+        FAST("Fast"),
+        FASTEST("Fastest"),
+        REALTIME("Realtime");
+
+        private final String name;
+
+        DynamicLightsQuality(String name) {
+            this.name = name;
+        }
+
+        public Component getLocalizedName() {
+            return Component.nullToEmpty(this.name);
+        }
     }
 }

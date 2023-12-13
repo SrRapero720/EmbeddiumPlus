@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(SodiumOptionsGUI.class)
-public class EmbedGUIMixin {
+public class EmbedtGUIMixin {
     @Redirect(
             method = "rebuildGUI",
             at = @At(value = "INVOKE",

@@ -11,7 +11,7 @@ package me.disabled720.dynamiclights.mixin.lightsource;
 
 import me.disabled720.dynamiclights.DynamicLightSource;
 import me.disabled720.dynamiclights.api.DynamicLightHandlers;
-import me.disabled720.dynamiclights.config.DynamicLightsConfig;
+import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -32,7 +32,7 @@ public abstract class ExplosiveProjectileEntityMixin extends Entity implements D
 
 	@Override
 	public int tdv$getLuminance() {
-		if (DynamicLightsConfig.TileEntityLighting.get() && DynamicLightHandlers.canLightUp(this))
+		if (EmbeddiumPlusConfig.tileEntityLighting.get() && DynamicLightHandlers.canLightUp(this))
 			return 14;
 		return 0;
 	}
