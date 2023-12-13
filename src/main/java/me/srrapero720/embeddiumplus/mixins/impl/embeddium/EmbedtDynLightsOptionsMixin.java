@@ -53,6 +53,7 @@ public abstract class EmbedtDynLightsOptionsMixin {
                                 Component.nullToEmpty("Off"),
                                 Component.nullToEmpty("Slow"),
                                 Component.nullToEmpty("Fast"),
+                                Component.nullToEmpty("Fastest"),
                                 Component.nullToEmpty("Realtime")
                         }))
                 .setBinding((options, value) -> {

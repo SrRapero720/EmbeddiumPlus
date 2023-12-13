@@ -100,7 +100,7 @@ public interface DynamicLightHandler<T> {
 				if (entity.getSwelling(0.f) > 0.001) {
 					luminance = switch (EmbeddiumPlusConfig.dynQuality.get()) {
 						case OFF -> 0;
-						case SLOW, FAST -> 10;
+						case SLOW, FAST, FASTEST -> 10;
 						case REALTIME -> (int) (entity.getSwelling(0.f) * 10.0);
 					};
 				}
