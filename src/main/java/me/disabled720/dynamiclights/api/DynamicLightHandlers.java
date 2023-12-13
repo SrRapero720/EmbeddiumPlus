@@ -13,6 +13,7 @@ import me.disabled720.dynamiclights.LambDynLights;
 import me.disabled720.dynamiclights.accessor.DynamicLightHandlerHolder;
 import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -36,7 +37,7 @@ public final class DynamicLightHandlers {
 			int luminance = 0;
 			if (entity.getCarriedBlock() != null)
 				luminance = entity.getCarriedBlock().getLightEmission();
-	//			luminance = entity.getCarriedBlock().getLightEmission(entity.level(), entity.blockPosition());
+				// luminance = entity.getCarriedBlock().getLightEmission(entity.level(), entity.blockPosition());
 			return luminance;
 		});
 		registerDynamicLightHandler(EntityType.ITEM,
@@ -52,9 +53,9 @@ public final class DynamicLightHandlers {
 		});
 		registerDynamicLightHandler(EntityType.MAGMA_CUBE, entity -> (entity.squish > 0.6) ? 11 : 8);
 		registerDynamicLightHandler(EntityType.SPECTRAL_ARROW, entity -> 8);
-//		registerDynamicLightHandler(EntityType.GLOW_SQUID,
-//				entity -> (int) Mth.clampedLerp(0.f, 12.f, 1.f - entity.getDarkTicksRemaining() / 10.f)
-//		);
+		registerDynamicLightHandler(EntityType.GLOW_SQUID,
+				entity -> (int) Mth.clampedLerp(0.f, 12.f, 1.f - entity.getDarkTicksRemaining() / 10.f)
+		);
 	}
 
 	/**
@@ -64,9 +65,8 @@ public final class DynamicLightHandlers {
 	 * @param handler the dynamic light handler
 	 * @param <T> the type of the entity
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T extends Entity> void registerDynamicLightHandler(EntityType<T> type, DynamicLightHandler<T> handler) {
-		register((DynamicLightHandlerHolder<T>) type, handler);
+		register(DynamicLightHandlerHolder.cast(type), handler);
 	}
 
 	/**
@@ -76,9 +76,8 @@ public final class DynamicLightHandlers {
 	 * @param handler the dynamic light handler
 	 * @param <T> the type of the block entity
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T extends BlockEntity> void registerDynamicLightHandler(BlockEntityType<T> type, DynamicLightHandler<T> handler) {
-		register((DynamicLightHandlerHolder<T>) type, handler);
+		register(DynamicLightHandlerHolder.cast(type), handler);
 	}
 
 	private static <T> void register(DynamicLightHandlerHolder<T> holder, DynamicLightHandler<T> handler) {

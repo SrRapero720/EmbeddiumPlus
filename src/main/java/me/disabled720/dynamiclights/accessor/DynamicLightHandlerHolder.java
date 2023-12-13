@@ -34,7 +34,6 @@ public interface DynamicLightHandlerHolder<T> {
 
 	@SuppressWarnings("unchecked")
 	static <T extends BlockEntity> DynamicLightHandlerHolder<T> cast(BlockEntityType<T> entityType) {
-
 		return (DynamicLightHandlerHolder<T>) entityType;
 	}
 }
