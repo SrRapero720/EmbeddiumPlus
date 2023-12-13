@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.embeddium;
 
 import com.google.common.collect.ImmutableList;
-import me.disabled720.dynamiclights.LambDynLights;
+import me.srrapero720.dynamiclights.LambDynLights;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
 import me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
