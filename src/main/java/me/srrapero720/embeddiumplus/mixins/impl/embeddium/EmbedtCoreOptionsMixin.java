@@ -229,11 +229,11 @@ public class EmbedtCoreOptionsMixin {
     @Redirect(method = "general", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableList;copyOf(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;"))
     private static ImmutableList<OptionGroup> redirectGeneralOptions(Collection<OptionGroup> groups) {
         OptionImpl<Options, EmbeddiumPlusConfig.FullscreenMode> fullscreenMode = OptionImpl.createBuilder( EmbeddiumPlusConfig.FullscreenMode.class, vanillaOpts)
-                .setName(Component.translatable("embeddium.plus.options.fullscreen.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.fullscreen.desc"))
+                .setName(Component.translatable("embeddium.plus.options.screen.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.screen.desc"))
                 .setControl((opt) -> new CyclingControl<>(opt, EmbeddiumPlusConfig.FullscreenMode.class, new Component[] {
-                        Component.translatable("embeddium.plus.options.fullscreen.windowed"),
-                        Component.translatable("embeddium.plus.options.fullscreen.borderless"),
+                        Component.translatable("embeddium.plus.options.screen.windowed"),
+                        Component.translatable("embeddium.plus.options.screen.borderless"),
                         Component.translatable("options.fullscreen")
                 }))
                 .setBinding(
