@@ -101,16 +101,16 @@ public abstract class BlockEntityMixin implements DynamicLightSource {
 	// TODO: fuze with me.disabled720.dynamiclights.mixin.lightsource.EntityMixin.tdv$shouldUpdateDynamicLight
 	public boolean tdv$shouldUpdateDynamicLight() {
 		long currentTime = System.currentTimeMillis();
-		return switch (EmbeddiumPlusConfig.dynQuality.get()) {
-			case OFF -> false;
+		boolean shouldNot = switch (EmbeddiumPlusConfig.dynQuality.get()) {
+			case OFF -> true;
 			case SLOW -> currentTime < lambdynlights_lastUpdate + 500;
 			case FAST -> currentTime < lambdynlights_lastUpdate + 200;
 			case FASTEST -> currentTime < lambdynlights_lastUpdate + 100;
-			default -> {
-				lambdynlights_lastUpdate = currentTime;
-				yield true;
-			}
+			default -> false;
 		};
+		if (shouldNot) return false;
+		lambdynlights_lastUpdate = currentTime;
+		return true;
 	}
 
 	@Override

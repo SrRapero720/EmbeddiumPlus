@@ -92,7 +92,7 @@ public abstract class ItemLightSource {
 
 	public static @NotNull Optional<ItemLightSource> fromJson(@NotNull ResourceLocation id, @NotNull JsonObject json) {
 		if (!json.has("item") || !json.has("luminance")) {
-			LambDynLights.get().warn("Failed to parse item light source \"" + id + "\", invalid format: missing required fields.");
+			LambDynLights.warn("Failed to parse item light source \"" + id + "\", invalid format: missing required fields.");
 			return Optional.empty();
 		}
 
@@ -124,7 +124,7 @@ public abstract class ItemLightSource {
 				}
 			}
 		} else {
-			LambDynLights.get().warn("Failed to parse item light source \"" + id + "\", invalid format: \"luminance\" field value isn't string or integer.");
+			LambDynLights.warn("Failed to parse item light source \"" + id + "\", invalid format: \"luminance\" field value isn't string or integer.");
 		}
 
 		return Optional.empty();
