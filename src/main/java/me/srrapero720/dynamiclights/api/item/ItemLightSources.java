@@ -67,7 +67,7 @@ public final class ItemLightSources {
 					register(data);
 			});
 		} catch (IOException | IllegalStateException e) {
-			LambDynLights.get().warn("Failed to load item light source \"" + id + "\".");
+			LambDynLights.warn("Failed to load item light source \"" + id + "\".");
 		}
 	}
 
@@ -79,7 +79,7 @@ public final class ItemLightSources {
 	private static void register(@NotNull ItemLightSource data) {
 		for (var other : ITEM_LIGHT_SOURCES) {
 			if (other.item() == data.item()) {
-				LambDynLights.get().warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
+				LambDynLights.warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
 						+ ForgeRegistries.ITEMS.getKey(data.item()) + "\" found in \"" + other.id() + "\".");
 				return;
 			}
@@ -96,7 +96,7 @@ public final class ItemLightSources {
 	public static void registerItemLightSource(@NotNull ItemLightSource data) {
 		for (var other : STATIC_ITEM_LIGHT_SOURCES) {
 			if (other.item() == data.item()) {
-				LambDynLights.get().warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
+				LambDynLights.warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
 						+ ForgeRegistries.ITEMS.getKey(data.item()) + "\" found in \"" + other.id() + "\".");
 				return;
 			}

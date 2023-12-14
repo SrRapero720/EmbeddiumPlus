@@ -27,8 +27,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,42 +40,31 @@ import java.util.function.Predicate;
 
 import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
+@OnlyIn(Dist.CLIENT)
 public class LambDynLights {
+	private static final Marker IT = MarkerManager.getMarker("DynamicLights");
 	private static final double MAX_RADIUS = 7.75;
 	private static final double MAX_RADIUS_SQUARED = MAX_RADIUS * MAX_RADIUS;
-	private static LambDynLights INSTANCE;
+	private static final LambDynLights INSTANCE = new LambDynLights();
 
 	private final Set<DynamicLightSource> dynamicLightSources = new HashSet<>();
 	private final ReentrantReadWriteLock lightSourcesLock = new ReentrantReadWriteLock();
 	private long lastUpdate = System.currentTimeMillis();
 	private int lastUpdateCount = 0;
 
-	public static boolean isEnabled() { return EmbeddiumPlusConfig.dynQuality.get() != EmbeddiumPlusConfig.DynamicLightsQuality.OFF; }
-
-	public LambDynLights() {
-		INSTANCE = this;
+	public static void init() {
 		log("Initializing Dynamic Lights Reforged...");
-//		this.config.load();
-//		DynamicLightsConfig.loadConfig(FMLPaths.CONFIGDIR.get().resolve("dynamic_lights_reforged.toml"));
+		DynLightsResourceListener reloadListener = new DynLightsResourceListener();
 
-		MinecraftForge.EVENT_BUS.register(this);
-		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ExecutorHelper::onInitializeClient);
-	}
-
-	static class ExecutorHelper {
-		public static void onInitializeClient() {
-			DynLightsResourceListener reloadListener = new DynLightsResourceListener();
-
-			ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
-			if (resourceManager instanceof ReloadableResourceManager reloadableResourceManager) {
-				reloadableResourceManager.registerReloadListener(reloadListener);
-			}
-
-			DynamicLightHandlers.registerDefaultHandlers();
+		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
+		if (resourceManager instanceof ReloadableResourceManager reloadableResourceManager) {
+			reloadableResourceManager.registerReloadListener(reloadListener);
 		}
+
+		DynamicLightHandlers.registerDefaultHandlers();
 	}
 
-
+	public static boolean isEnabled() { return EmbeddiumPlusConfig.dynQuality.get() != EmbeddiumPlusConfig.DynamicLightsQuality.OFF; }
 
 	/**
 	 * Updates all light sources.
@@ -355,8 +345,8 @@ public class LambDynLights {
 	 *
 	 * @param info the message to print
 	 */
-	public void log(String info) {
-		LOGGER.info("[LambDynLights] " + info);
+	public static void log(String info) {
+		LOGGER.info(IT, "[LambDynLights] " + info);
 	}
 
 	/**
@@ -364,8 +354,8 @@ public class LambDynLights {
 	 *
 	 * @param info the message to print
 	 */
-	public void warn(String info) {
-		LOGGER.warn("[LambDynLights] " + info);
+	public static void warn(String info) {
+		LOGGER.warn(IT, "[LambDynLights] " + info);
 	}
 
 	/**

@@ -49,10 +49,10 @@ public abstract class EmbedtDynLightsOptionsMixin {
                                 Component.translatable("embeddium.plus.options.common.realtime")
                         }))
                 .setBinding((options, value) -> {
-                            EmbeddiumPlusConfig.dynQuality.set(DynamicLightsQuality.valueOf(value.toString()));
+                            EmbeddiumPlusConfig.dynQuality.set(value);
                             LambDynLights.get().clearLightSources();
                         },
-                        (options) -> DynamicLightsQuality.valueOf(String.valueOf(EmbeddiumPlusConfig.dynQuality.get())))
+                        (options) -> EmbeddiumPlusConfig.dynQuality.get())
                 .setImpact(OptionImpact.MEDIUM)
                 .build();
 
