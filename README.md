@@ -1,13 +1,13 @@
-# EMBEDDIUM++
-Mod who gives you a plus for embeddium
-And a reliable fork of [MagnesiumExtras](https://github.com/anthxnymc/MagnesiumExtras) (now with [DynamicLights](https://github.com/anthxnymc/DynamicLightsReforged))
+# ![Embeddium++ cover](https://i.imgur.com/oAFyPox.png)
+Mod who gives you a plus for embeddium And a reliable fork of [MagnesiumExtras](https://github.com/anthxnymc/MagnesiumExtras)
+(and now is embedded [DynamicLights](https://github.com/anthxnymc/DynamicLightsReforged))
 
 ## FEATURES
-- DynamicLights Feature (works better with shaders)
+- Embedded DynamicLights (works better with shaders)
 - True Darkness (ideal for terror modpacks)
 - Entity Distance Rendering Limit (or EntityCulling for friends)
 - Fancy FPS Counter (No more F3 to see your FPS)
-- Borderless Fullscreen (tab faster)
+- Borderless FullScreen (tab faster)
 - Fog Toggle (Disable game fog)
 - Hide JEI overlay when you are not searching (this time disabled by default)
 - ~~ZommKey~~ (removed in favor of [JustZoom](https://www.curseforge.com/minecraft/mc-mods/just-zoom-forge))
