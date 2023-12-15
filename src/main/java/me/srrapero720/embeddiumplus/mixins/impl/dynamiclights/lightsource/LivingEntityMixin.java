@@ -3,7 +3,7 @@ package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
 import me.srrapero720.dynamiclights.DynamicLightSource;
 import me.srrapero720.dynamiclights.LambDynLights;
 import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -23,7 +23,7 @@ public abstract class LivingEntityMixin extends Entity implements DynamicLightSo
 
 	@Override
 	public void tdv$dynamicLightTick() {
-		if (!EmbeddiumPlusConfig.tileEntityLighting.get() || !DynamicLightHandlers.canLightUp(this)) {
+		if (!EmbPlusConfig.tileEntityLighting.get() || !DynamicLightHandlers.canLightUp(this)) {
 			this.lambdynlights$luminance = 0;
 			return;
 		}

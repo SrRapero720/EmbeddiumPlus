@@ -3,7 +3,7 @@ package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
 import me.srrapero720.dynamiclights.DynamicLightSource;
 import me.srrapero720.dynamiclights.LambDynLights;
 import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
@@ -42,7 +42,7 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Dyna
 			if (this.isRemoved()) {
 				this.tdv$setDynamicLightEnabled(false);
 			} else {
-				if (!EmbeddiumPlusConfig.tileEntityLighting.get() || !DynamicLightHandlers.canLightUp(this))
+				if (!EmbPlusConfig.tileEntityLighting.get() || !DynamicLightHandlers.canLightUp(this))
 					this.lambdynlights$luminance = 0;
 				else
 					this.tdv$dynamicLightTick();

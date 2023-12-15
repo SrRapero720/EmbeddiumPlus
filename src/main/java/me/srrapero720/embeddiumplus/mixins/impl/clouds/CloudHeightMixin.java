@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 
 @Mixin(value = DimensionSpecialEffects.class)
 public class CloudHeightMixin {
@@ -16,6 +16,6 @@ public class CloudHeightMixin {
     @Inject(at = @At("HEAD"), method = "getCloudHeight", cancellable = true)
     private void getCloudHeight(CallbackInfoReturnable<Float> cir) {
         if (cloudLevel == 192.0F)
-            cir.setReturnValue(EmbeddiumPlusConfig.cloudHeight.get().floatValue());
+            cir.setReturnValue(EmbPlusConfig.cloudHeight.get().floatValue());
     }
 }

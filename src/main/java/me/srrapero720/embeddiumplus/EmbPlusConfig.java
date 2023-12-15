@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.config;
+package me.srrapero720.embeddiumplus;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
@@ -7,12 +7,13 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 
-public class EmbeddiumPlusConfig {
+public class EmbPlusConfig {
     public static final ForgeConfigSpec SPECS;
 
     public static ForgeConfigSpec.EnumValue<FadeInQuality> fadeInQuality;
@@ -203,6 +204,31 @@ public class EmbeddiumPlusConfig {
 
         public Component getLocalizedName() {
             return Component.nullToEmpty(this.name);
+        }
+    }
+
+    public static class ConfigBuilder {
+        private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
+
+        public ConfigBuilder(String name, String... comments) {
+            for (int i = 0; i < comments.length; i++) COMMON_BUILDER.comment(comments[i]);
+            COMMON_BUILDER.push(name);
+        }
+
+        public ForgeConfigSpec save() {
+            COMMON_BUILDER.pop();
+            return COMMON_BUILDER.build();
+        }
+
+        public ConfigBuilder comment(String... comments) {
+            for (int i = 0; i < comments.length; i++) COMMON_BUILDER.comment(comments[i]);
+            return this;
+        }
+
+        public void block(String name, Consumer<ForgeConfigSpec.Builder> func) {
+            COMMON_BUILDER.push(name);
+            func.accept(COMMON_BUILDER);
+            COMMON_BUILDER.pop();
         }
     }
 }

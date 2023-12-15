@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
-public class MixinConfigPlugin implements IMixinConfigPlugin {
+public class EmbMixinPlugin implements IMixinConfigPlugin {
     private static final Marker IT = MarkerManager.getMarker("MixinPlugin");
     private static boolean isPresent(String modid) { return FMLLoader.getLoadingModList().getModFileById(modid) != null; }
 

@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.entity_distance.IEntityTypeAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -20,13 +20,18 @@ public abstract class EntityCullingMixin implements IEntityTypeAccess {
     @Override
     @Unique
     public boolean embeddiumPlus$isWhitelisted() {
-        if (!EmbeddiumPlusConfig.SPECS.isLoaded()) return false;
+        if (!EmbPlusConfig.SPECS.isLoaded()) return false;
         if (embeddiumPlus$checked) return embeddiumPlus$whitelisted;
 
-        List<?> entityWhitelist = EmbeddiumPlusConfig.entityWhitelist.get();
+        List<?> entityWhitelist = EmbPlusConfig.entityWhitelist.get();
         for (int i = 0; i < entityWhitelist.size(); i++) {
-            String result = (String) entityWhitelist.get(i);
-            if (result.equals(getDefaultLootTable().toString())) {
+
+            String[] result = ((String) entityWhitelist.get(i)).split(":");
+
+            if (result[1].equals("*") && getDefaultLootTable().getNamespace().equals(result[0])) {
+                embeddiumPlus$whitelisted = true;
+                break;
+            } else if (result.equals(getDefaultLootTable().toString())) {
                 embeddiumPlus$whitelisted = true;
                 break;
             }

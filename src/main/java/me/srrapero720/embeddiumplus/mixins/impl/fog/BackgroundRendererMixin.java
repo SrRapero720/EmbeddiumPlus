@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 
 @Mixin(value = FogRenderer.class, priority = 910)
 public abstract class BackgroundRendererMixin {
@@ -18,7 +18,7 @@ public abstract class BackgroundRendererMixin {
 
     @Inject(method = "setupFog", at = @At("RETURN"))
     private static void applyFogModifyDistance(Camera camera, FogRenderer.FogMode fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo info) {
-        if (!EmbeddiumPlusConfig.fog.get()) {
+        if (!EmbPlusConfig.fog.get()) {
             RenderSystem.setShaderFogStart(FOG_START);
             RenderSystem.setShaderFogEnd(FOG_END);
             RenderSystem.setShaderFogShape(FogShape.CYLINDER);

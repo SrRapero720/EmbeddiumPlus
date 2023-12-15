@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class Tools {
+public class EmbPlusTools {
     public static boolean isNearPlayer(Level world, BlockPos pos, int maxHeight, int maxDistanceSquare) {
         return isNearPlayerInternal(world, pos.getX(), pos.getY(), pos.getZ(), maxHeight, maxDistanceSquare, false);
     }

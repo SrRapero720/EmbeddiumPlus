@@ -11,8 +11,8 @@ import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
 import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig.DynamicLightsQuality;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig.DynamicLightsQuality;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Final;
@@ -49,10 +49,10 @@ public abstract class EmbedtDynLightsOptionsMixin {
                                 Component.translatable("embeddium.plus.options.common.realtime")
                         }))
                 .setBinding((options, value) -> {
-                            EmbeddiumPlusConfig.dynQuality.set(value);
+                            EmbPlusConfig.dynQuality.set(value);
                             LambDynLights.get().clearLightSources();
                         },
-                        (options) -> EmbeddiumPlusConfig.dynQuality.get())
+                        (options) -> EmbPlusConfig.dynQuality.get())
                 .setImpact(OptionImpact.MEDIUM)
                 .build();
 
@@ -62,8 +62,8 @@ public abstract class EmbedtDynLightsOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.dynlights.entities.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.entityLighting.set(value),
-                        (options) -> EmbeddiumPlusConfig.entityLighting.get())
+                        (options, value) -> EmbPlusConfig.entityLighting.set(value),
+                        (options) -> EmbPlusConfig.entityLighting.get())
                 .setImpact(OptionImpact.MEDIUM)
                 .build();
 
@@ -72,8 +72,8 @@ public abstract class EmbedtDynLightsOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.dynlights.blockentities.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.tileEntityLighting.set(value),
-                        (options) -> EmbeddiumPlusConfig.tileEntityLighting.get())
+                        (options, value) -> EmbPlusConfig.tileEntityLighting.set(value),
+                        (options) -> EmbPlusConfig.tileEntityLighting.get())
                 .setImpact(OptionImpact.MEDIUM)
                 .build();
 
