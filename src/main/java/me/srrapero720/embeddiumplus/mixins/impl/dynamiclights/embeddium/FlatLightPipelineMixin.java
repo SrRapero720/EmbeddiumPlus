@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.sodium;
+package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.embeddium;
 
 import me.jellysquid.mods.sodium.client.model.light.flat.FlatLightPipeline;
 import me.srrapero720.dynamiclights.SodiumDynamicLightHandler;
@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import org.spongepowered.asm.mixin.Dynamic;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;

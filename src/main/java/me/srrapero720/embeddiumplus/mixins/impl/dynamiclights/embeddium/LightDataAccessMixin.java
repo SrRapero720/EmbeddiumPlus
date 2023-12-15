@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.sodium;
+package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.embeddium;
 
 import me.jellysquid.mods.sodium.client.model.light.data.LightDataAccess;
 import me.srrapero720.dynamiclights.SodiumDynamicLightHandler;
