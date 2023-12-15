@@ -13,6 +13,9 @@ And a reliable fork of [MagnesiumExtras](https://github.com/anthxnymc/MagnesiumE
 - ~~ZommKey~~ (removed in favor of [JustZoom](https://www.curseforge.com/minecraft/mc-mods/just-zoom-forge))
 - ~~Chunk Fade In~~ (Missing)
 
+## WANT SOME SERVER?
+![KineticHosting sponsor](https://media.discordapp.net/attachments/1076151535291088916/1107066110492278856/watermods.png "KineticHosting sponsor code WATERCoRE")
+
 ## DIFFERENCES WITH OFFICIAL VERSION
 - Fixed: Ice and Fire dragons got culled
 - Fixed: you can't go back to Windowed after switching into Borderless/FullScreen
@@ -25,5 +28,9 @@ And a reliable fork of [MagnesiumExtras](https://github.com/anthxnymc/MagnesiumE
 Join to my [discord](https://discord.gg/cuYAzzZ) and talk directly with me
 
 ## CONFIG PREVIEW
-![Preview Screenshot](https://cdn.modrinth.com/data/yD9qW65f/images/45176d129b7b48d961938d2f5787bfe2676ba350.png)
-![Prev]()
+![Preview General](https://cdn.modrinth.com/data/yD9qW65f/images/d6e8bd3c3b38d8dec827e846014f2461aae85500.png)
+![Preview Plus](https://cdn.modrinth.com/data/yD9qW65f/images/5ac68ebc5dbd64bb6679fe5db5f9d148d55f05f4.png)
+![Preview Dyn](https://cdn.modrinth.com/data/yD9qW65f/images/eab2db3c3c62397a112c0ac3ce3c217e23f824ef.png)
+
+## IMPORTANT
+Requires EMBEDDIUM
