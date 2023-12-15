@@ -14,9 +14,7 @@ public class EmbeddiumPlus {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public EmbeddiumPlus() {
-        MinecraftForge.EVENT_BUS.register(this);
-        EmbPlusConfig.loadConfig();
+        EmbPlusConfig.load();
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> LambDynLights::init);
-//        EmbeddiumPlusConfig.loadConfig(FMLPaths.CONFIGDIR.get().resolve("embeddium++.toml"));
     }
 }

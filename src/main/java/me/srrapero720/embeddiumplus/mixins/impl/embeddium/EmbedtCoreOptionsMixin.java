@@ -10,9 +10,8 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
+import me.srrapero720.embeddiumplus.EmbPlusAPI;
 import net.minecraft.client.Options;
-import com.mojang.blaze3d.platform.Window;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import org.spongepowered.asm.mixin.Final;
@@ -20,7 +19,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
-import me.srrapero720.embeddiumplus.mixins.impl.borderless.MainWindowAccessor;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.*;
 
@@ -226,36 +226,22 @@ public class EmbedtCoreOptionsMixin {
         return ImmutableList.copyOf(groups);
     }
 
-    @Redirect(method = "general", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableList;copyOf(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;"))
-    private static ImmutableList<OptionGroup> redirectGeneralOptions(Collection<OptionGroup> groups) {
-        OptionImpl<Options, EmbPlusConfig.FullscreenMode> fullscreenMode = OptionImpl.createBuilder( EmbPlusConfig.FullscreenMode.class, vanillaOpts)
+    @Inject(
+            method = "general",
+            at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableList;copyOf(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;"),
+            locals = LocalCapture.CAPTURE_FAILHARD,
+            remap = false
+    )
+    private static void redirectGeneralOptions(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
+        OptionImpl<Options, EmbPlusConfig.FullScreenMode> fullscreenMode = OptionImpl.createBuilder(EmbPlusConfig.FullScreenMode.class, vanillaOpts)
                 .setName(Component.translatable("embeddium.plus.options.screen.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.screen.desc"))
-                .setControl((opt) -> new CyclingControl<>(opt, EmbPlusConfig.FullscreenMode.class, new Component[] {
+                .setControl((opt) -> new CyclingControl<>(opt, EmbPlusConfig.FullScreenMode.class, new Component[] {
                         Component.translatable("embeddium.plus.options.screen.windowed"),
                         Component.translatable("embeddium.plus.options.screen.borderless"),
                         Component.translatable("options.fullscreen")
                 }))
-                .setBinding(
-                        (opts, value) -> {
-                            EmbPlusConfig.fullScreenMode.set(value);
-                            opts.fullscreen.set(value != EmbPlusConfig.FullscreenMode.WINDOWED);
-
-                            Minecraft client = Minecraft.getInstance();
-                            Window window = client.getWindow();
-                            if (window.isFullscreen() != opts.fullscreen.get())
-                            {
-                                window.toggleFullScreen();
-                                opts.fullscreen.set(window.isFullscreen());
-                            }
-
-                            if (opts.fullscreen.get())
-                            {
-                                ((MainWindowAccessor) (Object) window).setDirty(true);
-                                window.changeFullscreenVideoMode();
-                            }
-                        },
-                        (opts) -> EmbPlusConfig.fullScreenMode.get())
+                .setBinding(EmbPlusAPI::setFullScreenMode, (opts) -> EmbPlusConfig.fullScreenMode.get())
                 .build();
 
         List<OptionGroup> newList = new ArrayList<>();
@@ -272,8 +258,6 @@ public class EmbedtCoreOptionsMixin {
 
         groups.clear();
         groups.addAll(newList);
-
-        return ImmutableList.copyOf(groups);
     }
 
     @Redirect(method = "advanced", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;", ordinal = 6))

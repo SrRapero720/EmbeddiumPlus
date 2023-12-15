@@ -6,6 +6,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Window.class)
 public interface MainWindowAccessor {
-    @Accessor()
+    @Accessor
     void setDirty(boolean value);
+
+    @Accessor
+    boolean getFullscreen();
 }

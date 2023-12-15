@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 public class EmbPlusConfig {
     public static final ForgeConfigSpec SPECS;
@@ -36,7 +37,7 @@ public class EmbPlusConfig {
 
     public static ConfigValue<Boolean> hideJEI;
 
-    public static ForgeConfigSpec.EnumValue<FullscreenMode> fullScreenMode;
+    public static ForgeConfigSpec.EnumValue<FullScreenMode> fullScreenMode;
 
 
     // Total Darkness
@@ -146,7 +147,7 @@ public class EmbPlusConfig {
             fog = b.define("RenderFog", true);
             enableExtendedServerViewDistance = b.define("ExtendedServerViewDistance", true);
             hideJEI = b.define("HideJEI", false);
-            fullScreenMode = b.defineEnum("BorderlessFullscreen", FullscreenMode.FULLSCREEN);
+            fullScreenMode = b.defineEnum("BorderlessFullscreen", FullScreenMode.FULLSCREEN);
         });
 
         builder.block("DynamicLights", b -> {
@@ -159,11 +160,16 @@ public class EmbPlusConfig {
         SPECS = builder.save();
     }
 
-    public static void loadConfig() {
+    public static boolean isLoaded() {
+        return SPECS.isLoaded();
+    }
+
+    public static void load() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SPECS, "embeddium++.toml");
     }
 
-    public static void loadConfig(Path path) {
+    public static void forceLoad() {
+        var path = FMLPaths.CONFIGDIR.get().resolve("embeddium++.toml");
         final CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
 
         configData.load();
@@ -171,7 +177,17 @@ public class EmbPlusConfig {
     }
 
 
-    public enum FullscreenMode { WINDOWED, BORDERLESS, FULLSCREEN }
+    public enum FullScreenMode {
+        WINDOWED, BORDERLESS, FULLSCREEN;
+
+        public static FullScreenMode nextOf(FullScreenMode current) {
+            return switch (current) {
+                case WINDOWED -> BORDERLESS;
+                case BORDERLESS -> FULLSCREEN;
+                case FULLSCREEN -> WINDOWED;
+            };
+        }
+    }
 
     public enum Complexity { OFF, SIMPLE, ADVANCED; }
 
@@ -179,7 +195,7 @@ public class EmbPlusConfig {
 
     public enum DarknessMode {
         PITCH_BLACK(0f),
-        REALLY_DARK (0.04f),
+        REALLY_DARK(0.04f),
         DARK(0.08f),
         DIM(0.12f);
 
