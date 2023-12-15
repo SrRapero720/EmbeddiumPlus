@@ -2,35 +2,33 @@
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
-# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Gradle Package
+name: Java CI with Gradle
 
 on:
-  release:
-    types: [created]
+  push:
+    branches: [ "1.20", "1.19.2", "1.18.2" ]
+  pull_request:
+    branches: [ "1.20", "1.19.2", "1.18.2" ]
+
+permissions:
+  contents: read
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - { uses: actions/checkout@v2, with: { fetch-depth: 0 } }
-      - name: "Set up JDK 17"
-        uses: actions/setup-java@v2
-        with: { distribution: "adopt", java-version: "17" }
-
-      - name: "Build with Gradle"
-        id: build
-        run: "chmod +x gradlew && ./gradlew build publish"
-
-      - uses: Kir-Antipov/mc-publish@v3.3
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          curseforge-id: 558905
-          curseforge-token: ${{ secrets.CF_API_TOKEN }}
-          loaders: |
-            forge
-          game-versions: |
-            1.20.1
-          java: |
-            17
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+        with:
+          arguments: build
