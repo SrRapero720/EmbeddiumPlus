@@ -119,7 +119,7 @@ public abstract class ItemLightSource {
 				var blockId = ResourceLocation.tryParse(luminanceStr);
 				if (blockId != null) {
 					var block = ForgeRegistries.BLOCKS.getValue(blockId);
-					if (block != Blocks.AIR)
+					if (block != null && block != Blocks.AIR)
 						return Optional.of(new BlockItemLightSource(id, item, block.defaultBlockState(), waterSensitive));
 				}
 			}
