@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.mixins.impl.borderless.MainWindowAccessor;
 
 import java.util.*;
@@ -39,17 +39,17 @@ public class EmbedtCoreOptionsMixin {
                     target = "Lcom/google/common/collect/ImmutableList;copyOf(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;"
             ))
     private static ImmutableList<OptionGroup> injectAdvanced(Collection<OptionGroup> groups) {
-        Option<EmbeddiumPlusConfig.Complexity> displayFps = OptionImpl.createBuilder(EmbeddiumPlusConfig.Complexity.class, sodiumOpts)
+        Option<EmbPlusConfig.Complexity> displayFps = OptionImpl.createBuilder(EmbPlusConfig.Complexity.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.displayfps.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.displayfps.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbeddiumPlusConfig.Complexity.class, new Component[]{
+                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.Complexity.class, new Component[]{
                         Component.translatable("embeddium.plus.options.common.off"),
                         Component.translatable("embeddium.plus.options.common.simple"),
                         Component.translatable("embeddium.plus.options.common.advanced")
                 }))
                 .setBinding(
-                        (opts, value) -> EmbeddiumPlusConfig.fpsCounterMode.set(value),
-                        (opts) -> EmbeddiumPlusConfig.fpsCounterMode.get())
+                        (opts, value) -> EmbPlusConfig.fpsCounterMode.set(value),
+                        (opts) -> EmbPlusConfig.fpsCounterMode.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -60,8 +60,8 @@ public class EmbedtCoreOptionsMixin {
                 .setControl((option) -> new SliderControl(option, 4, 64, 2, ControlValueFormatter.translateVariable("Pixels")))
                 .setImpact(OptionImpact.LOW)
                 .setBinding(
-                        (opts, value) -> EmbeddiumPlusConfig.fpsCounterPosition.set(value),
-                        (opts) -> EmbeddiumPlusConfig.fpsCounterPosition.get())
+                        (opts, value) -> EmbPlusConfig.fpsCounterPosition.set(value),
+                        (opts) -> EmbPlusConfig.fpsCounterPosition.get())
                 .build();
 
         groups.add(OptionGroup.createBuilder()
@@ -75,23 +75,23 @@ public class EmbedtCoreOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.darkness.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.trueDarknessEnabled.set(value),
-                        (options) -> EmbeddiumPlusConfig.trueDarknessEnabled.get())
+                        (options, value) -> EmbPlusConfig.trueDarknessEnabled.set(value),
+                        (options) -> EmbPlusConfig.trueDarknessEnabled.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
-        Option<EmbeddiumPlusConfig.DarknessMode> totalDarknessSetting = OptionImpl.createBuilder(EmbeddiumPlusConfig.DarknessMode.class, sodiumOpts)
+        Option<EmbPlusConfig.DarknessMode> totalDarknessSetting = OptionImpl.createBuilder(EmbPlusConfig.DarknessMode.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.darkness.mode.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.darkness.mode.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbeddiumPlusConfig.DarknessMode.class, new Component[]{
+                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.DarknessMode.class, new Component[]{
                         Component.translatable("embeddium.plus.options.darkness.mode.pitchblack"),
                         Component.translatable("embeddium.plus.options.darkness.mode.reallydark"),
                         Component.translatable("embeddium.plus.options.darkness.mode.dark"),
                         Component.translatable("embeddium.plus.options.darkness.mode.dim")
                 }))
                 .setBinding(
-                        (opts, value) -> EmbeddiumPlusConfig.darknessOption.set(value),
-                        (opts) -> EmbeddiumPlusConfig.darknessOption.get())
+                        (opts, value) -> EmbPlusConfig.darknessOption.set(value),
+                        (opts) -> EmbPlusConfig.darknessOption.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -101,17 +101,17 @@ public class EmbedtCoreOptionsMixin {
                 .build());
 
 
-        Option<EmbeddiumPlusConfig.FadeInQuality> fadeInQuality = OptionImpl.createBuilder(EmbeddiumPlusConfig.FadeInQuality.class, sodiumOpts)
+        Option<EmbPlusConfig.FadeInQuality> fadeInQuality = OptionImpl.createBuilder(EmbPlusConfig.FadeInQuality.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.chunkfadeinquality.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.chunkfadeinquality.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbeddiumPlusConfig.FadeInQuality.class, new Component[]{
+                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.FadeInQuality.class, new Component[]{
                         Component.translatable("options.off"),
                         Component.translatable("options.graphics.fast"),
                         Component.translatable("options.graphics.fancy")
                 }))
                 .setBinding(
-                        (opts, value) -> EmbeddiumPlusConfig.fadeInQuality.set(value),
-                        (opts) -> EmbeddiumPlusConfig.fadeInQuality.get())
+                        (opts, value) -> EmbPlusConfig.fadeInQuality.set(value),
+                        (opts) -> EmbPlusConfig.fadeInQuality.get())
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(false)
                 .build();
@@ -121,8 +121,8 @@ public class EmbedtCoreOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.fog.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.fog.set(value),
-                        (options) -> EmbeddiumPlusConfig.fog.get())
+                        (options, value) -> EmbPlusConfig.fog.set(value),
+                        (options) -> EmbPlusConfig.fog.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -131,8 +131,8 @@ public class EmbedtCoreOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.jei.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.hideJEI.set(value),
-                        (options) -> EmbeddiumPlusConfig.hideJEI.get())
+                        (options, value) -> EmbPlusConfig.hideJEI.set(value),
+                        (options) -> EmbPlusConfig.hideJEI.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -142,9 +142,9 @@ public class EmbedtCoreOptionsMixin {
                 .setControl((option) -> new SliderControl(option, 64, 364, 4, ControlValueFormatter.translateVariable("Blocks")))
                 .setBinding(
                         (options, value) -> {
-                            EmbeddiumPlusConfig.cloudHeight.set(value);
+                            EmbPlusConfig.cloudHeight.set(value);
                         },
-                        (options) -> EmbeddiumPlusConfig.cloudHeight.get())
+                        (options) -> EmbPlusConfig.cloudHeight.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -162,8 +162,8 @@ public class EmbedtCoreOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.enableDistanceChecks.set(value),
-                        (options) -> EmbeddiumPlusConfig.enableDistanceChecks.get())
+                        (options, value) -> EmbPlusConfig.enableDistanceChecks.set(value),
+                        (options) -> EmbPlusConfig.enableDistanceChecks.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -172,8 +172,8 @@ public class EmbedtCoreOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.distance.h.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 192, 8, ControlValueFormatter.translateVariable("Blocks")))
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.maxEntityRenderDistanceSquare.set(value * value),
-                        (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbeddiumPlusConfig.maxEntityRenderDistanceSquare.get()))))
+                        (options, value) -> EmbPlusConfig.maxEntityRenderDistanceSquare.set(value * value),
+                        (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbPlusConfig.maxEntityRenderDistanceSquare.get()))))
                 .setImpact(OptionImpact.HIGH)
                 .build();
 
@@ -182,8 +182,8 @@ public class EmbedtCoreOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.distance.v.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("Blocks")))
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.maxEntityRenderDistanceY.set(value),
-                        (options) -> EmbeddiumPlusConfig.maxEntityRenderDistanceY.get())
+                        (options, value) -> EmbPlusConfig.maxEntityRenderDistanceY.set(value),
+                        (options) -> EmbPlusConfig.maxEntityRenderDistanceY.get())
                 .setImpact(OptionImpact.HIGH)
                 .build();
 
@@ -202,8 +202,8 @@ public class EmbedtCoreOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.tile.distance.h.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 256, 8, ControlValueFormatter.translateVariable("Blocks")))
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.maxTileEntityRenderDistanceSquare.set(value * value),
-                        (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbeddiumPlusConfig.maxTileEntityRenderDistanceSquare.get()))))
+                        (options, value) -> EmbPlusConfig.maxTileEntityRenderDistanceSquare.set(value * value),
+                        (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbPlusConfig.maxTileEntityRenderDistanceSquare.get()))))
                 .setImpact(OptionImpact.HIGH)
                 .build();
 
@@ -212,8 +212,8 @@ public class EmbedtCoreOptionsMixin {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.tile.distance.v.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("Blocks")))
                 .setBinding(
-                        (options, value) -> EmbeddiumPlusConfig.maxTileEntityRenderDistanceY.set(value),
-                        (options) -> EmbeddiumPlusConfig.maxTileEntityRenderDistanceY.get())
+                        (options, value) -> EmbPlusConfig.maxTileEntityRenderDistanceY.set(value),
+                        (options) -> EmbPlusConfig.maxTileEntityRenderDistanceY.get())
                 .setImpact(OptionImpact.HIGH)
                 .build();
 
@@ -228,18 +228,18 @@ public class EmbedtCoreOptionsMixin {
 
     @Redirect(method = "general", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableList;copyOf(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;"))
     private static ImmutableList<OptionGroup> redirectGeneralOptions(Collection<OptionGroup> groups) {
-        OptionImpl<Options, EmbeddiumPlusConfig.FullscreenMode> fullscreenMode = OptionImpl.createBuilder( EmbeddiumPlusConfig.FullscreenMode.class, vanillaOpts)
+        OptionImpl<Options, EmbPlusConfig.FullscreenMode> fullscreenMode = OptionImpl.createBuilder( EmbPlusConfig.FullscreenMode.class, vanillaOpts)
                 .setName(Component.translatable("embeddium.plus.options.screen.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.screen.desc"))
-                .setControl((opt) -> new CyclingControl<>(opt, EmbeddiumPlusConfig.FullscreenMode.class, new Component[] {
+                .setControl((opt) -> new CyclingControl<>(opt, EmbPlusConfig.FullscreenMode.class, new Component[] {
                         Component.translatable("embeddium.plus.options.screen.windowed"),
                         Component.translatable("embeddium.plus.options.screen.borderless"),
                         Component.translatable("options.fullscreen")
                 }))
                 .setBinding(
                         (opts, value) -> {
-                            EmbeddiumPlusConfig.fullScreenMode.set(value);
-                            opts.fullscreen.set(value != EmbeddiumPlusConfig.FullscreenMode.WINDOWED);
+                            EmbPlusConfig.fullScreenMode.set(value);
+                            opts.fullscreen.set(value != EmbPlusConfig.FullscreenMode.WINDOWED);
 
                             Minecraft client = Minecraft.getInstance();
                             Window window = client.getWindow();
@@ -255,7 +255,7 @@ public class EmbedtCoreOptionsMixin {
                                 window.changeFullscreenVideoMode();
                             }
                         },
-                        (opts) -> EmbeddiumPlusConfig.fullScreenMode.get())
+                        (opts) -> EmbPlusConfig.fullScreenMode.get())
                 .build();
 
         List<OptionGroup> newList = new ArrayList<>();

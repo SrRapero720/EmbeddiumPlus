@@ -11,7 +11,7 @@ package me.srrapero720.dynamiclights.api;
 
 import me.srrapero720.dynamiclights.LambDynLights;
 import me.srrapero720.embeddiumplus.features.dynamic_lights.DynamicLightHandlerHolder;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -120,7 +120,7 @@ public final class DynamicLightHandlers {
 	 * @return {@code true} if the entity can light up, otherwise {@code false}
 	 */
 	public static <T extends Entity> boolean canLightUp(T entity) {
-		return EmbeddiumPlusConfig.entityLighting.get();
+		return EmbPlusConfig.entityLighting.get();
 	}
 
 	/**
@@ -131,7 +131,7 @@ public final class DynamicLightHandlers {
 	 * @return {@code true} if the block entity can light up, otherwise {@code false}
 	 */
 	public static <T extends BlockEntity> boolean canLightUp(T entity) {
-		return EmbeddiumPlusConfig.tileEntityLighting.get();
+		return EmbPlusConfig.tileEntityLighting.get();
 	}
 
 	/**
@@ -143,7 +143,7 @@ public final class DynamicLightHandlers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Entity> int getLuminanceFrom(T entity) {
-		if (!EmbeddiumPlusConfig.entityLighting.get())
+		if (!EmbPlusConfig.entityLighting.get())
 			return 0;
 
 		var handler = (DynamicLightHandler<T>) getDynamicLightHandler(entity.getType());
@@ -166,7 +166,7 @@ public final class DynamicLightHandlers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends BlockEntity> int getLuminanceFrom(T entity) {
-		if (!EmbeddiumPlusConfig.tileEntityLighting.get())
+		if (!EmbPlusConfig.tileEntityLighting.get())
 			return 0;
 		DynamicLightHandler<T> handler = (DynamicLightHandler<T>) getDynamicLightHandler(entity.getType());
 		if (handler == null)

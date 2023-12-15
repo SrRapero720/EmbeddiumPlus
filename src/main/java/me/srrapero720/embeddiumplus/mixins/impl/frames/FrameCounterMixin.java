@@ -9,10 +9,9 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 
 import java.util.LinkedList;
-import java.util.Objects;
 
 @Mixin(ForgeGui.class)
 public class FrameCounterMixin {
@@ -26,7 +25,7 @@ public class FrameCounterMixin {
     @Inject(method = "render", at = @At("HEAD"))
     public void render(GuiGraphics matrixStack, float tickDelta, CallbackInfo info) {
         String displayString;
-        switch (EmbeddiumPlusConfig.fpsCounterMode.get()) {
+        switch (EmbPlusConfig.fpsCounterMode.get()) {
             case SIMPLE -> {
                 int fps = FpsAccessorMixin.getFps();
                 displayString = String.valueOf(fps);
@@ -45,7 +44,7 @@ public class FrameCounterMixin {
         Minecraft client = Minecraft.getInstance();
         if (client.options.renderDebug && !client.options.renderFpsChart) return; // No render when F3 is open
 
-        float textPos = EmbeddiumPlusConfig.fpsCounterPosition.get();
+        float textPos = EmbPlusConfig.fpsCounterPosition.get();
 
         int textAlpha = 200;
         int textColor = 0xFFFFFF;

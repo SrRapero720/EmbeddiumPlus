@@ -4,7 +4,7 @@ import me.srrapero720.dynamiclights.DynamicLightSource;
 import me.srrapero720.dynamiclights.LambDynLights;
 import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
@@ -101,7 +101,7 @@ public abstract class BlockEntityMixin implements DynamicLightSource {
 	// TODO: fuze with me.disabled720.dynamiclights.mixin.lightsource.EntityMixin.tdv$shouldUpdateDynamicLight
 	public boolean tdv$shouldUpdateDynamicLight() {
 		long currentTime = System.currentTimeMillis();
-		boolean shouldNot = switch (EmbeddiumPlusConfig.dynQuality.get()) {
+		boolean shouldNot = switch (EmbPlusConfig.dynQuality.get()) {
 			case OFF -> true;
 			case SLOW -> currentTime < lambdynlights_lastUpdate + 500;
 			case FAST -> currentTime < lambdynlights_lastUpdate + 200;

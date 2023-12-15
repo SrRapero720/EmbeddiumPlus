@@ -5,18 +5,18 @@ import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 
 @Mixin(Window.class)
 public class WindowMixin {
     @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
     private void glfwSetWindowMonitor(long window, long monitor, int xpos, int ypos, int width, int height, int refreshRate) {
-        if (!EmbeddiumPlusConfig.SPECS.isLoaded()) {
+        if (!EmbPlusConfig.SPECS.isLoaded()) {
             GLFW.glfwSetWindowMonitor(window, monitor, xpos, ypos, width, height, refreshRate);
             return;
         }
 
-        if (EmbeddiumPlusConfig.fullScreenMode.get() == EmbeddiumPlusConfig.FullscreenMode.BORDERLESS) {
+        if (EmbPlusConfig.fullScreenMode.get() == EmbPlusConfig.FullscreenMode.BORDERLESS) {
             if (monitor != 0L) {
                 GLFW.glfwSetWindowSizeLimits(window, 0, 0, width, height);
             }

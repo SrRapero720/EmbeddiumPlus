@@ -3,7 +3,7 @@ package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
 import me.srrapero720.dynamiclights.DynamicLightSource;
 import me.srrapero720.dynamiclights.LambDynLights;
 import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.PrimedTnt;
@@ -44,7 +44,7 @@ public abstract class TntEntityMixin extends Entity implements DynamicLightSourc
 			if (this.isRemoved()) {
 				this.tdv$setDynamicLightEnabled(false);
 			} else {
-				if (!EmbeddiumPlusConfig.tileEntityLighting.get() || !DynamicLightHandlers.canLightUp(this))
+				if (!EmbPlusConfig.tileEntityLighting.get() || !DynamicLightHandlers.canLightUp(this))
 					this.tdv$resetDynamicLight();
 				else
 					this.tdv$dynamicLightTick();

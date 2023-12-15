@@ -10,14 +10,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
-import me.srrapero720.embeddiumplus.Tools;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusTools;
 
 @Mixin(EntityRenderDispatcher.class)
 public class MaxDistanceEntity {
     @Inject(at = @At("HEAD"), method = "shouldRender", cancellable = true)
     public <E extends Entity> void shouldDoRender(E entity, Frustum clippingHelper, double cameraX, double cameraY, double cameraZ, CallbackInfoReturnable<Boolean> cir) {
-        if (!EmbeddiumPlusConfig.enableDistanceChecks.get()) return;
+        if (!EmbPlusConfig.enableDistanceChecks.get()) return;
 
         if (entity instanceof EnderDragon) return;
         if (entity instanceof Ghast) return;
@@ -27,13 +27,13 @@ public class MaxDistanceEntity {
         if (name.startsWith("com.simibubi.create.content.contraptions")) return;
         if (name.startsWith("com.github.alexthe666.iceandfire.entity") && name.contains("dragon")) return;
 
-        if (!((IEntityTypeAccess) entity.getType()).embeddiumPlus$isWhitelisted() && !Tools.isEntityWithinDistance(
+        if (!((IEntityTypeAccess) entity.getType()).embeddiumPlus$isWhitelisted() && !EmbPlusTools.isEntityWithinDistance(
                 entity,
                 cameraX,
                 cameraY,
                 cameraZ,
-                EmbeddiumPlusConfig.maxEntityRenderDistanceY.get(),
-                EmbeddiumPlusConfig.maxEntityRenderDistanceSquare.get()
+                EmbPlusConfig.maxEntityRenderDistanceY.get(),
+                EmbPlusConfig.maxEntityRenderDistanceSquare.get()
         )) {
             cir.cancel();
         }

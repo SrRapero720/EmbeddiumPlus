@@ -12,7 +12,7 @@ package me.srrapero720.dynamiclights;
 import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
 import me.srrapero720.dynamiclights.api.item.ItemLightSources;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -64,7 +64,7 @@ public class LambDynLights {
 		DynamicLightHandlers.registerDefaultHandlers();
 	}
 
-	public static boolean isEnabled() { return EmbeddiumPlusConfig.dynQuality.get() != EmbeddiumPlusConfig.DynamicLightsQuality.OFF; }
+	public static boolean isEnabled() { return EmbPlusConfig.dynQuality.get() != EmbPlusConfig.DynamicLightsQuality.OFF; }
 
 	/**
 	 * Updates all light sources.

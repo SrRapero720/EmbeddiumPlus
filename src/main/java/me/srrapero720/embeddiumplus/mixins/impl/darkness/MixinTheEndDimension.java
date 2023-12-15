@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import me.srrapero720.embeddiumplus.config.EmbeddiumPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.true_darkness.Darkness;
 
 @Mixin(DimensionSpecialEffects.EndEffects.class)
@@ -31,10 +31,10 @@ public class MixinTheEndDimension {
 
 	@Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
 	private void onAdjustSkyColor(CallbackInfoReturnable<Vec3> ci) {
-		if (!EmbeddiumPlusConfig.trueDarknessEnabled.get())
+		if (!EmbPlusConfig.trueDarknessEnabled.get())
 			return;
 
-		if (!EmbeddiumPlusConfig.darkEnd.get())
+		if (!EmbPlusConfig.darkEnd.get())
 			return;
 
 		final double factor = Darkness.darkEndFog();
