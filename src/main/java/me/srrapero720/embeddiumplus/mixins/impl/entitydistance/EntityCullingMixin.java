@@ -31,7 +31,7 @@ public abstract class EntityCullingMixin implements IEntityTypeAccess {
             if (result[1].equals("*") && getDefaultLootTable().getNamespace().equals(result[0])) {
                 embeddiumPlus$whitelisted = true;
                 break;
-            } else if (result.equals(getDefaultLootTable().toString())) {
+            } else if (getDefaultLootTable().equals(new ResourceLocation(result[0], result[1]))) {
                 embeddiumPlus$whitelisted = true;
                 break;
             }
