@@ -13,7 +13,6 @@ import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage
 import me.srrapero720.embeddiumplus.EmbPlusAPI;
 import net.minecraft.client.Options;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -260,8 +259,8 @@ public class EmbedtCoreOptionsMixin {
         groups.addAll(newList);
     }
 
-    @Redirect(method = "advanced", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;", ordinal = 6))
-    private static MutableComponent ChangeCategoryName(String old) {
-        return Component.translatable("embeddium.plus.options.plus");
+    @Inject(method = "advanced", at = @At("RETURN"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
+    private static void ChangeCategoryName(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
+        cir.setReturnValue(new OptionPage(Component.translatable("embeddium.plus.options.plus"), ImmutableList.copyOf(groups)));
     }
 }
