@@ -20,8 +20,9 @@
   "embeddium.plus.options.darkness.mode.reallydark": "真实黑暗",
   "embeddium.plus.options.darkness.mode.dark": "黑暗",
   "embeddium.plus.options.darkness.mode.dim": "昏暗",
-  "embeddium.plus.options.chunkfadeinquality.title": "区块渐变质量",
-  "embeddium.plus.options.chunkfadeinquality.desc": "控制区块消退的速度。没有性能消耗，Fancy只需要更长的时间，但看起来有点酷。当前不工作",
+  "embeddium.plus.options.chunkfadeinquality.title": "区块渐显品质",
+  "embeddium.plus.options.chunkfadeinquality.desc": "控制区块渐显的速度。不吃性能，高品质也只是需要更长的时间，然而很炫酷。目前不生效",
+
   "embeddium.plus.options.fog.title": "启用雾",
   "embeddium.plus.options.fog.desc": "关闭整个世界中的所有雾",
   "embeddium.plus.options.jei.title": "在搜索之前隐藏JEI",
