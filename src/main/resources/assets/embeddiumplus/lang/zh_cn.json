@@ -11,9 +11,10 @@
   "embeddium.plus.options.displayfps.desc": "显示当前FPS. 高级模式还显示最低FPS以及15秒的平均FPS，这对判断性能很有用。",
   "embeddium.plus.options.displayfps.position.title": "FPS显示位置",
   "embeddium.plus.options.displayfps.position.desc": "将FPS显示偏移几个像素",
-  "embeddium.plus.options.darkness.title": "真正的黑暗",
-  "embeddium.plus.options.darkness.desc": "使世界其他地方更加逼真地黑暗。不影响日间照明或火把照明。",
-  "embeddium.plus.options.darkness.mode.title": "真实黑暗方式",
+  "embeddium.plus.options.darkness.title": "真实黑暗",
+  "embeddium.plus.options.darkness.desc": "使世界其他地方的黑暗更为逼真。这不会影响日间照明或火把照明。",
+  "embeddium.plus.options.darkness.mode.title": "真实黑暗的模式",
+
   "embeddium.plus.options.darkness.mode.desc": "控制什么样的黑暗被视为真正的黑暗。",
   "embeddium.plus.options.darkness.mode.pitchblack": "漆黑一片",
   "embeddium.plus.options.darkness.mode.reallydark": "真实黑暗",
