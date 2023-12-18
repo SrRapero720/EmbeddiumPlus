@@ -29,7 +29,8 @@
   "embeddium.plus.options.jei.desc": "隐藏JEI物品列表中的物品，直到你搜索了某些内容。输入空格可以搜索到所有内容。",
 
   "embeddium.plus.options.clouds.height.title": "云高度",
-  "embeddium.plus.options.clouds.height.desc": "增加云的高度。",
+  "embeddium.plus.options.clouds.height.desc": "改变云的高度。",
+
   "embeddium.plus.options.culling.entity.title": "启用最大实体距离",
   "embeddium.plus.options.culling.entity.desc": "关闭实体剔除。",
   "embeddium.plus.options.culling.entity.distance.h.title": "实体最大距离(水平)",
