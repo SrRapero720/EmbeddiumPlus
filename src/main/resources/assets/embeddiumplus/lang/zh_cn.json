@@ -8,13 +8,12 @@
   "embeddium.plus.options.common.faster": "更快",
   "embeddium.plus.options.common.realtime": "实时",
   "embeddium.plus.options.displayfps.title": "显示FPS",
-  "embeddium.plus.options.displayfps.desc": "显示当前FPS. 高级模式还显示最低FPS以及15秒的平均FPS，这对判断性能很有用。",
+  "embeddium.plus.options.displayfps.desc": "显示当前FPS。高级模式还显示最低FPS、前15秒内的平均FPS，这对评估性能很有用。",
   "embeddium.plus.options.displayfps.position.title": "FPS显示位置",
-  "embeddium.plus.options.displayfps.position.desc": "将FPS显示偏移几个像素",
+  "embeddium.plus.options.displayfps.position.desc": "将FPS显示偏移一定像素",
   "embeddium.plus.options.darkness.title": "真实黑暗",
-  "embeddium.plus.options.darkness.desc": "使世界其他地方的黑暗更为逼真。这不会影响日间照明或火把照明。",
+  "embeddium.plus.options.darkness.desc": "使世界其他地方的黑暗更为逼真。这不会影响日间或火把的光照。",
   "embeddium.plus.options.darkness.mode.title": "真实黑暗的模式",
-
   "embeddium.plus.options.darkness.mode.desc": "控制什么样的黑暗被视为真正的黑暗。",
   "embeddium.plus.options.darkness.mode.pitchblack": "漆黑一片",
   "embeddium.plus.options.darkness.mode.reallydark": "真实黑暗",
@@ -22,17 +21,14 @@
   "embeddium.plus.options.darkness.mode.dim": "昏暗",
   "embeddium.plus.options.chunkfadeinquality.title": "区块渐显品质",
   "embeddium.plus.options.chunkfadeinquality.desc": "控制区块渐显的速度。不吃性能，高品质也只是需要更长的时间，然而很炫酷。目前不生效",
-
   "embeddium.plus.options.fog.title": "启用雾",
-  "embeddium.plus.options.fog.desc": "关闭整个世界中的所有雾",
+  "embeddium.plus.options.fog.desc": "开启整个世界中的所有雾",
   "embeddium.plus.options.jei.title": "不在搜索时隐藏JEI",
   "embeddium.plus.options.jei.desc": "隐藏JEI物品列表中的物品，直到你搜索了某些内容。输入空格可以搜索到所有内容。",
-
   "embeddium.plus.options.clouds.height.title": "云高度",
   "embeddium.plus.options.clouds.height.desc": "改变云的高度。",
-
-  "embeddium.plus.options.culling.entity.title": "启用最大实体距离",
-  "embeddium.plus.options.culling.entity.desc": "关闭实体剔除。",
+  "embeddium.plus.options.culling.entity.title": "启用实体最大渲染距离",
+  "embeddium.plus.options.culling.entity.desc": "开启实体剔除，包括方块实体。",
   "embeddium.plus.options.culling.entity.distance.h.title": "实体最大渲染距离（水平）",
   "embeddium.plus.options.culling.entity.distance.h.desc": "隐藏并停止更新超过此范围的实体。大幅提高性能，尤其是在模组刷怪塔周围时。",
   "embeddium.plus.options.culling.entity.distance.v.title": "实体最大渲染距离（垂直）",
@@ -49,8 +45,9 @@
   "embeddium.plus.options.dynlights.speed.title": "光源更新速度",
   "embeddium.plus.options.dynlights.speed.desc": "控制动态光源的更新频率。\n\n重新计算光照会很吃性能，因此频率越低（速度越慢）性能就越好。",
   "embeddium.plus.options.dynlights.entities.title": "为实体启用",
-  "embeddium.plus.options.dynlights.entities.desc": "启用此选项后，将为实体（生物、掉落的物品等）启用动态光源。\n\n即使你没有拿着火把，照明更新的数量也会因它急剧增加。",
+  "embeddium.plus.options.dynlights.entities.desc": "启用此选项后，将为实体（生物、掉落的物品等）启用动态光源。\n\n即使你没有拿着火把，光照更新的数量也会因它急剧增加。",
   "embeddium.plus.options.dynlights.blockentities.title": "为方块实体启用",
-  "embeddium.plus.options.dynlights.blockentities.desc": "启用此选项后，将为方块实体（熔炉、模组机器等）启用动态光源。\n\n即使你没有拿着火把，照明更新的数量也会因它急剧增加。"
-
+  "embeddium.plus.options.dynlights.blockentities.desc": "启用此选项后，将为方块实体（熔炉、模组机器等）启用动态光源。\n\n即使你没有拿着火把，光照更新的数量也会因它急剧增加。",
+  "Pixels": "像素",
+  "Blocks": "格"
 }
