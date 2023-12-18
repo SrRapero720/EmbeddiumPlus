@@ -25,8 +25,9 @@
 
   "embeddium.plus.options.fog.title": "启用雾",
   "embeddium.plus.options.fog.desc": "关闭整个世界中的所有雾",
-  "embeddium.plus.options.jei.title": "在搜索之前隐藏JEI",
-  "embeddium.plus.options.jei.desc": "关闭JEI项目，除非您搜索某些内容。按空格键可搜索所有内容。",
+  "embeddium.plus.options.jei.title": "不在搜索时隐藏JEI",
+  "embeddium.plus.options.jei.desc": "隐藏JEI物品列表中的物品，直到你搜索了某些内容。输入空格可以搜索到所有内容。",
+
   "embeddium.plus.options.clouds.height.title": "云高度",
   "embeddium.plus.options.clouds.height.desc": "增加云的高度。",
   "embeddium.plus.options.culling.entity.title": "启用最大实体距离",
