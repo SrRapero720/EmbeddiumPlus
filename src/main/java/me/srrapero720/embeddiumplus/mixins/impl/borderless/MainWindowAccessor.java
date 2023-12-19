@@ -8,7 +8,4 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface MainWindowAccessor {
     @Accessor
     void setDirty(boolean value);
-
-    @Accessor
-    boolean getFullscreen();
 }

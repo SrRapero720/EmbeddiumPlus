@@ -2,6 +2,7 @@ package me.srrapero720.embeddiumplus.mixins.impl.fog;
 
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,7 +10,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
 
 @Mixin(value = FogRenderer.class, priority = 910)
 public abstract class BackgroundRendererMixin {

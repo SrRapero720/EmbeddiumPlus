@@ -1,16 +1,16 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
 
-import me.srrapero720.dynamiclights.DynamicLightSource;
-import me.srrapero720.dynamiclights.LambDynLights;
-import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
-import net.minecraft.util.Mth; 
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
@@ -77,9 +77,9 @@ public abstract class EntityMixin implements DynamicLightSource {
 			} else {
 				this.tdv$dynamicLightTick();
 				if ((!EmbPlusConfig.tileEntityLighting.get() && this.getType() != EntityType.PLAYER)
-						|| !DynamicLightHandlers.canLightUp((Entity) (Object) this))
+						|| !DynLightsHandlers.canLightUp((Entity) (Object) this))
 					this.lambdynlights$luminance = 0;
-				LambDynLights.updateTracking(this);
+				DynLightsPlus.updateTracking(this);
 			}
 		}
 	}
@@ -138,7 +138,7 @@ public abstract class EntityMixin implements DynamicLightSource {
 	public void tdv$dynamicLightTick() {
 		this.lambdynlights$luminance = this.isOnFire() ? 15 : 0;
 
-		int luminance = DynamicLightHandlers.getLuminanceFrom((Entity) (Object) this);
+		int luminance = DynLightsHandlers.getLuminanceFrom((Entity) (Object) this);
 		if (luminance > this.lambdynlights$luminance)
 			this.lambdynlights$luminance = luminance;
 	}
@@ -170,8 +170,8 @@ public abstract class EntityMixin implements DynamicLightSource {
 				var entityChunkPos = this.chunkPosition;
 				var chunkPos = new BlockPos.MutableBlockPos(entityChunkPos.x, SectionPos.posToSectionCoord(this.getEyeY()), entityChunkPos.z);
 
-				LambDynLights.scheduleChunkRebuild(renderer, chunkPos);
-				LambDynLights.updateTrackedChunks(chunkPos, this.lambdynlights$trackedLitChunkPos, newPos);
+				DynLightsPlus.scheduleChunkRebuild(renderer, chunkPos);
+				DynLightsPlus.updateTrackedChunks(chunkPos, this.lambdynlights$trackedLitChunkPos, newPos);
 
 				var directionX = (this.blockPosition().getX() & 15) >= 8 ? Direction.EAST : Direction.WEST;
 				var directionY = (Mth.floor(this.getEyeY()) & 15) >= 8 ? Direction.UP : Direction.DOWN;
@@ -188,8 +188,8 @@ public abstract class EntityMixin implements DynamicLightSource {
 						chunkPos.move(directionZ.getOpposite()); // origin
 						chunkPos.move(directionY); // Y
 					}
-					LambDynLights.scheduleChunkRebuild(renderer, chunkPos);
-					LambDynLights.updateTrackedChunks(chunkPos, this.lambdynlights$trackedLitChunkPos, newPos);
+					DynLightsPlus.scheduleChunkRebuild(renderer, chunkPos);
+					DynLightsPlus.updateTrackedChunks(chunkPos, this.lambdynlights$trackedLitChunkPos, newPos);
 				}
 			}
 
@@ -206,7 +206,7 @@ public abstract class EntityMixin implements DynamicLightSource {
 	public void tdv$lambdynlights$scheduleTrackedChunksRebuild(@NotNull LevelRenderer renderer) {
 		if (Minecraft.getInstance().level == this.level)
 			for (long pos : this.lambdynlights$trackedLitChunkPos) {
-				LambDynLights.scheduleChunkRebuild(renderer, pos);
+				DynLightsPlus.scheduleChunkRebuild(renderer, pos);
 			}
 	}
 }

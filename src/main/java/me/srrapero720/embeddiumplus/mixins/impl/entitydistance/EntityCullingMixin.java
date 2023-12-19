@@ -19,7 +19,7 @@ public abstract class EntityCullingMixin implements IEntityTypeAccess {
 
     @Override
     @Unique
-    public boolean embeddiumPlus$isWhitelisted() {
+    public boolean embPlus$isWhitelisted() {
         if (!EmbPlusConfig.SPECS.isLoaded()) return false;
         if (embeddiumPlus$checked) return embeddiumPlus$whitelisted;
 

@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights;
 
-import me.srrapero720.dynamiclights.DynamicLightSource;
+import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.entity.LevelEntityGetter;

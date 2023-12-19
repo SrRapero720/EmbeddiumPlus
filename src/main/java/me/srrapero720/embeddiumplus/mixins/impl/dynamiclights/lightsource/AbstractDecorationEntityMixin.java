@@ -1,9 +1,9 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
 
-import me.srrapero720.dynamiclights.DynamicLightSource;
-import me.srrapero720.dynamiclights.LambDynLights;
-import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
@@ -26,11 +26,11 @@ public abstract class AbstractDecorationEntityMixin extends Entity implements Dy
 			if (this.isRemoved()) {
 				this.tdv$setDynamicLightEnabled(false);
 			} else {
-				if (!EmbPlusConfig.tileEntityLighting.get() || !DynamicLightHandlers.canLightUp(this))
+				if (!EmbPlusConfig.tileEntityLighting.get() || !DynLightsHandlers.canLightUp(this))
 					this.tdv$resetDynamicLight();
 				else
 					this.tdv$dynamicLightTick();
-				LambDynLights.updateTracking(this);
+				DynLightsPlus.updateTracking(this);
 			}
 		}
 	}

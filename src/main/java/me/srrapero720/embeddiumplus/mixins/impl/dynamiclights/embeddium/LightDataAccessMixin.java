@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.embeddium;
 
 import me.jellysquid.mods.sodium.client.model.light.data.LightDataAccess;
-import me.srrapero720.dynamiclights.SodiumDynamicLightHandler;
+import me.srrapero720.embeddiumplus.features.dynlights.accessors.EmbedtDynamicLightHandler;
 import org.spongepowered.asm.mixin.Dynamic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +13,7 @@ public abstract class LightDataAccessMixin {
     @Dynamic
     @Inject(method = "getLightmap", at = @At("RETURN"), remap = false, cancellable = true)
     private static void lambdynlights$getLightmap(int word, CallbackInfoReturnable<Integer> cir) {
-        int lightmap = SodiumDynamicLightHandler.lambdynlights$getLightmap(SodiumDynamicLightHandler.lambdynlights$pos.get(), word, cir.getReturnValueI());
+        int lightmap = EmbedtDynamicLightHandler.lambdynlights$getLightmap(EmbedtDynamicLightHandler.lambdynlights$pos.get(), word, cir.getReturnValueI());
         cir.setReturnValue(lightmap);
     }
 }

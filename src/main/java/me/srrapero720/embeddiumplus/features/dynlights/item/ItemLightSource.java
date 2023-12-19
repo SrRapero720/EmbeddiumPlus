@@ -1,21 +1,7 @@
-/*
- * Copyright © 2020 LambdAurora <aurora42lambda@gmail.com>
- *
- * This file is part of LambDynamicLights.
- *
- * Licensed under the MIT license. For more information,
- * see the LICENSE file.
- */
-
-package me.srrapero720.dynamiclights.api.item;
+package me.srrapero720.embeddiumplus.features.dynlights.item;
 
 import com.google.gson.JsonObject;
-import me.srrapero720.dynamiclights.LambDynLights;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
-
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -24,6 +10,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * Represents an item light source.
@@ -37,27 +27,16 @@ public abstract class ItemLightSource {
 	private final Item item;
 	private final boolean waterSensitive;
 
+	public ItemLightSource(ResourceLocation id, Item item) { this(id, item, false); }
 	public ItemLightSource(ResourceLocation id, Item item, boolean waterSensitive) {
 		this.id = id;
 		this.item = item;
 		this.waterSensitive = waterSensitive;
 	}
 
-	public ItemLightSource(ResourceLocation id, Item item) {
-		this(id, item, false);
-	}
-
-	public ResourceLocation id() {
-		return this.id;
-	}
-
-	public Item item() {
-		return this.item;
-	}
-
-	public boolean waterSensitive() {
-		return this.waterSensitive;
-	}
+	public ResourceLocation id() { return this.id; }
+	public Item item() { return this.item; }
+	public boolean waterSensitive() { return this.waterSensitive; }
 
 	/**
 	 * Gets the luminance of the item.
@@ -92,7 +71,7 @@ public abstract class ItemLightSource {
 
 	public static @NotNull Optional<ItemLightSource> fromJson(@NotNull ResourceLocation id, @NotNull JsonObject json) {
 		if (!json.has("item") || !json.has("luminance")) {
-			LambDynLights.warn("Failed to parse item light source \"" + id + "\", invalid format: missing required fields.");
+			DynLightsPlus.warn("Failed to parse item light source \"" + id + "\", invalid format: missing required fields.");
 			return Optional.empty();
 		}
 
@@ -124,7 +103,7 @@ public abstract class ItemLightSource {
 				}
 			}
 		} else {
-			LambDynLights.warn("Failed to parse item light source \"" + id + "\", invalid format: \"luminance\" field value isn't string or integer.");
+			DynLightsPlus.warn("Failed to parse item light source \"" + id + "\", invalid format: \"luminance\" field value isn't string or integer.");
 		}
 
 		return Optional.empty();

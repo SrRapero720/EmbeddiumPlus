@@ -1,7 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.embeddium;
 
 import com.google.common.collect.ImmutableList;
-import me.srrapero720.dynamiclights.LambDynLights;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
 import me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
@@ -13,6 +12,7 @@ import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.EmbPlusConfig.DynamicLightsQuality;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Final;
@@ -50,7 +50,7 @@ public abstract class EmbedtDynLightsOptionsMixin {
                         }))
                 .setBinding((options, value) -> {
                             EmbPlusConfig.dynQuality.set(value);
-                            LambDynLights.get().clearLightSources();
+                            DynLightsPlus.get().clearLightSources();
                         },
                         (options) -> EmbPlusConfig.dynQuality.get())
                 .setImpact(OptionImpact.MEDIUM)

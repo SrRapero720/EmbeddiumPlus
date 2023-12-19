@@ -1,9 +1,9 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
 
-import me.srrapero720.dynamiclights.DynamicLightSource;
-import me.srrapero720.dynamiclights.LambDynLights;
-import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -23,7 +23,7 @@ public abstract class LivingEntityMixin extends Entity implements DynamicLightSo
 
 	@Override
 	public void tdv$dynamicLightTick() {
-		if (!EmbPlusConfig.tileEntityLighting.get() || !DynamicLightHandlers.canLightUp(this)) {
+		if (!EmbPlusConfig.tileEntityLighting.get() || !DynLightsHandlers.canLightUp(this)) {
 			this.lambdynlights$luminance = 0;
 			return;
 		}
@@ -36,13 +36,13 @@ public abstract class LivingEntityMixin extends Entity implements DynamicLightSo
 			boolean submergedInFluid = !this.level().getFluidState(eyePos).isEmpty();
 			for (var equipped : this.getAllSlots()) {
 				if (!equipped.isEmpty())
-					luminance = Math.max(luminance, LambDynLights.getLuminanceFromItemStack(equipped, submergedInFluid));
+					luminance = Math.max(luminance, DynLightsPlus.getLuminanceFromItemStack(equipped, submergedInFluid));
 			}
 
 			this.lambdynlights$luminance = luminance;
 		}
 
-		int luminance = DynamicLightHandlers.getLuminanceFrom(this);
+		int luminance = DynLightsHandlers.getLuminanceFrom(this);
 		if (luminance > this.lambdynlights$luminance)
 			this.lambdynlights$luminance = luminance;
 	}

@@ -4,15 +4,14 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeConfigSpec;
-import java.nio.file.Path;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Consumer;
-
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class EmbPlusConfig {
     public static final ForgeConfigSpec SPECS;

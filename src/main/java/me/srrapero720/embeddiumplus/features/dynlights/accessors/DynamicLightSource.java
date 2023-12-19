@@ -7,8 +7,9 @@
  * see the LICENSE file.
  */
 
-package me.srrapero720.dynamiclights;
+package me.srrapero720.embeddiumplus.features.dynlights.accessors;
 
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.ApiStatus;
@@ -56,7 +57,7 @@ public interface DynamicLightSource {
 	 * @return {@code true} if the dynamic light is enabled, else {@code false}
 	 */
 	default boolean tdv$isDynamicLightEnabled() {
-		return LambDynLights.isEnabled() && LambDynLights.get().containsLightSource(this);
+		return DynLightsPlus.isEnabled() && DynLightsPlus.get().containsLightSource(this);
 	}
 
 	/**
@@ -70,9 +71,9 @@ public interface DynamicLightSource {
 	default void tdv$setDynamicLightEnabled(boolean enabled) {
 		this.tdv$resetDynamicLight();
 		if (enabled)
-			LambDynLights.get().addLightSource(this);
+			DynLightsPlus.get().addLightSource(this);
 		else
-			LambDynLights.get().removeLightSource(this);
+			DynLightsPlus.get().removeLightSource(this);
 	}
 
 	void tdv$resetDynamicLight();

@@ -1,5 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusTools;
 import me.srrapero720.embeddiumplus.features.entity_distance.IEntityTypeAccess;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -10,8 +12,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
-import me.srrapero720.embeddiumplus.EmbPlusTools;
 
 @Mixin(EntityRenderDispatcher.class)
 public class MaxDistanceEntity {
@@ -27,7 +27,7 @@ public class MaxDistanceEntity {
         if (name.startsWith("com.simibubi.create.content.contraptions")) return;
         if (name.startsWith("com.github.alexthe666.iceandfire.entity") && name.contains("dragon")) return;
 
-        if (!((IEntityTypeAccess) entity.getType()).embeddiumPlus$isWhitelisted() && !EmbPlusTools.isEntityWithinDistance(
+        if (!((IEntityTypeAccess) entity.getType()).embPlus$isWhitelisted() && !EmbPlusTools.isEntityWithinDistance(
                 entity,
                 cameraX,
                 cameraY,
