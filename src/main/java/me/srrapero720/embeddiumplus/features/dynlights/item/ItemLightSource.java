@@ -11,9 +11,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
+
+import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
 /**
  * Represents an item light source.
@@ -23,6 +27,7 @@ import java.util.Optional;
  * @since 1.3.0
  */
 public abstract class ItemLightSource {
+	private static final Marker IT = MarkerManager.getMarker("ItemLightSource");
 	private final ResourceLocation id;
 	private final Item item;
 	private final boolean waterSensitive;
@@ -71,7 +76,7 @@ public abstract class ItemLightSource {
 
 	public static @NotNull Optional<ItemLightSource> fromJson(@NotNull ResourceLocation id, @NotNull JsonObject json) {
 		if (!json.has("item") || !json.has("luminance")) {
-			DynLightsPlus.warn("Failed to parse item light source \"" + id + "\", invalid format: missing required fields.");
+			LOGGER.warn(IT, "Failed to parse item light source '{}', invalid format: missing required fields.", id);
 			return Optional.empty();
 		}
 
@@ -103,7 +108,7 @@ public abstract class ItemLightSource {
 				}
 			}
 		} else {
-			DynLightsPlus.warn("Failed to parse item light source \"" + id + "\", invalid format: \"luminance\" field value isn't string or integer.");
+			LOGGER.warn(IT, "Failed to parse item light source '{}', invalid format: 'luminance' field value is not a string or integer", id);
 		}
 
 		return Optional.empty();

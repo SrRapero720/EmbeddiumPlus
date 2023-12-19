@@ -258,8 +258,7 @@ public class DynLightsPlus {
 			it = dynamicLightSources.next();
 			if (it.equals(lightSource)) {
 				dynamicLightSources.remove();
-				if (Minecraft.getInstance().levelRenderer != null)
-					lightSource.tdv$lambdynlights$scheduleTrackedChunksRebuild(Minecraft.getInstance().levelRenderer);
+                lightSource.tdv$lambdynlights$scheduleTrackedChunksRebuild(Minecraft.getInstance().levelRenderer);
 				break;
 			}
 		}
@@ -278,12 +277,10 @@ public class DynLightsPlus {
 		while (dynamicLightSources.hasNext()) {
 			it = dynamicLightSources.next();
 			dynamicLightSources.remove();
-			if (Minecraft.getInstance().levelRenderer != null) {
-				if (it.tdv$getLuminance() > 0)
-					it.tdv$resetDynamicLight();
-				it.tdv$lambdynlights$scheduleTrackedChunksRebuild(Minecraft.getInstance().levelRenderer);
-			}
-		}
+            if (it.tdv$getLuminance() > 0)
+                it.tdv$resetDynamicLight();
+            it.tdv$lambdynlights$scheduleTrackedChunksRebuild(Minecraft.getInstance().levelRenderer);
+        }
 
 		this.lightSourcesLock.writeLock().unlock();
 	}
@@ -302,12 +299,10 @@ public class DynLightsPlus {
 			it = dynamicLightSources.next();
 			if (filter.test(it)) {
 				dynamicLightSources.remove();
-				if (Minecraft.getInstance().levelRenderer != null) {
-					if (it.tdv$getLuminance() > 0)
-						it.tdv$resetDynamicLight();
-					it.tdv$lambdynlights$scheduleTrackedChunksRebuild(Minecraft.getInstance().levelRenderer);
-				}
-				break;
+                if (it.tdv$getLuminance() > 0)
+                    it.tdv$resetDynamicLight();
+                it.tdv$lambdynlights$scheduleTrackedChunksRebuild(Minecraft.getInstance().levelRenderer);
+                break;
 			}
 		}
 
@@ -340,24 +335,6 @@ public class DynLightsPlus {
 	 */
 	public void removeBlockEntitiesLightSource() {
 		this.removeLightSources(lightSource -> lightSource instanceof BlockEntity);
-	}
-
-	/**
-	 * Prints a message to the terminal.
-	 *
-	 * @param info the message to print
-	 */
-	public static void log(String info) {
-		LOGGER.info(IT, "[LambDynLights] " + info);
-	}
-
-	/**
-	 * Prints a warning message to the terminal.
-	 *
-	 * @param info the message to print
-	 */
-	public static void warn(String info) {
-		LOGGER.warn(IT, "[LambDynLights] " + info);
 	}
 
 	/**

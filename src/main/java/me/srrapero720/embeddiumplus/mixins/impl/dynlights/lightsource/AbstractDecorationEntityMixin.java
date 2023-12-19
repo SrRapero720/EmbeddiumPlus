@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
+package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;

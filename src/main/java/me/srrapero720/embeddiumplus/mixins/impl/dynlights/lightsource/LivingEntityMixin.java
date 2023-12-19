@@ -1,5 +1,6 @@
-package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
+package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
@@ -7,29 +8,22 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(Player.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements DynamicLightSource {
-	@Shadow
-	public abstract boolean isSpectator();
-
+@Mixin(LivingEntity.class)
+public abstract class LivingEntityMixin extends Entity implements DynamicLightSource {
 	@Unique
 	protected int lambdynlights$luminance;
-	@Unique
-	private Level lambdynlights$lastWorld;
 
-	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, Level world) {
-		super(entityType, world);
+	public LivingEntityMixin(EntityType<?> type, Level world) {
+		super(type, world);
 	}
 
 	@Override
 	public void tdv$dynamicLightTick() {
-		if (!DynLightsHandlers.canLightUp(this)) {
+		if (!EmbPlusConfig.tileEntityLighting.get() || !DynLightsHandlers.canLightUp(this)) {
 			this.lambdynlights$luminance = 0;
 			return;
 		}
@@ -37,8 +31,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DynamicL
 		if (this.isOnFire() || this.isCurrentlyGlowing()) {
 			this.lambdynlights$luminance = 15;
 		} else {
-			int luminance = DynLightsHandlers.getLuminanceFrom((Entity) this);
-
+			int luminance = 0;
 			var eyePos = BlockPos.containing(this.getX(), this.getEyeY(), this.getZ());
 			boolean submergedInFluid = !this.level().getFluidState(eyePos).isEmpty();
 			for (var equipped : this.getAllSlots()) {
@@ -49,13 +42,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DynamicL
 			this.lambdynlights$luminance = luminance;
 		}
 
-		if (this.isSpectator())
-			this.lambdynlights$luminance = 0;
-
-		if (this.lambdynlights$lastWorld != this.getCommandSenderWorld()) {
-			this.lambdynlights$lastWorld = this.getCommandSenderWorld();
-			this.lambdynlights$luminance = 0;
-		}
+		int luminance = DynLightsHandlers.getLuminanceFrom(this);
+		if (luminance > this.lambdynlights$luminance)
+			this.lambdynlights$luminance = luminance;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package me.srrapero720.embeddiumplus.features.dynlights;
 
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.EmbeddiumPlus;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightHolder;
 import me.srrapero720.embeddiumplus.features.dynlights.events.DynLightsSetupEvent;
 import net.minecraft.core.BlockPos;
@@ -11,13 +12,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
-
+@Mod.EventBusSubscriber(modid = EmbeddiumPlus.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public final class DynLightsHandlers {
 	@SubscribeEvent
 	public static void registerDefaultHandlers(DynLightsSetupEvent event) {
