@@ -56,7 +56,7 @@ public class EmbedtCoreOptionsMixin {
         Option<Integer> displayFpsPos = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.displayfps.position.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.displayfps.position.desc"))
-                .setControl((option) -> new SliderControl(option, 4, 64, 2, ControlValueFormatter.translateVariable("Pixels")))
+                .setControl((option) -> new SliderControl(option, 4, 64, 2, ControlValueFormatter.translateVariable("embeddium.plus.options.common.pixels")))
                 .setImpact(OptionImpact.LOW)
                 .setBinding(
                         (opts, value) -> EmbPlusConfig.fpsCounterPosition.set(value),
@@ -138,7 +138,7 @@ public class EmbedtCoreOptionsMixin {
         OptionImpl<SodiumGameOptions, Integer> cloudHeight = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.clouds.height.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.clouds.height.desc"))
-                .setControl((option) -> new SliderControl(option, 64, 364, 4, ControlValueFormatter.translateVariable("Blocks")))
+                .setControl((option) -> new SliderControl(option, 64, 364, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
                         (options, value) -> {
                             EmbPlusConfig.cloudHeight.set(value);
@@ -169,7 +169,7 @@ public class EmbedtCoreOptionsMixin {
         OptionImpl<SodiumGameOptions, Integer> maxEntityDistance = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.entity.distance.h.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.distance.h.desc"))
-                .setControl((option) -> new SliderControl(option, 16, 192, 8, ControlValueFormatter.translateVariable("Blocks")))
+                .setControl((option) -> new SliderControl(option, 16, 192, 8, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
                         (options, value) -> EmbPlusConfig.maxEntityRenderDistanceSquare.set(value * value),
                         (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbPlusConfig.maxEntityRenderDistanceSquare.get()))))
@@ -179,7 +179,7 @@ public class EmbedtCoreOptionsMixin {
         OptionImpl<SodiumGameOptions, Integer> maxEntityDistanceVertical = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.entity.distance.v.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.distance.v.desc"))
-                .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("Blocks")))
+                .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
                         (options, value) -> EmbPlusConfig.maxEntityRenderDistanceY.set(value),
                         (options) -> EmbPlusConfig.maxEntityRenderDistanceY.get())
@@ -199,7 +199,7 @@ public class EmbedtCoreOptionsMixin {
         OptionImpl<SodiumGameOptions, Integer> maxTileEntityDistance = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.tile.distance.h.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.tile.distance.h.desc"))
-                .setControl((option) -> new SliderControl(option, 16, 256, 8, ControlValueFormatter.translateVariable("Blocks")))
+                .setControl((option) -> new SliderControl(option, 16, 256, 8, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
                         (options, value) -> EmbPlusConfig.maxTileEntityRenderDistanceSquare.set(value * value),
                         (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbPlusConfig.maxTileEntityRenderDistanceSquare.get()))))
@@ -209,7 +209,7 @@ public class EmbedtCoreOptionsMixin {
         OptionImpl<SodiumGameOptions, Integer> maxTileEntityDistanceVertical = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.tile.distance.v.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.tile.distance.v.desc"))
-                .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("Blocks")))
+                .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
                         (options, value) -> EmbPlusConfig.maxTileEntityRenderDistanceY.set(value),
                         (options) -> EmbPlusConfig.maxTileEntityRenderDistanceY.get())
