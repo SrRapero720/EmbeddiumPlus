@@ -1,12 +1,3 @@
-/*
- * Copyright © 2020 LambdAurora <aurora42lambda@gmail.com>
- *
- * This file is part of LambDynamicLights.
- *
- * Licensed under the MIT license. For more information,
- * see the LICENSE file.
- */
-
 package me.srrapero720.embeddiumplus.features.dynlights.item;
 
 import com.google.gson.JsonParser;
@@ -17,12 +8,16 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
 /**
  * Represents an item light sources manager.
@@ -32,13 +27,9 @@ import java.util.List;
  * @since 1.3.0
  */
 public final class ItemLightRegistry {
-	private static final JsonParser JSON_PARSER = new JsonParser();
-	private static final List<ItemLightSource> ITEM_LIGHT_SOURCES = new ArrayList<>();
+	private static final Marker IT = MarkerManager.getMarker("ItemLightRegistry");
+    private static final List<ItemLightSource> ITEM_LIGHT_SOURCES = new ArrayList<>();
 	private static final List<ItemLightSource> STATIC_ITEM_LIGHT_SOURCES = new ArrayList<>();
-
-	private ItemLightRegistry() {
-		throw new UnsupportedOperationException("ItemLightSources only contains static definitions.");
-	}
 
 	/**
 	 * Loads the item light source data from resource pack.
@@ -59,14 +50,14 @@ public final class ItemLightRegistry {
 		var id = new ResourceLocation(resourceId.getNamespace(), resourceId.getPath().replace(".json", ""));
 
 		try {
-			var json = JSON_PARSER.parse(new InputStreamReader(resource.open())).getAsJsonObject();
+			var json = JsonParser.parseReader(new InputStreamReader(resource.open())).getAsJsonObject();
 
 			ItemLightSource.fromJson(id, json).ifPresent(data -> {
 				if (!STATIC_ITEM_LIGHT_SOURCES.contains(data))
 					register(data);
 			});
 		} catch (IOException | IllegalStateException e) {
-			DynLightsPlus.warn("Failed to load item light source \"" + id + "\".");
+			LOGGER.warn(IT, "Failed to load item light source '{}'", id);
 		}
 	}
 
@@ -78,8 +69,8 @@ public final class ItemLightRegistry {
 	private static void register(@NotNull ItemLightSource data) {
 		for (var other : ITEM_LIGHT_SOURCES) {
 			if (other.item() == data.item()) {
-				DynLightsPlus.warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
-						+ ForgeRegistries.ITEMS.getKey(data.item()) + "\" found in \"" + other.id() + "\".");
+				LOGGER.warn(IT, "Failed to register item light source '{}', duplicates item '{}' found in '{}'",
+						data.id(), ForgeRegistries.ITEMS.getKey(data.item()), other.id());
 				return;
 			}
 		}
@@ -95,8 +86,8 @@ public final class ItemLightRegistry {
 	public static void registerItemLightSource(@NotNull ItemLightSource data) {
 		for (var other : STATIC_ITEM_LIGHT_SOURCES) {
 			if (other.item() == data.item()) {
-				DynLightsPlus.warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
-						+ ForgeRegistries.ITEMS.getKey(data.item()) + "\" found in \"" + other.id() + "\".");
+				LOGGER.warn(IT, "Failed to register item light source '{}', duplicates item '{}' found in '{}'",
+						data.id(), ForgeRegistries.ITEMS.getKey(data.item()), other.id());
 				return;
 			}
 		}

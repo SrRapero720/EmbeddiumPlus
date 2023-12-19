@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
+package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;

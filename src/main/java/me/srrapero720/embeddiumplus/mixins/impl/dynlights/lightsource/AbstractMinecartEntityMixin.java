@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
+package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
@@ -6,8 +6,9 @@ import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -15,37 +16,34 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(PrimedTnt.class)
-public abstract class TntEntityMixin extends Entity implements DynamicLightSource {
+/**
+ * Adds the tick method for dynamic light source tracking in minecart entities.
+ *
+ * @author LambdAurora
+ * @version 2.0.2
+ * @since 1.3.2
+ */
+@Mixin(AbstractMinecart.class)
+public abstract class AbstractMinecartEntityMixin extends Entity implements DynamicLightSource {
 	@Shadow
-	public abstract int getFuse();
+	public abstract BlockState getDisplayBlockState();
 
-	@Unique
-	private int embeddiumPlus$startFuseTimer = 80;
 	@Unique
 	private int lambdynlights$luminance;
 
-	public TntEntityMixin(EntityType<?> type, Level world) {
+	public AbstractMinecartEntityMixin(EntityType<?> type, Level world) {
 		super(type, world);
 	}
 
-	@Inject(method = "<init>(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V", at = @At("TAIL"))
-	private void onNew(EntityType<? extends PrimedTnt> entityType, Level world, CallbackInfo ci) {
-		this.embeddiumPlus$startFuseTimer = this.getFuse();
-	}
-
-	@Inject(method = "tick", at = @At("TAIL"))
+	@Inject(method = "tick", at = @At("HEAD"))
 	private void onTick(CallbackInfo ci) {
 		// We do not want to update the entity on the server.
-		if (this.getCommandSenderWorld().isClientSide()) {
-			if (!DynLightsPlus.isEnabled())
-				return;
-
+		if (this.level().isClientSide()) {
 			if (this.isRemoved()) {
 				this.tdv$setDynamicLightEnabled(false);
 			} else {
 				if (!EmbPlusConfig.tileEntityLighting.get() || !DynLightsHandlers.canLightUp(this))
-					this.tdv$resetDynamicLight();
+					this.lambdynlights$luminance = 0;
 				else
 					this.tdv$dynamicLightTick();
 				DynLightsPlus.updateTracking(this);
@@ -55,16 +53,13 @@ public abstract class TntEntityMixin extends Entity implements DynamicLightSourc
 
 	@Override
 	public void tdv$dynamicLightTick() {
-		if (this.isOnFire()) {
-			this.lambdynlights$luminance = 15;
-		} else {
-			if (DynLightsPlus.isEnabled()) {
-				var fuse = this.getFuse() / this.embeddiumPlus$startFuseTimer;
-				this.lambdynlights$luminance = (int) (-(fuse * fuse) * 10.0) + 10;
-			} else {
-				this.lambdynlights$luminance = 10;
-			}
-		}
+		this.lambdynlights$luminance = Math.max(
+				Math.max(
+						this.isOnFire() ? 15 : 0,
+						this.getDisplayBlockState().getLightEmission()
+				),
+				DynLightsHandlers.getLuminanceFrom(this)
+		);
 	}
 
 	@Override

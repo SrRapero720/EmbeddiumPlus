@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.embeddium;
+package me.srrapero720.embeddiumplus.mixins.impl.dynlights.embeddium;
 
 import me.jellysquid.mods.sodium.client.model.light.flat.FlatLightPipeline;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.EmbedtDynamicLightHandler;

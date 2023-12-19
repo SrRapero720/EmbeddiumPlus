@@ -15,8 +15,6 @@ public class DebugOverlayImprovements {
 
         // cancel rendering text if chart is displaying
         var minecraft = Minecraft.getInstance();
-        if (minecraft.options.renderFpsChart)
-            event.setCanceled(true);
-
+        if (minecraft.options.renderFpsChart) event.setCanceled(true);
     }
 }
