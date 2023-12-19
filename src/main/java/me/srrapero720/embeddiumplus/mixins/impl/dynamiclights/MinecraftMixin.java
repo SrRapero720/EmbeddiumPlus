@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights;
 
-import me.srrapero720.dynamiclights.LambDynLights;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,6 +21,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MinecraftMixin {
 	@Inject(method = "setLevel", at = @At("HEAD"))
 	private void onSetWorld(ClientLevel world, CallbackInfo ci) {
-		LambDynLights.get().clearLightSources();
+		DynLightsPlus.get().clearLightSources();
 	}
 }

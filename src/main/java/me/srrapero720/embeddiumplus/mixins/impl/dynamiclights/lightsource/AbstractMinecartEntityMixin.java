@@ -1,9 +1,9 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
 
-import me.srrapero720.dynamiclights.DynamicLightSource;
-import me.srrapero720.dynamiclights.LambDynLights;
-import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
@@ -42,11 +42,11 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Dyna
 			if (this.isRemoved()) {
 				this.tdv$setDynamicLightEnabled(false);
 			} else {
-				if (!EmbPlusConfig.tileEntityLighting.get() || !DynamicLightHandlers.canLightUp(this))
+				if (!EmbPlusConfig.tileEntityLighting.get() || !DynLightsHandlers.canLightUp(this))
 					this.lambdynlights$luminance = 0;
 				else
 					this.tdv$dynamicLightTick();
-				LambDynLights.updateTracking(this);
+				DynLightsPlus.updateTracking(this);
 			}
 		}
 	}
@@ -58,7 +58,7 @@ public abstract class AbstractMinecartEntityMixin extends Entity implements Dyna
 						this.isOnFire() ? 15 : 0,
 						this.getDisplayBlockState().getLightEmission()
 				),
-				DynamicLightHandlers.getLuminanceFrom(this)
+				DynLightsHandlers.getLuminanceFrom(this)
 		);
 	}
 

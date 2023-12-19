@@ -7,18 +7,19 @@
  * see the LICENSE file.
  */
 
-package me.srrapero720.dynamiclights;
+package me.srrapero720.embeddiumplus.features.dynlights;
 
-import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
-import me.srrapero720.dynamiclights.api.item.ItemLightSources;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
+import me.srrapero720.embeddiumplus.features.dynlights.events.DynLightsSetupEvent;
+import me.srrapero720.embeddiumplus.features.dynlights.item.ItemLightRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.packs.resources.ReloadableResourceManager;
-import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.PrimedTnt;
@@ -28,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
@@ -41,11 +43,11 @@ import java.util.function.Predicate;
 import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
 @OnlyIn(Dist.CLIENT)
-public class LambDynLights {
+public class DynLightsPlus {
 	private static final Marker IT = MarkerManager.getMarker("DynamicLights");
 	private static final double MAX_RADIUS = 7.75;
 	private static final double MAX_RADIUS_SQUARED = MAX_RADIUS * MAX_RADIUS;
-	private static final LambDynLights INSTANCE = new LambDynLights();
+	private static final DynLightsPlus INSTANCE = new DynLightsPlus();
 
 	private final Set<DynamicLightSource> dynamicLightSources = new HashSet<>();
 	private final ReentrantReadWriteLock lightSourcesLock = new ReentrantReadWriteLock();
@@ -53,15 +55,15 @@ public class LambDynLights {
 	private int lastUpdateCount = 0;
 
 	public static void init() {
-		log("Initializing Dynamic Lights Reforged...");
-		DynLightsResourceListener reloadListener = new DynLightsResourceListener();
-
-		ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
-		if (resourceManager instanceof ReloadableResourceManager reloadableResourceManager) {
-			reloadableResourceManager.registerReloadListener(reloadListener);
+		LOGGER.info(IT,"Initializing DynLights...");
+		if (Minecraft.getInstance().getResourceManager() instanceof ReloadableResourceManager reloadableResourceManager) {
+			reloadableResourceManager.registerReloadListener((ResourceManagerReloadListener) resourceManager -> {
+                LOGGER.warn("Reloading Dynamic lights");
+                ItemLightRegistry.load(resourceManager);
+            });
 		}
 
-		DynamicLightHandlers.registerDefaultHandlers();
+		MinecraftForge.EVENT_BUS.post(new DynLightsSetupEvent());
 	}
 
 	public static boolean isEnabled() { return EmbPlusConfig.dynQuality.get() != EmbPlusConfig.DynamicLightsQuality.OFF; }
@@ -424,7 +426,7 @@ public class LambDynLights {
 	 * @return the luminance of the item
 	 */
 	public static int getLuminanceFromItemStack(@NotNull ItemStack stack, boolean submergedInWater) {
-		return ItemLightSources.getLuminance(stack, submergedInWater);
+		return ItemLightRegistry.getLuminance(stack, submergedInWater);
 	}
 
 	/**
@@ -432,7 +434,7 @@ public class LambDynLights {
 	 *
 	 * @return the mod instance
 	 */
-	public static LambDynLights get() {
+	public static DynLightsPlus get() {
 		return INSTANCE;
 	}
 }

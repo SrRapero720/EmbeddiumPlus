@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.srrapero720.dynamiclights.LambDynLights;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -18,6 +18,6 @@ public class LevelRendererMixin {
     @Inject(at = @At("HEAD"), method = "renderLevel")
     public void render(PoseStack outlinebuffersource, float i, long j, boolean k, Camera l, GameRenderer i1, LightTexture lightTexture, Matrix4f multibuffersource, CallbackInfo ci) {
         Minecraft.getInstance().getProfiler().popPush("dynamic_lighting");
-        LambDynLights.get().updateAll((LevelRenderer) (Object) this);
+        DynLightsPlus.get().updateAll((LevelRenderer) (Object) this);
     }
 }

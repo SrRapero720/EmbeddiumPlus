@@ -7,11 +7,15 @@
  * see the LICENSE file.
  */
 
-package me.srrapero720.dynamiclights.api.item;
+package me.srrapero720.embeddiumplus.features.dynlights.item;
 
 import com.google.gson.JsonParser;
-import me.srrapero720.dynamiclights.LambDynLights;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,11 +24,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
-
 /**
  * Represents an item light sources manager.
  *
@@ -32,12 +31,12 @@ import net.minecraft.world.item.ItemStack;
  * @version 2.0.2
  * @since 1.3.0
  */
-public final class ItemLightSources {
+public final class ItemLightRegistry {
 	private static final JsonParser JSON_PARSER = new JsonParser();
 	private static final List<ItemLightSource> ITEM_LIGHT_SOURCES = new ArrayList<>();
 	private static final List<ItemLightSource> STATIC_ITEM_LIGHT_SOURCES = new ArrayList<>();
 
-	private ItemLightSources() {
+	private ItemLightRegistry() {
 		throw new UnsupportedOperationException("ItemLightSources only contains static definitions.");
 	}
 
@@ -67,7 +66,7 @@ public final class ItemLightSources {
 					register(data);
 			});
 		} catch (IOException | IllegalStateException e) {
-			LambDynLights.warn("Failed to load item light source \"" + id + "\".");
+			DynLightsPlus.warn("Failed to load item light source \"" + id + "\".");
 		}
 	}
 
@@ -79,7 +78,7 @@ public final class ItemLightSources {
 	private static void register(@NotNull ItemLightSource data) {
 		for (var other : ITEM_LIGHT_SOURCES) {
 			if (other.item() == data.item()) {
-				LambDynLights.warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
+				DynLightsPlus.warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
 						+ ForgeRegistries.ITEMS.getKey(data.item()) + "\" found in \"" + other.id() + "\".");
 				return;
 			}
@@ -96,7 +95,7 @@ public final class ItemLightSources {
 	public static void registerItemLightSource(@NotNull ItemLightSource data) {
 		for (var other : STATIC_ITEM_LIGHT_SOURCES) {
 			if (other.item() == data.item()) {
-				LambDynLights.warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
+				DynLightsPlus.warn("Failed to register item light source \"" + data.id() + "\", duplicates item \""
 						+ ForgeRegistries.ITEMS.getKey(data.item()) + "\" found in \"" + other.id() + "\".");
 				return;
 			}

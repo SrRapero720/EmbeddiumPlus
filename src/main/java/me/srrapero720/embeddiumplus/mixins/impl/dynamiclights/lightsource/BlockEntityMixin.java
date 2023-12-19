@@ -1,10 +1,10 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.lightsource;
 
-import me.srrapero720.dynamiclights.DynamicLightSource;
-import me.srrapero720.dynamiclights.LambDynLights;
-import me.srrapero720.dynamiclights.api.DynamicLightHandlers;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
@@ -80,8 +80,8 @@ public abstract class BlockEntityMixin implements DynamicLightSource {
 		if (this.level == null || !this.level.isClientSide())
 			return;
 		if (!this.remove) {
-			this.luminance = DynamicLightHandlers.getLuminanceFrom((BlockEntity) (Object) this);
-			LambDynLights.updateTracking(this);
+			this.luminance = DynLightsHandlers.getLuminanceFrom((BlockEntity) (Object) this);
+			DynLightsPlus.updateTracking(this);
 
 			if (!this.tdv$isDynamicLightEnabled()) {
 				this.lastLuminance = 0;
@@ -128,7 +128,7 @@ public abstract class BlockEntityMixin implements DynamicLightSource {
 						Mth.floorDiv(this.worldPosition.getY(), 16),
 						Mth.floorDiv(this.worldPosition.getZ(), 16));
 
-				LambDynLights.updateTrackedChunks(chunkPos, null, this.lambdynlights$trackedLitChunkPos);
+				DynLightsPlus.updateTrackedChunks(chunkPos, null, this.lambdynlights$trackedLitChunkPos);
 
 				var directionX = (this.worldPosition.getX() & 15) >= 8 ? Direction.EAST : Direction.WEST;
 				var directionY = (this.worldPosition.getY() & 15) >= 8 ? Direction.UP : Direction.DOWN;
@@ -145,7 +145,7 @@ public abstract class BlockEntityMixin implements DynamicLightSource {
 						chunkPos.move(directionZ.getOpposite()); // origin
 						chunkPos.move(directionY); // Y
 					}
-					LambDynLights.updateTrackedChunks(chunkPos, null, this.lambdynlights$trackedLitChunkPos);
+					DynLightsPlus.updateTrackedChunks(chunkPos, null, this.lambdynlights$trackedLitChunkPos);
 				}
 			}
 
@@ -160,7 +160,7 @@ public abstract class BlockEntityMixin implements DynamicLightSource {
 	public void tdv$lambdynlights$scheduleTrackedChunksRebuild(@NotNull LevelRenderer renderer) {
 		if (this.level == Minecraft.getInstance().level)
 			for (long pos : this.lambdynlights$trackedLitChunkPos) {
-				LambDynLights.scheduleChunkRebuild(renderer, pos);
+				DynLightsPlus.scheduleChunkRebuild(renderer, pos);
 			}
 	}
 }

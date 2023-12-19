@@ -1,48 +1,28 @@
-/*******************************************************************************
- * Copyright 2019 grondag
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License.  You may obtain a copy
- * of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
- * License for the specific language governing permissions and limitations under
- * the License.
- ******************************************************************************/
-package me.srrapero720.embeddiumplus.features.true_darkness;
+package me.srrapero720.embeddiumplus.features.darkness;
 
-
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.EmbeddiumPlus;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
 
+@Mod.EventBusSubscriber(modid = EmbeddiumPlus.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class DarknessPlus {
 
-@Mod.EventBusSubscriber(modid = EmbeddiumPlus.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-public class Darkness {
 	@SubscribeEvent
 	public static void onConfigChange(ModConfigEvent e) {
-		bake();
-	}
-
-	public static void bake() {
 		EmbPlusConfig.darkNetherFogEffective = EmbPlusConfig.darkNether.get() ? EmbPlusConfig.darkNetherFogConfigured.get() : 1.0;
 		EmbPlusConfig.darkEndFogEffective = EmbPlusConfig.darkEnd.get() ? EmbPlusConfig.darkEndFogConfigured.get() : 1.0;
 	}
@@ -136,10 +116,10 @@ public class Darkness {
 				enabled = true;
 			}
 
-			final float dimSkyFactor = Darkness.skyFactor(world);
+			final float dimSkyFactor = DarknessPlus.skyFactor(world);
 			final float ambient = world.getSkyDarken(1.0F);
 			final DimensionType dim = world.dimensionType();
-			final boolean blockAmbient = !Darkness.isDark(world);
+			final boolean blockAmbient = !DarknessPlus.isDark(world);
 
 			for (int skyIndex = 0; skyIndex < 16; ++skyIndex) {
 				float skyFactor = 1f - skyIndex / 15f;
@@ -245,7 +225,7 @@ public class Darkness {
 						blue = 0.0F;
 					}
 
-					LUMINANCE[blockIndex][skyIndex] = Darkness.luminance(red, green, blue);
+					LUMINANCE[blockIndex][skyIndex] = DarknessPlus.luminance(red, green, blue);
 				}
 			}
 		}

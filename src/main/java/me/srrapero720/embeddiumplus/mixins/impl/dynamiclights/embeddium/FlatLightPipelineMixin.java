@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynamiclights.embeddium;
 
 import me.jellysquid.mods.sodium.client.model.light.flat.FlatLightPipeline;
-import me.srrapero720.dynamiclights.SodiumDynamicLightHandler;
+import me.srrapero720.embeddiumplus.features.dynlights.accessors.EmbedtDynamicLightHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import org.spongepowered.asm.mixin.Dynamic;
@@ -16,7 +16,7 @@ public abstract class FlatLightPipelineMixin {
     @Dynamic
     @Inject(method = "getOffsetLightmap", at = @At(value = "RETURN", ordinal = 1), remap = false, locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     private void lambdynlights$getLightmap(BlockPos pos, Direction face, CallbackInfoReturnable<Integer> cir, int word, int adjWord) {
-        int lightmap = SodiumDynamicLightHandler.lambdynlights$getLightmap(pos, adjWord, cir.getReturnValueI());
+        int lightmap = EmbedtDynamicLightHandler.lambdynlights$getLightmap(pos, adjWord, cir.getReturnValueI());
         cir.setReturnValue(lightmap);
     }
 }

@@ -1,5 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.frames;
 
+import me.srrapero720.embeddiumplus.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.frame_overlay.MinFrameProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,7 +10,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
 
 import java.util.LinkedList;
 
