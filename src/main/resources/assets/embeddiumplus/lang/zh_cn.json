@@ -47,7 +47,5 @@
   "embeddium.plus.options.dynlights.entities.title": "为实体启用",
   "embeddium.plus.options.dynlights.entities.desc": "启用此选项后，将为实体（生物、掉落的物品等）启用动态光源。\n\n即使你没有拿着火把，光照更新的数量也会因它急剧增加。",
   "embeddium.plus.options.dynlights.blockentities.title": "为方块实体启用",
-  "embeddium.plus.options.dynlights.blockentities.desc": "启用此选项后，将为方块实体（熔炉、模组机器等）启用动态光源。\n\n即使你没有拿着火把，光照更新的数量也会因它急剧增加。",
-  "Pixels": "像素",
-  "Blocks": "格"
+  "embeddium.plus.options.dynlights.blockentities.desc": "启用此选项后，将为方块实体（熔炉、模组机器等）启用动态光源。\n\n即使你没有拿着火把，光照更新的数量也会因它急剧增加。"
 }
