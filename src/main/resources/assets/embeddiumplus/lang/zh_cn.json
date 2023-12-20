@@ -7,6 +7,8 @@
   "embeddium.plus.options.common.fast": "快",
   "embeddium.plus.options.common.faster": "更快",
   "embeddium.plus.options.common.realtime": "实时",
+  "embeddium.plus.options.common.blocks": "格",
+  "embeddium.plus.options.common.pixels": "像素",
   "embeddium.plus.options.displayfps.title": "显示FPS",
   "embeddium.plus.options.displayfps.desc": "显示当前FPS。高级模式还显示最低FPS、前15秒内的平均FPS，这对评估性能很有用。",
   "embeddium.plus.options.displayfps.position.title": "FPS显示位置",
