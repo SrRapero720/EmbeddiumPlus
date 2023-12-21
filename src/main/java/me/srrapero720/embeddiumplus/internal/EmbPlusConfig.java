@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus;
+package me.srrapero720.embeddiumplus.internal;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;

@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;

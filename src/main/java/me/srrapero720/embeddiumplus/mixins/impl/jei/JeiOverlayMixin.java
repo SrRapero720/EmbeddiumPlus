@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.jei;
 
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import mezz.jei.gui.elements.GuiIconToggleButton;
 import mezz.jei.gui.input.GuiTextFieldFilter;
 import mezz.jei.gui.overlay.IngredientListOverlay;

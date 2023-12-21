@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.entity_distance.IEntityTypeAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;

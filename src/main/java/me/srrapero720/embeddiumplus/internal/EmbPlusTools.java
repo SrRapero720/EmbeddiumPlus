@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus;
+package me.srrapero720.embeddiumplus.internal;
 
 import com.jozufozu.flywheel.config.BackendType;
 import com.jozufozu.flywheel.config.FlwConfig;

@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.borderless;
 
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.api.EmbPlusAPI;
 import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;

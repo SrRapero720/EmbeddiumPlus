@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.features.darkness;
 
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.EmbeddiumPlus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
