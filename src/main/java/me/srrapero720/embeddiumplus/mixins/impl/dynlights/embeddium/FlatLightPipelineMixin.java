@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class FlatLightPipelineMixin {
     @Dynamic
     @Inject(method = "getOffsetLightmap", at = @At(value = "RETURN", ordinal = 1), remap = false, locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private void lambdynlights$getLightmap(BlockPos pos, Direction face, CallbackInfoReturnable<Integer> cir, int word, int adjWord) {
-        int lightmap = EmbedtDynamicLightHandler.lambdynlights$getLightmap(pos, adjWord, cir.getReturnValueI());
+    private void dynlights$getLightmap(BlockPos pos, Direction face, CallbackInfoReturnable<Integer> cir, int word, int adjWord) {
+        int lightmap = EmbedtDynamicLightHandler.getLightMap(pos, adjWord, cir.getReturnValueI());
         cir.setReturnValue(lightmap);
     }
 }

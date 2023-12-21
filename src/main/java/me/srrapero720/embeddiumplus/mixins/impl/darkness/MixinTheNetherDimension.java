@@ -15,11 +15,9 @@ public class MixinTheNetherDimension {
 	@Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
 	private void onAdjustSkyColor(CallbackInfoReturnable<Vec3> ci) {
 		if (!EmbPlusConfig.trueDarknessEnabled.get()) return;
-
 		if (!EmbPlusConfig.darkNether.get()) return;
 
 		final double factor = DarknessPlus.darkNetherFog();
-
 		DarknessPlus.getDarkenedFogColor(ci, factor);
 	}
 }

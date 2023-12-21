@@ -14,14 +14,14 @@ import java.util.List;
 public abstract class EntityCullingMixin implements IEntityTypeAccess {
     @Shadow public abstract ResourceLocation getDefaultLootTable();
 
-    @Unique private boolean embeddiumPlus$checked = false;
-    @Unique private boolean embeddiumPlus$whitelisted = false;
+    @Unique private boolean embPlus$checked = false;
+    @Unique private boolean embPlus$whitelisted = false;
 
     @Override
     @Unique
     public boolean embPlus$isWhitelisted() {
         if (!EmbPlusConfig.SPECS.isLoaded()) return false;
-        if (embeddiumPlus$checked) return embeddiumPlus$whitelisted;
+        if (embPlus$checked) return embPlus$whitelisted;
 
         List<?> entityWhitelist = EmbPlusConfig.entityWhitelist.get();
         for (int i = 0; i < entityWhitelist.size(); i++) {
@@ -29,14 +29,14 @@ public abstract class EntityCullingMixin implements IEntityTypeAccess {
             String[] result = ((String) entityWhitelist.get(i)).split(":");
 
             if (result[1].equals("*") && getDefaultLootTable().getNamespace().equals(result[0])) {
-                embeddiumPlus$whitelisted = true;
+                embPlus$whitelisted = true;
                 break;
             } else if (getDefaultLootTable().equals(new ResourceLocation(result[0], result[1]))) {
-                embeddiumPlus$whitelisted = true;
+                embPlus$whitelisted = true;
                 break;
             }
-            embeddiumPlus$checked = true;
+            embPlus$checked = true;
         }
-        return embeddiumPlus$whitelisted;
+        return embPlus$whitelisted;
     }
 }

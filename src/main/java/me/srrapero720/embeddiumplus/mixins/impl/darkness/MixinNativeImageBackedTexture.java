@@ -17,11 +17,11 @@ public class MixinNativeImageBackedTexture implements TextureAccess {
 	private NativeImage pixels;
 
 	@Unique
-	private boolean embeddiumPlus$enableHook = false;
+	private boolean embPlus$enableHook = false;
 
 	@Inject(method = "upload", at = @At(value = "HEAD"))
 	private void onRenderWorld(CallbackInfo ci) {
-		if (embeddiumPlus$enableHook && DarknessPlus.enabled) {
+		if (embPlus$enableHook && DarknessPlus.enabled) {
 			final NativeImage img = pixels;
 			for (int b = 0; b < 16; b++) {
 				for (int s = 0; s < 16; s++) {
@@ -34,6 +34,6 @@ public class MixinNativeImageBackedTexture implements TextureAccess {
 
 	@Override
 	public void embPlus$enableUploadHook() {
-		embeddiumPlus$enableHook = true;
+		embPlus$enableHook = true;
 	}
 }

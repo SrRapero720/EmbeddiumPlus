@@ -10,9 +10,9 @@ public interface EmbedtDynamicLightHandler {
     // Stores the current light position being used by ArrayLightDataCache#get
     // We use ThreadLocal because Sodium's chunk builder is multithreaded, otherwise it will break
     // catastrophically.
-    ThreadLocal<BlockPos.MutableBlockPos> lambdynlights$pos = ThreadLocal.withInitial(BlockPos.MutableBlockPos::new);
+    ThreadLocal<BlockPos.MutableBlockPos> pos = ThreadLocal.withInitial(BlockPos.MutableBlockPos::new);
 
-    static int lambdynlights$getLightmap(BlockPos pos, int word, int lightmap) {
+    static int getLightMap(BlockPos pos, int word, int lightmap) {
         if (!DynLightsPlus.isEnabled())
             return lightmap;
 
