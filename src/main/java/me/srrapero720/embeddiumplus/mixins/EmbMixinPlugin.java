@@ -2,7 +2,6 @@ package me.srrapero720.embeddiumplus.mixins;
 
 import me.srrapero720.embeddiumplus.EmbPlusTools;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.objectweb.asm.tree.ClassNode;
@@ -16,7 +15,6 @@ import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
 public class EmbMixinPlugin implements IMixinConfigPlugin {
     private static final Marker IT = MarkerManager.getMarker("MixinPlugin");
-    private static boolean isPresent(String modid) { return FMLLoader.getLoadingModList().getModFileById(modid) != null; }
 
     @Override
     public void onLoad(String mixinPackage) {
@@ -39,12 +37,12 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
             }
 
             case "JeiOverlayMixin" -> {
-                if (!isPresent("jei")) {
+                if (!EmbPlusTools.isPresent("jei")) {
                     LOGGER.warn(IT, "Disabling JeiOverlayMixin due to JEI being NOT installed");
                     yield false;
                 } else {
                     LOGGER.warn(IT, "Enabling JeiOverlayMixin...");
-                    if (isPresent("rei")) throw new IllegalStateException("REI and JEI detected... forcing shutting down");
+                    if (EmbPlusTools.isPresent("rei")) throw new IllegalStateException("REI and JEI detected... forcing shutting down");
                     yield true;
                 }
             }

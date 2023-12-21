@@ -1,16 +1,27 @@
 package me.srrapero720.embeddiumplus;
 
+import com.jozufozu.flywheel.config.BackendType;
+import com.jozufozu.flywheel.config.FlwConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 import java.util.List;
 
 public class EmbPlusTools {
     public static <T> T getLastValue(T[] value) {
         return value[value.length - 1];
+    }
+
+    public static boolean flwIsOff() {
+        try {
+            return FlwConfig.get().getBackendType() == BackendType.OFF;
+        } catch (Error e) {
+            return true; // no flywheel
+        }
     }
 
     public static boolean isNearPlayer(Level world, BlockPos pos, int maxHeight, int maxDistanceSquare) {
@@ -71,4 +82,6 @@ public class EmbPlusTools {
 
         return false;
     }
+
+    public static boolean isPresent(String modid) { return FMLLoader.getLoadingModList().getModFileById(modid) != null; }
 }
