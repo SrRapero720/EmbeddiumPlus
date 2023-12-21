@@ -13,7 +13,7 @@ public abstract class LightDataAccessMixin {
     @Dynamic
     @Inject(method = "getLightmap", at = @At("RETURN"), remap = false, cancellable = true)
     private static void lambdynlights$getLightmap(int word, CallbackInfoReturnable<Integer> cir) {
-        int lightmap = EmbedtDynamicLightHandler.lambdynlights$getLightmap(EmbedtDynamicLightHandler.lambdynlights$pos.get(), word, cir.getReturnValueI());
+        int lightmap = EmbedtDynamicLightHandler.getLightMap(EmbedtDynamicLightHandler.pos.get(), word, cir.getReturnValueI());
         cir.setReturnValue(lightmap);
     }
 }

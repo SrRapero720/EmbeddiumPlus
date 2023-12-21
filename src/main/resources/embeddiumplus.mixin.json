@@ -35,7 +35,6 @@
     "dynlights.lightsource.LivingEntityMixin",
     "dynlights.lightsource.TntEntityMixin",
     "embeddium.EmbedtCoreOptionsMixin",
-    "embeddium.EmbedtDynLightsOptionsMixin",
     "embeddium.EmbedtGUIMixin",
     "entitydistance.EntityCullingMixin",
     "entitydistance.MaxDistanceEntity",

@@ -9,6 +9,10 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class EmbPlusTools {
+    public static <T> T getLastValue(T[] value) {
+        return value[value.length - 1];
+    }
+
     public static boolean isNearPlayer(Level world, BlockPos pos, int maxHeight, int maxDistanceSquare) {
         return isNearPlayerInternal(world, pos.getX(), pos.getY(), pos.getZ(), maxHeight, maxDistanceSquare, false);
     }

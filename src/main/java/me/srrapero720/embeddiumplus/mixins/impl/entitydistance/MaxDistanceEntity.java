@@ -22,7 +22,6 @@ public class MaxDistanceEntity {
         if (entity instanceof EnderDragon) return;
         if (entity instanceof Ghast) return;
 
-
         String name = entity.getClass().getName().toLowerCase();
         if (name.startsWith("com.simibubi.create.content.contraptions")) return;
         if (name.startsWith("com.github.alexthe666.iceandfire.entity") && name.contains("dragon")) return;

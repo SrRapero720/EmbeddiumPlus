@@ -15,12 +15,9 @@ import java.util.LinkedList;
 
 @Mixin(ForgeGui.class)
 public class FrameCounterMixin {
-    @Unique
-    private int embeddiumExtras$lastMeasuredFPS;
-    @Unique
-    private String embeddiumExtras$runningAverageFPS;
-    @Unique
-    private final LinkedList<Integer> embeddiumExtras$fpsRunningAverageQueue = new LinkedList<>();
+    @Unique private int embPlus$lastMeasuredFPS;
+    @Unique private String embPlus$runningAverageFPS;
+    @Unique private final LinkedList<Integer> embPlus$fpsRunningAverageQueue = new LinkedList<>();
 
     @Inject(method = "render", at = @At("HEAD"))
     public void render(GuiGraphics matrixStack, float tickDelta, CallbackInfo info) {
@@ -33,7 +30,7 @@ public class FrameCounterMixin {
 
             case ADVANCED -> {
                 int fps = FpsAccessorMixin.getFps();
-                displayString = GetAdvancedFPSString(fps);
+                displayString = embPlus$getAdvancedFPSString(fps);
             }
 
             default -> {
@@ -76,28 +73,29 @@ public class FrameCounterMixin {
     }
 
 
-    private String GetAdvancedFPSString(int fps) {
+    @Unique
+    private String embPlus$getAdvancedFPSString(int fps) {
         MinFrameProvider.recalculate();
 
-        if (embeddiumExtras$lastMeasuredFPS != fps) {
-            embeddiumExtras$lastMeasuredFPS = fps;
+        if (embPlus$lastMeasuredFPS != fps) {
+            embPlus$lastMeasuredFPS = fps;
 
-            if (embeddiumExtras$fpsRunningAverageQueue.size() > 14)
-                embeddiumExtras$fpsRunningAverageQueue.poll();
+            if (embPlus$fpsRunningAverageQueue.size() > 14)
+                embPlus$fpsRunningAverageQueue.poll();
 
-            embeddiumExtras$fpsRunningAverageQueue.offer(fps);
+            embPlus$fpsRunningAverageQueue.offer(fps);
 
             int totalFps = 0;
             int frameCount = 0;
-            for (var frameTime : embeddiumExtras$fpsRunningAverageQueue) {
+            for (var frameTime : embPlus$fpsRunningAverageQueue) {
                 totalFps += frameTime;
                 frameCount++;
             }
 
             int average = (int) (totalFps / frameCount);
-            embeddiumExtras$runningAverageFPS = String.valueOf(average);
+            embPlus$runningAverageFPS = String.valueOf(average);
         }
 
-        return fps + " | MIN " + MinFrameProvider.getLastMinFrame() + " | AVG " + embeddiumExtras$runningAverageFPS;
+        return fps + " | MIN " + MinFrameProvider.getLastMinFrame() + " | AVG " + embPlus$runningAverageFPS;
     }
 }
