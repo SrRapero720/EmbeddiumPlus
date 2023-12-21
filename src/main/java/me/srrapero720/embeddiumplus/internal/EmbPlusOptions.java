@@ -1,7 +1,6 @@
-package me.srrapero720.embeddiumplus.mixins;
+package me.srrapero720.embeddiumplus.internal;
 
 import com.google.common.collect.ImmutableList;
-import com.jozufozu.flywheel.Flywheel;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
 import me.jellysquid.mods.sodium.client.gui.options.*;
 import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
@@ -10,17 +9,12 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
-import me.srrapero720.embeddiumplus.EmbPlusTools;
 import me.srrapero720.embeddiumplus.api.EmbPlusAPI;
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import net.minecraft.network.chat.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EmbPlusOptions {
-
 
     public static Option<EmbPlusConfig.FullScreenMode> getFullscreenOption(MinecraftOptionsStorage options) {
         return OptionImpl.createBuilder(EmbPlusConfig.FullScreenMode.class, options)
@@ -34,7 +28,10 @@ public class EmbPlusOptions {
                 .setBinding(EmbPlusAPI::setFullScreenMode, (opts) -> EmbPlusConfig.fullScreenMode.get()).build();
     }
 
-    public static ImmutableList<OptionGroup> getPlusOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts) {
+
+    public static void setFPSOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts, MinecraftOptionsStorage vanillaOpts) {
+        var builder = OptionGroup.createBuilder();
+
         Option<EmbPlusConfig.Complexity> displayFps = OptionImpl.createBuilder(EmbPlusConfig.Complexity.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.displayfps.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.displayfps.desc"))
@@ -60,22 +57,15 @@ public class EmbPlusOptions {
                         (opts) -> EmbPlusConfig.fpsCounterPosition.get())
                 .build();
 
-        groups.add(OptionGroup.createBuilder()
-                .add(displayFps)
-                .add(displayFpsPos)
-                .build());
+        builder.add(displayFps);
+        builder.add(displayFpsPos);
+
+        groups.add(builder.build());
+    }
 
 
-        OptionImpl<SodiumGameOptions, Boolean> totalDarkness = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.darkness.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.darkness.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding(
-                        (options, value) -> EmbPlusConfig.trueDarknessEnabled.set(value),
-                        (options) -> EmbPlusConfig.trueDarknessEnabled.get())
-                .setImpact(OptionImpact.LOW)
-                .build();
-
+    public static void setPerformanceOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts, MinecraftOptionsStorage vanillaOpts) {
+        var builder = OptionGroup.createBuilder();
         OptionImpl<SodiumGameOptions, Boolean> fastChest = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.fastchest.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.fastchest.desc"))
@@ -87,84 +77,25 @@ public class EmbPlusOptions {
                 .setEnabled(EmbPlusTools.flwIsOff())
                 .build();
 
-        Option<EmbPlusConfig.DarknessMode> totalDarknessSetting = OptionImpl.createBuilder(EmbPlusConfig.DarknessMode.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.darkness.mode.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.darkness.mode.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.DarknessMode.class, new Component[]{
-                        Component.translatable("embeddium.plus.options.darkness.mode.pitchblack"),
-                        Component.translatable("embeddium.plus.options.darkness.mode.reallydark"),
-                        Component.translatable("embeddium.plus.options.darkness.mode.dark"),
-                        Component.translatable("embeddium.plus.options.darkness.mode.dim")
-                }))
-                .setBinding(
-                        (opts, value) -> EmbPlusConfig.darknessOption.set(value),
-                        (opts) -> EmbPlusConfig.darknessOption.get())
-                .setImpact(OptionImpact.LOW)
-                .build();
-
-        groups.add(OptionGroup.createBuilder()
-                .add(totalDarkness)
-                .add(fastChest)
-                .add(totalDarknessSetting)
-                .build());
-
-
-        Option<EmbPlusConfig.FadeInQuality> fadeInQuality = OptionImpl.createBuilder(EmbPlusConfig.FadeInQuality.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.chunkfadeinquality.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.chunkfadeinquality.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.FadeInQuality.class, new Component[]{
-                        Component.translatable("options.off"),
-                        Component.translatable("options.graphics.fast"),
-                        Component.translatable("options.graphics.fancy")
-                }))
-                .setBinding(
-                        (opts, value) -> EmbPlusConfig.fadeInQuality.set(value),
-                        (opts) -> EmbPlusConfig.fadeInQuality.get())
-                .setImpact(OptionImpact.LOW)
-                .setEnabled(false)
-                .build();
-
-        OptionImpl<SodiumGameOptions, Boolean> fog = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.fog.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.fog.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding(
-                        (options, value) -> EmbPlusConfig.fog.set(value),
-                        (options) -> EmbPlusConfig.fog.get())
-                .setImpact(OptionImpact.LOW)
-                .build();
-
         OptionImpl<SodiumGameOptions, Boolean> hideJEI = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.jei.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.jei.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
                         (options, value) -> EmbPlusConfig.hideJEI.set(value),
-                        (options) -> EmbPlusConfig.hideJEI.get())
+                        (options) -> EmbPlusTools.flwIsOff() ? EmbPlusConfig.hideJEI.get() : false)
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(EmbPlusTools.isPresent("jei"))
                 .build();
 
-        OptionImpl<SodiumGameOptions, Integer> cloudHeight = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.clouds.height.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.clouds.height.desc"))
-                .setControl((option) -> new SliderControl(option, 64, 364, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
-                .setBinding(
-                        (options, value) -> {
-                            EmbPlusConfig.cloudHeight.set(value);
-                        },
-                        (options) -> EmbPlusConfig.cloudHeight.get())
-                .setImpact(OptionImpact.LOW)
-                .build();
+        builder.add(fastChest);
+        builder.add(hideJEI);
+
+        groups.add(builder.build());
+    }
 
 
-        groups.add(OptionGroup.createBuilder()
-                .add(hideJEI)
-                .add(fadeInQuality)
-                .add(fog)
-                .add(cloudHeight)
-                .build());
-
+    public static OptionPage setPerformancePlusOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts) {
 
         OptionImpl<SodiumGameOptions, Boolean> enableDistanceChecks = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.entity.title"))
@@ -232,61 +163,7 @@ public class EmbPlusOptions {
                 .add(maxTileEntityDistanceVertical)
                 .build()
         );
-        return ImmutableList.copyOf(groups);
+        return new OptionPage(Component.translatable("sodium.options.pages.performance").append("++"), ImmutableList.copyOf(groups));
     }
 
-    // DYN LIGHTS
-    private static final SodiumOptionsStorage dynLightsOptionsStorage = new SodiumOptionsStorage();
-    public static OptionPage getDynLightsPage() {
-        List<OptionGroup> groups = new ArrayList<>();
-
-        OptionImpl<SodiumGameOptions, EmbPlusConfig.DynamicLightsQuality> qualityMode = OptionImpl.createBuilder(EmbPlusConfig.DynamicLightsQuality.class, dynLightsOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.dynlights.speed.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.dynlights.speed.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.DynamicLightsQuality.class, new Component[] {
-                        Component.translatable("embeddium.plus.options.common.off"),
-                        Component.translatable("embeddium.plus.options.common.slow"),
-                        Component.translatable("embeddium.plus.options.common.fast"),
-                        Component.translatable("embeddium.plus.options.common.faster"),
-                        Component.translatable("embeddium.plus.options.common.realtime")
-                }))
-                .setBinding((options, value) -> {
-                            EmbPlusConfig.dynQuality.set(value);
-                            DynLightsPlus.get().clearLightSources();
-                        },
-                        (options) -> EmbPlusConfig.dynQuality.get())
-                .setImpact(OptionImpact.MEDIUM)
-                .build();
-
-
-        OptionImpl<SodiumGameOptions, Boolean> entityLighting = OptionImpl.createBuilder(Boolean.class, dynLightsOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.dynlights.entities.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.dynlights.entities.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding(
-                        (options, value) -> EmbPlusConfig.entityLighting.set(value),
-                        (options) -> EmbPlusConfig.entityLighting.get())
-                .setImpact(OptionImpact.MEDIUM)
-                .build();
-
-        OptionImpl<SodiumGameOptions, Boolean> tileEntityLighting = OptionImpl.createBuilder(Boolean.class, dynLightsOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.dynlights.blockentities.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.dynlights.blockentities.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding(
-                        (options, value) -> EmbPlusConfig.tileEntityLighting.set(value),
-                        (options) -> EmbPlusConfig.tileEntityLighting.get())
-                .setImpact(OptionImpact.MEDIUM)
-                .build();
-
-        groups.add(OptionGroup
-                .createBuilder()
-                .add(qualityMode)
-                .add(entityLighting)
-                .add(tileEntityLighting)
-                .build()
-        );
-
-        return new OptionPage(Component.translatable("embeddium.plus.options.dynlights.group"), ImmutableList.copyOf(groups));
-    }
 }

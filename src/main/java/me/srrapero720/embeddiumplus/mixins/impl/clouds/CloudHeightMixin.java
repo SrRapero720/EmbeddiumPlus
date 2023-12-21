@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.clouds;
 
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

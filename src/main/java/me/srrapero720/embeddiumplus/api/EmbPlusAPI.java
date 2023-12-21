@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.api;
 
 import com.mojang.blaze3d.platform.Window;
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.mixins.impl.borderless.MainWindowAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;

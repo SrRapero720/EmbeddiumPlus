@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.features.dynlights;
 
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.EmbeddiumPlus;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightHolder;
 import me.srrapero720.embeddiumplus.features.dynlights.events.DynLightsSetupEvent;

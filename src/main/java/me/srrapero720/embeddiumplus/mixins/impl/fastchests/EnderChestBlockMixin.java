@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.fastchests;
 
-import me.srrapero720.embeddiumplus.EmbPlusConfig;
-import me.srrapero720.embeddiumplus.EmbPlusTools;
+import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbPlusTools;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EnderChestBlock;
 import net.minecraft.world.level.block.RenderShape;

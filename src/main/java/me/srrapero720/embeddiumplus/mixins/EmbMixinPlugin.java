@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins;
 
-import me.srrapero720.embeddiumplus.EmbPlusTools;
+import me.srrapero720.embeddiumplus.internal.EmbPlusTools;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
