@@ -39,10 +39,15 @@
     "entitydistance.EntityCullingMixin",
     "entitydistance.MaxDistanceEntity",
     "entitydistance.MaxDistanceTileEntity",
+    "fastchests.BERenderDispatcherMixin",
     "fog.BackgroundRendererMixin",
     "frames.FpsAccessorMixin",
     "frames.FrameCounterMixin",
     "jei.JeiOverlayMixin",
     "viewdistance.ExtendedServerViewDistanceMixin"
+  ],
+  "mixins": [
+    "fastchests.ChestBlockMixin",
+    "fastchests.EnderChestBlockMixin"
   ]
 }

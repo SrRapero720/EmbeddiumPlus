@@ -15,6 +15,8 @@
   "embeddium.plus.options.displayfps.position.desc": "Offsets the FPS display a few pixels",
   "embeddium.plus.options.darkness.title": "True Darkness",
   "embeddium.plus.options.darkness.desc": "Makes the rest of the world more realistically dark. Does not effect daytime or torch light.",
+  "embeddium.plus.options.fastchest.title": "Fast Chests",
+  "embeddium.plus.options.fastchest.desc": "Makes chest renders more faster, it breaks chest animations and requires leave and rejoin worldor change dimension\n\nDisabled by default when Flywheel is installed with instancing/batching backend",
   "embeddium.plus.options.darkness.mode.title": "True Darkness Mode",
   "embeddium.plus.options.darkness.mode.desc": "Controls how dark is considered true darkness.",
   "embeddium.plus.options.darkness.mode.pitchblack": "Pitch Black",

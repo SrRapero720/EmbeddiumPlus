@@ -1,6 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins;
 
 import com.google.common.collect.ImmutableList;
+import com.jozufozu.flywheel.Flywheel;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
 import me.jellysquid.mods.sodium.client.gui.options.*;
 import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
@@ -10,6 +11,7 @@ import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
 import me.srrapero720.embeddiumplus.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.EmbPlusTools;
 import me.srrapero720.embeddiumplus.api.EmbPlusAPI;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import net.minecraft.network.chat.Component;
@@ -74,6 +76,17 @@ public class EmbPlusOptions {
                 .setImpact(OptionImpact.LOW)
                 .build();
 
+        OptionImpl<SodiumGameOptions, Boolean> fastChest = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
+                .setName(Component.translatable("embeddium.plus.options.fastchest.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.fastchest.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (options, value) -> EmbPlusConfig.fastChestsEnabled.set(value),
+                        (options) -> EmbPlusConfig.fastChestsEnabled.get())
+                .setImpact(OptionImpact.LOW)
+                .setEnabled(EmbPlusTools.flwIsOff())
+                .build();
+
         Option<EmbPlusConfig.DarknessMode> totalDarknessSetting = OptionImpl.createBuilder(EmbPlusConfig.DarknessMode.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.darkness.mode.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.darkness.mode.desc"))
@@ -91,6 +104,7 @@ public class EmbPlusOptions {
 
         groups.add(OptionGroup.createBuilder()
                 .add(totalDarkness)
+                .add(fastChest)
                 .add(totalDarknessSetting)
                 .build());
 
@@ -128,6 +142,7 @@ public class EmbPlusOptions {
                         (options, value) -> EmbPlusConfig.hideJEI.set(value),
                         (options) -> EmbPlusConfig.hideJEI.get())
                 .setImpact(OptionImpact.LOW)
+                .setEnabled(EmbPlusTools.isPresent("jei"))
                 .build();
 
         OptionImpl<SodiumGameOptions, Integer> cloudHeight = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
