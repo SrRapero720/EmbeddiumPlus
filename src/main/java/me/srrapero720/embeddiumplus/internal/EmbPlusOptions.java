@@ -75,6 +75,7 @@ public class EmbPlusOptions {
                         (options) -> EmbPlusConfig.fastChestsEnabled.get())
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(EmbPlusTools.flwIsOff())
+                .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                 .build();
 
         OptionImpl<SodiumGameOptions, Boolean> hideJEI = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
