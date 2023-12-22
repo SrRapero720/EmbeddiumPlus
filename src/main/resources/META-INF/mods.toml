@@ -31,3 +31,9 @@ displayTest="IGNORE_SERVER_VERSION"
     versionRange="${embeddiumrange}"
     ordering="AFTER"
     side="CLIENT"
+[[dependencies.${modid}]]
+    modId="textrues_embeddium_options"
+    mandatory=true
+    versionRange="*"
+    ordering="AFTER"
+    side="CLIENT"
