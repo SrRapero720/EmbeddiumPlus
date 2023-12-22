@@ -1,7 +1,9 @@
 package me.srrapero720.embeddiumplus.mixins.impl.embeddium;
 
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptionPages;
-import me.jellysquid.mods.sodium.client.gui.options.*;
+import me.jellysquid.mods.sodium.client.gui.options.Option;
+import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
+import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
 import me.srrapero720.embeddiumplus.internal.EmbPlusOptions;
@@ -42,6 +44,16 @@ public class OptionPagesMixin {
     @Redirect(method = "advanced", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup;createBuilder()Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;"))
     private static OptionGroup.Builder regroup() {
         return embPlus$advancedBuilder;
+    }
+
+    @Redirect(method = "advanced", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
+    private static <E> boolean unlist(List<E> instance, E e) {
+        return true; // NO-OP
+    }
+
+    @Inject(method = "advanced", at = @At(value = "NEW", target = "(Lnet/minecraft/network/chat/Component;Lcom/google/common/collect/ImmutableList;)Lme/jellysquid/mods/sodium/client/gui/options/OptionPage;"), locals = LocalCapture.CAPTURE_FAILHARD)
+    private static void relist(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
+        groups.add(embPlus$advancedBuilder.build());
     }
 
     @Inject(method = "advanced", at = @At("RETURN"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)

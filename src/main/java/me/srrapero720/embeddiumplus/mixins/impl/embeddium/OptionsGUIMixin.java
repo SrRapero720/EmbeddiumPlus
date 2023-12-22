@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-@Mixin(SodiumOptionsGUI.class)
+@Mixin(value = SodiumOptionsGUI.class, remap = false)
 public class OptionsGUIMixin {
     @Shadow @Final private List<OptionPage> pages;
 
