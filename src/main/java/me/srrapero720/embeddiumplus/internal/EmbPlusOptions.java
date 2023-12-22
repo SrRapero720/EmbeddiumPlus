@@ -73,7 +73,7 @@ public class EmbPlusOptions {
                 .setBinding(
                         (options, value) -> EmbPlusConfig.fastChestsEnabled.set(value),
                         (options) -> EmbPlusConfig.fastChestsEnabled.get())
-                .setImpact(OptionImpact.LOW)
+                .setImpact(OptionImpact.HIGH)
                 .setEnabled(EmbPlusTools.flwIsOff())
                 .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                 .build();
