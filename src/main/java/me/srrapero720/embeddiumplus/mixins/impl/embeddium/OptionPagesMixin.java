@@ -40,9 +40,10 @@ public class OptionPagesMixin {
         EmbPlusOptions.setPerformanceOptions(groups, sodiumOpts, vanillaOpts);
     }
 
-    @Unique private static final OptionGroup.Builder embPlus$advancedBuilder = OptionGroup.createBuilder();
+    @Unique private static OptionGroup.Builder embPlus$advancedBuilder;
     @Redirect(method = "advanced", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup;createBuilder()Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;"))
     private static OptionGroup.Builder regroup() {
+        if (embPlus$advancedBuilder == null) embPlus$advancedBuilder = OptionGroup.createBuilder();
         return embPlus$advancedBuilder;
     }
 
@@ -54,6 +55,7 @@ public class OptionPagesMixin {
     @Inject(method = "advanced", at = @At(value = "NEW", target = "(Lnet/minecraft/network/chat/Component;Lcom/google/common/collect/ImmutableList;)Lme/jellysquid/mods/sodium/client/gui/options/OptionPage;"), locals = LocalCapture.CAPTURE_FAILHARD)
     private static void relist(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
         groups.add(embPlus$advancedBuilder.build());
+        embPlus$advancedBuilder = null;
     }
 
     @Inject(method = "advanced", at = @At("RETURN"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
