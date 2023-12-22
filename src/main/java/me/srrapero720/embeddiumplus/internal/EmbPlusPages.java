@@ -16,7 +16,6 @@ import java.util.List;
 
 public class EmbPlusPages {
     private static final SodiumOptionsStorage qualityOptionsStorage = new SodiumOptionsStorage();
-    // DYN LIGHTS
     private static final SodiumOptionsStorage dynLightsOptionsStorage = new SodiumOptionsStorage();
 
     public static OptionPage getQualityPlusPage(){
