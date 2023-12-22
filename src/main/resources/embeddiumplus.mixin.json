@@ -44,8 +44,7 @@
     "frames.FpsAccessorMixin",
     "frames.FrameCounterMixin",
     "jei.JeiOverlayMixin",
-    "language.LanguageScreenMixin",
-    "viewdistance.ExtendedServerViewDistanceMixin"
+    "language.LanguageScreenMixin"
   ],
   "mixins": [
     "fastchests.ChestBlockMixin",
