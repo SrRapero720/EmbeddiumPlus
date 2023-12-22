@@ -24,6 +24,12 @@ Mod who gives you a plus for embeddium And a reliable fork of [MagnesiumExtras](
 - Misc: Code cleanup and optimization
 - Misc: More stuff that I forgot :(
 
+# TRANSLATIONS
+- 🍜 Simplified Chinese (thanks to Wheatley11 and qznfbnj)
+- 🥐 French (thanks to Myuui)
+- 🍾 Russia (thanks to CatAndPaste)
+- 🌮 Mexican Spanish (thanks to ME, that's right, I am mexican)
+
 ## COMMUNITY AND SUPPORT
 Join to my [discord](https://discord.gg/cuYAzzZ) and talk directly with me
 
