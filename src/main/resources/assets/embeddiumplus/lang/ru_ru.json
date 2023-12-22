@@ -1,5 +1,4 @@
 {
-  "embeddium.plus.options.plus": "Plus",
   "embeddium.plus.options.common.off": "Отключено",
   "embeddium.plus.options.common.simple": "Простое",
   "embeddium.plus.options.common.advanced": "Расширенное",
@@ -7,12 +6,16 @@
   "embeddium.plus.options.common.fast": "Быстрая",
   "embeddium.plus.options.common.faster": "Ещё быстрее",
   "embeddium.plus.options.common.realtime": "В реальном времени",
+  "embeddium.plus.options.common.blocks": "Blocks",
+  "embeddium.plus.options.common.pixels": "Pixels",
   "embeddium.plus.options.displayfps.title": "Отображение FPS",
   "embeddium.plus.options.displayfps.desc": "Отображает текущее значение кадров в секунду. В расширенном режиме также отображаются минимальное и среднее за 15 секунд значения, полезно для оценки производительности.",
   "embeddium.plus.options.displayfps.position.title": "Положение счётчика FPS",
   "embeddium.plus.options.displayfps.position.desc": "Смещает отображение FPS на несколько пикселей",
-  "embeddium.plus.options.darkness.title": "True Darkness",
   "embeddium.plus.options.darkness.desc": "Делает темноту более реалистичной. Не влияет на освещение днем или от факелов.",
+  "embeddium.plus.options.fastchest.title": "Fast Chests",
+  "embeddium.plus.options.fastchest.desc": "Disables dynamic chests model and makes it a static model like a normal block, breaks chest animation but goes more faster on chest rooms\n\nOption has no effects with flywheel installed and running batching or instancing backend",
+  "embeddium.plus.options.darkness.title": "True Darkness",
   "embeddium.plus.options.darkness.mode.title": "Режим True Darkness",
   "embeddium.plus.options.darkness.mode.desc": "Регулирует, что считается настоящей темнотой для True Darkness.",
   "embeddium.plus.options.darkness.mode.pitchblack": "Абсолютная темнота",
@@ -47,5 +50,5 @@
   "embeddium.plus.options.dynlights.entities.title": "Включено для сущностей",
   "embeddium.plus.options.dynlights.entities.desc": "Позволяет динамически отображать свет вокруг сущностей (выпавшие предметы, мобы, др.).\n\nМожет занчительно увеличить количество расчётов освещения, даже когда вы не держите в руках факел.",
   "embeddium.plus.options.dynlights.blockentities.title": "Включено для блоков-сущностей",
-  "embeddium.plus.options.dynlights.blockentities.desc": "Позволяет динамически отображать свет вокруг тайловых сущностей (печи, машины из модов, др.).\n\nМожет занчительно увеличить количество расчётов освещения, даже когда вы не держите в руках факел."
+  "embeddium.plus.options.dynlights.blockentities.desc": "Позволяет динамически отображать свет вокруг тайловых сущностей (печи, машины из модов, др.).\n\nМожет занчительно увеличить количество расчётов освещения, даже когда вы не держите в руках факел.",
 }

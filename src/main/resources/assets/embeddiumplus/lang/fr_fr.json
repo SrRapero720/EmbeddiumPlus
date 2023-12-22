@@ -1,5 +1,4 @@
 {
-  "embeddium.plus.options.plus": "Plus",
   "embeddium.plus.options.common.off": "Off",
   "embeddium.plus.options.common.simple": "Simple",
   "embeddium.plus.options.common.advanced": "Avancé",
@@ -7,12 +6,16 @@
   "embeddium.plus.options.common.fast": "Rapide",
   "embeddium.plus.options.common.faster": "Tres rapide",
   "embeddium.plus.options.common.realtime": "En temps réel",
+  "embeddium.plus.options.common.blocks": "Blocks",
+  "embeddium.plus.options.common.pixels": "Pixels",
   "embeddium.plus.options.displayfps.title": "Afficher les FPS",
   "embeddium.plus.options.displayfps.desc": "Affiche les FPS actuels. Le mode avancé affiche aussi les FPS minimum, ainsi qu'une moyenne d'FPS des dernières 15 secondes, utile pour jauger la performance.",
   "embeddium.plus.options.displayfps.position.title": "Position d'affichage des FPS",
   "embeddium.plus.options.displayfps.position.desc": "Décale l'affichage des FPS de quelques pixels",
-  "embeddium.plus.options.darkness.title": "Véritable Obscurité",
   "embeddium.plus.options.darkness.desc": "Assombris le monde de manière plus réaliste. Cela n'affecte pas le jour ou les torches.",
+  "embeddium.plus.options.fastchest.title": "Fast Chests",
+  "embeddium.plus.options.fastchest.desc": "Disables dynamic chests model and makes it a static model like a normal block, breaks chest animation but goes more faster on chest rooms\n\nOption has no effects with flywheel installed and running batching or instancing backend",
+  "embeddium.plus.options.darkness.title": "Véritable Obscurité",
   "embeddium.plus.options.darkness.mode.title": "Mode Véritable Obscurité",
   "embeddium.plus.options.darkness.mode.desc": "Contrôle comment est considérée la Vraie Obscurité.",
   "embeddium.plus.options.darkness.mode.pitchblack": "Noir absolu",
@@ -47,5 +50,5 @@
   "embeddium.plus.options.dynlights.entities.title": "Activer pour les entitées",
   "embeddium.plus.options.dynlights.entities.desc": "Activer ceci affichera la dynamic light sur les entités (objets jetés, monstres, etc)\n\nCela peut augmenter considérablement le nombre de mises à jour d'éclairage, même lorsque vous ne tenez pas de torche.",
   "embeddium.plus.options.dynlights.blockentities.title": "Activer pour les entitées de blocs",
-  "embeddium.plus.options.dynlights.blockentities.desc": "Activer ceci affichera la dynamic light sur les entités de blocs (fourneaux, machines modifiées, etc).\n\nCela peut augmenter considérablement le nombre de mises à jour d'éclairage, même lorsque vous ne tenez pas de torche."
+  "embeddium.plus.options.dynlights.blockentities.desc": "Activer ceci affichera la dynamic light sur les entités de blocs (fourneaux, machines modifiées, etc).\n\nCela peut augmenter considérablement le nombre de mises à jour d'éclairage, même lorsque vous ne tenez pas de torche.",
 }

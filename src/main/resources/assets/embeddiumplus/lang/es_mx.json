@@ -1,5 +1,4 @@
 {
-  "embeddium.plus.options.plus": "Plus",
   "embeddium.plus.options.common.off": "Desactivado",
   "embeddium.plus.options.common.simple": "Simple",
   "embeddium.plus.options.common.advanced": "Avanzado",
@@ -13,8 +12,10 @@
   "embeddium.plus.options.displayfps.desc": "Mostrar los FPS. Modo avanzado muestra la cantidad mas baja de FPS, en unos 15 segundos de FPS promedio, util para evaluar el rendimiento.",
   "embeddium.plus.options.displayfps.position.title": "Posicion del Display de FPS",
   "embeddium.plus.options.displayfps.position.desc": "Espaciado extra del Display de FPS unos cuantos pixeles",
-  "embeddium.plus.options.darkness.title": "Verdadera Oscuridad",
   "embeddium.plus.options.darkness.desc": "Envuelve todo el mundo en verdadera oscuridad. No afecta al dia o las antorchas.",
+  "embeddium.plus.options.fastchest.title": "Fast Chests",
+  "embeddium.plus.options.fastchest.desc": "Disables dynamic chests model and makes it a static model like a normal block, breaks chest animation but goes more faster on chest rooms\n\nOption has no effects with flywheel installed and running batching or instancing backend",
+  "embeddium.plus.options.darkness.title": "Verdadera Oscuridad",
   "embeddium.plus.options.darkness.mode.title": "Modo de Verdadera Oscuridad",
   "embeddium.plus.options.darkness.mode.desc": "Controla que tan oscuro se considera Verdadera Oscuridad",
   "embeddium.plus.options.darkness.mode.pitchblack": "Tono Oscuro",
