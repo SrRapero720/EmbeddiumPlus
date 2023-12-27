@@ -15,6 +15,8 @@
   "embeddium.plus.options.darkness.desc": "Makes the rest of the world more realistically dark. Does not effect daytime or torch light.",
   "embeddium.plus.options.fastchest.title": "Fast Chests",
   "embeddium.plus.options.fastchest.desc": "Disables dynamic chests model and makes it a static model like a normal block, breaks chest animation but goes more faster on chest rooms\n\nOption has no effects with flywheel installed and running batching or instancing backend",
+  "embeddium.plus.options.fontshadow.title": "Disable Font Shadow",
+  "embeddium.plus.options.fontshadow.desc": "Disables Minecraft's font shadows. It looks flat and increases performance depending of the case",
   "embeddium.plus.options.darkness.title": "True Darkness",
   "embeddium.plus.options.darkness.mode.title": "True Darkness Mode",
   "embeddium.plus.options.darkness.mode.desc": "Controls how dark is considered true darkness.",

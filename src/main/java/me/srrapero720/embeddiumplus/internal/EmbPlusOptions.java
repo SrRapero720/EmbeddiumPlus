@@ -66,6 +66,15 @@ public class EmbPlusOptions {
 
     public static void setPerformanceOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts, MinecraftOptionsStorage vanillaOpts) {
         var builder = OptionGroup.createBuilder();
+        OptionImpl<SodiumGameOptions, Boolean> disableFontShadow = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
+                .setName(Component.translatable("embeddium.plus.options.fontshadow.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.fontshadow.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (options, value) -> EmbPlusConfig.disableFontShadow.set(value),
+                        (options) -> EmbPlusConfig.disableFontShadow.get())
+                .setImpact(OptionImpact.VARIES)
+                .build();
         OptionImpl<SodiumGameOptions, Boolean> fastChest = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.fastchest.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.fastchest.desc"))
@@ -89,6 +98,7 @@ public class EmbPlusOptions {
                 .setEnabled(EmbPlusTools.isPresent("jei"))
                 .build();
 
+        builder.add(disableFontShadow);
         builder.add(fastChest);
         builder.add(hideJEI);
 
