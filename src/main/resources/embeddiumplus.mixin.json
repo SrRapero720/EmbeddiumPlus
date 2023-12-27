@@ -41,6 +41,8 @@
     "entitydistance.MaxDistanceTileEntity",
     "fastchests.BERenderDispatcherMixin",
     "fog.BackgroundRendererMixin",
+    "fontshadow.FontMixin",
+    "fontshadow.FontMixin$StringRenderOutputMixin",
     "frames.FpsAccessorMixin",
     "frames.FrameCounterMixin",
     "jei.JeiOverlayMixin",

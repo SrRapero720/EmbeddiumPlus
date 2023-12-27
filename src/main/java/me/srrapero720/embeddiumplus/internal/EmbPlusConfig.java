@@ -42,6 +42,7 @@ public class EmbPlusConfig {
     // Total Darkness
     public static double darkNetherFogEffective;
     public static double darkEndFogEffective;
+    public static ForgeConfigSpec.BooleanValue disableFontShadow;
     public static ForgeConfigSpec.BooleanValue fastChestsEnabled;
     public static ForgeConfigSpec.BooleanValue trueDarknessEnabled;
     public static ForgeConfigSpec.EnumValue<DarknessMode> darknessOption;
@@ -142,6 +143,7 @@ public class EmbPlusConfig {
         });
 
         builder.block("Misc", b -> {
+            disableFontShadow = b.comment("Turn off this minecraft feature").define("NoFontShadow", true);
             fastChestsEnabled = b.comment("Turn on this feature").define("FastChests", false);
             cloudHeight = b.define("CloudHeight", 128);
             fadeInQuality =  b.defineEnum("ChunkFadeInQuality", FadeInQuality.FANCY);
