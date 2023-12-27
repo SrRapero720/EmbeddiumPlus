@@ -9,7 +9,7 @@
     "borderless.KeyboardHandlerMixin",
     "borderless.MainWindowAccessor",
     "borderless.WindowMixin",
-    "clouds.CloudHeightMixin",
+    "cloudheight.CloudHeightMixin",
     "darkness.MixinGameRenderer",
     "darkness.MixinLightMapTextureManager",
     "darkness.MixinNativeImageBackedTexture",
