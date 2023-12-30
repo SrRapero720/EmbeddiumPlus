@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.entity_distance.IEntityTypeAccess;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,10 +20,10 @@ public abstract class EntityCullingMixin implements IEntityTypeAccess {
     @Override
     @Unique
     public boolean embPlus$isWhitelisted() {
-        if (!EmbPlusConfig.SPECS.isLoaded()) return false;
+        EmbyConfig.load();
         if (embPlus$checked) return embPlus$whitelisted;
 
-        List<?> entityWhitelist = EmbPlusConfig.entityWhitelist.get();
+        List<?> entityWhitelist = EmbyConfig.entityWhitelist.get();
         for (int i = 0; i < entityWhitelist.size(); i++) {
 
             String[] result = ((String) entityWhitelist.get(i)).split(":");

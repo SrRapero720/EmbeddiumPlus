@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.fastchests;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.internal.EmbPlusTools;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -18,14 +18,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ChestBlockMixin {
     @Inject(method = "getTicker", at = @At("HEAD"), cancellable = true)
     private <T extends BlockEntity> void removeTicker(Level level, BlockState state, BlockEntityType<T> type, CallbackInfoReturnable<BlockEntityTicker<T>> cir) {
-        if (EmbPlusTools.flwIsOff() && EmbPlusConfig.fastChestsEnabled.get()) {
+        if (EmbPlusTools.flwIsOff() && EmbyConfig.fastChestsCache) {
             cir.setReturnValue(null);
         }
     }
 
     @Inject(method = "getRenderShape", at = @At("HEAD"), cancellable = true)
     private void replaceRenderType(BlockState state, CallbackInfoReturnable<RenderShape> cir) {
-        if (EmbPlusTools.flwIsOff() && EmbPlusConfig.fastChestsEnabled.get()) {
+        if (EmbPlusTools.flwIsOff() && EmbyConfig.fastChestsCache) {
             cir.setReturnValue(RenderShape.MODEL);
         }
     }

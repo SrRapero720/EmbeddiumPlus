@@ -1,7 +1,6 @@
 package me.srrapero720.embeddiumplus.features.darkness;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
-import me.srrapero720.embeddiumplus.EmbeddiumPlus;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
@@ -12,32 +11,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mod.EventBusSubscriber(modid = EmbeddiumPlus.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+
 public class DarknessPlus {
 
-	@SubscribeEvent
-	public static void onConfigChange(ModConfigEvent e) {
-		EmbPlusConfig.darkNetherFogEffective = EmbPlusConfig.darkNether.get() ? EmbPlusConfig.darkNetherFogConfigured.get() : 1.0;
-		EmbPlusConfig.darkEndFogEffective = EmbPlusConfig.darkEnd.get() ? EmbPlusConfig.darkEndFogConfigured.get() : 1.0;
-	}
 
-	public static boolean blockLightOnly() {
-		return EmbPlusConfig.blockLightOnly.get();
-	}
-
-	public static double darkNetherFog() {
-		return EmbPlusConfig.darkNetherFogEffective;
-	}
-
-	public static double darkEndFog() {
-		return EmbPlusConfig.darkEndFogEffective;
-	}
 
 	public static void getDarkenedFogColor(CallbackInfoReturnable<Vec3> ci, double factor) {
 		if (factor != 1.0) {
@@ -49,31 +28,30 @@ public class DarknessPlus {
 	}
 
 	private static boolean isDark(Level world) {
-		if (!EmbPlusConfig.trueDarknessEnabled.get())
-			return false;
+		if (EmbyConfig.darknessMode.get() == EmbyConfig.DarknessMode.OFF) return false;
 
 		final ResourceKey<Level> dimType = world.dimension();
 		if (dimType == Level.OVERWORLD) {
-			return EmbPlusConfig.darkOverworld.get();
+			return EmbyConfig.darknessOnOverworldCache;
 		} else if (dimType == Level.NETHER) {
-			return EmbPlusConfig.darkNether.get();
+			return EmbyConfig.darknessOnNetherCache;
 		} else if (dimType == Level.END) {
-			return EmbPlusConfig.darkEnd.get();
+			return EmbyConfig.darknessOnEndCache;
 		} else if (world.dimensionType().hasSkyLight()) {
-			return EmbPlusConfig.darkDefault.get();
+			return EmbyConfig.darknessByDefaultCache;
 		} else {
-			return EmbPlusConfig.darkSkyless.get();
+			return EmbyConfig.darknessOnNoSkyLightCache;
 		}
 	}
 
 	private static float skyFactor(Level world) {
-		if (!EmbPlusConfig.blockLightOnly.get() && isDark(world)) {
+		if (!blockLightOnly() && isDark(world)) {
 			if (world.dimensionType().hasSkyLight()) {
 				final float angle = world.getTimeOfDay(0);
 				if (angle > 0.25f && angle < 0.75f) {
 					final float oldWeight = Math.max(0, (Math.abs(angle - 0.5f) - 0.2f)) * 20;
-					final float moon = EmbPlusConfig.ignoreMoonPhase.get() ? 0 : world.getMoonBrightness();
-					final float moonInterpolated = (float) Mth.lerp(moon, EmbPlusConfig.minimumMoonLevel.get(), EmbPlusConfig.maximumMoonLevel.get());
+					final float moon = EmbyConfig.darknessAffectedByMoonPhaseCache ? world.getMoonBrightness() : 0;
+					final float moonInterpolated = (float) Mth.lerp(moon, EmbyConfig.darknessNewMoonBrightCache, EmbyConfig.darknessFullMoonBrightCache);
 					return Mth.lerp(oldWeight * oldWeight * oldWeight, moonInterpolated, 1f) ;
 				} else {
 					return 1;
@@ -126,12 +104,15 @@ public class DarknessPlus {
 				skyFactor = 1 - skyFactor * skyFactor * skyFactor * skyFactor;
 				skyFactor *= dimSkyFactor;
 
-				float min = Math.max(skyFactor * 0.05f, EmbPlusConfig.darknessOption.get().value);
+				var value = EmbyConfig.darknessMode.get().value;
+				if (value == -1) throw new IllegalStateException("Darkness value can't be negative");
+
+				float min = Math.max(skyFactor * 0.05f, value);
 				final float rawAmbient = ambient * skyFactor;
 				final float minAmbient = rawAmbient * (1 - min) + min;
 				final float skyBase = LightTexture.getBrightness(dim, skyIndex) * minAmbient;
 
-				min = Math.max(0.35f * skyFactor, EmbPlusConfig.darknessOption.get().value);
+				min = Math.max(0.35f * skyFactor, value);
 				float v = skyBase * (rawAmbient * (1 - min) + min);
 				float skyRed = v;
 				float skyGreen = v;
@@ -196,7 +177,7 @@ public class DarknessPlus {
 					green = green * (1.0F - gamma) + invGreen * gamma;
 					blue = blue * (1.0F - gamma) + invBlue * gamma;
 
-					min = Math.max(0.03f * f, EmbPlusConfig.darknessOption.get().value);
+					min = Math.max(0.03f * f, EmbyConfig.darknessMode.get().value);
 					red = red * (0.99F - min) + min;
 					green = green * (0.99F - min) + min;
 					blue = blue * (0.99F - min) + min;
@@ -229,5 +210,9 @@ public class DarknessPlus {
 				}
 			}
 		}
-	} 
+	}
+
+	public static boolean blockLightOnly() { return EmbyConfig.darknessBlockLightOnlyCache; }
+	public static double darkNetherFogBrightness() { return EmbyConfig.darknessNetherFogBrightCache; }
+	public static double darkEndFogBrightness() { return EmbyConfig.darknessEndFogBrightCache; }
 }

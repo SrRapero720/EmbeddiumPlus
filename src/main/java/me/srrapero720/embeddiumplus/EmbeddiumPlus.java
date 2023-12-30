@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus;
 
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
@@ -13,8 +13,11 @@ public class EmbeddiumPlus {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public EmbeddiumPlus() {
-        EmbPlusConfig.load();
+        if (FMLLoader.getDist().isClient()) initClient();
+    }
 
-        if (FMLLoader.getDist().isClient()) DynLightsPlus.init();
+    public void initClient() {
+        DynLightsPlus.init();
+        EmbyConfig.load();
     }
 }

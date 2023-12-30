@@ -1,8 +1,8 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
-import me.srrapero720.embeddiumplus.internal.EmbPlusTools;
 import me.srrapero720.embeddiumplus.features.entity_distance.IEntityTypeAccess;
+import me.srrapero720.embeddiumplus.internal.EmbPlusTools;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MaxDistanceEntity {
     @Inject(at = @At("HEAD"), method = "shouldRender", cancellable = true)
     public <E extends Entity> void shouldDoRender(E entity, Frustum clippingHelper, double cameraX, double cameraY, double cameraZ, CallbackInfoReturnable<Boolean> cir) {
-        if (!EmbPlusConfig.enableDistanceChecks.get()) return;
+        if (!EmbyConfig.entityDistanceCullingCache) return;
 
         if (entity instanceof EnderDragon) return;
         if (entity instanceof Ghast) return;
@@ -31,8 +31,8 @@ public class MaxDistanceEntity {
                 cameraX,
                 cameraY,
                 cameraZ,
-                EmbPlusConfig.maxEntityRenderDistanceY.get(),
-                EmbPlusConfig.maxEntityRenderDistanceSquare.get()
+                EmbyConfig.entityCullingDistanceYCache,
+                EmbyConfig.entityCullingDistanceXCache
         )) {
             cir.cancel();
         }

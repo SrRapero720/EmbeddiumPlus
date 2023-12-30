@@ -1,10 +1,10 @@
 {
   "embeddium.plus.options.common.off": "关",
   "embeddium.plus.options.common.simple": "简单",
-  "embeddium.plus.options.common.advanced": "高级",
+  "embeddium.plus.options.common.complete": "高级",
   "embeddium.plus.options.common.slow": "慢",
   "embeddium.plus.options.common.fast": "快",
-  "embeddium.plus.options.common.faster": "更快",
+  "embeddium.plus.options.common.fastest": "更快",
   "embeddium.plus.options.common.realtime": "实时",
   "embeddium.plus.options.common.blocks": "格",
   "embeddium.plus.options.common.pixels": "像素",

@@ -1,10 +1,10 @@
 {
   "embeddium.plus.options.common.off": "Отключено",
   "embeddium.plus.options.common.simple": "Простое",
-  "embeddium.plus.options.common.advanced": "Расширенное",
+  "embeddium.plus.options.common.complete": "Расширенное",
   "embeddium.plus.options.common.slow": "Медленная",
   "embeddium.plus.options.common.fast": "Быстрая",
-  "embeddium.plus.options.common.faster": "Ещё быстрее",
+  "embeddium.plus.options.common.fastest": "Ещё быстрее",
   "embeddium.plus.options.common.realtime": "В реальном времени",
   "embeddium.plus.options.common.blocks": "Blocks",
   "embeddium.plus.options.common.pixels": "Pixels",

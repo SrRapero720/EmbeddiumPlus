@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.Level;
@@ -31,7 +31,7 @@ public abstract class LevelMixin {
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION
 	)
 	private void onBlockEntityTick(CallbackInfo ci, ProfilerFiller profiler, Iterator<BlockEntity> iterator, TickingBlockEntity blockEntityTickInvoker) {
-		if (this.isClientSide() && EmbPlusConfig.tileEntityLighting.get()) {
+		if (this.isClientSide() && EmbyConfig.dynLightsOnTileEntities.get()) {
 			var blockEntity = this.getBlockEntity(blockEntityTickInvoker.getPos());
 			if (blockEntity != null)
 				((DynamicLightSource) blockEntity).tdv$dynamicLightTick();

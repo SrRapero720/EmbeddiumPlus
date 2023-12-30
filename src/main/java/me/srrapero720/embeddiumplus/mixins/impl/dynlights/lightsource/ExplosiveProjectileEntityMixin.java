@@ -1,6 +1,5 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
 import net.minecraft.world.entity.Entity;
@@ -23,7 +22,7 @@ public abstract class ExplosiveProjectileEntityMixin extends Entity implements D
 
 	@Override
 	public int tdv$getLuminance() {
-		if (EmbPlusConfig.tileEntityLighting.get() && DynLightsHandlers.canLightUp(this))
+		if (DynLightsHandlers.canLightUp(this))
 			return 14;
 		return 0;
 	}

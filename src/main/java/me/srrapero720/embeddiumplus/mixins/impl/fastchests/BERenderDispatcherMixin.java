@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.fastchests;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.internal.EmbPlusTools;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BERenderDispatcherMixin {
     @Inject(method = "getRenderer", at = @At("HEAD"), cancellable = true)
     private <E extends BlockEntity> void disableChestRender(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
-        if (EmbPlusTools.flwIsOff() &&  EmbPlusConfig.fastChestsEnabled.get()) {
+        if (EmbPlusTools.flwIsOff() &&  EmbyConfig.fastChestsCache) {
             Class<?> beClass = blockEntity.getClass();
 
             if (beClass == ChestBlockEntity.class || beClass == TrappedChestBlockEntity.class || beClass == EnderChestBlockEntity.class ||

@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.cloudheight;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +16,6 @@ public class CloudHeightMixin {
     @Inject(method = "getCloudHeight", at = @At("HEAD"), cancellable = true)
     private void getCloudHeight(CallbackInfoReturnable<Float> cir) {
         if (cloudLevel == 192.0F)
-            cir.setReturnValue(EmbPlusConfig.cloudHeight.get().floatValue());
+            cir.setReturnValue((float) EmbyConfig.cloudsHeightCache);
     }
 }

@@ -1,10 +1,10 @@
 {
   "embeddium.plus.options.common.off": "Desactivado",
   "embeddium.plus.options.common.simple": "Simple",
-  "embeddium.plus.options.common.advanced": "Avanzado",
+  "embeddium.plus.options.common.complete": "Avanzado",
   "embeddium.plus.options.common.slow": "Lento",
   "embeddium.plus.options.common.fast": "Rapido",
-  "embeddium.plus.options.common.faster": "Rapidisimo",
+  "embeddium.plus.options.common.fastest": "Rapidisimo",
   "embeddium.plus.options.common.realtime": "Tiempo Real",
   "embeddium.plus.options.common.blocks": "Bloques",
   "embeddium.plus.options.common.pixels": "Pixeles",
