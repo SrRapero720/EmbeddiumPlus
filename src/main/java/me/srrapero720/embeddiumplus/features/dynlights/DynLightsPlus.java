@@ -10,10 +10,10 @@
 package me.srrapero720.embeddiumplus.features.dynlights;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
 import me.srrapero720.embeddiumplus.features.dynlights.events.DynLightsSetupEvent;
 import me.srrapero720.embeddiumplus.features.dynlights.item.ItemLightRegistry;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -34,6 +34,7 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -66,7 +67,7 @@ public class DynLightsPlus {
 		MinecraftForge.EVENT_BUS.post(new DynLightsSetupEvent());
 	}
 
-	public static boolean isEnabled() { return EmbPlusConfig.dynQuality.get() != EmbPlusConfig.DynamicLightsQuality.OFF; }
+	public static boolean isEnabled() { return EmbyConfig.dynLightSpeed.get() != EmbyConfig.DynLightsSpeed.OFF; }
 
 	/**
 	 * Updates all light sources.
@@ -88,6 +89,22 @@ public class DynLightsPlus {
 			}
 			this.lightSourcesLock.readLock().unlock();
 		}
+	}
+
+
+	private static long lastUpdateTime = 0;
+	public static boolean shouldUpdateDynLights() {
+		long currentTime = System.currentTimeMillis();
+		EmbyConfig.DynLightsSpeed speed = EmbyConfig.dynLightSpeed.get();
+
+		boolean shouldNot = switch (speed) {
+			case OFF -> true;
+			case SLOW, NORMAL, FAST, SUPERFAST, FASTESTS -> currentTime < lastUpdateTime + speed.getDelay();
+			default -> false;
+		};
+		if (shouldNot) return false;
+		lastUpdateTime = currentTime;
+		return true;
 	}
 
 	/**

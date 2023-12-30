@@ -11,6 +11,8 @@ import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import net.minecraft.network.chat.Component;
 
+import me.srrapero720.embeddiumplus.internal.EmbyConfig.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,22 +28,25 @@ public class EmbPlusPages {
                 .setTooltip(Component.translatable("embeddium.plus.options.fog.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.fog.set(value),
-                        (options) -> EmbPlusConfig.fog.get())
+                        (options, value) -> {
+                            EmbyConfig.fog.set(value);
+                            EmbyConfig.fogCache = value;
+                        },
+                        (options) -> EmbyConfig.fogCache)
                 .setImpact(OptionImpact.LOW)
                 .build();
 
-        Option<EmbPlusConfig.FadeInQuality> fadeInQuality = OptionImpl.createBuilder(EmbPlusConfig.FadeInQuality.class, qualityOptionsStorage)
+        Option<ChunkFadeSpeed> fadeInQuality = OptionImpl.createBuilder(ChunkFadeSpeed.class, qualityOptionsStorage)
                 .setName(Component.translatable("embeddium.plus.options.chunkfadeinquality.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.chunkfadeinquality.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.FadeInQuality.class, new Component[]{
+                .setControl((option) -> new CyclingControl<>(option, ChunkFadeSpeed.class, new Component[]{
                         Component.translatable("options.off"),
                         Component.translatable("options.graphics.fast"),
                         Component.translatable("options.graphics.fancy")
                 }))
                 .setBinding(
-                        (opts, value) -> EmbPlusConfig.fadeInQuality.set(value),
-                        (opts) -> EmbPlusConfig.fadeInQuality.get())
+                        (opts, value) -> EmbyConfig.chunkFadeSpeed.set(value),
+                        (opts) -> EmbyConfig.chunkFadeSpeed.get())
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(false)
                 .build();
@@ -52,50 +57,40 @@ public class EmbPlusPages {
                 .build()
         );
 
-        OptionImpl<SodiumGameOptions, Boolean> totalDarkness = OptionImpl.createBuilder(Boolean.class, qualityOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.darkness.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.darkness.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding(
-                        (options, value) -> EmbPlusConfig.trueDarknessEnabled.set(value),
-                        (options) -> EmbPlusConfig.trueDarknessEnabled.get())
-                .setImpact(OptionImpact.LOW)
-                .build();
 
-
-
-        Option<EmbPlusConfig.DarknessMode> totalDarknessSetting = OptionImpl.createBuilder(EmbPlusConfig.DarknessMode.class, qualityOptionsStorage)
+        Option<DarknessMode> darknessMode = OptionImpl.createBuilder(DarknessMode.class, qualityOptionsStorage)
                 .setName(Component.translatable("embeddium.plus.options.darkness.mode.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.darkness.mode.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.DarknessMode.class, new Component[]{
+                .setControl((option) -> new CyclingControl<>(option, DarknessMode.class, new Component[]{
                         Component.translatable("embeddium.plus.options.darkness.mode.pitchblack"),
                         Component.translatable("embeddium.plus.options.darkness.mode.reallydark"),
                         Component.translatable("embeddium.plus.options.darkness.mode.dark"),
-                        Component.translatable("embeddium.plus.options.darkness.mode.dim")
+                        Component.translatable("embeddium.plus.options.darkness.mode.dim"),
+                        Component.translatable("options.off")
                 }))
                 .setBinding(
-                        (opts, value) -> EmbPlusConfig.darknessOption.set(value),
-                        (opts) -> EmbPlusConfig.darknessOption.get())
+                        (opts, value) -> EmbyConfig.darknessMode.set(value),
+                        (opts) -> EmbyConfig.darknessMode.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
         groups.add(OptionGroup.createBuilder()
-                .add(totalDarkness)
-                .add(totalDarknessSetting)
+                .add(darknessMode)
                 .build()
         );
 
 
 
-        OptionImpl<SodiumGameOptions, Integer> cloudHeight = OptionImpl.createBuilder(Integer.TYPE, qualityOptionsStorage)
+        OptionImpl<SodiumGameOptions, Integer> cloudHeight = OptionImpl.createBuilder(int.class, qualityOptionsStorage)
                 .setName(Component.translatable("embeddium.plus.options.clouds.height.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.clouds.height.desc"))
                 .setControl((option) -> new SliderControl(option, 64, 364, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
                         (options, value) -> {
-                            EmbPlusConfig.cloudHeight.set(value);
+                            EmbyConfig.cloudsHeight.set(value);
+                            EmbyConfig.cloudsHeightCache = value;
                         },
-                        (options) -> EmbPlusConfig.cloudHeight.get())
+                        (options) -> EmbyConfig.cloudsHeightCache)
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -111,21 +106,23 @@ public class EmbPlusPages {
     public static OptionPage getDynLightsPage() {
         List<OptionGroup> groups = new ArrayList<>();
 
-        OptionImpl<SodiumGameOptions, EmbPlusConfig.DynamicLightsQuality> qualityMode = OptionImpl.createBuilder(EmbPlusConfig.DynamicLightsQuality.class, dynLightsOptionsStorage)
+        OptionImpl<SodiumGameOptions, DynLightsSpeed> qualityMode = OptionImpl.createBuilder(DynLightsSpeed.class, dynLightsOptionsStorage)
                 .setName(Component.translatable("embeddium.plus.options.dynlights.speed.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.dynlights.speed.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.DynamicLightsQuality.class, new Component[] {
+                .setControl((option) -> new CyclingControl<>(option, DynLightsSpeed.class, new Component[] {
                         Component.translatable("embeddium.plus.options.common.off"),
                         Component.translatable("embeddium.plus.options.common.slow"),
+                        Component.translatable("embeddium.plus.options.common.normal"),
                         Component.translatable("embeddium.plus.options.common.fast"),
-                        Component.translatable("embeddium.plus.options.common.faster"),
+                        Component.translatable("embeddium.plus.options.common.superfast"),
+                        Component.translatable("embeddium.plus.options.common.fastest"),
                         Component.translatable("embeddium.plus.options.common.realtime")
                 }))
                 .setBinding((options, value) -> {
-                            EmbPlusConfig.dynQuality.set(value);
+                            EmbyConfig.dynLightSpeed.set(value);
                             DynLightsPlus.get().clearLightSources();
                         },
-                        (options) -> EmbPlusConfig.dynQuality.get())
+                        (options) -> EmbyConfig.dynLightSpeed.get())
                 .setImpact(OptionImpact.MEDIUM)
                 .build();
 
@@ -135,8 +132,11 @@ public class EmbPlusPages {
                 .setTooltip(Component.translatable("embeddium.plus.options.dynlights.entities.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.entityLighting.set(value),
-                        (options) -> EmbPlusConfig.entityLighting.get())
+                        (options, value) -> {
+                            EmbyConfig.dynLightsOnEntities.set(value);
+                            EmbyConfig.dynLightsOnEntitiesCache = value;
+                        },
+                        (options) -> EmbyConfig.dynLightsOnEntitiesCache)
                 .setImpact(OptionImpact.MEDIUM)
                 .build();
 
@@ -145,8 +145,11 @@ public class EmbPlusPages {
                 .setTooltip(Component.translatable("embeddium.plus.options.dynlights.blockentities.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.tileEntityLighting.set(value),
-                        (options) -> EmbPlusConfig.tileEntityLighting.get())
+                        (options, value) -> {
+                            EmbyConfig.dynLightsOnTileEntities.set(value);
+                            EmbyConfig.dynLightsOnEntitiesCache = value;
+                        },
+                        (options) -> EmbyConfig.dynLightsOnEntitiesCache)
                 .setImpact(OptionImpact.MEDIUM)
                 .build();
 

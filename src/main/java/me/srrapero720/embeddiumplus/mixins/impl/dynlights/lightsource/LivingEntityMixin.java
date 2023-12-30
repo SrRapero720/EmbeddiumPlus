@@ -1,6 +1,5 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
@@ -23,7 +22,7 @@ public abstract class LivingEntityMixin extends Entity implements DynamicLightSo
 
 	@Override
 	public void tdv$dynamicLightTick() {
-		if (!EmbPlusConfig.tileEntityLighting.get() || !DynLightsHandlers.canLightUp(this)) {
+		if (!DynLightsHandlers.canLightUp(this)) {
 			this.lambdynlights$luminance = 0;
 			return;
 		}

@@ -1,7 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
@@ -76,8 +75,7 @@ public abstract class EntityMixin implements DynamicLightSource {
 				this.tdv$setDynamicLightEnabled(false);
 			} else {
 				this.tdv$dynamicLightTick();
-				if ((!EmbPlusConfig.tileEntityLighting.get() && this.getType() != EntityType.PLAYER)
-						|| !DynLightsHandlers.canLightUp((Entity) (Object) this))
+				if (this.getType() != EntityType.PLAYER || !DynLightsHandlers.canLightUp((Entity) (Object) this))
 					this.lambdynlights$luminance = 0;
 				DynLightsPlus.updateTracking(this);
 			}
@@ -116,23 +114,8 @@ public abstract class EntityMixin implements DynamicLightSource {
 	}
 
 
+	@Unique
 	private static long lambdynlights_lastUpdate = 0;
-
-	@Override
-	// TODO: fuze with me.disabled720.dynamiclights.mixin.lightsource.BlockEntityMixin.tdv$shouldUpdateDynamicLight
-	public boolean tdv$shouldUpdateDynamicLight() {
-		long currentTime = System.currentTimeMillis();
-		boolean shouldNot = switch (EmbPlusConfig.dynQuality.get()) {
-			case OFF -> true;
-			case SLOW -> currentTime < lambdynlights_lastUpdate + 500;
-			case FAST -> currentTime < lambdynlights_lastUpdate + 200;
-			case FASTEST -> currentTime < lambdynlights_lastUpdate + 100;
-			default -> false;
-		};
-		if (shouldNot) return false;
-		lambdynlights_lastUpdate = currentTime;
-		return true;
-	}
 
 	@Override
 	public void tdv$dynamicLightTick() {
@@ -150,8 +133,7 @@ public abstract class EntityMixin implements DynamicLightSource {
 
 	@Override
 	public boolean tdv$lambdynlights$updateDynamicLight(@NotNull LevelRenderer renderer) {
-		if (!this.tdv$shouldUpdateDynamicLight())
-			return false;
+		if (!DynLightsPlus.shouldUpdateDynLights()) return false;
 		double deltaX = this.getX() - this.lambdynlights$prevX;
 		double deltaY = this.getY() - this.lambdynlights$prevY;
 		double deltaZ = this.getZ() - this.lambdynlights$prevZ;

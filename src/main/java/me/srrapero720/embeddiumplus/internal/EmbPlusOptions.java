@@ -9,40 +9,41 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
-import me.srrapero720.embeddiumplus.api.EmbPlusAPI;
 import net.minecraft.network.chat.Component;
+
+import me.srrapero720.embeddiumplus.internal.EmbyConfig.*;
 
 import java.util.List;
 
 public class EmbPlusOptions {
 
-    public static Option<EmbPlusConfig.FullScreenMode> getFullscreenOption(MinecraftOptionsStorage options) {
-        return OptionImpl.createBuilder(EmbPlusConfig.FullScreenMode.class, options)
+    public static Option<FullScreenMode> getFullscreenOption(MinecraftOptionsStorage options) {
+        return OptionImpl.createBuilder(FullScreenMode.class, options)
                 .setName(Component.translatable("embeddium.plus.options.screen.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.screen.desc"))
-                .setControl((opt) -> new CyclingControl<>(opt, EmbPlusConfig.FullScreenMode.class, new Component[] {
+                .setControl((opt) -> new CyclingControl<>(opt, FullScreenMode.class, new Component[] {
                         Component.translatable("embeddium.plus.options.screen.windowed"),
                         Component.translatable("embeddium.plus.options.screen.borderless"),
                         Component.translatable("options.fullscreen")
                 }))
-                .setBinding(EmbPlusAPI::setFullScreenMode, (opts) -> EmbPlusConfig.fullScreenMode.get()).build();
+                .setBinding(EmbyConfig::setFullScreenMode, (opts) -> EmbyConfig.fullScreen.get()).build();
     }
 
 
     public static void setFPSOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts, MinecraftOptionsStorage vanillaOpts) {
         var builder = OptionGroup.createBuilder();
 
-        Option<EmbPlusConfig.Complexity> displayFps = OptionImpl.createBuilder(EmbPlusConfig.Complexity.class, sodiumOpts)
+        Option<FPSDisplayMode> displayFps = OptionImpl.createBuilder(FPSDisplayMode.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.displayfps.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.displayfps.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbPlusConfig.Complexity.class, new Component[]{
+                .setControl((option) -> new CyclingControl<>(option, FPSDisplayMode.class, new Component[]{
                         Component.translatable("embeddium.plus.options.common.off"),
                         Component.translatable("embeddium.plus.options.common.simple"),
-                        Component.translatable("embeddium.plus.options.common.advanced")
+                        Component.translatable("embeddium.plus.options.common.complete")
                 }))
                 .setBinding(
-                        (opts, value) -> EmbPlusConfig.fpsCounterMode.set(value),
-                        (opts) -> EmbPlusConfig.fpsCounterMode.get())
+                        (opts, value) -> EmbyConfig.fpsDisplayMode.set(value),
+                        (opts) -> EmbyConfig.fpsDisplayMode.get())
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -53,8 +54,11 @@ public class EmbPlusOptions {
                 .setControl((option) -> new SliderControl(option, 4, 64, 2, ControlValueFormatter.translateVariable("embeddium.plus.options.common.pixels")))
                 .setImpact(OptionImpact.LOW)
                 .setBinding(
-                        (opts, value) -> EmbPlusConfig.fpsCounterPosition.set(value),
-                        (opts) -> EmbPlusConfig.fpsCounterPosition.get())
+                        (opts, value) -> {
+                            EmbyConfig.fpsDisplayMargin.set(value);
+                            EmbyConfig.fpsDisplayMarginCache = value;
+                        },
+                        (opts) -> EmbyConfig.fpsDisplayMarginCache)
                 .build();
 
         builder.add(displayFps);
@@ -71,8 +75,11 @@ public class EmbPlusOptions {
                 .setTooltip(Component.translatable("embeddium.plus.options.fontshadow.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.disableFontShadow.set(value),
-                        (options) -> EmbPlusConfig.disableFontShadow.get())
+                        (options, value) -> {
+                            EmbyConfig.fontShadows.set(value);
+                            EmbyConfig.fontShadowsCache = value;
+                        },
+                        (options) -> EmbyConfig.fontShadowsCache)
                 .setImpact(OptionImpact.VARIES)
                 .build();
         OptionImpl<SodiumGameOptions, Boolean> fastChest = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
@@ -80,8 +87,11 @@ public class EmbPlusOptions {
                 .setTooltip(Component.translatable("embeddium.plus.options.fastchest.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.fastChestsEnabled.set(value),
-                        (options) -> EmbPlusConfig.fastChestsEnabled.get())
+                        (options, value) -> {
+                            EmbyConfig.fastChests.set(value);
+                            EmbyConfig.fastChestsCache = value;
+                        },
+                        (options) -> EmbyConfig.fastChestsCache)
                 .setImpact(OptionImpact.HIGH)
                 .setEnabled(EmbPlusTools.flwIsOff())
                 .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
@@ -92,8 +102,11 @@ public class EmbPlusOptions {
                 .setTooltip(Component.translatable("embeddium.plus.options.jei.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.hideJEI.set(value),
-                        (options) -> EmbPlusTools.flwIsOff() ? EmbPlusConfig.hideJEI.get() : false)
+                        (options, value) -> {
+                            EmbyConfig.hideJREI.set(value);
+                            EmbyConfig.hideJREICache = value;
+                        },
+                        (options) -> EmbPlusTools.flwIsOff() && EmbyConfig.hideJREICache)
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(EmbPlusTools.isPresent("jei"))
                 .build();
@@ -113,8 +126,11 @@ public class EmbPlusOptions {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.enableDistanceChecks.set(value),
-                        (options) -> EmbPlusConfig.enableDistanceChecks.get())
+                        (options, value) -> {
+                            EmbyConfig.entityDistanceCulling.set(value);
+                            EmbyConfig.entityDistanceCullingCache = value;
+                        },
+                        (options) -> EmbyConfig.entityDistanceCullingCache)
                 .setImpact(OptionImpact.LOW)
                 .build();
 
@@ -123,8 +139,12 @@ public class EmbPlusOptions {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.distance.h.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 192, 8, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.maxEntityRenderDistanceSquare.set(value * value),
-                        (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbPlusConfig.maxEntityRenderDistanceSquare.get()))))
+                        (options, value) -> {
+                            int result = value * value;
+                            EmbyConfig.entityCullingDistanceX.set(result);
+                            EmbyConfig.entityCullingDistanceXCache = result;
+                        },
+                        (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbyConfig.entityCullingDistanceXCache))))
                 .setImpact(OptionImpact.HIGH)
                 .build();
 
@@ -133,8 +153,11 @@ public class EmbPlusOptions {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.distance.v.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.maxEntityRenderDistanceY.set(value),
-                        (options) -> EmbPlusConfig.maxEntityRenderDistanceY.get())
+                        (options, value) -> {
+                            EmbyConfig.entityCullingDistanceY.set(value);
+                            EmbyConfig.entityCullingDistanceYCache = value;
+                        },
+                        (options) -> EmbyConfig.entityCullingDistanceYCache)
                 .setImpact(OptionImpact.HIGH)
                 .build();
 
@@ -153,8 +176,12 @@ public class EmbPlusOptions {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.tile.distance.h.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 256, 8, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.maxTileEntityRenderDistanceSquare.set(value * value),
-                        (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbPlusConfig.maxTileEntityRenderDistanceSquare.get()))))
+                        (options, value) -> {
+                            int result = value * value;
+                            EmbyConfig.tileEntityCullingDistanceX.set(result);
+                            EmbyConfig.tileEntityCullingDistanceXCache = result;
+                        },
+                        (options) -> Math.toIntExact(Math.round(Math.sqrt(EmbyConfig.tileEntityCullingDistanceXCache))))
                 .setImpact(OptionImpact.HIGH)
                 .build();
 
@@ -163,8 +190,11 @@ public class EmbPlusOptions {
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.tile.distance.v.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
                 .setBinding(
-                        (options, value) -> EmbPlusConfig.maxTileEntityRenderDistanceY.set(value),
-                        (options) -> EmbPlusConfig.maxTileEntityRenderDistanceY.get())
+                        (options, value) -> {
+                            EmbyConfig.tileEntityCullingDistanceY.set(value);
+                            EmbyConfig.tileEntityCullingDistanceYCache = value;
+                        },
+                        (options) -> EmbyConfig.tileEntityCullingDistanceYCache)
                 .setImpact(OptionImpact.HIGH)
                 .build();
 

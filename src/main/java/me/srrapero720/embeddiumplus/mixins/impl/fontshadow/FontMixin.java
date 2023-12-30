@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.fontshadow;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Style;
@@ -17,12 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class FontMixin {
     @Inject(method = "renderText(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;II)F", at = @At("HEAD"), cancellable = true)
     public void inject$renderText(String pText, float pX, float pY, int pColor, boolean pDropShadow, Matrix4f pMatrix, MultiBufferSource pBuffer, Font.DisplayMode pDisplayMode, int pBackgroundColor, int pPackedLightCoords, CallbackInfoReturnable<Float> cir) {
-        if (EmbPlusConfig.disableFontShadow.get() && pDropShadow) cir.setReturnValue(0f);
+        if (EmbyConfig.fontShadowsCache && pDropShadow) cir.setReturnValue(0f);
     }
 
     @Inject(method = "renderText(Lnet/minecraft/util/FormattedCharSequence;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;II)F", at = @At("HEAD"), cancellable = true)
     public void inject$renderText(FormattedCharSequence pText, float pX, float pY, int pColor, boolean pDropShadow, Matrix4f pMatrix, MultiBufferSource pBuffer, Font.DisplayMode pDisplayMode, int pBackgroundColor, int pPackedLightCoords, CallbackInfoReturnable<Float> cir) {
-        if (EmbPlusConfig.disableFontShadow.get() &&  pDropShadow) cir.setReturnValue(0f);
+        if (EmbyConfig.fontShadowsCache &&  pDropShadow) cir.setReturnValue(0f);
     }
 
     @Mixin(value = Font.StringRenderOutput.class)
@@ -31,7 +31,7 @@ public class FontMixin {
 
         @Inject(method = "accept", at = @At("HEAD"), cancellable = true)
         public void inject$accept(int pPositionInCurrentSequence, Style pStyle, int pCodePoint, CallbackInfoReturnable<Boolean> cir) {
-            if (EmbPlusConfig.disableFontShadow.get() && this.dropShadow) cir.setReturnValue(false);
+            if (EmbyConfig.fontShadowsCache && this.dropShadow) cir.setReturnValue(false);
         }
     }
 }

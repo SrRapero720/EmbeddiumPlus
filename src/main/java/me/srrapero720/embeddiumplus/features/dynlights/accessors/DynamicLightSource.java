@@ -91,13 +91,6 @@ public interface DynamicLightSource {
 	 */
 	void tdv$dynamicLightTick();
 
-	/**
-	 * Returns whether this dynamic light source should update.
-	 *
-	 * @return {@code true} if this dynamic light source should update, else {@code false}
-	 */
-	boolean tdv$shouldUpdateDynamicLight();
-
 	boolean tdv$lambdynlights$updateDynamicLight(@NotNull LevelRenderer renderer);
 
 	void tdv$lambdynlights$scheduleTrackedChunksRebuild(@NotNull LevelRenderer renderer);

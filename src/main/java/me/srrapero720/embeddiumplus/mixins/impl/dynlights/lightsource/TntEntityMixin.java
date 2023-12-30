@@ -1,6 +1,5 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
 import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
@@ -44,7 +43,7 @@ public abstract class TntEntityMixin extends Entity implements DynamicLightSourc
 			if (this.isRemoved()) {
 				this.tdv$setDynamicLightEnabled(false);
 			} else {
-				if (!EmbPlusConfig.tileEntityLighting.get() || !DynLightsHandlers.canLightUp(this))
+				if (!DynLightsHandlers.canLightUp(this))
 					this.tdv$resetDynamicLight();
 				else
 					this.tdv$dynamicLightTick();

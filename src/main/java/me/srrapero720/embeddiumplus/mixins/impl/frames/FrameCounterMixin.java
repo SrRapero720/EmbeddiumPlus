@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.frames;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.features.frame_overlay.MinFrameProvider;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -22,13 +22,13 @@ public class FrameCounterMixin {
     @Inject(method = "render", at = @At("HEAD"))
     public void render(GuiGraphics matrixStack, float tickDelta, CallbackInfo info) {
         String displayString;
-        switch (EmbPlusConfig.fpsCounterMode.get()) {
+        switch (EmbyConfig.fpsDisplayMode.get()) {
             case SIMPLE -> {
                 int fps = FpsAccessorMixin.getFps();
                 displayString = String.valueOf(fps);
             }
 
-            case ADVANCED -> {
+            case COMPLETE -> {
                 int fps = FpsAccessorMixin.getFps();
                 displayString = embPlus$getAdvancedFPSString(fps);
             }
@@ -41,7 +41,7 @@ public class FrameCounterMixin {
         Minecraft client = Minecraft.getInstance();
         if (client.options.renderDebug && !client.options.renderFpsChart) return; // No render when F3 is open
 
-        float textPos = EmbPlusConfig.fpsCounterPosition.get();
+        float textPos = EmbyConfig.fpsDisplayMarginCache;
 
         int textAlpha = 200;
         int textColor = 0xFFFFFF;

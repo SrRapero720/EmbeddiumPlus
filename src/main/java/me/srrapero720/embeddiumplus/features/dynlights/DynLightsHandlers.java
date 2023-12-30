@@ -1,9 +1,9 @@
 package me.srrapero720.embeddiumplus.features.dynlights;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusConfig;
 import me.srrapero720.embeddiumplus.EmbeddiumPlus;
 import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightHolder;
 import me.srrapero720.embeddiumplus.features.dynlights.events.DynLightsSetupEvent;
+import me.srrapero720.embeddiumplus.internal.EmbyConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -113,7 +113,7 @@ public final class DynLightsHandlers {
 	 * @return {@code true} if the entity can light up, otherwise {@code false}
 	 */
 	public static <T extends Entity> boolean canLightUp(T entity) {
-		return EmbPlusConfig.entityLighting.get();
+		return EmbyConfig.dynLightsOnEntitiesCache;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public final class DynLightsHandlers {
 	 * @return {@code true} if the block entity can light up, otherwise {@code false}
 	 */
 	public static <T extends BlockEntity> boolean canLightUp(T entity) {
-		return EmbPlusConfig.tileEntityLighting.get();
+		return EmbyConfig.dynLightsOnTileEntitiesCache;
 	}
 
 	/**
@@ -136,7 +136,7 @@ public final class DynLightsHandlers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Entity> int getLuminanceFrom(T entity) {
-		if (!EmbPlusConfig.entityLighting.get())
+		if (!EmbyConfig.dynLightsOnEntitiesCache)
 			return 0;
 
 		var handler = (Entry<T>) getDynamicLightHandler(entity.getType());
@@ -159,7 +159,7 @@ public final class DynLightsHandlers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends BlockEntity> int getLuminanceFrom(T entity) {
-		if (!EmbPlusConfig.tileEntityLighting.get())
+		if (!EmbyConfig.dynLightsOnTileEntitiesCache)
 			return 0;
 		Entry<T> handler = (Entry<T>) getDynamicLightHandler(entity.getType());
 		if (handler == null)
@@ -179,7 +179,7 @@ public final class DynLightsHandlers {
 	 * @version 1.3.0
 	 * @since 1.1.0
 	 */
-	public static interface Entry<T> {
+	public interface Entry<T> {
 		/**
 		 * Returns the luminance of the light source.
 		 *
@@ -244,6 +244,7 @@ public final class DynLightsHandlers {
 		 * @param <T> The type of Creeper entity.
 		 * @return The completed handler.
 		 */
+		// TODO: fix this, make getLuminance return dynLight config instead of manually get it
 		static <T extends Creeper> @NotNull Entry<T> makeCreeperEntityHandler(@Nullable DynLightsHandlers.Entry<T> handler) {
 			return new Entry<>() {
 				@Override
@@ -251,10 +252,10 @@ public final class DynLightsHandlers {
 					int luminance = 0;
 
 					if (entity.getSwelling(0.f) > 0.001) {
-						luminance = switch (EmbPlusConfig.dynQuality.get()) {
+						luminance = switch (EmbyConfig.dynLightSpeed.get()) {
 							case OFF -> 0;
-							case SLOW, FAST, FASTEST -> 10;
-							case REALTIME -> (int) (entity.getSwelling(0.f) * 10.0);
+							case NORMAL, SLOW, FAST, SUPERFAST, FASTESTS -> 12;
+							case REALTIME -> (int) (entity.getSwelling(0.f) * 12.0);
 						};
 					}
 
