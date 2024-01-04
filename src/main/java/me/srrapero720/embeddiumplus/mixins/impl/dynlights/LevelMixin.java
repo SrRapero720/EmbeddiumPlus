@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights;
 
-import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
+import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.DynamicLightSource;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.Level;

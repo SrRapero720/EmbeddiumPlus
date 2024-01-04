@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
-import me.srrapero720.embeddiumplus.features.entity_distance.IEntityTypeAccess;
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
+import me.srrapero720.embeddiumplus.foundation.entitydistance.IEntityTypeAccess;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import org.spongepowered.asm.mixin.Mixin;

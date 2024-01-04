@@ -1,8 +1,8 @@
 package me.srrapero720.embeddiumplus.mixins.impl.darkness;
 
 import com.mojang.blaze3d.platform.NativeImage;
-import me.srrapero720.embeddiumplus.features.darkness.DarknessPlus;
-import me.srrapero720.embeddiumplus.features.darkness.accessors.TextureAccess;
+import me.srrapero720.embeddiumplus.foundation.darkness.DarknessPlus;
+import me.srrapero720.embeddiumplus.foundation.darkness.accessors.TextureAccess;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

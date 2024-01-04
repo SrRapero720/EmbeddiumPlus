@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins;
 
-import me.srrapero720.embeddiumplus.internal.EmbPlusTools;
+import me.srrapero720.embeddiumplus.EmbyTools;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
@@ -29,20 +29,15 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String target, String mixin) {
         if (FMLEnvironment.dist.isDedicatedServer()) return false;
 
-        final var mixinName = EmbPlusTools.getLastValue(mixin.split("\\."));
+        final var mixinName = EmbyTools.getLastValue(mixin.split("\\."));
         return switch (mixinName) {
-            case "ExtendedServerViewDistance" -> {
-                LOGGER.warn(IT,"Disabling ExtendedServerViewDistance mixin due to Farsight/Bobby being installed.");
-                yield  false;
-            }
-
             case "JeiOverlayMixin" -> {
-                if (!EmbPlusTools.isPresent("jei")) {
+                if (!EmbyTools.isModInstalled("jei")) {
                     LOGGER.warn(IT, "Disabling JeiOverlayMixin due to JEI being NOT installed");
                     yield false;
                 } else {
                     LOGGER.warn(IT, "Enabling JeiOverlayMixin...");
-                    if (EmbPlusTools.isPresent("rei")) throw new IllegalStateException("REI and JEI detected... forcing shutting down");
+                    if (EmbyTools.isModInstalled("rei")) throw new IllegalStateException("REI and JEI detected... forcing shutting down");
                     yield true;
                 }
             }

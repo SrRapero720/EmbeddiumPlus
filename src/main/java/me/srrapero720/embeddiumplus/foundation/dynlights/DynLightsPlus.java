@@ -7,13 +7,13 @@
  * see the LICENSE file.
  */
 
-package me.srrapero720.embeddiumplus.features.dynlights;
+package me.srrapero720.embeddiumplus.foundation.dynlights;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
-import me.srrapero720.embeddiumplus.features.dynlights.events.DynLightsSetupEvent;
-import me.srrapero720.embeddiumplus.features.dynlights.item.ItemLightRegistry;
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
+import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.DynamicLightSource;
+import me.srrapero720.embeddiumplus.foundation.dynlights.events.DynLightsSetupEvent;
+import me.srrapero720.embeddiumplus.foundation.dynlights.item.ItemLightRegistry;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -34,7 +34,6 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Unique;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.features.frame_overlay;
+package me.srrapero720.embeddiumplus.foundation.frames;
 
 import me.srrapero720.embeddiumplus.mixins.impl.frames.FpsAccessorMixin;
 import net.minecraft.client.Minecraft;

@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights;
 
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
-import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightHolder;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.DynamicLightHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

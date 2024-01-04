@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.internal;
+package me.srrapero720.embeddiumplus;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
@@ -285,7 +285,7 @@ public class EmbyConfig {
     }
 
     @SubscribeEvent
-    public static void updateCache(ModConfigEvent event) {
+    public static void updateCache(ModConfigEvent ignored) {
         EmbeddiumPlus.LOGGER.info("Updating cache...");
 
         fpsDisplayMarginCache = fpsDisplayMargin.get();

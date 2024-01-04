@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights.embeddium;
 
 import me.jellysquid.mods.sodium.client.model.light.flat.FlatLightPipeline;
-import me.srrapero720.embeddiumplus.features.dynlights.accessors.EmbedtDynamicLightHandler;
+import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.EmbedtDynamicLightHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import org.spongepowered.asm.mixin.Dynamic;

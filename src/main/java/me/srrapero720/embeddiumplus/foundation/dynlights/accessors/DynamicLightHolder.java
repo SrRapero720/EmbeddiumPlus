@@ -1,6 +1,6 @@
-package me.srrapero720.embeddiumplus.features.dynlights.accessors;
+package me.srrapero720.embeddiumplus.foundation.dynlights.accessors;
 
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsHandlers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntity;

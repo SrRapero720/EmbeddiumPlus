@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights;
 
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
-import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.DynamicLightSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;

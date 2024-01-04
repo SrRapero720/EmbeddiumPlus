@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.features.entity_distance;
+package me.srrapero720.embeddiumplus.foundation.entitydistance;
 
 public interface IEntityTypeAccess {
     boolean embPlus$isWhitelisted();

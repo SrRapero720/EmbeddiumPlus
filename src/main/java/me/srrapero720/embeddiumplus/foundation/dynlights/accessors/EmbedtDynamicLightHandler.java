@@ -1,7 +1,7 @@
-package me.srrapero720.embeddiumplus.features.dynlights.accessors;
+package me.srrapero720.embeddiumplus.foundation.dynlights.accessors;
 
 import me.jellysquid.mods.sodium.client.model.light.data.LightDataAccess;
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
 import net.minecraft.core.BlockPos;
 import org.jetbrains.annotations.ApiStatus;
 

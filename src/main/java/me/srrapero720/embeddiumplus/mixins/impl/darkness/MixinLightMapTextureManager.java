@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.darkness;
 
-import me.srrapero720.embeddiumplus.features.darkness.accessors.LightMapAccess;
-import me.srrapero720.embeddiumplus.features.darkness.accessors.TextureAccess;
+import me.srrapero720.embeddiumplus.foundation.darkness.accessors.LightMapAccess;
+import me.srrapero720.embeddiumplus.foundation.darkness.accessors.TextureAccess;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;

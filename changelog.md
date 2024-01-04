@@ -11,6 +11,8 @@ The performance update (to be less "redundant"... or what do you think LunaPixel
   - 🐛 It can't be used with Flywheel + Instancing or Batching backend.
 - [🔥] Changing language no longer reloads all resources
   - 🛠️ A QoL change that increases language changing
+- [🔥] Added into video settings page all true darkness settings
+  - 🔥 Adds "True Darkness" page
 - [🔥] Added fresh localization languages
   - 🍜 Simplified Chinese (thanks to Wheatley11 and qznfbnj)
   - 🥐 French (thanks to Myuui)

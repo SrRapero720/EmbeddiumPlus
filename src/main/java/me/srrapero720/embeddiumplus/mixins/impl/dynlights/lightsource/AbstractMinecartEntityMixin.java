@@ -1,8 +1,8 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
-import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.DynamicLightSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;

@@ -1,7 +1,6 @@
-package me.srrapero720.embeddiumplus.features.dynlights.item;
+package me.srrapero720.embeddiumplus.foundation.dynlights.item;
 
 import com.google.gson.JsonObject;
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

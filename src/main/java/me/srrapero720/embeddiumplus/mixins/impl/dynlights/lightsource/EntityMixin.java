@@ -1,9 +1,9 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights.lightsource;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
-import me.srrapero720.embeddiumplus.features.dynlights.accessors.DynamicLightSource;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.DynamicLightSource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
