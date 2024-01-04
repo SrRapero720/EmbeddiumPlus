@@ -1,6 +1,6 @@
-package me.srrapero720.embeddiumplus.features.darkness;
+package me.srrapero720.embeddiumplus.foundation.darkness;
 
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
@@ -15,9 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
 public class DarknessPlus {
-
-
-
 	public static void getDarkenedFogColor(CallbackInfoReturnable<Vec3> ci, double factor) {
 		if (factor != 1.0) {
 			Vec3 result = ci.getReturnValue();

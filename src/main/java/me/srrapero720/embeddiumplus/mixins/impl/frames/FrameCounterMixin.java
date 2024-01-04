@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.frames;
 
-import me.srrapero720.embeddiumplus.features.frame_overlay.MinFrameProvider;
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
+import me.srrapero720.embeddiumplus.foundation.frames.MinFrameProvider;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.client.gui.overlay.ForgeGui;

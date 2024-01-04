@@ -1,8 +1,8 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.srrapero720.embeddiumplus.internal.EmbPlusTools;
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyTools;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,7 +18,7 @@ public class MaxDistanceTileEntity {
     public <E extends BlockEntity> void render(E entity, float val, PoseStack matrix, MultiBufferSource p_228850_4_, CallbackInfo ci) {
         BlockEntityRenderDispatcher thisObj = (BlockEntityRenderDispatcher) (Object) this;
 
-        if (!EmbPlusTools.isEntityWithinDistance(
+        if (!EmbyTools.isEntityWithinDistance(
                 entity.getBlockPos(),
                 thisObj.camera.getPosition(),
                 EmbyConfig.tileEntityCullingDistanceYCache,

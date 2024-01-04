@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights;
 
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.DebugScreenOverlay;
 import org.spongepowered.asm.mixin.Mixin;

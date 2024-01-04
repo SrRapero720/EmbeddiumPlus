@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.cloudheight;
 
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

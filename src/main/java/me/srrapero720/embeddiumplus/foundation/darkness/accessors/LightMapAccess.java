@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.features.darkness.accessors;
+package me.srrapero720.embeddiumplus.foundation.darkness.accessors;
 
 public interface LightMapAccess {
 	boolean embPlus$isDirty();

@@ -2,8 +2,8 @@ package me.srrapero720.embeddiumplus.mixins.impl.dynlights.embeddium;
 
 import me.jellysquid.mods.sodium.client.model.light.data.ArrayLightDataCache;
 import me.jellysquid.mods.sodium.client.model.light.data.LightDataAccess;
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
-import me.srrapero720.embeddiumplus.features.dynlights.accessors.EmbedtDynamicLightHandler;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.EmbedtDynamicLightHandler;
 import org.spongepowered.asm.mixin.Dynamic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

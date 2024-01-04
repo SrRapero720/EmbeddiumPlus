@@ -1,7 +1,6 @@
 package me.srrapero720.embeddiumplus;
 
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;

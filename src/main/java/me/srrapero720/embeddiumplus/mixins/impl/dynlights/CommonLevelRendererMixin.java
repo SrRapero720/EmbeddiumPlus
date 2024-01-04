@@ -1,8 +1,8 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights;
 
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
-import me.srrapero720.embeddiumplus.internal.EmbyConfig.DynLightsSpeed;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyConfig.DynLightsSpeed;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;

@@ -7,9 +7,9 @@
  * see the LICENSE file.
  */
 
-package me.srrapero720.embeddiumplus.features.dynlights.accessors;
+package me.srrapero720.embeddiumplus.foundation.dynlights.accessors;
 
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.ApiStatus;

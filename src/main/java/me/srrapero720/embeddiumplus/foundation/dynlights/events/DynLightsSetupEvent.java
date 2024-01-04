@@ -1,8 +1,8 @@
-package me.srrapero720.embeddiumplus.features.dynlights.events;
+package me.srrapero720.embeddiumplus.foundation.dynlights.events;
 
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsHandlers;
-import me.srrapero720.embeddiumplus.features.dynlights.item.ItemLightRegistry;
-import me.srrapero720.embeddiumplus.features.dynlights.item.ItemLightSource;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsHandlers;
+import me.srrapero720.embeddiumplus.foundation.dynlights.item.ItemLightRegistry;
+import me.srrapero720.embeddiumplus.foundation.dynlights.item.ItemLightSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.Event;

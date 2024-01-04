@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Mixin(LanguageSelectScreen.class)
 public class LanguageScreenMixin extends OptionsSubScreen {
-    public LanguageScreenMixin(Screen p_96284_, Options p_96285_, Component p_96286_) { super(p_96284_, p_96285_, p_96286_); }
+    public LanguageScreenMixin(Screen screen, Options options, Component component) { super(screen, options, component); }
 
     @Redirect(method = "onDone", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks()Ljava/util/concurrent/CompletableFuture;"))
     public CompletableFuture<Void> redirectResourceManagerReload(Minecraft instance) {

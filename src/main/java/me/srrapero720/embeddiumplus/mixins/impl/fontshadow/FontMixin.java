@@ -1,6 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins.impl.fontshadow;
 
-import me.srrapero720.embeddiumplus.internal.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Style;

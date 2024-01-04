@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.internal;
+package me.srrapero720.embeddiumplus.foundation.embeddium;
 
 import com.google.common.collect.ImmutableList;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
@@ -9,14 +9,15 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
+import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyTools;
 import net.minecraft.network.chat.Component;
 
-import me.srrapero720.embeddiumplus.internal.EmbyConfig.*;
+import me.srrapero720.embeddiumplus.EmbyConfig.*;
 
 import java.util.List;
 
 public class EmbPlusOptions {
-
     public static Option<FullScreenMode> getFullscreenOption(MinecraftOptionsStorage options) {
         return OptionImpl.createBuilder(FullScreenMode.class, options)
                 .setName(Component.translatable("embeddium.plus.options.screen.title"))
@@ -33,7 +34,7 @@ public class EmbPlusOptions {
     public static void setFPSOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts, MinecraftOptionsStorage vanillaOpts) {
         var builder = OptionGroup.createBuilder();
 
-        Option<FPSDisplayMode> displayFps = OptionImpl.createBuilder(FPSDisplayMode.class, sodiumOpts)
+        var displayFps = OptionImpl.createBuilder(FPSDisplayMode.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.displayfps.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.displayfps.desc"))
                 .setControl((option) -> new CyclingControl<>(option, FPSDisplayMode.class, new Component[]{
@@ -48,7 +49,7 @@ public class EmbPlusOptions {
                 .build();
 
 
-        Option<Integer> displayFpsPos = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
+        var displayFpsPos = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.displayfps.position.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.displayfps.position.desc"))
                 .setControl((option) -> new SliderControl(option, 4, 64, 2, ControlValueFormatter.translateVariable("embeddium.plus.options.common.pixels")))
@@ -70,7 +71,7 @@ public class EmbPlusOptions {
 
     public static void setPerformanceOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts, MinecraftOptionsStorage vanillaOpts) {
         var builder = OptionGroup.createBuilder();
-        OptionImpl<SodiumGameOptions, Boolean> disableFontShadow = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
+        var disableFontShadow = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.fontshadow.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.fontshadow.desc"))
                 .setControl(TickBoxControl::new)
@@ -82,7 +83,7 @@ public class EmbPlusOptions {
                         (options) -> EmbyConfig.fontShadowsCache)
                 .setImpact(OptionImpact.VARIES)
                 .build();
-        OptionImpl<SodiumGameOptions, Boolean> fastChest = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
+        var fastChest = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.fastchest.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.fastchest.desc"))
                 .setControl(TickBoxControl::new)
@@ -93,11 +94,11 @@ public class EmbPlusOptions {
                         },
                         (options) -> EmbyConfig.fastChestsCache)
                 .setImpact(OptionImpact.HIGH)
-                .setEnabled(EmbPlusTools.flwIsOff())
+                .setEnabled(EmbyTools.isFlywheelOff())
                 .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                 .build();
 
-        OptionImpl<SodiumGameOptions, Boolean> hideJEI = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
+        var hideJEI = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.jei.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.jei.desc"))
                 .setControl(TickBoxControl::new)
@@ -106,9 +107,9 @@ public class EmbPlusOptions {
                             EmbyConfig.hideJREI.set(value);
                             EmbyConfig.hideJREICache = value;
                         },
-                        (options) -> EmbPlusTools.flwIsOff() && EmbyConfig.hideJREICache)
+                        (options) -> EmbyTools.isFlywheelOff() && EmbyConfig.hideJREICache)
                 .setImpact(OptionImpact.LOW)
-                .setEnabled(EmbPlusTools.isPresent("jei"))
+                .setEnabled(EmbyTools.isModInstalled("jei"))
                 .build();
 
         builder.add(disableFontShadow);
@@ -121,7 +122,7 @@ public class EmbPlusOptions {
 
     public static OptionPage setPerformancePlusOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts) {
 
-        OptionImpl<SodiumGameOptions, Boolean> enableDistanceChecks = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
+        var enableDistanceChecks = OptionImpl.createBuilder(Boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.entity.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.desc"))
                 .setControl(TickBoxControl::new)
@@ -134,7 +135,7 @@ public class EmbPlusOptions {
                 .setImpact(OptionImpact.LOW)
                 .build();
 
-        OptionImpl<SodiumGameOptions, Integer> maxEntityDistance = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
+        var maxEntityDistance = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.entity.distance.h.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.distance.h.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 192, 8, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
@@ -148,7 +149,7 @@ public class EmbPlusOptions {
                 .setImpact(OptionImpact.HIGH)
                 .build();
 
-        OptionImpl<SodiumGameOptions, Integer> maxEntityDistanceVertical = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
+        var maxEntityDistanceVertical = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.entity.distance.v.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.entity.distance.v.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
@@ -171,7 +172,7 @@ public class EmbPlusOptions {
         );
 
 
-        OptionImpl<SodiumGameOptions, Integer> maxTileEntityDistance = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
+        var maxTileEntityDistance = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.tile.distance.h.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.tile.distance.h.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 256, 8, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
@@ -185,7 +186,7 @@ public class EmbPlusOptions {
                 .setImpact(OptionImpact.HIGH)
                 .build();
 
-        OptionImpl<SodiumGameOptions, Integer> maxTileEntityDistanceVertical = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
+        var maxTileEntityDistanceVertical = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.culling.tile.distance.v.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.tile.distance.v.desc"))
                 .setControl((option) -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))

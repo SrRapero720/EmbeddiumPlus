@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.dynlights;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.srrapero720.embeddiumplus.features.dynlights.DynLightsPlus;
+import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
