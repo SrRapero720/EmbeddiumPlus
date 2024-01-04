@@ -270,11 +270,18 @@ public class EmbyConfig {
 
         // FORCE LOAD
         var path = FMLPaths.CONFIGDIR.get().resolve("embeddium++.toml");
-        final CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
+        try {
+            final CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
 
-        configData.load();
-        SPECS.setConfig(configData);
-        updateCache(null);
+            configData.load();
+            SPECS.setConfig(configData);
+            updateCache(null);
+        } catch (Exception e) {
+            var file = path.toFile();
+            if (!file.exists()) throw new RuntimeException("Failed to read configuration file");
+            if (!file.delete()) throw new RuntimeException("Failed to remove corrupted configuration file");
+            load();
+        }
     }
 
     @SubscribeEvent
