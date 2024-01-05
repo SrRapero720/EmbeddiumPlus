@@ -29,9 +29,20 @@ public class MixinsPage extends OptionPage {
                         .setBinding((options, value) -> EmbyMixinConfig.mixin$Borderless$F11.set(value),
                                 (options) -> EmbyMixinConfig.mixin$Borderless$F11.get())
                         .setFlags(OptionFlag.REQUIRES_GAME_RESTART)
+                        .build())
+                .add(OptionImpl.createBuilder(boolean.class, mixinsOptionsStorage)
+                        .setName(Component.translatable("embeddium.plus.mixins.languagescreen.fastreload.title"))
+                        .setTooltip(Component.translatable("embeddium.plus.mixins.languagescreen.fastreload.desc"))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((options, value) -> EmbyMixinConfig.mixin$LanguageScreen$fastreload.set(value),
+                                (options) -> EmbyMixinConfig.mixin$LanguageScreen$fastreload.get())
+                        .setFlags(OptionFlag.REQUIRES_GAME_RESTART)
                         .build()
-                ).build())
-        ;
+                )
+
+
+                .build()
+        );
 
         return ImmutableList.copyOf(groups);
     }

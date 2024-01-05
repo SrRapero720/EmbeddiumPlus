@@ -34,20 +34,35 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
         final var mixinName = EmbyTools.getLastValue(mixin.split("\\."));
 
         if (mixin.endsWith("fastchests.BERenderDispatcherMixin") || mixin.endsWith("fastchests.ChestBlockMixin") || mixin.endsWith("fastchests.EnderChestBlockMixin")) {
-            return EmbyTools.isModInstalled("enhancedblockentities");
+            if (EmbyTools.isModInstalled("enhancedblockentities")) {
+                LOGGER.warn(IT, "Disabled FastChest feature mixin '{}' because EBE is installed", mixinName);
+                return false;
+            } else {
+                return true;
+            }
         }
 
+        if (mixin.endsWith("language.LanguageScreenMixin")) {
+            if (!EmbyMixinConfig.mixin$LanguageScreen$fastreload.get()) {
+                LOGGER.warn(IT, "Disabled LanguageReload feature mixins by user config");
+                return false;
+            } else {
+                return true;
+            }
+        }
 
         if (mixin.endsWith("borderless.KeyboardHandlerMixin")) {
             if (!EmbyMixinConfig.mixin$Borderless$F11.get()) {
-                LOGGER.warn("Mixin {}.{} disabled by user config", "borderless", mixinName);
+                LOGGER.warn(IT,"Disable F11 mixin for Borderless feature by user config");
                 return false;
+            } else {
+                return true;
             }
         }
 
         if (mixin.endsWith("JeiOverlayMixin")) {
             if (!EmbyTools.isModInstalled("jei")) {
-                LOGGER.warn(IT, "Disabling JeiOverlayMixin due to JEI being NOT installed");
+                LOGGER.warn(IT, "Disabling JeiOverlayMixin because JEI is not installed");
                 return false;
             } else {
                 LOGGER.warn(IT, "Enabling JeiOverlayMixin...");
