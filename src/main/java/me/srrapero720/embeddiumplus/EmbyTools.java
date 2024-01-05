@@ -2,6 +2,7 @@ package me.srrapero720.embeddiumplus;
 
 import com.jozufozu.flywheel.config.BackendType;
 import com.jozufozu.flywheel.config.FlwConfig;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -19,6 +20,31 @@ public class EmbyTools {
         } catch (Error e) {
             return true; // no flywheel
         }
+    }
+
+    public static String tintByLower(int usage) {
+        return ((usage < 9) ? ChatFormatting.DARK_RED
+                : (usage < 16) ? ChatFormatting.RED
+                : (usage < 30) ? ChatFormatting.GOLD
+                : ChatFormatting.RESET).toString() + usage;
+    }
+
+    public static String tintByPercent(long usage) {
+        return ((usage >= 100) ? ChatFormatting.DARK_RED
+                : (usage >= 90) ? ChatFormatting.RED
+                : (usage >= 75) ? ChatFormatting.GOLD
+                : ChatFormatting.RESET).toString() + usage;
+    }
+
+    public static String tintByPercent(double usage) {
+        return ((usage >= 100) ? ChatFormatting.DARK_RED
+                : (usage >= 90) ? ChatFormatting.RED
+                : (usage >= 75) ? ChatFormatting.GOLD
+                : ChatFormatting.RESET).toString() + usage;
+    }
+
+    public static long bytesToMB(long input) {
+        return input / 1024 / 1024;
     }
 
     public static boolean isModInstalled(String modid) { return FMLLoader.getLoadingModList().getModFileById(modid) != null; }

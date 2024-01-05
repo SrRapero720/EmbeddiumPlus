@@ -59,13 +59,12 @@ public class QualityPlusPage extends OptionPage {
         final var cloudHeight = OptionImpl.createBuilder(int.class, qualityOptionsStorage)
                 .setName(Component.translatable("embeddium.plus.options.clouds.height.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.clouds.height.desc"))
-                .setControl((option) -> new SliderControl(option, 64, 364, 4, ControlValueFormatter.translateVariable("embeddium.plus.options.common.blocks")))
+                .setControl((option) -> new SliderControl(option, 64, 364, 4, ControlValueFormatter.biomeBlend()))
                 .setBinding((options, value) -> {
                             EmbyConfig.cloudsHeight.set(value);
                             EmbyConfig.cloudsHeightCache = value;
                         },
                         (options) -> EmbyConfig.cloudsHeightCache)
-                .setImpact(OptionImpact.LOW)
                 .build();
 
         groups.add(OptionGroup.createBuilder()

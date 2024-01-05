@@ -1,11 +1,16 @@
 package me.srrapero720.embeddiumplus.mixins.impl.frames;
 
+import me.srrapero720.embeddiumplus.EmbyTools;
+import me.srrapero720.embeddiumplus.foundation.frames.FPSDisplayBuilder;
 import me.srrapero720.embeddiumplus.foundation.frames.MinFrameProvider;
 import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.foundation.frames.accessors.IGpuUsage;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,68 +19,80 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.LinkedList;
 
 @Mixin(ForgeGui.class)
-public class FrameCounterMixin {
-    @Unique private int embPlus$lastMeasuredFPS;
-    @Unique private String embPlus$runningAverageFPS;
-    @Unique private final LinkedList<Integer> embPlus$fpsRunningAverageQueue = new LinkedList<>();
+public abstract class FrameCounterMixin {
+    @Shadow(remap = false)
+    public abstract Minecraft getMinecraft();
+
+    @Unique
+    private int embPlus$lastMeasuredFPS;
+    @Unique
+    private String embPlus$runningAverageFPS;
+    @Unique
+    private final LinkedList<Integer> embPlus$fpsRunningAverageQueue = new LinkedList<>();
 
     @Inject(method = "render", at = @At("HEAD"))
-    public void render(GuiGraphics matrixStack, float tickDelta, CallbackInfo info) {
-        String displayString;
-        switch (EmbyConfig.fpsDisplayMode.get()) {
-            case SIMPLE -> {
-                int fps = FpsAccessorMixin.getFps();
-                displayString = String.valueOf(fps);
-            }
+    public void inject$render(GuiGraphics matrixStack, float tickDelta, CallbackInfo info) {
+        var minecraft = Minecraft.getInstance();
+        if (minecraft.options.renderDebug && !minecraft.options.renderFpsChart) return; // No render when F3 is open
 
-            case COMPLETE -> {
-                int fps = FpsAccessorMixin.getFps();
-                displayString = embPlus$getAdvancedFPSString(fps);
-            }
+        var displayMode = EmbyConfig.fpsDisplayMode.get();
+        var displaySystemMode = EmbyConfig.fpsDisplaySystemMode.get();
 
-            default -> {
-                return;
-            }
+        if (displayMode.off() && displaySystemMode.off()) return; // NOTHING TO DO HERE, BACK TO WORK
+
+
+        var displayBuilder = new FPSDisplayBuilder();
+        // FPS
+        switch (displayMode) {
+            case SIMPLE -> displayBuilder.append(EmbyTools.tintByLower(FpsAccessorMixin.getFps()), "FPS" + ChatFormatting.RESET);
+            case ADVANCED -> this.embPlus$getFpsStr(displayBuilder);
         }
 
-        Minecraft client = Minecraft.getInstance();
-        if (client.options.renderDebug && !client.options.renderFpsChart) return; // No render when F3 is open
+        // ATTACH NEXT VALUES
+        if (!displayBuilder.isEmpty() && !displaySystemMode.off()) displayBuilder.split();
 
-        float textPos = EmbyConfig.fpsDisplayMarginCache;
+        // GPU + RAM
+        switch (displaySystemMode) {
+            case GPU -> displayBuilder.append(embPlus$getGpuStr());
+            case RAM -> displayBuilder.append(embPlus$getMemoryStr());
+            case ON -> displayBuilder.append(embPlus$getGpuStr()).append(embPlus$getMemoryStr());
+        }
+
+        if (displayBuilder.isEmpty()) throw new IllegalStateException("Someone screw mod config");
+
+        double guiScale = minecraft.getWindow().getGuiScale();
+        float textMargin = EmbyConfig.fpsDisplayMarginCache;
+        textMargin = (guiScale > 0) ? textMargin / (float) guiScale : textMargin;
+
+        // Prevent FPS-Display to render outside screenspace
+        String displayString = displayBuilder.toString();
+
+        float maxTextPosX = minecraft.getWindow().getGuiScaledWidth() - minecraft.font.width(displayString);
+        float maxTextPosY = minecraft.getWindow().getGuiScaledHeight() - minecraft.font.lineHeight;
+        float posX, posY;
+
+        // CALCULATE x
+        // REMOVED Math.min() because is redundant.
+        posX = switch (EmbyConfig.fpsDisplayGravity.get()) {
+            case LEFT -> textMargin;
+            case CENTER -> (maxTextPosX / 2);
+            case RIGHT -> maxTextPosX - textMargin;
+        };
+        posY = textMargin;
 
         int textAlpha = 200;
         int textColor = 0xFFFFFF;
-        float fontScale = 0.75F;
-
-        double guiScale = client.getWindow().getGuiScale();
-        if (guiScale > 0) {
-            textPos /= (float) guiScale;
-        }
-
-        // Prevent FPS-Display to render outside screenspace
-        float maxTextPosX = client.getWindow().getGuiScaledWidth() - client.font.width(displayString);
-        float maxTextPosY = client.getWindow().getGuiScaledHeight() - client.font.lineHeight;
-        textPos = Math.min(textPos, maxTextPosX);
-
         int drawColor = ((textAlpha & 0xFF) << 24) | textColor;
 
-//        if (client.getWindow().getGuiScale() > 3)
-//        {
-//            GL11.glPushMatrix();
-//            GL11.glScalef(fontScale, fontScale, fontScale);
-//            client.font.drawShadow(matrixStack, displayString, textPos, textPos, drawColor);
-//            GL11.glPopMatrix();
-//        }
-//        else
-//        {
-            matrixStack.drawString(client.font, displayString, textPos, textPos, drawColor, true);
-        //}
+        matrixStack.drawString(minecraft.font, displayString, posX, posY, drawColor, true);
+        displayBuilder.release();
     }
 
 
     @Unique
-    private String embPlus$getAdvancedFPSString(int fps) {
+    private void embPlus$getFpsStr(FPSDisplayBuilder builder) {
         MinFrameProvider.recalculate();
+        int fps = FpsAccessorMixin.getFps();
 
         if (embPlus$lastMeasuredFPS != fps) {
             embPlus$lastMeasuredFPS = fps;
@@ -96,6 +113,36 @@ public class FrameCounterMixin {
             embPlus$runningAverageFPS = String.valueOf(average);
         }
 
-        return fps + " | MIN " + MinFrameProvider.getLastMinFrame() + " | AVG " + embPlus$runningAverageFPS;
+        builder.append(EmbyTools.tintByLower(fps) + ChatFormatting.RESET)
+                .append("MIN", MinFrameProvider.getLastMinFrame())
+                .append("AVG", embPlus$runningAverageFPS);
+    }
+
+
+    @Unique
+    private String embPlus$getGpuStr() {
+        double usage = ((IGpuUsage) getMinecraft()).embPlus$getGPU();
+        if (usage > 0.0d) {
+            return "GPU " + EmbyTools.tintByPercent(Math.min(Math.round(usage), 100)) + "%" + ChatFormatting.RESET;
+        } else {
+            return "GPU --%";
+        }
+    }
+
+    @Unique
+    private String embPlus$getMemoryStr() {
+        Runtime runtime = Runtime.getRuntime();
+
+        // JAVA USES STUPID AND CONFUSING NAMES
+        // max memory is the assigned memory (ej: -Xmx8G)
+        // total memory is the allocated memory (normally isn't much)
+        // used memory needs to be calculated using total memory - free memory, same with percent
+        long assigned = runtime.maxMemory();
+        long allocated = runtime.totalMemory();
+        long free = runtime.freeMemory();
+        long used = allocated - free;
+
+//        return "MEM " + EmbyTools.bytesToMB(used) + "/" + EmbyTools.bytesToMB(assigned) + "MB (" + (used * 100) / assigned + "%)";
+        return "MEM " + EmbyTools.tintByPercent((used * 100) / assigned) + "%" + ChatFormatting.RESET;
     }
 }

@@ -34,8 +34,8 @@
     "dynlights.lightsource.ExplosiveProjectileEntityMixin",
     "dynlights.lightsource.LivingEntityMixin",
     "dynlights.lightsource.TntEntityMixin",
-    "embeddium.EmbPagesMixin",
     "embeddium.EmbOptionsMixin",
+    "embeddium.EmbPagesMixin",
     "entitydistance.EntityCullingMixin",
     "entitydistance.MaxDistanceEntity",
     "entitydistance.MaxDistanceTileEntity",
@@ -45,6 +45,7 @@
     "fontshadow.FontMixin$StringRenderOutputMixin",
     "frames.FpsAccessorMixin",
     "frames.FrameCounterMixin",
+    "frames.GpuUsageMixin",
     "jei.JeiOverlayMixin",
     "language.LanguageScreenMixin"
   ],

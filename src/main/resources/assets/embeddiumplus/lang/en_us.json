@@ -7,10 +7,13 @@
   "embeddium.plus.options.common.fastest": "Fastest",
   "embeddium.plus.options.common.realtime": "Real Time",
   "embeddium.plus.options.common.off": "Off",
+  "embeddium.plus.options.common.on": "On",
   "embeddium.plus.options.common.simple": "Simple",
   "embeddium.plus.options.common.advanced": "Advanced",
+
   "embeddium.plus.options.clouds.height.title": "Cloud Height",
   "embeddium.plus.options.clouds.height.desc": "Raises cloud height.",
+
   "embeddium.plus.options.culling.page": "Entity Culling",
   "embeddium.plus.options.culling.entity.title": "Enable Max Entity Distance",
   "embeddium.plus.options.culling.entity.desc": "Toggles Entity culling feature",
@@ -24,6 +27,7 @@
   "embeddium.plus.options.culling.tile.distance.horizontal.desc": "Hides block entities beyond this many blocks. Huge performance increase, especially around lots of modded machines.",
   "embeddium.plus.options.culling.tile.distance.vertical.title": "Block Entities Max Distance (Vertical)",
   "embeddium.plus.options.culling.tile.distance.vertical.desc": "Hides block entities underneath this many blocks, improving performance above caves (if you have your machines in caves, for some reason). This should ideally be set lower than the horizontal distance.",
+
   "embeddium.plus.options.darkness.page": "True Darkness",
   "embeddium.plus.options.darkness.mode.title": "Darkness Mode",
   "embeddium.plus.options.darkness.mode.desc": "Makes the rest of the world more realistically dark. Does not effect daytime or torch light.\nControls how dark is considered true darkness.",
@@ -53,10 +57,24 @@
   "embeddium.plus.options.darkness.moonphase.fresh.desc": "Configure brightness on a new moon, or minimal bright level on black moon phase",
   "embeddium.plus.options.darkness.moonphase.full.title": "Full Moon Bright (max)",
   "embeddium.plus.options.darkness.moonphase.full.desc": "Configure brightness on a full moon, or maximum bright level on black moon phase",
+
   "embeddium.plus.options.displayfps.title": "Display FPS",
   "embeddium.plus.options.displayfps.desc": "Displays the current FPS. Advanced mode also displays minimum FPS, as well as 15 second average FPS, useful for judging performance.",
-  "embeddium.plus.options.displayfps.position.title": "FPS Display Position",
-  "embeddium.plus.options.displayfps.position.desc": "Offsets the FPS display a few pixels",
+
+  "embeddium.plus.options.displayfps.gravity.title": "FPS Display Gravity",
+  "embeddium.plus.options.displayfps.gravity.desc": "Corner position of the FPS display",
+  "embeddium.plus.options.displayfps.gravity.left": "Left",
+  "embeddium.plus.options.displayfps.gravity.center": "Center",
+  "embeddium.plus.options.displayfps.gravity.right": "Right",
+
+  "embeddium.plus.options.displayfps.system.title": "Display Metrics",
+  "embeddium.plus.options.displayfps.system.desc": "Displays memory usage and GPU usage beside FPS counter",
+  "embeddium.plus.options.displayfps.system.gpu": "Graphics only",
+  "embeddium.plus.options.displayfps.system.ram": "Memory only",
+
+  "embeddium.plus.options.displayfps.margin.title": "FPS Display Margin",
+  "embeddium.plus.options.displayfps.margin.desc": "Offset of the FPS display",
+
   "embeddium.plus.options.dynlights.page": "Dynamic Lights",
   "embeddium.plus.options.dynlights.tiles.title": "Enable for Block Entities",
   "embeddium.plus.options.dynlights.tiles.desc": "Turning this on will show dynamic lighting on tile entities (furnaces, modded machines, etc).\n\nThis can drastically increase the amount of lighting updates, even when you're not holding a torch.",
@@ -70,8 +88,8 @@
   "embeddium.plus.options.fastchest.desc": "Disables dynamic chests model and makes it a static model like a normal block, breaks chest animation but goes more faster on chest rooms\n\nOption has no effects with flywheel installed and running batching or instancing backend",
   "embeddium.plus.options.fog.title": "Fog",
   "embeddium.plus.options.fog.desc": "Toggles fog effect only in the overworld",
-  "embeddium.plus.options.fontshadow.title": "Disable Font Shadow",
-  "embeddium.plus.options.fontshadow.desc": "Disables Minecraft's font shadows. It looks flat and increases performance depending of the case",
+  "embeddium.plus.options.fontshadow.title": "Font Shadows",
+  "embeddium.plus.options.fontshadow.desc": "Toggles Minecraft's font shadows. It looks flat and increases performance depending of the case",
   "embeddium.plus.options.jei.title": "Hide JEI Until Searching",
   "embeddium.plus.options.jei.desc": "Toggles JEI item list unless you search for something. Press space to search for everything.",
   "embeddium.plus.options.screen.title": "Fullscreen Mode",

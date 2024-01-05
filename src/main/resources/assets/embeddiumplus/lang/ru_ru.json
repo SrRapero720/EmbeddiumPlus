@@ -7,10 +7,13 @@
   "embeddium.plus.options.common.fastest": "Ещё быстрее",
   "embeddium.plus.options.common.realtime": "В реальном времени",
   "embeddium.plus.options.common.off": "Отключено",
+  "embeddium.plus.options.common.on": "On",
   "embeddium.plus.options.common.simple": "Простое",
   "embeddium.plus.options.common.advanced": "Расширенное",
+
   "embeddium.plus.options.clouds.height.title": "Высота облаков",
   "embeddium.plus.options.clouds.height.desc": "Изменяет высоту облаков.",
+
   "embeddium.plus.options.culling.page": "Entity Culling",
   "embeddium.plus.options.culling.entity.title": "Скрытие существ на расстоянии",
   "embeddium.plus.options.culling.entity.desc": "Позволяет полностью отключить скрытие существ.",
@@ -24,6 +27,7 @@
   "embeddium.plus.options.culling.tile.distance.horizontal.desc": "Скрывает и не обрабатывает блоки-сущности за пределами этого расстояния. Значительно увеличивает производительность, особенно вблизи машин из модов.",
   "embeddium.plus.options.culling.tile.distance.vertical.title": "Макс. расстояние блоков-сущностей (по вертикали)",
   "embeddium.plus.options.culling.tile.distance.vertical.desc": "Скрывает и не обрабатывает блоки-сущности под указанным расстоянием, повышая производительность, когда вы находитесь над пещерами (если там по какой-то причине есть машины). Лучше установить меньшее значение, чем для расстояния по горизонтали.",
+
   "embeddium.plus.options.darkness.page": "True Darkness",
   "embeddium.plus.options.darkness.mode.title": "Режим True Darkness",
   "embeddium.plus.options.darkness.mode.desc": "Регулирует, что считается настоящей темнотой для True Darkness.",
@@ -53,10 +57,24 @@
   "embeddium.plus.options.darkness.moonphase.fresh.desc": "Configure brightness on a new moon, or minimal bright level on black moon phase",
   "embeddium.plus.options.darkness.moonphase.full.title": "Full Moon Bright",
   "embeddium.plus.options.darkness.moonphase.full.desc": "Configure brightness on a full moon, or maximum bright level on black moon phase",
+
   "embeddium.plus.options.displayfps.title": "Отображение FPS",
   "embeddium.plus.options.displayfps.desc": "Отображает текущее значение кадров в секунду. В расширенном режиме также отображаются минимальное и среднее за 15 секунд значения, полезно для оценки производительности.",
-  "embeddium.plus.options.displayfps.position.title": "Положение счётчика FPS",
-  "embeddium.plus.options.displayfps.position.desc": "Смещает отображение FPS на несколько пикселей",
+
+  "embeddium.plus.options.displayfps.gravity.title": "FPS Display Gravity",
+  "embeddium.plus.options.displayfps.gravity.desc": "Corner position of the FPS display",
+  "embeddium.plus.options.displayfps.gravity.left": "Left",
+  "embeddium.plus.options.displayfps.gravity.center": "Center",
+  "embeddium.plus.options.displayfps.gravity.right": "Right",
+
+  "embeddium.plus.options.displayfps.system.title": "Display Metrics",
+  "embeddium.plus.options.displayfps.system.desc": "Displays memory usage and GPU usage beside FPS counter",
+  "embeddium.plus.options.displayfps.system.gpu": "Graphics only",
+  "embeddium.plus.options.displayfps.system.ram": "Memory only",
+
+  "embeddium.plus.options.displayfps.margin.title": "Положение счётчика FPS",
+  "embeddium.plus.options.displayfps.margin.desc": "Смещает отображение FPS на несколько пикселей",
+
   "embeddium.plus.options.dynlights.page": "Динамическое освещение",
   "embeddium.plus.options.dynlights.tiles.title": "Включено для блоков-сущностей",
   "embeddium.plus.options.dynlights.tiles.desc": "Позволяет динамически отображать свет вокруг тайловых сущностей (печи, машины из модов, др.).\n\nМожет занчительно увеличить количество расчётов освещения, даже когда вы не держите в руках факел.",

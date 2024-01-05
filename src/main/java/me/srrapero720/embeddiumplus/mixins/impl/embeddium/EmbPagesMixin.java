@@ -32,12 +32,12 @@ public class EmbPagesMixin {
 
     @Inject(method = "general", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;add(Lme/jellysquid/mods/sodium/client/gui/options/Option;)Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;", ordinal = 8), locals = LocalCapture.CAPTURE_FAILHARD)
     private static void injectFPSOption(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
-        EmbPlusOptions.setFPSOptions(groups, sodiumOpts, vanillaOpts);
+        EmbPlusOptions.setFPSOptions(groups, sodiumOpts);
     }
 
     @Inject(method = "performance", at = @At(value = "NEW", target = "(Lnet/minecraft/network/chat/Component;Lcom/google/common/collect/ImmutableList;)Lme/jellysquid/mods/sodium/client/gui/options/OptionPage;"), locals = LocalCapture.CAPTURE_FAILHARD)
     private static void setPerformanceOptions(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
-        EmbPlusOptions.setPerformanceOptions(groups, sodiumOpts, vanillaOpts);
+        EmbPlusOptions.setPerformanceOptions(groups, sodiumOpts);
     }
 
     @Unique private static OptionGroup.Builder embPlus$advancedBuilder;
