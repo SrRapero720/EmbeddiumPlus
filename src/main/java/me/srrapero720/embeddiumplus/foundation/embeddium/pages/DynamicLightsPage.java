@@ -1,7 +1,6 @@
 package me.srrapero720.embeddiumplus.foundation.embeddium.pages;
 
 import com.google.common.collect.ImmutableList;
-import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
 import me.jellysquid.mods.sodium.client.gui.options.OptionImpact;
 import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
@@ -20,7 +19,7 @@ public class DynamicLightsPage extends OptionPage {
     private static final SodiumOptionsStorage dynLightsOptionsStorage = new SodiumOptionsStorage();
 
     public DynamicLightsPage() {
-        super(Component.translatable("embeddium.plus.options.dynlights.group"), create());
+        super(Component.translatable("embeddium.plus.options.dynlights.page"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
@@ -60,8 +59,8 @@ public class DynamicLightsPage extends OptionPage {
                 .build();
 
         final var tileEntityLighting = OptionImpl.createBuilder(Boolean.class, dynLightsOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.dynlights.blockentities.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.dynlights.blockentities.desc"))
+                .setName(Component.translatable("embeddium.plus.options.dynlights.tiles.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.dynlights.tiles.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.dynLightsOnTileEntities.set(value);
