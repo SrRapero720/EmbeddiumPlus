@@ -102,5 +102,7 @@
   "embeddium.plus.options.screen.windowed": "Windowed",
 
   "embeddium.plus.mixins.borderless.f11.title": "Add borderless to F11",
-  "embeddium.plus.mixins.borderless.f11.desc": "If enabled, F11 will now had borderless state into it.\n\nRequires game restart"
+  "embeddium.plus.mixins.borderless.f11.desc": "If enabled, F11 will now had borderless state into it.\n\nRequires game restart",
+  "embeddium.plus.mixins.languagescreen.fastreload.title": "Enable Fast Language Reload",
+  "embeddium.plus.mixins.languagescreen.fastreload.desc": "If enabled, Language updates only reload language instead of all resources, a 99.9% extra of speed\n\nRequires game restart"
 }
