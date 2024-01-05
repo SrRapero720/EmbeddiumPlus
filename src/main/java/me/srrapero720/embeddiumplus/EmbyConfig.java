@@ -3,7 +3,6 @@ package me.srrapero720.embeddiumplus;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.mojang.blaze3d.platform.Window;
-import me.srrapero720.embeddiumplus.EmbeddiumPlus;
 import me.srrapero720.embeddiumplus.mixins.impl.borderless.MainWindowAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -25,6 +24,7 @@ public class EmbyConfig {
     public static final ForgeConfigSpec.EnumValue<FullScreenMode> fullScreen;
     public static final ForgeConfigSpec.EnumValue<FPSDisplayMode> fpsDisplayMode;
     public static final ForgeConfigSpec.EnumValue<FPSDisplayGravity> fpsDisplayGravity;
+    public static final ForgeConfigSpec.EnumValue<FPSDisplaySystemMode> fpsDisplaySystemMode;
     public static final ForgeConfigSpec.IntValue fpsDisplayMargin;
     public static volatile int fpsDisplayMarginCache;
 
@@ -103,11 +103,15 @@ public class EmbyConfig {
 
         fpsDisplayMode = BUILDER
                 .comment("Configure FPS Display mode", "Complete mode gives you min FPS count and average count")
-                .defineEnum("fpsDisplay", FPSDisplayMode.COMPLETE);
+                .defineEnum("fpsDisplay", FPSDisplayMode.ADVANCED);
 
         fpsDisplayGravity = BUILDER
                 .comment("Configure FPS Display gravity", "Places counter on specified corner of your screen")
-                .defineEnum("fpsDisplayGravity", FPSDisplayGravity.TOP_LEFT);
+                .defineEnum("fpsDisplayGravity", FPSDisplayGravity.LEFT);
+
+        fpsDisplaySystemMode = BUILDER
+                .comment("Shows GPU and memory usage onto FPS display")
+                .defineEnum("fpsDisplaySystem", FPSDisplaySystemMode.OFF);
 
         fpsDisplayMargin = BUILDER
                 .comment("Configure FPS Display margin", "Give some space between corner and text")
@@ -192,7 +196,7 @@ public class EmbyConfig {
 
         fontShadows = BUILDER
                 .comment("Toggles Minecraft Fonts shadows", "Depending of the case may increase performance", "Gives a flat style text")
-                .define("fontShadows", true);
+                .define("fontShadows", false);
 
         fastChests = BUILDER
                 .comment("Toggles FastChest feature", "Without flywheel installed or using any backend it increases FPS significatly on chest rooms")
@@ -339,9 +343,22 @@ public class EmbyConfig {
 
 
     /* CONFIG VALUES */
-    public enum FPSDisplayMode { OFF, SIMPLE, COMPLETE; }
-    public enum FPSDisplayGravity { TOP_LEFT, TOP_CENTER, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT; }
+    public enum FPSDisplayMode {
+        OFF, SIMPLE, ADVANCED;
+
+        public boolean off() {
+            return this == OFF;
+        }
+    }
+    public enum FPSDisplayGravity { LEFT, CENTER, RIGHT; }
     public enum ChunkFadeSpeed { OFF, FAST, SLOW; }
+    public enum FPSDisplaySystemMode {
+        OFF, ON, GPU, RAM;
+
+        public boolean off() {
+            return this == OFF;
+        }
+    }
     public enum DynLightsSpeed {
         OFF(-1),
         SLOW(750),
@@ -357,6 +374,9 @@ public class EmbyConfig {
         }
         public int getDelay() { return delay; }
 
+        public boolean off() {
+            return this == OFF;
+        }
     }
     public enum DarknessMode {
         TOTAL_DARKNESS(0.04f),

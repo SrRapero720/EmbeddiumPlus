@@ -28,10 +28,10 @@ public class EmbPlusOptions {
     }
 
 
-    public static void setFPSOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts, MinecraftOptionsStorage vanillaOpts) {
+    public static void setFPSOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts) {
         var builder = OptionGroup.createBuilder();
 
-        var displayFps = OptionImpl.createBuilder(FPSDisplayMode.class, sodiumOpts)
+        builder.add(OptionImpl.createBuilder(FPSDisplayMode.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.displayfps.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.displayfps.desc"))
                 .setControl((option) -> new CyclingControl<>(option, FPSDisplayMode.class, new Component[]{
@@ -43,13 +43,43 @@ public class EmbPlusOptions {
                         (opts, value) -> EmbyConfig.fpsDisplayMode.set(value),
                         (opts) -> EmbyConfig.fpsDisplayMode.get())
                 .setImpact(OptionImpact.LOW)
-                .build();
+                .build()
+        );
+
+        builder.add(OptionImpl.createBuilder(FPSDisplaySystemMode.class, sodiumOpts)
+                .setName(Component.translatable("embeddium.plus.options.displayfps.system.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.system.desc"))
+                .setControl((option) -> new CyclingControl<>(option, FPSDisplaySystemMode.class, new Component[]{
+                        Component.translatable("embeddium.plus.options.common.off"),
+                        Component.translatable("embeddium.plus.options.common.on"),
+                        Component.translatable("embeddium.plus.options.displayfps.system.gpu"),
+                        Component.translatable("embeddium.plus.options.displayfps.system.ram")
+                }))
+                .setBinding((options, value) -> EmbyConfig.fpsDisplaySystemMode.set(value),
+                        (options) -> EmbyConfig.fpsDisplaySystemMode.get())
+                .build()
+        );
+
+        var components = new Component[FPSDisplayGravity.values().length];
+        for (int i = 0; i < components.length; i++) {
+            components[i] = Component.translatable("embeddium.plus.options.displayfps.gravity." + FPSDisplayGravity.values()[i].name().toLowerCase());
+        }
+
+        builder.add(OptionImpl.createBuilder(FPSDisplayGravity.class, sodiumOpts)
+                .setName(Component.translatable("embeddium.plus.options.displayfps.gravity.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.gravity.desc"))
+                .setControl((option) -> new CyclingControl<>(option, FPSDisplayGravity.class, components))
+                .setBinding(
+                        (opts, value) -> EmbyConfig.fpsDisplayGravity.set(value),
+                        (opts) -> EmbyConfig.fpsDisplayGravity.get())
+                .build()
+        );
 
 
-        var displayFpsPos = OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
-                .setName(Component.translatable("embeddium.plus.options.displayfps.position.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.position.desc"))
-                .setControl((option) -> new SliderControl(option, 4, 64, 2, (v) -> Component.translatable("embeddium.plus.options.common.pixels", v)))
+        builder.add(OptionImpl.createBuilder(Integer.TYPE, sodiumOpts)
+                .setName(Component.translatable("embeddium.plus.options.displayfps.margin.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.margin.desc"))
+                .setControl((option) -> new SliderControl(option, 4, 64, 1, (v) -> Component.literal(v + "px")))
                 .setImpact(OptionImpact.LOW)
                 .setBinding(
                         (opts, value) -> {
@@ -57,16 +87,14 @@ public class EmbPlusOptions {
                             EmbyConfig.fpsDisplayMarginCache = value;
                         },
                         (opts) -> EmbyConfig.fpsDisplayMarginCache)
-                .build();
-
-        builder.add(displayFps);
-        builder.add(displayFpsPos);
+                .build()
+        );
 
         groups.add(builder.build());
     }
 
 
-    public static void setPerformanceOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts, MinecraftOptionsStorage vanillaOpts) {
+    public static void setPerformanceOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts) {
         var builder = OptionGroup.createBuilder();
         var disableFontShadow = OptionImpl.createBuilder(boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.fontshadow.title"))
