@@ -57,9 +57,4 @@ public class OptionPagesMixin {
         groups.add(embPlus$advancedBuilder.build());
         embPlus$advancedBuilder = null;
     }
-
-    @Inject(method = "advanced", at = @At("RETURN"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void changeCategoryName(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
-        cir.setReturnValue(EmbPlusOptions.setPerformancePlusOptions(groups, sodiumOpts));
-    }
 }

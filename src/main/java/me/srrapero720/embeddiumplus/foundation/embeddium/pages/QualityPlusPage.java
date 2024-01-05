@@ -1,7 +1,6 @@
 package me.srrapero720.embeddiumplus.foundation.embeddium.pages;
 
 import com.google.common.collect.ImmutableList;
-import me.jellysquid.mods.sodium.client.gui.SodiumGameOptions;
 import me.jellysquid.mods.sodium.client.gui.options.*;
 import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
 import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
@@ -9,7 +8,6 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
 import me.srrapero720.embeddiumplus.EmbyConfig;
-import me.srrapero720.embeddiumplus.foundation.dynlights.DynLightsPlus;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
@@ -39,8 +37,8 @@ public class QualityPlusPage extends OptionPage {
                 .build();
 
         final var fadeInQuality = OptionImpl.createBuilder(EmbyConfig.ChunkFadeSpeed.class, qualityOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.chunkfadeinquality.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.chunkfadeinquality.desc"))
+                .setName(Component.translatable("embeddium.plus.options.fadein.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.fadein.desc"))
                 .setControl((option) -> new CyclingControl<>(option, EmbyConfig.ChunkFadeSpeed.class, new Component[]{
                         Component.translatable("options.off"),
                         Component.translatable("options.graphics.fast"),
@@ -55,27 +53,6 @@ public class QualityPlusPage extends OptionPage {
         groups.add(OptionGroup.createBuilder()
                 .add(fog)
                 .add(fadeInQuality)
-                .build()
-        );
-
-
-        final var darknessMode = OptionImpl.createBuilder(EmbyConfig.DarknessMode.class, qualityOptionsStorage)
-                .setName(Component.translatable("embeddium.plus.options.darkness.mode.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.darkness.mode.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbyConfig.DarknessMode.class, new Component[]{
-                        Component.translatable("embeddium.plus.options.darkness.mode.pitchblack"),
-                        Component.translatable("embeddium.plus.options.darkness.mode.reallydark"),
-                        Component.translatable("embeddium.plus.options.darkness.mode.dark"),
-                        Component.translatable("embeddium.plus.options.darkness.mode.dim"),
-                        Component.translatable("options.off")
-                }))
-                .setBinding((opts, value) -> EmbyConfig.darknessMode.set(value),
-                        (opts) -> EmbyConfig.darknessMode.get())
-                .setImpact(OptionImpact.LOW)
-                .build();
-
-        groups.add(OptionGroup.createBuilder()
-                .add(darknessMode)
                 .build()
         );
 
