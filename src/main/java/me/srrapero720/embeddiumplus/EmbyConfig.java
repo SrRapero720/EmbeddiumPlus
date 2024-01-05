@@ -70,12 +70,14 @@ public class EmbyConfig {
     public static volatile boolean fastChestsCache;
     public static volatile boolean fastBedsCache;
 
+    public static final ForgeConfigSpec.BooleanValue tileEntityDistanceCulling;
     public static final ForgeConfigSpec.IntValue tileEntityCullingDistanceX;
     public static final ForgeConfigSpec.IntValue tileEntityCullingDistanceY;
     public static final ForgeConfigSpec.BooleanValue entityDistanceCulling;
     public static final ForgeConfigSpec.IntValue entityCullingDistanceX;
     public static final ForgeConfigSpec.IntValue entityCullingDistanceY;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> entityWhitelist; // QUICK CHECK
+    public static volatile boolean tileEntityDistanceCullingCache;
     public static volatile int tileEntityCullingDistanceXCache;
     public static volatile int tileEntityCullingDistanceYCache;
     public static volatile boolean entityDistanceCullingCache;
@@ -213,6 +215,9 @@ public class EmbyConfig {
 
         // embeddiumplus -> performance -> distanceCulling -> tileEntities
         BUILDER.push("tileEntities");
+        tileEntityDistanceCulling = BUILDER
+                .comment("Toggles distance culling for Block Entities", "Maybe you use another mod for that :(")
+                .define("enable", true);
 
         tileEntityCullingDistanceX = BUILDER
                 .comment("Configure horizontal max distance before cull Block entities", "Value is squared, default was 64^2 (or 64x64)")
@@ -320,6 +325,7 @@ public class EmbyConfig {
         fastChestsCache = fastChests.get();
         fastBedsCache = fastBeds.get();
 
+        tileEntityDistanceCullingCache = tileEntityDistanceCulling.get();
         tileEntityCullingDistanceXCache = tileEntityCullingDistanceX.get();
         tileEntityCullingDistanceYCache = tileEntityCullingDistanceY.get();
         entityDistanceCullingCache = entityDistanceCulling.get();
