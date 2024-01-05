@@ -39,6 +39,8 @@
     "entitydistance.EntityCullingMixin",
     "entitydistance.MaxDistanceEntity",
     "entitydistance.MaxDistanceTileEntity",
+    "fastbeds.BERenderDispatcherMixin",
+    "fastbeds.BedBlockMixin",
     "fastchests.BERenderDispatcherMixin",
     "fog.BackgroundRendererMixin",
     "fontshadow.FontMixin",
@@ -47,9 +49,7 @@
     "frames.FrameCounterMixin",
     "frames.GpuUsageMixin",
     "jei.JeiOverlayMixin",
-    "language.LanguageScreenMixin"
-  ],
-  "mixins": [
+    "language.LanguageScreenMixin",
     "fastchests.ChestBlockMixin",
     "fastchests.EnderChestBlockMixin"
   ]

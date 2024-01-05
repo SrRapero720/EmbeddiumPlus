@@ -64,9 +64,11 @@ public class EmbyConfig {
     public static final ForgeConfigSpec.BooleanValue hideJREI;
     public static final ForgeConfigSpec.BooleanValue fontShadows;
     public static final ForgeConfigSpec.BooleanValue fastChests;
+    public static final ForgeConfigSpec.BooleanValue fastBeds;
     public static volatile boolean hideJREICache;
     public static volatile boolean fontShadowsCache;
     public static volatile boolean fastChestsCache;
+    public static volatile boolean fastBedsCache;
 
     public static final ForgeConfigSpec.IntValue tileEntityCullingDistanceX;
     public static final ForgeConfigSpec.IntValue tileEntityCullingDistanceY;
@@ -199,8 +201,12 @@ public class EmbyConfig {
                 .define("fontShadows", false);
 
         fastChests = BUILDER
-                .comment("Toggles FastChest feature", "Without flywheel installed or using any backend it increases FPS significatly on chest rooms")
+                .comment("Toggles FastChest feature", "Without flywheel installed or using any backend, it increases FPS significatly on chest rooms")
                 .define("fastChests", false);
+
+        fastBeds = BUILDER
+                .comment("Toggles FastBeds feature")
+                .define("fastBeds", true);
 
         // embeddiumplus -> performance -> distanceCulling
         BUILDER.push("distanceCulling");
@@ -312,6 +318,7 @@ public class EmbyConfig {
         hideJREICache = hideJREI.get();
         fontShadowsCache = fontShadows.get();
         fastChestsCache = fastChests.get();
+        fastBedsCache = fastBeds.get();
 
         tileEntityCullingDistanceXCache = tileEntityCullingDistanceX.get();
         tileEntityCullingDistanceYCache = tileEntityCullingDistanceY.get();

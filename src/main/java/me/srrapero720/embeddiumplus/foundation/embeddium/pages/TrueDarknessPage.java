@@ -145,7 +145,7 @@ public class TrueDarknessPage extends OptionPage {
 
         var blockLightOnly = OptionImpl.createBuilder(boolean.class, performanceOptionsStorage)
                 .setName(Component.translatable("embeddium.plus.options.darkness.blocklightonly.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.darkness.blocklighonly.desc"))
+                .setTooltip(Component.translatable("embeddium.plus.options.darkness.blocklightonly.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> {
                             EmbyConfig.darknessBlockLightOnly.set(value);
