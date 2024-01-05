@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.List;
 
 @Mixin(value = SodiumGameOptionPages.class, remap = false)
-public class OptionPagesMixin {
+public class EmbPagesMixin {
     @Shadow @Final private static MinecraftOptionsStorage vanillaOpts;
     @Shadow @Final private static SodiumOptionsStorage sodiumOpts;
 

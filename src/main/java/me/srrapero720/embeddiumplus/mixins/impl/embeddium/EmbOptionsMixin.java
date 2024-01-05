@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(value = SodiumOptionsGUI.class, remap = false, priority = 100/* Prevents other forks of sodium extra stay above emb++*/)
-public class OptionsGUIMixin {
+public class EmbOptionsMixin {
     @Shadow @Final private List<OptionPage> pages;
 
     // TODO: we can't inject on constructors :P
