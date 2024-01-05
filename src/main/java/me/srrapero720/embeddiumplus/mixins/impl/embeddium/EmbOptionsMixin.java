@@ -2,10 +2,7 @@ package me.srrapero720.embeddiumplus.mixins.impl.embeddium;
 
 import me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI;
 import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
-import me.srrapero720.embeddiumplus.foundation.embeddium.pages.DynamicLightsPage;
-import me.srrapero720.embeddiumplus.foundation.embeddium.pages.EntityCullingPage;
-import me.srrapero720.embeddiumplus.foundation.embeddium.pages.QualityPlusPage;
-import me.srrapero720.embeddiumplus.foundation.embeddium.pages.TrueDarknessPage;
+import me.srrapero720.embeddiumplus.foundation.embeddium.pages.*;
 import net.minecraft.client.gui.screens.Screen;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,5 +31,6 @@ public class EmbOptionsMixin {
         pages.add(new TrueDarknessPage());
         pages.add(new EntityCullingPage());
         pages.add(new DynamicLightsPage());
+        pages.add(new MixinsPage());
     }
 }

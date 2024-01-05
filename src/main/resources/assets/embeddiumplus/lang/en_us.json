@@ -96,5 +96,8 @@
   "embeddium.plus.options.screen.title": "Fullscreen Mode",
   "embeddium.plus.options.screen.desc": "Windowed - the game will display in a small window.\nBorderless - the game will be fullscreened, and locked to your monitor's refresh rate, but allow you to tab out easily.\nFullscreen - the game will display in native fullscreen mode.",
   "embeddium.plus.options.screen.borderless": "Borderless",
-  "embeddium.plus.options.screen.windowed": "Windowed"
+  "embeddium.plus.options.screen.windowed": "Windowed",
+
+  "embeddium.plus.mixins.borderless.f11.title": "Add borderless to F11",
+  "embeddium.plus.mixins.borderless.f11.desc": "If enabled, F11 will now had borderless state into it.\n\nRequires game restart"
 }
