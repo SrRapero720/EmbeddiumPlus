@@ -18,11 +18,13 @@ I am redundant now?
 - [🛠️] Added missing options of True darkness into video settings
   - ℹ️ These options exist since port was made, but it never got added into video settings
   - 🛠️ Now are more accessible and contains a bunch of configurations
-- [🛠️] Added Mixins page
-  - 🛠️ Let you disable some Emb++ features
+- [🛠️] Added Mixins page to disable Emb++ features
+  - 🛠️ Can disable F11 key mixin (which adds the borderless option)
+  - 🛠️ Can disable LanguageReload mixin feature
 - [🔥] Overhaul Display FPS feature
   - 🔥 Now can be change position between LEFT, CENTER, RIGHT (left by default)
   - 🔥 Added option to also show GPU and RAM usage in percent
+  - 🔥 Added option to render text with a shadow box (for all emb++ closet fans who likes shadows on FPS displays)
   - 🛠️ Now texts are colored based on how bad are your FPS and GPU/RAM usage.
   - ℹ️ Placed on Embeddium's general page
 - [🔥] Redistributed config
