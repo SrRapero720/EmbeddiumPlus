@@ -35,7 +35,7 @@ public class EntityCullingPage extends OptionPage {
                             EmbyConfig.entityDistanceCullingCache = value;
                         },
                         (options) -> EmbyConfig.entityDistanceCullingCache)
-                .setImpact(OptionImpact.LOW)
+                .setImpact(OptionImpact.HIGH)
                 .build();
 
         var maxEntityDistance = OptionImpl.createBuilder(Integer.TYPE, performanceOptionsStorage)
@@ -75,6 +75,20 @@ public class EntityCullingPage extends OptionPage {
         );
 
 
+        var enableTileDistanceChecks = OptionImpl.createBuilder(Boolean.class, performanceOptionsStorage)
+                .setName(Component.translatable("embeddium.plus.options.culling.tiles.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.culling.tiles.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (options, value) -> {
+                            EmbyConfig.tileEntityDistanceCulling.set(value);
+                            EmbyConfig.tileEntityDistanceCullingCache = value;
+                        },
+                        (options) -> EmbyConfig.tileEntityDistanceCullingCache)
+                .setImpact(OptionImpact.HIGH)
+                .build();
+
+
         var maxTileEntityDistance = OptionImpl.createBuilder(Integer.TYPE, performanceOptionsStorage)
                 .setName(Component.translatable("embeddium.plus.options.culling.tile.distance.horizontal.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.culling.tile.distance.horizontal.desc"))
@@ -102,6 +116,7 @@ public class EntityCullingPage extends OptionPage {
 
         groups.add(OptionGroup
                 .createBuilder()
+                .add(enableTileDistanceChecks)
                 .add(maxTileEntityDistance)
                 .add(maxTileEntityDistanceVertical)
                 .build()
