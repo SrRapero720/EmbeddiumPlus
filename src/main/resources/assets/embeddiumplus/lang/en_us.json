@@ -74,6 +74,9 @@
   "embeddium.plus.options.displayfps.margin.title": "FPS Display Margin",
   "embeddium.plus.options.displayfps.margin.desc": "Offset of the FPS display",
 
+  "embeddium.plus.options.displayfps.shadow.title": "FPS Display Shadow",
+  "embeddium.plus.options.displayfps.shadow.desc": "Add a Shadow box onto FPS Display, at the pure style of F3",
+
   "embeddium.plus.options.dynlights.page": "Dynamic Lights",
   "embeddium.plus.options.dynlights.tiles.title": "Use for Block Entities",
   "embeddium.plus.options.dynlights.tiles.desc": "If enabled, dynamic lighting will be showed on tile entities (furnaces, modded machines, etc).\n\nThis can drastically increase the amount of lighting updates, even when you're not around furnaces",
