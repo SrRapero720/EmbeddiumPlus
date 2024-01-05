@@ -1,5 +1,6 @@
 package me.srrapero720.embeddiumplus.mixins;
 
+import me.srrapero720.embeddiumplus.EmbyMixinConfig;
 import me.srrapero720.embeddiumplus.EmbyTools;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.Marker;
@@ -18,6 +19,7 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
+        EmbyMixinConfig.load();
     }
 
     @Override
@@ -42,7 +44,16 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
                 }
             }
 
-            default -> true;
+            default -> {
+                if (mixin.endsWith("borderless.KeyboardHandlerMixin")) {
+                    if (!EmbyMixinConfig.mixin$Borderless$F11.get()) {
+                        LOGGER.warn("Mixin {}.{} disabled by user config", "borderless", mixinName);
+                        yield false;
+                    }
+                }
+
+                yield true;
+            }
         };
     }
 
