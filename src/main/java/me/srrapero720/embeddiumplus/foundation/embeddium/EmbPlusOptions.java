@@ -119,7 +119,7 @@ public class EmbPlusOptions {
                         },
                         (options) -> EmbyConfig.fastChestsCache)
                 .setImpact(OptionImpact.HIGH)
-                .setEnabled(EmbyTools.canUseFastChests())
+                .setEnabled(EmbyTools.canUseFastChests() && !EmbyTools.isModInstalled("enhancedblockentities"))
                 .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                 .build();
 

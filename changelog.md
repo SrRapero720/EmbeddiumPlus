@@ -1,18 +1,40 @@
 # RELEASE 1.2.0
-The performance update (to be less "redundant"... or what do you think LunaPixel?)
+The performance and overhaul update... just to be less "redundant"... or what do you think LunaPixel?
+I am redundant now?
 
-- [🐛] Disabled ``ExtendedServerViewDistanceMixin``
+- [🐛] Removed ``ExtendedServerViewDistanceMixin``
   - 🛠️ Some reports culprit it causes a GPU MemoryLeak. I suggest using other alternatives like [Farsight](https://legacy.curseforge.com/minecraft/mc-mods/farsight)
+- [🔥] Added "FastChest" feature, which increases FPS in hundreds on chest rooms
+  - 🐛 It can't be used with Flywheel + Instancing or Batching backend.
+  - ℹ️ Placed on Embeddium's performance page
+  - 👟 Disabled if Enhanced Block Entities are installed
+- [🔥] Added "FastBeds" feature, which increases FPS in bedrooms
+  - ℹ️ Why do you in the first place have a lot of beds?
+  - ℹ️ Placed on Embeddium's performance page
+- [🔥] Added "Font Shadows" toggle
+  - ℹ️ Let you disable font shadows, giving texts on minecraft a flat-style
+  - 🛠️ Increases FPS on screens with a lot of text
+  - ℹ️ Placed on Embeddium's performance page
+- [🛠️] Added missing options of True darkness into video settings
+  - ℹ️ These options exist since port was made, but it never got added into video settings
+  - 🛠️ Now are more accessible and contains a bunch of configurations
+- [🛠️] Added Mixins page
+  - 🛠️ Let you disable some Emb++ features
+- [🔥] Overhaul Display FPS feature
+  - 🔥 Now can be change position between LEFT, CENTER, RIGHT (left by default)
+  - 🔥 Added option to also show GPU and RAM usage in percent
+  - 🛠️ Now texts are colored based on how bad are your FPS and GPU/RAM usage.
+  - ℹ️ Placed on Embeddium's general page
 - [🔥] Redistributed config
   - 👟 Now it was easier to find certain options like "Display FPS" that was placed in general
-  - 🔥 Adds "Quality++" and "Performance++" tabs
-  - ℹ️ Recommended usage with [TexTure's Embeddium Options](https://www.curseforge.com/minecraft/mc-mods/textrues-embeddium-options)
-- [🔥] Added "FastChest" option, witch increases FPS in hundreds on chest rooms
-  - 🐛 It can't be used with Flywheel + Instancing or Batching backend.
+  - 🔥 Adds "Quality++" page, containing all extra quality settings
+  - 🔥 Adds "True Darkness" page, containing darkness features
+  - 🔥 Adds "Entity Culling" page, which contains all render limit for BE and entities
+  - ℹ️ Now mod depends on [TexTure's Embeddium Options](https://www.curseforge.com/minecraft/mc-mods/textrues-embeddium-options)
 - [🔥] Changing language no longer reloads all resources
   - 🛠️ A QoL change that increases language changing
-- [🔥] Added into video settings page all true darkness settings
-  - 🔥 Adds "True Darkness" page
+- [🛠️] Rewrote configs
+  - 🛠️ May you notice a 1~5 extra FPS. Thank me later
 - [🔥] Added fresh localization languages
   - 🍜 Simplified Chinese (thanks to Wheatley11 and qznfbnj)
   - 🥐 French (thanks to Myuui)
