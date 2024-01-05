@@ -32,29 +32,31 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
         if (FMLEnvironment.dist.isDedicatedServer()) return false;
 
         final var mixinName = EmbyTools.getLastValue(mixin.split("\\."));
-        return switch (mixinName) {
-            case "JeiOverlayMixin" -> {
-                if (!EmbyTools.isModInstalled("jei")) {
-                    LOGGER.warn(IT, "Disabling JeiOverlayMixin due to JEI being NOT installed");
-                    yield false;
-                } else {
-                    LOGGER.warn(IT, "Enabling JeiOverlayMixin...");
-                    if (EmbyTools.isModInstalled("rei")) throw new IllegalStateException("REI and JEI detected... forcing shutting down");
-                    yield true;
-                }
-            }
 
-            default -> {
-                if (mixin.endsWith("borderless.KeyboardHandlerMixin")) {
-                    if (!EmbyMixinConfig.mixin$Borderless$F11.get()) {
-                        LOGGER.warn("Mixin {}.{} disabled by user config", "borderless", mixinName);
-                        yield false;
-                    }
-                }
+        if (mixin.endsWith("fastchests.BERenderDispatcherMixin") || mixin.endsWith("fastchests.ChestBlockMixin") || mixin.endsWith("fastchests.EnderChestBlockMixin")) {
+            return EmbyTools.isModInstalled("enhancedblockentities");
+        }
 
-                yield true;
+
+        if (mixin.endsWith("borderless.KeyboardHandlerMixin")) {
+            if (!EmbyMixinConfig.mixin$Borderless$F11.get()) {
+                LOGGER.warn("Mixin {}.{} disabled by user config", "borderless", mixinName);
+                return false;
             }
-        };
+        }
+
+        if (mixin.endsWith("JeiOverlayMixin")) {
+            if (!EmbyTools.isModInstalled("jei")) {
+                LOGGER.warn(IT, "Disabling JeiOverlayMixin due to JEI being NOT installed");
+                return false;
+            } else {
+                LOGGER.warn(IT, "Enabling JeiOverlayMixin...");
+                if (EmbyTools.isModInstalled("rei")) throw new IllegalStateException("REI and JEI detected... forcing shutting down");
+                return true;
+            }
+        }
+
+        return true;
     }
 
     @Override

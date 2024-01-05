@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BERenderDispatcherMixin {
     @Inject(method = "getRenderer", at = @At("HEAD"), cancellable = true)
     private <E extends BlockEntity> void disableChestRender(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
-        if (EmbyTools.isFlywheelOff() &&  EmbyConfig.fastChestsCache) {
+        if (EmbyTools.canUseFastChests() &&  EmbyConfig.fastChestsCache) {
             Class<?> beClass = blockEntity.getClass();
 
             if (beClass == ChestBlockEntity.class || beClass == TrappedChestBlockEntity.class || beClass == EnderChestBlockEntity.class ||

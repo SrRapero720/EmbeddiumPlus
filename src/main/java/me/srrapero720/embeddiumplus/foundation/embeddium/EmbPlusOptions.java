@@ -119,7 +119,7 @@ public class EmbPlusOptions {
                         },
                         (options) -> EmbyConfig.fastChestsCache)
                 .setImpact(OptionImpact.HIGH)
-                .setEnabled(EmbyTools.isFlywheelOff())
+                .setEnabled(EmbyTools.canUseFastChests())
                 .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                 .build();
 
@@ -147,7 +147,7 @@ public class EmbPlusOptions {
                             EmbyConfig.hideJREI.set(value);
                             EmbyConfig.hideJREICache = value;
                         },
-                        (options) -> EmbyTools.isFlywheelOff() && EmbyConfig.hideJREICache)
+                        (options) -> EmbyTools.canUseFastChests() && EmbyConfig.hideJREICache)
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(EmbyTools.isModInstalled("jei"))
                 .build();
