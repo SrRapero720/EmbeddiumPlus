@@ -14,7 +14,7 @@ public class EmbyTools {
         return value[value.length - 1];
     }
 
-    public static boolean isFlywheelOff() {
+    public static boolean canUseFastChests() {
         try {
             return FlwConfig.get().getBackendType() == BackendType.OFF;
         } catch (Error e) {

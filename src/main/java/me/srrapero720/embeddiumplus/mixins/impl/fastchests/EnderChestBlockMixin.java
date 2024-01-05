@@ -18,14 +18,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class EnderChestBlockMixin {
     @Inject(method = "getTicker", at = @At("HEAD"), cancellable = true)
     private <T extends BlockEntity> void removeTicker(Level world, BlockState state, BlockEntityType<T> type, CallbackInfoReturnable<BlockEntityTicker<T>> cir) {
-        if (EmbyTools.isFlywheelOff() && EmbyConfig.fastChestsCache) {
+        if (EmbyTools.canUseFastChests() && EmbyConfig.fastChestsCache) {
             cir.setReturnValue(null);
         }
     }
 
     @Inject(method = "getRenderShape", at = @At("HEAD"), cancellable = true)
     private void replaceRenderType(BlockState state, CallbackInfoReturnable<RenderShape> cir) {
-        if (EmbyTools.isFlywheelOff() && EmbyConfig.fastChestsCache) {
+        if (EmbyTools.canUseFastChests() && EmbyConfig.fastChestsCache) {
             cir.setReturnValue(RenderShape.MODEL);
         }
     }
