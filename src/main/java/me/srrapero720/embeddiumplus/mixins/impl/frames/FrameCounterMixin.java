@@ -5,6 +5,7 @@ import me.srrapero720.embeddiumplus.foundation.frames.FPSDisplayBuilder;
 import me.srrapero720.embeddiumplus.foundation.frames.MinFrameProvider;
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.foundation.frames.accessors.IGpuUsage;
+import me.srrapero720.embeddiumplus.mixins.impl.dynlights.DebugScreenMixin;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -84,7 +85,11 @@ public abstract class FrameCounterMixin {
         int textColor = 0xFFFFFF;
         int drawColor = ((textAlpha & 0xFF) << 24) | textColor;
 
+        if (EmbyConfig.fpsDisplayShadowCache) {
+            matrixStack.fill((int) posX - 2, (int) posY - 2, (int) posX + minecraft.font.width(displayString) + 2, (int) (posY + minecraft.font.lineHeight) + 1, -1873784752);
+        }
         matrixStack.drawString(minecraft.font, displayString, posX, posY, drawColor, true);
+
         displayBuilder.release();
     }
 

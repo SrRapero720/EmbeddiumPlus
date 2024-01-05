@@ -90,6 +90,19 @@ public class EmbPlusOptions {
                 .build()
         );
 
+        builder.add(OptionImpl.createBuilder(boolean.class, sodiumOpts)
+                .setName(Component.translatable("embeddium.plus.options.displayfps.shadow.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.displayfps.shadow.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (options, value) -> {
+                            EmbyConfig.fpsDisplayShadow.set(value);
+                            EmbyConfig.fpsDisplayShadowCache = value;
+                        },
+                        (options) -> EmbyConfig.fpsDisplayShadowCache)
+                .build()
+        );
+
         groups.add(builder.build());
     }
 

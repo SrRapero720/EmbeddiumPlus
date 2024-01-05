@@ -26,7 +26,9 @@ public class EmbyConfig {
     public static final ForgeConfigSpec.EnumValue<FPSDisplayGravity> fpsDisplayGravity;
     public static final ForgeConfigSpec.EnumValue<FPSDisplaySystemMode> fpsDisplaySystemMode;
     public static final ForgeConfigSpec.IntValue fpsDisplayMargin;
+    public static final ForgeConfigSpec.BooleanValue fpsDisplayShadow;
     public static volatile int fpsDisplayMarginCache;
+    public static volatile boolean fpsDisplayShadowCache;
 
     // QUALITY
     public static final ForgeConfigSpec.BooleanValue fog;
@@ -120,6 +122,10 @@ public class EmbyConfig {
         fpsDisplayMargin = BUILDER
                 .comment("Configure FPS Display margin", "Give some space between corner and text")
                 .defineInRange("fpsDisplayMargin", 12, 0, 48);
+
+        fpsDisplayShadow = BUILDER
+                .comment("Toggle FPS Display shadow", "In case sometimes you can't see the text")
+                .define("fpsDisplayShadow", false);
 
         // embeddiumplus ->
         BUILDER.pop();
@@ -304,6 +310,7 @@ public class EmbyConfig {
         EmbeddiumPlus.LOGGER.info("Updating cache...");
 
         fpsDisplayMarginCache = fpsDisplayMargin.get();
+        fpsDisplayShadowCache = fpsDisplayShadow.get();
 
         fogCache = fog.get();
         cloudsHeightCache = cloudsHeight.get();
