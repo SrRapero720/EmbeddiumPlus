@@ -96,7 +96,7 @@ public class EmbPlusOptions {
 
     public static void setPerformanceOptions(List<OptionGroup> groups, SodiumOptionsStorage sodiumOpts) {
         var builder = OptionGroup.createBuilder();
-        var disableFontShadow = OptionImpl.createBuilder(boolean.class, sodiumOpts)
+        var fontShadow = OptionImpl.createBuilder(boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.fontshadow.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.fontshadow.desc"))
                 .setControl(TickBoxControl::new)
@@ -123,6 +123,21 @@ public class EmbPlusOptions {
                 .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                 .build();
 
+        var fastBeds = OptionImpl.createBuilder(boolean.class, sodiumOpts)
+                .setName(Component.translatable("embeddium.plus.options.fastbeds.title"))
+                .setTooltip(Component.translatable("embeddium.plus.options.fastbeds.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (options, value) -> {
+                            EmbyConfig.fastBeds.set(value);
+                            EmbyConfig.fastBedsCache = value;
+                        },
+                        (options) -> EmbyConfig.fastBedsCache)
+                .setImpact(OptionImpact.LOW)
+//                .setEnabled(EmbyTools.isFlywheelOff())
+                .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
+                .build();
+
         var hideJEI = OptionImpl.createBuilder(boolean.class, sodiumOpts)
                 .setName(Component.translatable("embeddium.plus.options.jei.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.jei.desc"))
@@ -137,8 +152,9 @@ public class EmbPlusOptions {
                 .setEnabled(EmbyTools.isModInstalled("jei"))
                 .build();
 
-        builder.add(disableFontShadow);
+        builder.add(fontShadow);
         builder.add(fastChest);
+        builder.add(fastBeds);
         builder.add(hideJEI);
 
         groups.add(builder.build());
