@@ -60,7 +60,7 @@
   "embeddium.plus.options.displayfps.title": "Display FPS",
   "embeddium.plus.options.displayfps.desc": "Displays the current FPS. Advanced mode also displays minimum FPS, as well as 15 second average FPS, useful for judging performance.",
 
-  "embeddium.plus.options.displayfps.gravity.title": "FPS Display Gravity",
+  "embeddium.plus.options.displayfps.gravity.title": "Text Gravity",
   "embeddium.plus.options.displayfps.gravity.desc": "Corner position of the FPS display",
   "embeddium.plus.options.displayfps.gravity.left": "Left",
   "embeddium.plus.options.displayfps.gravity.center": "Center",
@@ -71,10 +71,10 @@
   "embeddium.plus.options.displayfps.system.gpu": "Graphics only",
   "embeddium.plus.options.displayfps.system.ram": "Memory only",
 
-  "embeddium.plus.options.displayfps.margin.title": "FPS Display Margin",
+  "embeddium.plus.options.displayfps.margin.title": "Text Margin",
   "embeddium.plus.options.displayfps.margin.desc": "Offset of the FPS display",
 
-  "embeddium.plus.options.displayfps.shadow.title": "FPS Display Shadow",
+  "embeddium.plus.options.displayfps.shadow.title": "Use Text Shadow Box",
   "embeddium.plus.options.displayfps.shadow.desc": "Add a Shadow box onto FPS Display, at the pure style of F3",
 
   "embeddium.plus.options.dynlights.page": "Dynamic Lights",
