@@ -10,12 +10,14 @@ public class EmbyMixinConfig {
 
     public static final ForgeConfigSpec.BooleanValue mixin$Borderless$F11;
     public static final ForgeConfigSpec.BooleanValue mixin$LanguageScreen$fastreload;
+//    public static final ForgeConfigSpec.BooleanValue mixin$DynLights;
 
     static {
         var BUILDER = new ForgeConfigSpec.Builder();
 
         mixin$Borderless$F11 = BUILDER.define("mixin.borderless.f11", true);
         mixin$LanguageScreen$fastreload = BUILDER.define("mixin.languageScreen.fastreload", true);
+//        mixin$DynLights = BUILDER.define("mixin.dynLights", true);
 
         SPECS = BUILDER.build();
     }

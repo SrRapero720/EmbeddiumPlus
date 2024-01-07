@@ -45,7 +45,7 @@ import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 @OnlyIn(Dist.CLIENT)
 public class DynLightsPlus {
 	private static final Marker IT = MarkerManager.getMarker("DynamicLights");
-	private static final double MAX_RADIUS = 7.75;
+	private static final double MAX_RADIUS = 12;
 	private static final double MAX_RADIUS_SQUARED = MAX_RADIUS * MAX_RADIUS;
 	private static final DynLightsPlus INSTANCE = new DynLightsPlus();
 
@@ -55,10 +55,15 @@ public class DynLightsPlus {
 	private int lastUpdateCount = 0;
 
 	public static void init() {
-		LOGGER.info(IT,"Initializing DynLights...");
+//		LOGGER.info(IT,"Starting DynLights by Embeddium++");
+//		if (!EmbyMixinConfig.mixin$DynLights.get()) {
+//			LOGGER.info(IT,"Starting cancelled by config");
+//			return;
+//		}
+
 		if (Minecraft.getInstance().getResourceManager() instanceof ReloadableResourceManager reloadableResourceManager) {
 			reloadableResourceManager.registerReloadListener((ResourceManagerReloadListener) resourceManager -> {
-                LOGGER.warn("Reloading Dynamic lights");
+                LOGGER.warn(IT, "Reloading resources");
                 ItemLightRegistry.load(resourceManager);
             });
 		}
@@ -66,7 +71,13 @@ public class DynLightsPlus {
 		MinecraftForge.EVENT_BUS.post(new DynLightsSetupEvent());
 	}
 
-	public static boolean isEnabled() { return EmbyConfig.dynLightSpeed.get() != EmbyConfig.DynLightsSpeed.OFF; }
+//	public static boolean isStarted() {
+//		return EmbyMixinConfig.mixin$DynLights.get();
+//	}
+
+	public static boolean isEnabled() {
+		return EmbyConfig.dynLightSpeed.get() != EmbyConfig.DynLightsSpeed.OFF;
+	}
 
 	/**
 	 * Updates all light sources.

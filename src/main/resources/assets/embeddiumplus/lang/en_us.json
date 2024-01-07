@@ -9,6 +9,7 @@
   "embeddium.plus.options.common.on": "On",
   "embeddium.plus.options.common.simple": "Simple",
   "embeddium.plus.options.common.advanced": "Advanced",
+  "embeddium.plus.options.common.experimental": "[EXPERIMENTAL]",
 
   "embeddium.plus.options.clouds.height.title": "Cloud Height",
   "embeddium.plus.options.clouds.height.desc": "Raises cloud height.\nConfigure the height of the clouds",
@@ -104,5 +105,7 @@
   "embeddium.plus.mixins.borderless.f11.title": "Add borderless to F11",
   "embeddium.plus.mixins.borderless.f11.desc": "If enabled, F11 will now had borderless state into it.\n\nRequires game restart",
   "embeddium.plus.mixins.languagescreen.fastreload.title": "Enable Fast Language Reload",
-  "embeddium.plus.mixins.languagescreen.fastreload.desc": "If enabled, Language updates only reload language instead of all resources, a 99.9% extra of speed\n\nRequires game restart"
+  "embeddium.plus.mixins.languagescreen.fastreload.desc": "If enabled, Language updates only reload language instead of all resources, a 99.9% extra of speed\n\nRequires game restart",
+  "embeddium.plus.mixins.dynlights.title": "Dynamic Lights",
+  "embeddium.plus.mixins.dynlights.desc": "If disabled, DynLight related code will be turned off\n\nRequires game restart"
 }

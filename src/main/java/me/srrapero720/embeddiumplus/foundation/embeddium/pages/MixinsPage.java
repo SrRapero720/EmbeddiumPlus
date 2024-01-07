@@ -6,6 +6,7 @@ import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.EmbyMixinConfig;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
@@ -39,6 +40,16 @@ public class MixinsPage extends OptionPage {
                         .setFlags(OptionFlag.REQUIRES_GAME_RESTART)
                         .build()
                 )
+//                .add(OptionImpl.createBuilder(boolean.class, mixinsOptionsStorage)
+//                        .setName(Component.translatable("embeddium.plus.options.common.experimental").withStyle(ChatFormatting.RED).append(" ").append(Component.translatable("embeddium.plus.mixins.dynlights.title")))
+//                        .setTooltip(Component.translatable("embeddium.plus.mixins.dynlights.desc"))
+//                        .setControl(TickBoxControl::new)
+//                        .setBinding((options, value) -> EmbyMixinConfig.mixin$DynLights.set(value),
+//                                (options) -> EmbyMixinConfig.mixin$DynLights.get())
+//                        .setFlags(OptionFlag.REQUIRES_GAME_RESTART)
+//                        .build()
+//                )
+
 
 
                 .build()
