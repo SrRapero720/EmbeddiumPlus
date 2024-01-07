@@ -8,9 +8,9 @@ plugins {
 
 version = "${mcversion}-v${modversion}"
 group = "me.srrapero720"
-archivesBaseName = modid
 
-java {
+base {
+    archivesName = modid
     targetCompatibility = JavaVersion.VERSION_17
     sourceCompatibility = JavaVersion.VERSION_17
 }
@@ -20,27 +20,24 @@ minecraft {
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     copyIdeResources = true
     runs {
-        client {
-            taskName "runClient-${mcversion}"
-            workingDirectory project.file('run')
-            arg '-mixin.config=' + String.valueOf(modid) + '.mixin.json'
-            //jvmArgs '-XX:+UnlockCommercialFeatures' // uncomment for profiling
-            property 'forge.logging.console.level', 'info'
+        configureEach {
+            workingDirectory file('run')
+            arg "-mixin.config=${modid}.${mixin_file_suffix}"
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
             property 'terminal.jline', 'true'
-            property 'fml.earlyprogresswindow', 'false'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 "${modid}" {
                     source sourceSets.main
                 }
             }
         }
+
+        client {
+            taskName "runClient"
+        }
     }
 }
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 
 repositories {
     mavenCentral()
@@ -54,10 +51,6 @@ repositories {
     }
     maven {
         url "https://maven.blamejared.com"
-    }
-    maven { url 'https://jitpack.io' }
-    flatDir {
-        dirs 'libs'
     }
 }
 
@@ -78,7 +71,7 @@ dependencies {
 }
 
 mixin {
-    add sourceSets.main, "${modid}.mixin-refmap.json"
+    add sourceSets.main, "${modid}.${mixin_refmap_suffix}"
 }
 
 jar {
@@ -91,7 +84,7 @@ jar {
                 "Implementation-Version": "${modversion}",
                 "Implementation-Vendor" : "${modauthor}",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "${modid}.mixin.json"
+                "MixinConfigs": "${modid}.${mixin_file_suffix}"
         ])
     }
 }

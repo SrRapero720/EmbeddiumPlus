@@ -24,7 +24,7 @@ I am redundant now?
 - [🔥] Overhaul Display FPS feature
   - 🔥 Now can be change position between LEFT, CENTER, RIGHT (left by default)
   - 🔥 Added option to also show GPU and RAM usage in percent
-  - 🔥 Added option to render text with a shadow box (for all emb++ closet fans who likes shadows on FPS displays)
+  - 🔥 Added option to render text with a shadow box
   - 🛠️ Now texts are colored based on how bad are your FPS and GPU/RAM usage.
   - ℹ️ Placed on Embeddium's general page
 - [🔥] Redistributed config
