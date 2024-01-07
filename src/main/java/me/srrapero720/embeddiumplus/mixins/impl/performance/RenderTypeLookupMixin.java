@@ -16,11 +16,8 @@ import java.util.Map;
 
 @Mixin(value = ItemBlockRenderTypes.class)
 public class RenderTypeLookupMixin {
-    @Shadow
-    private static boolean renderCutout;
-
+    @Shadow private static boolean renderCutout;
     @Shadow @Final private static Map<Block, RenderType> TYPE_BY_BLOCK;
-
     @Shadow @Final private static Map<Fluid, RenderType> TYPE_BY_FLUID;
 
 //    @Inject(method = "setRenderLayer(Lnet/minecraft/block/Block;Lnet/minecraft/client/renderer/RenderType;)Z", at = @At("HEAD"), remap = false, cancellable = true)
