@@ -46,7 +46,6 @@ repositories {
     it.configure {
         archiveBaseName = "${mod_name}".replace("+", "Plus")
     }
-
 }
 
 dependencies {
