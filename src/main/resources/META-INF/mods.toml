@@ -1,42 +1,44 @@
-modLoader="javafml" #mandatory
-loaderVersion="${fgrange}"
-license="${modlicense}"
-issueTrackerURL="https://github.com/${github_project}/issues"
+modLoader="javafml"
+loaderVersion="[${forge},)"
+license="WTFPL"
+issueTrackerURL="https://github.com/SrRapero720/EmbeddiumPlus/issues"
 displayTest="IGNORE_SERVER_VERSION"
 
 [[mods]]
-    modId="${modid}"
-    version="${modversion}"
-    displayName="${modname}"
+    modId="embeddiumplus"
+    version="${version}"
+    displayName="Embeddium++"
     displayTest="IGNORE_SERVER_VERSION"
-    logoFile="icon.png" #optional
-    authors="${modauthor}" #optional
-    credits="${modcredits}"
+    logoFile="icon.png"
+    authors="SrRapero720"
+    credits="TeamDeusVult is the original author"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/embeddium-plus"
-    description='''${mod_description}'''
+    description='''
+    Adds Extra Settings to Embeddium.
+    '''
 
-[[dependencies.${modid}]]
+[[dependencies.embeddiumplus]]
     modId="forge"
     mandatory=true
-    versionRange="${fgrange}"
+    versionRange="[${forge},)"
     ordering="NONE"
     side="CLIENT"
 
-[[dependencies.${modid}]]
+[[dependencies.embeddiumplus]]
     modId="minecraft"
     mandatory=true
-    versionRange="${mcrange}"
+    versionRange="${minecraft}"
     ordering="NONE"
     side="CLIENT"
 
-[[dependencies.${modid}]]
+[[dependencies.embeddiumplus]]
     modId="embeddium"
     mandatory=true
-    versionRange="${embeddiumrange}"
+    versionRange="[${embeddium},)"
     ordering="AFTER"
     side="CLIENT"
 
-[[dependencies.${modid}]]
+[[dependencies.embeddiumplus]]
     modId="textrues_embeddium_options"
     mandatory=true
     versionRange="*"
