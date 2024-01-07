@@ -1,4 +1,4 @@
-# ![Embeddium++ cover](https://i.imgur.com/oAFyPox.png)
+# ![Embeddium++ cover](.github/assets/banner.png)
 Mod who gives you a plus for embeddium And a reliable fork of [MagnesiumExtras](https://github.com/anthxnymc/MagnesiumExtras)
 (and now is embedded [DynamicLights](https://github.com/anthxnymc/DynamicLightsReforged))
 
@@ -10,7 +10,7 @@ Mod who gives you a plus for embeddium And a reliable fork of [MagnesiumExtras](
 - Borderless FullScreen (tab faster)
 - Fog Toggle (Disable game fog)
 - Hide JEI overlay when you are not searching (this time disabled by default)
-- ~~ZommKey~~ (removed in favor of [JustZoom](https://www.curseforge.com/minecraft/mc-mods/just-zoom-forge))
+- ~~ZoomKey~~ (removed in favor of [JustZoom](https://www.curseforge.com/minecraft/mc-mods/just-zoom-forge))
 - ~~Chunk Fade In~~ (Missing)
 
 ## WANT SOME SERVER?
