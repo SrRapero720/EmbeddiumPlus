@@ -41,6 +41,7 @@ minecraft {
 
 repositories {
     mavenCentral()
+    maven { url = "https://maven.fabricmc.net/" }
     maven { url "https://repo.spongepowered.org/maven" }
     maven { url "https://maven.tterrag.com/" }
     maven {
@@ -56,7 +57,7 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mcversion}-${fgversion}"
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    annotationProcessor "net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5"
 
     // DEPENDENCIES
     implementation fg.deobf("org.embeddedt:embeddium-${mcversion}:${embeddiumversion}")
