@@ -1,8 +1,8 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.srrapero720.embeddiumplus.EmbyTools;
 import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyTools;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.level.block.entity.BlockEntity;

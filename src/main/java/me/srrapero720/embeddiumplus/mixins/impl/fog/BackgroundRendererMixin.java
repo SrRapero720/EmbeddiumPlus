@@ -1,11 +1,9 @@
 package me.srrapero720.embeddiumplus.mixins.impl.fog;
 
 import com.mojang.blaze3d.shaders.FogShape;
-import com.mojang.blaze3d.systems.RenderSystem;
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.material.FogType;
 import org.spongepowered.asm.mixin.Mixin;

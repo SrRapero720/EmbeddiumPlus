@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.darkness;
 
-import me.srrapero720.embeddiumplus.foundation.darkness.DarknessPlus;
 import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.foundation.darkness.DarknessPlus;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;

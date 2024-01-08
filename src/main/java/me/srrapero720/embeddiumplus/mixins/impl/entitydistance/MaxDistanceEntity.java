@@ -1,8 +1,8 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
-import me.srrapero720.embeddiumplus.foundation.entitydistance.IEntityTypeAccess;
-import me.srrapero720.embeddiumplus.EmbyTools;
 import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyTools;
+import me.srrapero720.embeddiumplus.foundation.entitydistance.IEntityTypeAccess;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;

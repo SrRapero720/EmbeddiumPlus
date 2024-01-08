@@ -7,10 +7,12 @@ import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.SodiumOptionsStorage;
 import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyConfig.FPSDisplayGravity;
+import me.srrapero720.embeddiumplus.EmbyConfig.FPSDisplayMode;
+import me.srrapero720.embeddiumplus.EmbyConfig.FPSDisplaySystemMode;
+import me.srrapero720.embeddiumplus.EmbyConfig.FullScreenMode;
 import me.srrapero720.embeddiumplus.EmbyTools;
 import net.minecraft.network.chat.Component;
-
-import me.srrapero720.embeddiumplus.EmbyConfig.*;
 
 import java.util.List;
 
