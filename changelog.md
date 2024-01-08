@@ -26,6 +26,7 @@ I am redundant now?
   - 🔥 Added option to also show GPU and RAM usage in percent
   - 🔥 Added option to render text with a shadow box
   - 🛠️ Now texts are colored based on how bad are your FPS and GPU/RAM usage.
+  - 🛠️ [1.18.2] Backported Mojang GPU usage profiling (added on F3 overlay and FPS Display)
   - ℹ️ Placed on Embeddium's general page
 - [🔥] Redistributed config
   - 👟 Now it was easier to find certain options like "Display FPS" that was placed in general
