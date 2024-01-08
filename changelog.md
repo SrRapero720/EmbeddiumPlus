@@ -8,6 +8,7 @@ I am redundant now?
   - 🐛 It can't be used with Flywheel + Instancing or Batching backend.
   - ℹ️ Placed on Embeddium's performance page
   - 👟 Disabled if Enhanced Block Entities are installed
+- [🛠️] Increased range of DynLights from 7.2 to 12 (workarround for [#8](https://github.com/SrRapero720/EmbeddiumPlus/issues/8))
 - [🔥] Added "FastBeds" feature, which increases FPS in bedrooms
   - ℹ️ Why do you in the first place have a lot of beds?
   - ℹ️ Placed on Embeddium's performance page
