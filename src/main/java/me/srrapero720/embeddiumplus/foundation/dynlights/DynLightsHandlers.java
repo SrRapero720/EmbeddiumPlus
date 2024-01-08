@@ -1,9 +1,9 @@
 package me.srrapero720.embeddiumplus.foundation.dynlights;
 
 import me.srrapero720.embeddiumplus.EmbeddiumPlus;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.DynamicLightHolder;
 import me.srrapero720.embeddiumplus.foundation.dynlights.events.DynLightsSetupEvent;
-import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

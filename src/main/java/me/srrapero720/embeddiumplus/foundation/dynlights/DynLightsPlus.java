@@ -10,10 +10,10 @@
 package me.srrapero720.embeddiumplus.foundation.dynlights;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.DynamicLightSource;
 import me.srrapero720.embeddiumplus.foundation.dynlights.events.DynLightsSetupEvent;
 import me.srrapero720.embeddiumplus.foundation.dynlights.item.ItemLightRegistry;
-import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;

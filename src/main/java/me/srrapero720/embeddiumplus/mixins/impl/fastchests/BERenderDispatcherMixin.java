@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.fastchests;
 
-import me.srrapero720.embeddiumplus.EmbyTools;
 import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyTools;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.world.level.block.entity.BlockEntity;

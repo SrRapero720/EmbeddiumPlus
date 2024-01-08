@@ -251,7 +251,7 @@ public class EmbyConfig {
 
         entityWhitelist = BUILDER
                 .comment("List of all entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:bat\" - Ignores bats only", "Example 2: \"alexsmobs:*\" - ignores all entities for alexmobs mod")
-                .defineListAllowEmpty("whitelist", Collections::emptyList, (s) -> s.toString().contains(":"));
+                .defineListAllowEmpty(Collections.singletonList("whitelist"), Collections::emptyList, (s) -> s.toString().contains(":"));
 
         // embeddiumplus ->
         BUILDER.pop(3);

@@ -1,11 +1,10 @@
 package me.srrapero720.embeddiumplus.mixins.impl.frames;
 
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.EmbyTools;
 import me.srrapero720.embeddiumplus.foundation.frames.FPSDisplayBuilder;
 import me.srrapero720.embeddiumplus.foundation.frames.MinFrameProvider;
-import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.foundation.frames.accessors.IGpuUsage;
-import me.srrapero720.embeddiumplus.mixins.impl.dynlights.DebugScreenMixin;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
