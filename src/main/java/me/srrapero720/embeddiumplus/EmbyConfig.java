@@ -79,6 +79,7 @@ public class EmbyConfig {
     public static final ForgeConfigSpec.IntValue entityCullingDistanceX;
     public static final ForgeConfigSpec.IntValue entityCullingDistanceY;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> entityWhitelist; // QUICK CHECK
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> tileEntityWhitelist; // QUICK CHECK
     public static volatile boolean tileEntityDistanceCullingCache;
     public static volatile int tileEntityCullingDistanceXCache;
     public static volatile int tileEntityCullingDistanceYCache;
@@ -233,6 +234,10 @@ public class EmbyConfig {
                 .comment("Configure vertical max distance before cull Block entities", "Value is raw")
                 .defineInRange("cullingDistanceY", 32, 0, 512);
 
+        tileEntityWhitelist = BUILDER
+                .comment("List of all Block Entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:chest\" - Ignores chests only", "Example 2: \"ae2:*\" - ignores all Block entities from Applied Energetics 2")
+                .defineListAllowEmpty(Collections.singletonList("whitelist"), Collections::emptyList, (s) -> s.toString().contains(":"));
+
         // embeddiumplus -> performance -> distanceCulling ->
         BUILDER.pop();
 
@@ -250,7 +255,7 @@ public class EmbyConfig {
                 .defineInRange("cullingDistanceY", 32, 0, 512);
 
         entityWhitelist = BUILDER
-                .comment("List of all entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:bat\" - Ignores bats only", "Example 2: \"alexsmobs:*\" - ignores all entities for alexmobs mod")
+                .comment("List of all Entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:bat\" - Ignores bats only", "Example 2: \"alexsmobs:*\" - ignores all entities for alexmobs mod")
                 .defineListAllowEmpty(Collections.singletonList("whitelist"), Collections::emptyList, (s) -> s.toString().contains(":"));
 
         // embeddiumplus ->

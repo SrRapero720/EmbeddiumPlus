@@ -2,7 +2,7 @@ package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.EmbyTools;
-import me.srrapero720.embeddiumplus.foundation.entitydistance.IEntityTypeAccess;
+import me.srrapero720.embeddiumplus.foundation.entitydistance.IWhitelistCheck;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
@@ -14,9 +14,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityRenderDispatcher.class)
-public class MaxDistanceEntity {
+public class EntityDispatcherMixin {
     @Inject(at = @At("HEAD"), method = "shouldRender", cancellable = true)
-    public <E extends Entity> void shouldDoRender(E entity, Frustum clippingHelper, double cameraX, double cameraY, double cameraZ, CallbackInfoReturnable<Boolean> cir) {
+    public <E extends Entity> void inject$shouldDoRender(E entity, Frustum clippingHelper, double cameraX, double cameraY, double cameraZ, CallbackInfoReturnable<Boolean> cir) {
         if (!EmbyConfig.entityDistanceCullingCache) return;
 
         if (entity instanceof EnderDragon) return;
@@ -26,7 +26,7 @@ public class MaxDistanceEntity {
         if (name.startsWith("com.simibubi.create.content.contraptions")) return;
         if (name.startsWith("com.github.alexthe666.iceandfire.entity") && name.contains("dragon")) return;
 
-        if (!((IEntityTypeAccess) entity.getType()).embPlus$isWhitelisted() && !EmbyTools.isEntityWithinDistance(
+        if (!((IWhitelistCheck) entity.getType()).embPlus$isAllowed() && !EmbyTools.isEntityWithinDistance(
                 entity,
                 cameraX,
                 cameraY,
@@ -34,7 +34,7 @@ public class MaxDistanceEntity {
                 EmbyConfig.entityCullingDistanceYCache,
                 EmbyConfig.entityCullingDistanceXCache
         )) {
-            cir.cancel();
+            cir.setReturnValue(false);
         }
     }
 }
