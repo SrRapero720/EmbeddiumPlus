@@ -13,6 +13,9 @@ Mod who gives you a plus for embeddium And a reliable fork of [MagnesiumExtras](
 - ~~ZoomKey~~ (removed in favor of [JustZoom](https://www.curseforge.com/minecraft/mc-mods/just-zoom-forge))
 - ~~Chunk Fade In~~ (Missing)
 
+## MISC FEATURES
+- Hide game overlay when is showing FPS chart
+
 ## WANT SOME SERVER?
 ![KineticHosting sponsor](https://media.discordapp.net/attachments/1076151535291088916/1107066110492278856/watermods.png "KineticHosting sponsor code WATERCoRE")
 

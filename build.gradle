@@ -7,7 +7,6 @@ plugins {
 }
 
 version = "${mcversion}-v${modversion}"
-group = "me.srrapero720"
 
 base {
     archivesName = modid
@@ -41,17 +40,15 @@ minecraft {
 
 repositories {
     mavenCentral()
-    maven { url = "https://maven.fabricmc.net/" }
     maven { url "https://repo.spongepowered.org/maven" }
+    maven { url "https://maven.fabricmc.net/" }
     maven { url "https://maven.tterrag.com/" }
+    maven { url "https://maven.blamejared.com" }
     maven {
         url 'https://www.cursemaven.com'
         content {
-            includeGroup "curse.maven"
+            includeGroup 'curse.maven'
         }
-    }
-    maven {
-        url "https://maven.blamejared.com"
     }
 }
 
@@ -73,6 +70,7 @@ dependencies {
 
 mixin {
     add sourceSets.main, "${modid}.${mixin_refmap_suffix}"
+    config("${modid}.${mixin_file_suffix}")
 }
 
 jar {
