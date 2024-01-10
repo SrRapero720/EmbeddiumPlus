@@ -6,7 +6,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "embeddiumplus.mixin-refmap.json",
   "client": [
-    "borderless.KeyboardHandlerMixin",
+    "borderless.KeyboardF3Mixin",
     "borderless.MainWindowAccessor",
     "borderless.WindowMixin",
     "cloudheight.CloudHeightMixin",
