@@ -4,7 +4,7 @@ Well, we are no longer redundant, but we have redudant code :)
 - [🛠️] Optimized FPS Display feature
   - 🛠️ Removed rendering mixins (using forge events)
   - 🐛 Fixed FPS Chart is not rendering
-  - 🐛 [1.19.2] Fixed crashes related to that feature 
+  - 🐛 [18.2-19.2] Fixed crashes related to that feature 
   - 👟 Optimizes rendering speeds (sweet)
   - 🔥 FPS, MIN, AVG, GPU, RAM texts are translatable
   - 🔥 Now texts are better colored
