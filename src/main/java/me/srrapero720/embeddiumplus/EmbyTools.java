@@ -2,14 +2,26 @@ package me.srrapero720.embeddiumplus;
 
 import com.jozufozu.flywheel.config.BackendType;
 import com.jozufozu.flywheel.config.FlwConfig;
+import it.unimi.dsi.fastutil.Pair;
+import it.unimi.dsi.fastutil.ints.IntIntMutablePair;
+import it.unimi.dsi.fastutil.ints.IntIntPair;
+import it.unimi.dsi.fastutil.longs.LongLongMutablePair;
+import it.unimi.dsi.fastutil.longs.LongLongPair;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.loading.FMLLoader;
 
+import java.util.List;
+
+import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
+
 public class EmbyTools {
+
+
     public static <T> T getLastValue(T[] value) {
         return value[value.length - 1];
     }
@@ -20,6 +32,47 @@ public class EmbyTools {
         } catch (Error e) {
             return true; // no flywheel
         }
+    }
+
+    private static final LongLongPair[] BENCHTIMES = new LongLongPair[100];
+    private static int BENCH_POS = 0;
+    public static void benchStart() {
+        BENCHTIMES[BENCH_POS] = new LongLongMutablePair(Util.getNanos(), -1);
+    }
+
+    public static void benchEnd() {
+        BENCHTIMES[BENCH_POS].right(Util.getNanos());
+        LOGGER.debug("Current method takes RIGHT NOW {} nanoseconds", BENCHTIMES[BENCH_POS].rightLong() - BENCHTIMES[BENCH_POS].leftLong());
+
+        if (BENCH_POS == BENCHTIMES.length - 1) {
+            long totalStart = 0;
+            long totalEnd = 0;
+
+            for (int i = 0; i < BENCHTIMES.length; i++) {
+                totalStart += BENCHTIMES[i].firstLong();
+                totalEnd += BENCHTIMES[i].secondLong();
+            }
+
+            LOGGER.info("Current method takes AVG {} nanoseconds", (totalEnd - totalStart) / BENCHTIMES.length);
+
+            BENCH_POS = 0;
+        } else {
+            BENCH_POS++;
+        }
+    }
+
+    public static ChatFormatting colorByLow(int usage) {
+        return ((usage < 9) ? ChatFormatting.DARK_RED
+                : (usage < 16) ? ChatFormatting.RED
+                : (usage < 30) ? ChatFormatting.GOLD
+                : ChatFormatting.RESET);
+    }
+
+    public static ChatFormatting colorByPercent(int usage) {
+        return ((usage >= 100) ? ChatFormatting.DARK_RED
+                : (usage >= 90) ? ChatFormatting.RED
+                : (usage >= 75) ? ChatFormatting.GOLD
+                : ChatFormatting.RESET);
     }
 
     public static String tintByLower(int usage) {
@@ -36,11 +89,24 @@ public class EmbyTools {
                 : ChatFormatting.RESET).toString() + usage;
     }
 
-    public static String tintByPercent(double usage) {
-        return ((usage >= 100) ? ChatFormatting.DARK_RED
-                : (usage >= 90) ? ChatFormatting.RED
-                : (usage >= 75) ? ChatFormatting.GOLD
-                : ChatFormatting.RESET).toString() + usage;
+    /**
+     * Creates a hexadecimal color based on gave params
+     * All values need to be in a range of 0 ~ 255
+     * Code copied from WATERMeDIA
+     * @param a Alpha
+     * @param r Red
+     * @param g Green
+     * @param b Blue
+     * @return HEX color
+     */
+    public static int getColorARGB(int a, int r, int g, int b) { return (a << 24) | (r << 16) | (g << 8) | b; }
+
+    // JAVA USES STUPID AND CONFUSING NAMES
+    // max memory is the assigned memory (ej: -Xmx8G)
+    // total memory is the allocated memory (normally isn't much)
+    // used memory needs to be calculated using total memory - free memory, same with percent
+    public static long ramUsed() {
+        return Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
     }
 
     public static long bytesToMB(long input) {

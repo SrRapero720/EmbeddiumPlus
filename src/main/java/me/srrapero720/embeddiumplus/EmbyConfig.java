@@ -375,9 +375,9 @@ public class EmbyConfig {
     public enum FPSDisplaySystemMode {
         OFF, ON, GPU, RAM;
 
-        public boolean off() {
-            return this == OFF;
-        }
+        public boolean ram() { return this == RAM || this == ON; }
+        public boolean gpu() { return this == GPU || this == ON; }
+        public boolean off() { return this == OFF; }
     }
     public enum DynLightsSpeed {
         OFF(-1),
