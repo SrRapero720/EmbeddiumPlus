@@ -13,14 +13,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(DynamicTexture.class)
 public class MixinNativeImageBackedTexture implements TextureAccess {
-	@Shadow
-	private NativeImage pixels;
-
-	@Unique
-	private boolean embPlus$enableHook = false;
+	@Shadow private NativeImage pixels;
+	@Unique private boolean embPlus$enableHook = false;
 
 	@Inject(method = "upload", at = @At(value = "HEAD"))
-	private void onRenderWorld(CallbackInfo ci) {
+	private void inject$onUpload(CallbackInfo ci) {
 		if (embPlus$enableHook && DarknessPlus.enabled) {
 			final NativeImage img = pixels;
 			for (int b = 0; b < 16; b++) {

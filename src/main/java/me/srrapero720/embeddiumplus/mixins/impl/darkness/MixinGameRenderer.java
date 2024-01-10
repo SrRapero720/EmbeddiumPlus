@@ -19,13 +19,13 @@ public abstract class MixinGameRenderer {
 	@Shadow @Final public LightTexture lightTexture;
 
 	@Inject(method = "renderLevel", at = @At(value = "HEAD"))
-	private void onRenderWorld(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
-		if (lightTexture instanceof LightMapAccess lightmap) {
-			if (lightmap.embPlus$isDirty()) {
-				minecraft.getProfiler().push("lightTex");
-				DarknessPlus.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.embPlus$prevFlicker());
-				minecraft.getProfiler().pop();
-			}
+	private void inject$renderLevel(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
+		var lightmap = (LightMapAccess) lightTexture;
+
+		if (lightmap.embPlus$isDirty()) {
+			minecraft.getProfiler().push("lightTex");
+			DarknessPlus.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.embPlus$prevFlicker());
+			minecraft.getProfiler().pop();
 		}
 	}
 }

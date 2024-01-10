@@ -3,12 +3,12 @@ package me.srrapero720.embeddiumplus.foundation.frames;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
-public class FPSDisplayBuilder {
+public class FPSDisplay {
     private String builder = "";
     private boolean split = false;
     private boolean divisor = false;
 
-    public FPSDisplayBuilder append(String param) {
+    public FPSDisplay append(String param) {
         if (split) builder += " - ";
         if (divisor) builder += " | ";
         builder += param;
@@ -18,29 +18,29 @@ public class FPSDisplayBuilder {
         return this;
     }
 
-    public FPSDisplayBuilder append(Component component) {
+    public FPSDisplay append(Component component) {
         return append(component.getString());
     }
 
-    public FPSDisplayBuilder append(ChatFormatting formatting) {
+    public FPSDisplay append(ChatFormatting formatting) {
         return append(formatting.toString());
     }
 
-    public FPSDisplayBuilder add(int param) {
+    public FPSDisplay add(int param) {
         builder += param;
         return this;
     }
 
-    public FPSDisplayBuilder add(String param) {
+    public FPSDisplay add(String param) {
         builder += param;
         return this;
     }
 
-    public FPSDisplayBuilder add(Component component) {
+    public FPSDisplay add(Component component) {
         return add(component.getString());
     }
 
-    public FPSDisplayBuilder add(ChatFormatting formatting) {
+    public FPSDisplay add(ChatFormatting formatting) {
         return add(formatting.toString());
     }
 

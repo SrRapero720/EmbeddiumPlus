@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = EmbeddiumPlus.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class DebugOverlayEvent {
-    private static final FPSDisplayBuilder DISPLAY = new FPSDisplayBuilder();
+    private static final FPSDisplay DISPLAY = new FPSDisplay();
 
     private static final Component MSG_FPS = Component.translatable("embeddium.plus.options.displayfps.fps");
     private static final Component MSG_MIN = Component.translatable("embeddium.plus.options.displayfps.min");

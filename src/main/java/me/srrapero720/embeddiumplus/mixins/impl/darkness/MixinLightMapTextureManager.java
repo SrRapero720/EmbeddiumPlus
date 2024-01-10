@@ -20,7 +20,7 @@ public class MixinLightMapTextureManager implements LightMapAccess {
 	@Shadow private boolean updateLightTexture;
 
 	@Inject(method = "<init>*", at = @At(value = "RETURN"))
-	private void afterInit(GameRenderer gameRenderer, Minecraft minecraftClient, CallbackInfo ci) {
+	private void inject$afterInit(GameRenderer gameRenderer, Minecraft minecraftClient, CallbackInfo ci) {
 		((TextureAccess) lightTexture).embPlus$enableUploadHook();
 	}
 
