@@ -31,7 +31,7 @@ public abstract class LevelMixin {
 			locals = LocalCapture.CAPTURE_FAILEXCEPTION
 	)
 	private void onBlockEntityTick(CallbackInfo ci, ProfilerFiller profiler, Iterator<BlockEntity> iterator, TickingBlockEntity blockEntityTickInvoker) {
-		if (this.isClientSide() && EmbyConfig.dynLightsOnTileEntities.get()) {
+		if (this.isClientSide() && EmbyConfig.dynLightsOnTileEntitiesCache) {
 			var blockEntity = this.getBlockEntity(blockEntityTickInvoker.getPos());
 			if (blockEntity != null)
 				((DynamicLightSource) blockEntity).tdv$dynamicLightTick();

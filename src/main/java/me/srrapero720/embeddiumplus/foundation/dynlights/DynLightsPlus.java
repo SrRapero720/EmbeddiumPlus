@@ -62,13 +62,10 @@ public class DynLightsPlus {
 //		}
 
 		if (Minecraft.getInstance().getResourceManager() instanceof ReloadableResourceManager reloadableResourceManager) {
-			reloadableResourceManager.registerReloadListener((ResourceManagerReloadListener) resourceManager -> {
-                LOGGER.warn(IT, "Reloading resources");
-                ItemLightRegistry.load(resourceManager);
-            });
+			reloadableResourceManager.registerReloadListener((ResourceManagerReloadListener) ItemLightRegistry::load);
 		}
 
-		MinecraftForge.EVENT_BUS.post(new DynLightsSetupEvent());
+		DynLightsHandlers.registerDefaultHandlers(null);
 	}
 
 //	public static boolean isStarted() {
