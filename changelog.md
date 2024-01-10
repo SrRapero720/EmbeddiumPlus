@@ -1,14 +1,19 @@
 # RELEASE 1.2.1
 Well, we are no longer redundant, but we have redudant code :)
 
-- [🛠️] Optimized FPS Display feature
+- [🛠️] Optimized FPS Display feature (fixes [#20](https://github.com/SrRapero720/EmbeddiumPlus/issues/20) and [#21](https://github.com/SrRapero720/EmbeddiumPlus/issues/21))
   - 🛠️ Removed rendering mixins (using forge events)
   - 🐛 Fixed FPS Chart is not rendering
   - 🐛 [18.2-19.2] Fixed crashes related to that feature 
   - 👟 Optimizes rendering speeds (sweet)
   - 🔥 FPS, MIN, AVG, GPU, RAM texts are translatable
   - 🔥 Now texts are better colored
-
+- [🛠️] Optimized EntityCulling feature (fixes [#19](https://github.com/SrRapero720/EmbeddiumPlus/issues/19))
+  - 🐛 Fixed Block Entities never stop culled disabling on config
+  - 🐛 Fixed WATERFrAMES Block Entities got culled
+  - 🔥 Added whitelist for Block Entities
+  - 👟 Speed up whitelist check for Entities and Block Entities
+    - ℹ️ When an Entity matches with the first whitelist value, this never got marked as "checked," checking it indefinitely
 
 # RELEASE 1.2.0
 The performance and overhaul update... just to be less "redundant"... or what do you think LunaPixel?

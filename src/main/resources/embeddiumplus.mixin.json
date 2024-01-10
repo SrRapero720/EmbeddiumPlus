@@ -36,19 +36,20 @@
     "dynlights.lightsource.TntEntityMixin",
     "embeddium.EmbOptionsMixin",
     "embeddium.EmbPagesMixin",
-    "entitydistance.EntityCullingMixin",
-    "entitydistance.MaxDistanceEntity",
-    "entitydistance.MaxDistanceTileEntity",
-    "fastbeds.BERenderDispatcherMixin",
+    "entitydistance.EntityDispatcherMixin",
+    "entitydistance.EntityTypeMixin",
+    "entitydistance.TileDispatcherMixin",
     "fastbeds.BedBlockMixin",
+    "fastbeds.BERenderDispatcherMixin",
     "fastchests.BERenderDispatcherMixin",
+    "fastchests.ChestBlockMixin",
+    "fastchests.EnderChestBlockMixin",
     "fog.BackgroundRendererMixin",
     "fontshadow.FontMixin",
     "fontshadow.FontMixin$StringRenderOutputMixin",
     "frames.GpuUsageMixin",
     "jei.JeiOverlayMixin",
     "language.LanguageScreenMixin",
-    "fastchests.ChestBlockMixin",
-    "fastchests.EnderChestBlockMixin"
+    "entitydistance.TileEntityTypeMixin"
   ]
 }
