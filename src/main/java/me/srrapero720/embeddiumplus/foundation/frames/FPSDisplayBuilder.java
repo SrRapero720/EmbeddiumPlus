@@ -1,57 +1,66 @@
 package me.srrapero720.embeddiumplus.foundation.frames;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+
 public class FPSDisplayBuilder {
-    private String[] builder = new String[] { "", "", "" };
-    private int index = 0;
+    private String builder = "";
+    private boolean split = false;
+    private boolean divisor = false;
 
     public FPSDisplayBuilder append(String param) {
-        return append(param, "");
-    }
+        if (split) builder += " - ";
+        if (divisor) builder += " | ";
+        builder += param;
 
-    public FPSDisplayBuilder append(String param, String suffix) {
-        if (!builder[index].isEmpty()) builder[index] += " | ";
-        builder[index] += param + ((!suffix.isEmpty()) ? " " + suffix : "");
+        split = false;
+        divisor = true;
         return this;
     }
 
-    public FPSDisplayBuilder append(Number param) {
-        return append(param, "");
+    public FPSDisplayBuilder append(Component component) {
+        return append(component.getString());
     }
 
-    public FPSDisplayBuilder append(Number param, String suffix) {
-        return append(String.valueOf(param), suffix);
+    public FPSDisplayBuilder append(ChatFormatting formatting) {
+        return append(formatting.toString());
     }
 
-    public FPSDisplayBuilder append(Number param, Number suffix) {
-        return append(String.valueOf(param), String.valueOf(suffix));
+    public FPSDisplayBuilder add(int param) {
+        builder += param;
+        return this;
     }
 
-    public FPSDisplayBuilder append(String param, Number suffix) {
-        return append(param, String.valueOf(suffix));
+    public FPSDisplayBuilder add(String param) {
+        builder += param;
+        return this;
+    }
+
+    public FPSDisplayBuilder add(Component component) {
+        return add(component.getString());
+    }
+
+    public FPSDisplayBuilder add(ChatFormatting formatting) {
+        return add(formatting.toString());
+    }
+
+    public void split() {
+        split = true;
+        divisor = false;
     }
 
     public boolean isEmpty() {
-        return builder[index].isEmpty();
+        return builder.isEmpty();
     }
 
-    public FPSDisplayBuilder split() {
-        index++;
-        if (index >= builder.length) throw new ArrayIndexOutOfBoundsException("Exceeded number of allowed splits");
-        return this;
+    public void release() {
+        builder = "";
+        split = false;
+        divisor = false;
     }
 
     @Override
     public String toString() {
-        String result = "";
-        for (int i = 0; i < index + 1; i++) {
-            if (i > 0) result += " - ";
-            result += builder[i];
-        }
-        return result;
-    }
-
-    public void release() {
-        builder = null;
-        index = -1;
+        return builder;
     }
 }
