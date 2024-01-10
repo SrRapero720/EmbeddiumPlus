@@ -14,6 +14,8 @@ Well, we are no longer redundant, but we have redudant code :)
   - 🔥 Added whitelist for Block Entities
   - 👟 Speed up whitelist check for Entities and Block Entities
     - ℹ️ When an Entity matches with the first whitelist value, this never got marked as "checked," checking it indefinitely
+- [🐛] Fixed DynLights on entities (like GlowSquid) are not glowing (closes [#23](https://github.com/SrRapero720/EmbeddiumPlus/issues/23))
+  - 🐛 Also added missing resources for the proper functionality of DynLights
 
 # RELEASE 1.2.0
 The performance and overhaul update... just to be less "redundant"... or what do you think LunaPixel?

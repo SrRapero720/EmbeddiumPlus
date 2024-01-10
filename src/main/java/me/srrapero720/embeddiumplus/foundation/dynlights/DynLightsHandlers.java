@@ -20,12 +20,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
+import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
+
 @Mod.EventBusSubscriber(modid = EmbeddiumPlus.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public final class DynLightsHandlers {
+
 	@SubscribeEvent
 	public static void registerDefaultHandlers(DynLightsSetupEvent event) {
 		registerDynamicLightHandler(EntityType.BLAZE, Entry.makeHandler(blaze -> 10, blaze -> true));
 		registerDynamicLightHandler(EntityType.CREEPER, Entry.makeCreeperEntityHandler(null));
+
 		registerDynamicLightHandler(EntityType.ENDERMAN, entity -> {
 			int luminance = 0; // TODO: make it configurable
 			if (entity.getCarriedBlock() != null)
@@ -35,6 +39,7 @@ public final class DynLightsHandlers {
 		});
 		registerDynamicLightHandler(EntityType.ITEM,
 				entity -> DynLightsPlus.getLuminanceFromItemStack(entity.getItem(), entity.isUnderWater()));
+
 		registerDynamicLightHandler(EntityType.ITEM_FRAME, entity -> {
 			var world = entity.getCommandSenderWorld();
 			return DynLightsPlus.getLuminanceFromItemStack(entity.getItem(), !world.getFluidState(entity.blockPosition()).isEmpty());

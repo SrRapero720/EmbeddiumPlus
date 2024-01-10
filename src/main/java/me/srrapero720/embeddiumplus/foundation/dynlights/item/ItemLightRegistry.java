@@ -36,6 +36,7 @@ public final class ItemLightRegistry {
 	 * @param resourceManager The resource manager.
 	 */
 	public static void load(@NotNull ResourceManager resourceManager) {
+		LOGGER.info(IT, "{}oading resources", ITEM_LIGHT_SOURCES.isEmpty() ? "L" : "Rel");
 		ITEM_LIGHT_SOURCES.clear();
 
 		resourceManager.listResources("dynamiclights/item", path -> path.getPath().endsWith(".json")).forEach((id, resource) -> {
