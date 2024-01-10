@@ -80,11 +80,11 @@
 
   "embeddium.plus.options.displayfps.fps": "FPS",
   "embeddium.plus.options.displayfps.min": "MIN",
-  "embeddium.plus.options.displayfps.avg": "PROM",
+  "embeddium.plus.options.displayfps.avg": "AVG",
   "embeddium.plus.options.displayfps.gpu": "GPU",
   "embeddium.plus.options.displayfps.mem": "MEM",
 
-  "embeddium.plus.options.dynlights.page": "luz Dinamica",
+  "embeddium.plus.options.dynlights.page": "Luz Dinamica",
   "embeddium.plus.options.dynlights.tiles.title": "Activar en Entidades de Bloques",
   "embeddium.plus.options.dynlights.tiles.desc": "If enabled, dynamic lighting will be showed on tile entities (furnaces, modded machines, etc).\n\nThis can drastically increase the amount of lighting updates, even when you're not around furnaces",
   "embeddium.plus.options.dynlights.entities.title": "Activar en Entidades",
@@ -99,7 +99,7 @@
   "embeddium.plus.options.fastbeds.desc": "Si se activa, remplazara las camas con un bloque estatico, somo si se fuera un bloque. Incrementa el rendimiento y te permite utilizar modelos mas complejos en resource packs",
   "embeddium.plus.options.fog.title": "Mostrar Niebla",
   "embeddium.plus.options.fog.desc": "Si se desactiva, la niebla no se mostrara en la superficie",
-  "embeddium.plus.options.fontshadow.title": "Sombra en los texts",
+  "embeddium.plus.options.fontshadow.title": "Sombra en los textos",
   "embeddium.plus.options.fontshadow.desc": "Si se desactiva, los textos dejaran de renderizar sombras.\nIncrementa el rendimiento en menus con mucho texto, como el BetterF3",
   "embeddium.plus.options.jei.title": "Ocultar JEI hasta buscar",
   "embeddium.plus.options.jei.desc": "Si se desactiva, los items en el JEI se ocultan hasta que busques algo. Escribe un espacio para buscar cualquier cosa",
