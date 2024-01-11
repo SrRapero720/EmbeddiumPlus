@@ -16,6 +16,10 @@ Well, we are no longer redundant, but we have redudant code :)
     - ℹ️ When an Entity matches with the first whitelist value, this never got marked as "checked," checking it indefinitely
 - [🐛] Fixed DynLights on entities (like GlowSquid) are not glowing (closes [#23](https://github.com/SrRapero720/EmbeddiumPlus/issues/23))
   - 🐛 Also added missing resources for the proper functionality of DynLights
+- [🔥] \[1.18.2\] Added a new performance feature: Replace HashMap with a Object2ObjectArrayMap
+  - 🛠️ Can be disabled on mixins page
+- [🛠️] \[1.18.2\] Make RenderType lookup performance option toggleable on mixins page
+  - ℹ️ This performance feature wasn't available on 1.19.2 because Moyank already adds it.
 - [🔥] Updated translations
   - 🍾 Russian translation
   - 🌮 Mexican spanish
