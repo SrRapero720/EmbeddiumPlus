@@ -11,7 +11,9 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FrameTimer;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -34,20 +36,21 @@ public class DebugOverlayEvent {
     private static int gpuPercent = -1;
     private static int memUsage = -1;
 
-    @SubscribeEvent
-    public static void onRenderDebugText(RenderGuiOverlayEvent.Pre event) {
-        var minecraft = Minecraft.getInstance();
-        var window = minecraft.getWindow();
-        renderFPSChar(minecraft, event.getGuiGraphics(), minecraft.font, window.getGuiScale(),
-                window.getGuiScaledWidth());
-
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onRenderOverlayItem(RenderGuiOverlayEvent.Pre event) {
         if (!event.getOverlay().id().getPath().equals("debug_text")) return;
 
         // cancel rendering text if chart is displaying
-        if (minecraft.options.renderFpsChart) event.setCanceled(true);
+        if (Minecraft.getInstance().options.renderFpsChart) event.setCanceled(true);
     }
 
-    private static void renderFPSChar(Minecraft mc, GuiGraphics graphics, Font font, double scale, int scaledWidth) {
+    @SubscribeEvent
+    public static void onRenderOverlay(RenderGuiEvent.Pre event) {
+        var minecraft = Minecraft.getInstance();
+        renderFPSChar(minecraft, event.getGuiGraphics(), minecraft.font, event.getWindow().getGuiScale());
+    }
+
+    private static void renderFPSChar(Minecraft mc, GuiGraphics graphics, Font font, double scale) {
         if (mc.options.renderDebug || mc.options.renderFpsChart) return; // No render when F3 is open
 
         final var mode = EmbyConfig.fpsDisplayMode.get();
@@ -86,7 +89,7 @@ public class DebugOverlayEvent {
 
         // Prevent FPS-Display to render outside screenspace
         String displayString = DISPLAY.toString();
-        float maxPosX = scaledWidth - font.width(displayString);
+        float maxPosX = graphics.guiWidth() - font.width(displayString);
         float posX, posY;
 
         posX = switch (EmbyConfig.fpsDisplayGravity.get()) {
@@ -96,12 +99,15 @@ public class DebugOverlayEvent {
         };
         posY = margin;
 
+        graphics.pose().pushPose();
         if (EmbyConfig.fpsDisplayShadowCache) {
             graphics.fill((int) posX - 2, (int) posY - 2, (int) posX + font.width(displayString) + 2, (int) (posY + font.lineHeight) + 1, -1873784752);
+            graphics.flush();
         }
 
-        graphics.drawString(font, displayString, posX, posY, EmbyTools.getColorARGB(200, 255, 255, 255), true);
+        graphics.drawString(font, displayString, posX, posY, 0xffffffff, true);
         DISPLAY.release();
+        graphics.pose().popPose();
     }
 
     private static ChatFormatting calculateFPS$getColor(Minecraft mc) {

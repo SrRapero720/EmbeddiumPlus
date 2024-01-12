@@ -1,3 +1,12 @@
+# RELEASE 1.2.2
+Things that I may forget
+
+- [🐛] Fixed fps text and shadow box rendering multiple times breaking transparency
+  - [🔒] Closes [#26](https://github.com/SrRapero720/EmbeddiumPlus/issues/26), [#24](https://github.com/SrRapero720/EmbeddiumPlus/issues/24)
+- [🐛] \[1.18.2\] Removed performance Mixins
+  - ℹ️ These mixins causes more problems than solutions, even make performance worse (after some deep benches and possible fixes)
+- [🍜] Updated Simplified Chinese translation (by qznfbnj)
+
 # RELEASE 1.2.1
 Well, we are no longer redundant, but we have redudant code :)
 

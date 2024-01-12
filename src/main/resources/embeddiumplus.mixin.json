@@ -39,6 +39,7 @@
     "entitydistance.EntityDispatcherMixin",
     "entitydistance.EntityTypeMixin",
     "entitydistance.TileDispatcherMixin",
+    "entitydistance.TileEntityTypeMixin",
     "fastbeds.BedBlockMixin",
     "fastbeds.BERenderDispatcherMixin",
     "fastchests.BERenderDispatcherMixin",
@@ -49,7 +50,6 @@
     "fontshadow.FontMixin$StringRenderOutputMixin",
     "frames.GpuUsageMixin",
     "jei.JeiOverlayMixin",
-    "language.LanguageScreenMixin",
-    "entitydistance.TileEntityTypeMixin"
+    "language.LanguageScreenMixin"
   ]
 }
