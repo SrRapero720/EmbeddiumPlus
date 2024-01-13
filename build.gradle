@@ -66,6 +66,9 @@ dependencies {
     implementation fg.deobf("com.simibubi.create:create-${mcversion}:${createversion}:slim") { transitive = false }
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${mcversion}:${flywheelversion}")
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrateversion}")
+
+    // UTILITY
+    runtimeOnly fg.deobf("curse.maven:worldedit-225608:${worldeditversion}")
 }
 
 mixin {
