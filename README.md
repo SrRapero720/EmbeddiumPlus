@@ -1,7 +1,6 @@
 [![Downloads](https://cf.way2muchnoise.eu/embeddiumplus.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus)
 [![Available for](https://cf.way2muchnoise.eu/versions/embeddiumplus.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
 [![Latest Version](https://img.shields.io/curseforge/v/931925?style=for-the-badge&label=curseforge&labelColor=%232d2d2d&color=%23e04e14&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fwatermedia%2Ffiles)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
-<br>
 [![Discord community](https://dcbadge.vercel.app/api/server/cuYAzzZ)](https://discord.gg/cuYAzzZ)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/embeddiumplus?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231bd96a)](https://modrinth.com/mod/embeddiumplus)
 
@@ -14,7 +13,7 @@ Provides a bunch of options to speed up your FPS, like fast models, entity dista
 
 ---
 
-# <span style="color:#E280C5">⚠️ IMPORTANT</span>
+# ⚠️ IMPORTANT
 
 > **REQUIRES [EMBEDDIUM](https://www.curseforge.com/minecraft/mc-mods/embeddium) AND [TEXTRUE'S EMBEDDIUM OPTIONS](https://www.curseforge.com/minecraft/mc-mods/textrues-embeddium-options)**
 
@@ -23,9 +22,9 @@ This mod is a remplacement of [Magnesium/Rubidium Extras](https://github.com/ant
 and many other mods referenced in the [Gallery](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/screenshots). 
 If you have any of them or similar, you should remove them, may crash, collide or cause lag.
 
-# <span style="color:#E280C5">🔧 FEATURES</span>
+# 🔧 FEATURES
 
-### <span style="color:#ded357">[⚡] PERFORMANCE</span>
+### [⚡] PERFORMANCE
 
 - **[💡] Dynamic Lights:** Make **Torches** in your hand **Bright** your caves.
   - ~~Add custom brightness to items and entities with a resource pack~~
@@ -37,7 +36,7 @@ If you have any of them or similar, you should remove them, may crash, collide o
 - **[🔦] Hide JEI:** Now doesn't render **JEI items** until you **search** for something
 - **[🌎] Fast Language Reload:** No more wait 2 minutes just to change your language
 
-### <span style="color:#ded357">[👓] QUALITY</span>
+### [👓] QUALITY
 
 - **[🧮] FPS Display:** Shows your current, min and average **FPS**, **Memory** usage percent and **GPU** usage percent.
     - You can place it anywhere of your top corners
@@ -49,7 +48,7 @@ If you have any of them or similar, you should remove them, may crash, collide o
 - **~~[👁️] Chunk Fade In~~:** (**Soon™️** will be back)
 
 
-# <span style="color:#E280C5">☕ SUPPORT ME</span>
+# ☕ SUPPORT ME
 
 You can support me on: 
 [PayPal](https://paypal.me/SrRapero720) | 
@@ -61,13 +60,13 @@ I use the money to buy coffee, sleep less and program more
 
 ---
 
-# <span style="color:#E280C5">🔰 VERSION 1.16.5</span>
+# 🔰 VERSION 1.16.5
 
 I decide to skip that version in favor of
 [Embeddium Extras](https://www.curseforge.com/minecraft/mc-mods/embeddium-extras) by PotatoBoy (aka TexTure).
 It Is too good like Embeddium++, Shares features and has more Performance fixes and features.
 
-# <span style="color:#E280C5">👥 COMMUNITY AND SUPPORT</span>
+# 👥 COMMUNITY AND SUPPORT
 
 Have some questions?
 Bugs? 
@@ -75,7 +74,7 @@ Or want to say something to my [stupid face](https://www.youtube.com/watch?v=4Nq
 Then my [discord](https://discord.gg/cuYAzzZ) is the place you're looking for.
 I am always around, only have to throw your question, and I will answer
 
-# <span style="color:#E280C5">⏩ THE FUTURE OF EMBEDDIUM++</span>
+# ⏩ THE FUTURE OF EMBEDDIUM++
 
 Before I place some jokes, but this time I am 100% sure. 
 All [Sodium Extras](https://www.curseforge.com/minecraft/mc-mods/sodium-extra) will be added
