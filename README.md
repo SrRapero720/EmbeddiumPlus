@@ -7,7 +7,7 @@
 [![Embeddium++Banner](https://i.imgur.com/oBLXT7n.png)](https://github.com/SrRapero720/EmbeddiumPlus)
 
 The best complement for embeddium, giving it some extras in performance and game quality.<br>
-Provides a bunch of options to speed up your FPS, like fast models, entity distance culling, font shadows toggle JEI hiding and more
+Provides a bunch of options to speed up your FPS, like fast models, entity distance culling, font shadows toggle, JEI hiding and more
 
 ~~It Also includes their own dynamic lights system~~ - *(soon: at the moment has a LambDynLights port)*
 
