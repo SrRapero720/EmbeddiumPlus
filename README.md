@@ -1,45 +1,85 @@
-# ![Embeddium++ cover](.github/assets/banner.png)
-Mod who gives you a plus for embeddium And a reliable fork of [MagnesiumExtras](https://github.com/anthxnymc/MagnesiumExtras)
-(and now is embedded [DynamicLights](https://github.com/anthxnymc/DynamicLightsReforged))
+[# ![Embeddium++Banner](https://i.imgur.com/oBLXT7n.png)](https://github.com/SrRapero720/EmbeddiumPlus)
+[![Downloads](https://cf.way2muchnoise.eu/embeddiumplus.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus)
+[![Available for](https://cf.way2muchnoise.eu/versions/embeddiumplus.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
+[![Latest Version](https://img.shields.io/curseforge/v/931925?style=for-the-badge&label=curseforge&labelColor=%232d2d2d&color=%23e04e14&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fwatermedia%2Ffiles)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
+<br>
+[![Discord community](https://dcbadge.vercel.app/api/server/cuYAzzZ)](https://discord.gg/cuYAzzZ)
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/embeddiumplus?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231bd96a)](https://modrinth.com/mod/embeddiumplus)
 
-## FEATURES
-- Embedded DynamicLights (works better with shaders)
-- True Darkness (ideal for terror modpacks)
-- Entity Distance Rendering Limit (or EntityCulling for friends)
-- Fancy FPS Counter (No more F3 to see your FPS)
-- Borderless FullScreen (tab faster)
-- Fog Toggle (Disable game fog)
-- Hide JEI overlay when you are not searching (this time disabled by default)
-- ~~ZoomKey~~ (removed in favor of [JustZoom](https://www.curseforge.com/minecraft/mc-mods/just-zoom-forge))
-- ~~Chunk Fade In~~ (Missing)
+The most realiable embeddium extension, giving it some extras in performance.<br>
+Provides a bunch of options to speed up your FPS, like fast models, entity distance culling, font shadows toggle JEI hiding and more
 
-## MISC FEATURES
-- Hide game overlay when is showing FPS chart
+~~It Also includes their own dynamic lights system~~ - *(soon: at the moment has a LambDynLights port)*
 
-## WANT SOME SERVER?
-![KineticHosting sponsor](https://media.discordapp.net/attachments/1076151535291088916/1107066110492278856/watermods.png "KineticHosting sponsor code WATERCoRE")
+# <span style="color:#E280C5">⚠️ IMPORTANT</span>
 
-## DIFFERENCES WITH OFFICIAL VERSION
-- Fixed: Ice and Fire dragons got culled
-- Fixed: you can't go back to Windowed after switching into Borderless/FullScreen
-- Implemented: fast entities whitelist to be ignored on culling (supports wildcard for name)
-- Implemented: Gui configurations are now localized (help translating [here](https://igthub.com/SrRapero720/EmbeddiumPlus/blob/1.20/src/main/resources/assets/embeddiumplus/lang/en_us.json))
-- Misc: Code cleanup and optimization
-- Misc: More stuff that I forgot :(
+> **REQUIRES [EMBEDDIUM](https://www.curseforge.com/minecraft/mc-mods/embeddium) AND [TEXTRUE'S EMBEDDIUM OPTIONS](https://www.curseforge.com/minecraft/mc-mods/textrues-embeddium-options)**
 
-# TRANSLATIONS
-- 🍜 Simplified Chinese (thanks to Wheatley11 and qznfbnj)
-- 🥐 French (thanks to Myuui)
-- 🍾 Russia (thanks to CatAndPaste)
-- 🌮 Mexican Spanish (thanks to ME, that's right, I am mexican)
+This mod is a remplacement of [Magnesium/Rubidium Extras](https://github.com/anthxnymc/MagnesiumExtras), 
+[DynamicLights Reforged](https://github.com/anthxnymc/DynamicLightsReforged)
+and many other mods referenced in the [Gallery](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/screenshots). 
+If you have any of them or similar, you should remove them, may crash, collide or cause lag.
 
-## COMMUNITY AND SUPPORT
-Join to my [discord](https://discord.gg/cuYAzzZ) and talk directly with me
+# <span style="color:#E280C5">🔧 FEATURES</span>
 
-## CONFIG PREVIEW
-![Preview General](https://cdn.modrinth.com/data/yD9qW65f/images/d6e8bd3c3b38d8dec827e846014f2461aae85500.png)
-![Preview Plus](https://cdn.modrinth.com/data/yD9qW65f/images/5ac68ebc5dbd64bb6679fe5db5f9d148d55f05f4.png)
-![Preview Dyn](https://cdn.modrinth.com/data/yD9qW65f/images/eab2db3c3c62397a112c0ac3ce3c217e23f824ef.png)
+### <span style="color:#ded357">[⚡] PERFORMANCE</span>
 
-## IMPORTANT
-Requires EMBEDDIUM
+- **[💡] Dynamic Lights:** Make **Torches** in your hand **Bright** your caves.
+  - ~~Add custom brightness to items and entities with a resource pack~~
+- **[🐄] Entity Distance Culling:** Stops rendering and ticking on client side of **Entities** and **Block entities** too far away.
+  - You can ignore specific entities in mod config adding them on the whitelist (requires resource name)
+  - Example: ``minecraft:bat`` skips bats only, `alexsmobs:*` skips all Alex's Mobs entities.
+- **[🕯️] True Darkness:** When low brightness isn't enough in your terror modpacks, we can make it **Really Dark**.
+- **[👟] Fast Models:** Disable the unoptimized dynamic **Chest** and **Bed** models and use static ones
+- **[🔦] Hide JEI:** Now doesn't render **JEI items** until you **search** for something
+- **[🌎] Fast Language Reload:** No more wait 2 minutes just to change your language
+
+### <span style="color:#ded357">[👓] QUALITY</span>
+
+- **[🧮] FPS Display:** Shows your current, min and average **FPS**, **Memory** usage percent and **GPU** usage percent.
+    - You can place it anywhere of your top corners
+- **[🖥️] Borderless FullScreen:** gives Image-In-Image support, and you can use ALT+TAB faster
+    - Using F11 also switch to Borderless FullScreen (can be disabled)
+- **[🌁] Toggle Fog:** Disables overworld fog.
+- **[🔳] Toggle Text Shadows:** Menus have a flat-style and might increase FPS using [BetterF3](https://www.curseforge.com/minecraft/mc-mods/betterf3))
+- **~~[🔍] Zoom Key~~:** (**Soon™️** will be back)
+- **~~[👁️] Chunk Fade In~~:** (**Soon™️** will be back)
+
+
+# <span style="color:#E280C5">☕ SUPPORT ME</span>
+
+You can support me on: 
+[PayPal](https://paypal.me/SrRapero720) | 
+[Boss Revolution](https://www.bossrevolution.com/es-us/country/mexico/send-money) - BANK: BBVA / CLABE: `012180015606063111`<br>
+Or buy a server using my coupon code and get 15% discount in your first purchase
+I use the money to buy coffee, sleep less and program more
+
+![KineticHosting sponsor](https://media.discordapp.net/attachments/1076151535291088916/1107066110492278856/watermods.png "KineticHosting sponsor code WATERMoDS")
+
+# <span style="color:#E280C5">🔰 VERSION 1.16.5</span>
+
+I decide to skip that version in favor of
+[Embeddium Extras](https://www.curseforge.com/minecraft/mc-mods/embeddium-extras) by PotatoBoy (aka TexTure).
+It Is too good like Embeddium++, Shares features and has more Performance fixes and features.
+
+# <span style="color:#E280C5">👥 COMMUNITY AND SUPPORT</span>
+
+Have some questions?
+Bugs? 
+Or want to say something to my [stupid face](https://www.youtube.com/watch?v=4NqHV1BpQHQ)? 
+Then my [discord](https://discord.gg/cuYAzzZ) is the place you're looking for.
+I am always around, only have to throw your question, and I will answer
+
+# <span style="color:#E280C5">⏩ THE FUTURE OF EMBEDDIUM++</span>
+
+Before I place some jokes, but this time I am 100% sure. 
+All [Sodium Extras](https://www.curseforge.com/minecraft/mc-mods/sodium-extra) will be added
+onto Embeddium++, making OBSOLETE some ports of it like Rubidium (Embeddium) Extra.
+
+Create the first API around Sodium config page and include some misc optimization options like Cull Leaves
+and quality features like Shadow Path Blocks
+
+Enviddium (Nvidium port) will be a separated mod; I don't think it is a good idea to add it on embeddium++.
+You can speed porting donating me, so I can afford a second-hand GTX 1660), you cannot, and anyway, I'll do it :)
+
+Sodium++ will exist... *soon™️*
