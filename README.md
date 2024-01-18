@@ -1,4 +1,3 @@
-[![Embeddium++Banner](https://i.imgur.com/oBLXT7n.png)](https://github.com/SrRapero720/EmbeddiumPlus)
 [![Downloads](https://cf.way2muchnoise.eu/embeddiumplus.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus)
 [![Available for](https://cf.way2muchnoise.eu/versions/embeddiumplus.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
 [![Latest Version](https://img.shields.io/curseforge/v/931925?style=for-the-badge&label=curseforge&labelColor=%232d2d2d&color=%23e04e14&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fwatermedia%2Ffiles)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
@@ -6,10 +5,14 @@
 [![Discord community](https://dcbadge.vercel.app/api/server/cuYAzzZ)](https://discord.gg/cuYAzzZ)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/embeddiumplus?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231bd96a)](https://modrinth.com/mod/embeddiumplus)
 
+[![Embeddium++Banner](https://i.imgur.com/oBLXT7n.png)](https://github.com/SrRapero720/EmbeddiumPlus)
+
 The most realiable embeddium extension, giving it some extras in performance.<br>
 Provides a bunch of options to speed up your FPS, like fast models, entity distance culling, font shadows toggle JEI hiding and more
 
 ~~It Also includes their own dynamic lights system~~ - *(soon: at the moment has a LambDynLights port)*
+
+---
 
 # <span style="color:#E280C5">⚠️ IMPORTANT</span>
 
@@ -55,6 +58,8 @@ Or buy a server using my coupon code and get 15% discount in your first purchase
 I use the money to buy coffee, sleep less and program more
 
 ![KineticHosting sponsor](https://media.discordapp.net/attachments/1076151535291088916/1107066110492278856/watermods.png "KineticHosting sponsor code WATERMoDS")
+
+---
 
 # <span style="color:#E280C5">🔰 VERSION 1.16.5</span>
 
