@@ -22,8 +22,7 @@ public abstract class ExplosiveProjectileEntityMixin extends Entity implements D
 
 	@Override
 	public int tdv$getLuminance() {
-		if (DynLightsHandlers.canLightUp(this))
-			return 14;
+		if (DynLightsHandlers.canLightUp(this)) return 14;
 		return 0;
 	}
 }
