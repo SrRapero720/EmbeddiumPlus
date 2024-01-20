@@ -16,7 +16,11 @@ public class KeyboardF11Mixin {
 
     @Inject(method = "keyPress", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;toggleFullScreen()V"), cancellable = true)
     public void redirect$handleFullScreenToggle(long pWindowPointer, int pKey, int pScanCode, int pAction, int pModifiers, CallbackInfo ci) {
-        EmbyConfig.setFullScreenMode(minecraft.options, EmbyConfig.FullScreenMode.nextOf(EmbyConfig.fullScreen.get()));
+        switch (EmbyConfig.borderlessAttachModeF11.get()) {
+            case ATTACH -> EmbyConfig.setFullScreenMode(minecraft.options, EmbyConfig.FullScreenMode.nextOf(EmbyConfig.fullScreen.get()));
+            case REPLACE -> EmbyConfig.setFullScreenMode(minecraft.options, EmbyConfig.FullScreenMode.nextBorderless(EmbyConfig.fullScreen.get()));
+            case OFF -> EmbyConfig.setFullScreenMode(minecraft.options, EmbyConfig.FullScreenMode.nextFullscreen(EmbyConfig.fullScreen.get()));
+        }
         ci.cancel();
     }
 }

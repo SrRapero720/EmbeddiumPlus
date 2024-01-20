@@ -1,3 +1,16 @@
+# HOTFIX 1.2.3
+Minor things
+- [🐛] Fixed F11 borderless doesn't work
+  - 🔥 Can replace Fullscreen with Borderless
+- [🛠️] Tweak mixin page
+  - 🖋️ Renamed page to "others"
+  - 👟 Make options not longer request game restart
+  - 🛠️ Moved config entries to default config file
+    - By default, it will delete old ``embeddium++mixins.toml`` file, because it was no longer used
+- [🛠️] Enabled shadows on text by default again (temporal workaround)
+- [🔥] Updated translation(s)
+  - 🌮 Mexican spanish
+
 # RELEASE 1.2.2
 Things that I may forget
 

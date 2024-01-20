@@ -102,10 +102,9 @@
   "embeddium.plus.options.screen.borderless": "Безрамочный",
   "embeddium.plus.options.screen.windowed": "Оконный",
 
-  "embeddium.plus.mixins.borderless.f11.title": "Добавить безрамочный к F11",
-  "embeddium.plus.mixins.borderless.f11.desc": "Если включено, F11 теперь будет также иметь безрамочное состояние.\n\nТребует перезапуска игры.",
-  "embeddium.plus.mixins.languagescreen.fastreload.title": "Включить быструю перезагрузку языка",
-  "embeddium.plus.mixins.languagescreen.fastreload.desc": "Если включено, языковые обновления перезагружают только язык, а не все ресурсы, что увеличивает скорость на 99,9%.\n\nТребует перезапуска игры.",
-  "embeddium.plus.mixins.dynlights.title": "Динамическое освещение",
-  "embeddium.plus.mixins.dynlights.desc": "Если отключено, код, связанный с динамическим освещением, будет отключён.\n\nТребует перезапуска игры."
+  "___comment": "requires update",
+  "embeddium.plus.options.others.borderless.attachmode.title": "Добавить безрамочный к F11",
+  "embeddium.plus.options.others.borderless.attachmode.desc": "Если включено, F11 теперь будет также иметь безрамочное состояние.",
+  "embeddium.plus.options.others.languagescreen.fastreload.title": "Включить быструю перезагрузку языка",
+  "embeddium.plus.options.others.languagescreen.fastreload.desc": "Если включено, языковые обновления перезагружают только язык, а не все ресурсы, что увеличивает скорость на 99,9%."
 }

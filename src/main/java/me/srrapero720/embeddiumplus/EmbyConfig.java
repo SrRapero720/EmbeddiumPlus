@@ -3,6 +3,7 @@ package me.srrapero720.embeddiumplus;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.mojang.blaze3d.platform.Window;
+import me.srrapero720.embeddiumplus.foundation.borderless.VideoModeHandler;
 import me.srrapero720.embeddiumplus.mixins.impl.borderless.MainWindowAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -12,12 +13,18 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 
 import java.util.Collections;
 import java.util.List;
 
+import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
+
 @Mod.EventBusSubscriber(modid = EmbeddiumPlus.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class EmbyConfig {
+    public static final Marker IT = MarkerManager.getMarker("Config");
+
     public static final ForgeConfigSpec SPECS;
 
     // GENERAL
@@ -86,6 +93,13 @@ public class EmbyConfig {
     public static volatile boolean entityDistanceCullingCache;
     public static volatile int entityCullingDistanceXCache;
     public static volatile int entityCullingDistanceYCache;
+
+    // OTHERS
+    public static final ForgeConfigSpec.EnumValue<AttachMode> borderlessAttachModeF11;
+    public static final ForgeConfigSpec.BooleanValue fastLanguageReload;
+    public static boolean fastLanguageReloadCache; // this theoretically wasn't needed,
+    // but I am seeing people complaining why fast language reload wasn't cached
+    // and takes 0.0001ms extra to update lang by an idiotic check
 
     // DYN LIGHTS
     public static final ForgeConfigSpec.EnumValue<DynLightsSpeed> dynLightSpeed;
@@ -207,7 +221,7 @@ public class EmbyConfig {
 
         fontShadows = BUILDER
                 .comment("Toggles Minecraft Fonts shadows", "Depending of the case may increase performance", "Gives a flat style text")
-                .define("fontShadows", false);
+                .define("fontShadows", true);
 
         fastChests = BUILDER
                 .comment("Toggles FastChest feature", "Without flywheel installed or using any backend, it increases FPS significatly on chest rooms")
@@ -261,6 +275,17 @@ public class EmbyConfig {
         // embeddiumplus ->
         BUILDER.pop(3);
 
+        // embeddiumplus -> others
+        BUILDER.push("others");
+        borderlessAttachModeF11 = BUILDER
+                .comment("Configure if borderless fullscreen option should be attached to F11 or replace vanilla fullscreen")
+                .defineEnum("borderlessAttachModeOnF11", AttachMode.ATTACH);
+        fastLanguageReload = BUILDER
+                .comment("Toggles fast language reload", "Embeddedt points it maybe cause troubles to JEI, so ¿why not add it as a toggleable option?")
+                .define("fastLanguageReload", true);
+
+        BUILDER.pop();
+
         // embeddiumplus -> dynlights
         BUILDER.push("dynlights");
         dynLightSpeed = BUILDER
@@ -278,7 +303,6 @@ public class EmbyConfig {
         dynLightsUpdateOnPositionChange = BUILDER
                 .define("updateOnlyOnPositionChange", true);
 
-
         // embeddiumplus ->
         BUILDER.pop();
 
@@ -291,13 +315,12 @@ public class EmbyConfig {
 
     public static void load() {
         if (isLoaded()) return;
-
-        EmbeddiumPlus.LOGGER.warn("Force-loading Embeddium++ config");
+        LOGGER.warn(IT, "Loading Embeddium++Config");
 
         // FORCE LOAD
         var path = FMLPaths.CONFIGDIR.get().resolve("embeddium++.toml");
         try {
-            final CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
+            final var configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
 
             configData.load();
             SPECS.setConfig(configData);
@@ -312,7 +335,7 @@ public class EmbyConfig {
 
     @SubscribeEvent
     public static void updateCache(ModConfigEvent ignored) {
-        EmbeddiumPlus.LOGGER.info("Updating cache...");
+        LOGGER.info(IT,"Updating config cache");
 
         fpsDisplayMarginCache = fpsDisplayMargin.get();
         fpsDisplayShadowCache = fpsDisplayShadow.get();
@@ -344,9 +367,13 @@ public class EmbyConfig {
         entityCullingDistanceXCache = entityCullingDistanceX.get();
         entityCullingDistanceYCache = entityCullingDistanceY.get();
 
+        fastLanguageReloadCache = fastLanguageReload.get();
+
         dynLightsOnEntitiesCache = dynLightsOnEntities.get();
         dynLightsOnTileEntitiesCache = dynLightsOnTileEntities.get();
         dynLightsUpdateOnPositionChangeCache = dynLightsUpdateOnPositionChange.get();
+
+        LOGGER.info(IT,"Cache updated successfully");
     }
 
     public static void setFullScreenMode(Options opts, FullScreenMode value) {
@@ -355,6 +382,7 @@ public class EmbyConfig {
 
         Minecraft client = Minecraft.getInstance();
         Window window = client.getWindow();
+
         if (window.isFullscreen() != opts.fullscreen.get()) {
             window.toggleFullScreen();
             opts.fullscreen.set(window.isFullscreen());
@@ -366,6 +394,9 @@ public class EmbyConfig {
         }
     }
 
+    public enum AttachMode {
+        ATTACH, REPLACE, OFF;
+    }
 
     /* CONFIG VALUES */
     public enum FPSDisplayMode {
@@ -421,6 +452,20 @@ public class EmbyConfig {
                 case WINDOWED -> BORDERLESS;
                 case BORDERLESS -> FULLSCREEN;
                 case FULLSCREEN -> WINDOWED;
+            };
+        }
+
+        public static FullScreenMode nextBorderless(FullScreenMode current) {
+            return switch (current) {
+                case FULLSCREEN, BORDERLESS -> WINDOWED;
+                case WINDOWED -> BORDERLESS;
+            };
+        }
+
+        public static FullScreenMode nextFullscreen(FullScreenMode current) {
+            return switch (current) {
+                case FULLSCREEN, BORDERLESS -> WINDOWED;
+                case WINDOWED -> FULLSCREEN;
             };
         }
 
