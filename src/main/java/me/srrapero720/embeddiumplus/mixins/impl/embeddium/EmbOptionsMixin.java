@@ -31,6 +31,6 @@ public class EmbOptionsMixin {
         pages.add(new TrueDarknessPage());
         pages.add(new EntityCullingPage());
         pages.add(new DynamicLightsPage());
-        pages.add(new MixinsPage());
+        pages.add(new OthersPage());
     }
 }

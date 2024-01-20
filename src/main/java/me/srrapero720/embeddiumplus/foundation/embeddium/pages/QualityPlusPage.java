@@ -26,7 +26,7 @@ public class QualityPlusPage extends OptionPage {
     private static ImmutableList<OptionGroup> create() {
         final List<OptionGroup> groups = new ArrayList<>();
 
-        final var fog = OptionImpl.createBuilder(Boolean.class, qualityOptionsStorage)
+        final var fog = OptionImpl.createBuilder(boolean.class, qualityOptionsStorage)
                 .setName(Component.translatable("embeddium.plus.options.fog.title"))
                 .setTooltip(Component.translatable("embeddium.plus.options.fog.desc"))
                 .setControl(TickBoxControl::new)

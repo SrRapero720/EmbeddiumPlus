@@ -9,10 +9,12 @@
   "embeddium.plus.options.common.on": "Encendido",
   "embeddium.plus.options.common.simple": "Simple",
   "embeddium.plus.options.common.advanced": "Completo",
+  "embeddium.plus.options.common.attach": "Agregar",
+  "embeddium.plus.options.common.replace": "Remplazar",
   "embeddium.plus.options.common.experimental": "[EXPERIMENTAL]",
 
   "embeddium.plus.options.clouds.height.title": "Altura de Nubes",
-  "embeddium.plus.options.clouds.height.desc": "Elevate hasta las nubes, o has que ellas lleguen a ti.\nConfigura que tan alto se veran las nubes",
+  "embeddium.plus.options.clouds.height.desc": "Alcanza las nubes, o que ellas te alcancen a ti.\nConfigura que tan alto se posicionan las nubes",
 
   "embeddium.plus.options.culling.page": "Rango de Entidades",
   "embeddium.plus.options.culling.entity.title": "Activar para Entidades",
@@ -47,15 +49,15 @@
   "embeddium.plus.options.darkness.nether.brightness.desc": "Configura el brillo de la niebla en el nether si la oscuridad se activa en el Nether",
   "embeddium.plus.options.darkness.end.title": "Activar en el End",
   "embeddium.plus.options.darkness.end.desc": "Si se activa, se aplicara la oscuridad en el End.",
-  "embeddium.plus.options.darkness.end.brightness.title": "End Fog Brightness",
+  "embeddium.plus.options.darkness.end.brightness.title": "Brillo de Niebla",
   "embeddium.plus.options.darkness.end.brightness.desc": "Configure fog brightness in the End when darkness is enabled.",
   "embeddium.plus.options.darkness.blocklightonly.title": "Block light only",
   "embeddium.plus.options.darkness.blocklightonly.desc": "If enabled, Disables sky, fog and moon brightness, making blocks as a only source of light",
-  "embeddium.plus.options.darkness.moonphase.title": "Use Moon Phases",
-  "embeddium.plus.options.darkness.moonphase.desc": "If enabled, Darkness will be affected by Moon Phases",
-  "embeddium.plus.options.darkness.moonphase.fresh.title": "New Moon Bright (min)",
+  "embeddium.plus.options.darkness.moonphase.title": "Usar Fases Lunares",
+  "embeddium.plus.options.darkness.moonphase.desc": "Si se activa, la oscuridad se vera afectada por las fases lunares",
+  "embeddium.plus.options.darkness.moonphase.fresh.title": "Brillo de Luna Nueva (min)",
   "embeddium.plus.options.darkness.moonphase.fresh.desc": "Configure brightness on a new moon, or minimal bright level on black moon phase",
-  "embeddium.plus.options.darkness.moonphase.full.title": "Full Moon Bright (max)",
+  "embeddium.plus.options.darkness.moonphase.full.title": "Brillo de Luna Llena (max)",
   "embeddium.plus.options.darkness.moonphase.full.desc": "Configure brightness on a full moon, or maximum bright level on black moon phase",
 
   "embeddium.plus.options.displayfps.title": "Mostrar FPS",
@@ -108,10 +110,9 @@
   "embeddium.plus.options.screen.borderless": "Sin Bordes",
   "embeddium.plus.options.screen.windowed": "Ventana",
 
-  "embeddium.plus.mixins.borderless.f11.title": "Add borderless to F11",
-  "embeddium.plus.mixins.borderless.f11.desc": "If enabled, F11 will now had borderless state into it.\n\nRequires game restart",
-  "embeddium.plus.mixins.languagescreen.fastreload.title": "Enable Fast Language Reload",
-  "embeddium.plus.mixins.languagescreen.fastreload.desc": "If enabled, Language updates only reload language instead of all resources, a 99.9% extra of speed\n\nRequires game restart",
-  "embeddium.plus.mixins.dynlights.title": "Dynamic Lights",
-  "embeddium.plus.mixins.dynlights.desc": "If disabled, DynLight related code will be turned off\n\nRequires game restart"
+  "embeddium.plus.options.others.page": "Otros",
+  "embeddium.plus.options.others.borderless.attachmode.title": "Pantalla sin bordes en F11",
+  "embeddium.plus.options.others.borderless.attachmode.desc": "Configura como la pantalla completa sin bordes se aplica al F11\n\nADJUNTAR - Agrega la opcion entre modo ventana y pantalla completa\nREMPLAZAR - Cambia la pantalla completa vanilla por la sin bordes\nAPAGADO - Conserva el comportamiento vanilla",
+  "embeddium.plus.options.others.languagescreen.fastreload.title": "Cambio de lenguage rapido",
+  "embeddium.plus.options.others.languagescreen.fastreload.desc": "Si se activa, el menu del idioma solo actualizara el lenguage en lugar de actualizar todos los resources, un 99.9% extra de eficiencia"
 }

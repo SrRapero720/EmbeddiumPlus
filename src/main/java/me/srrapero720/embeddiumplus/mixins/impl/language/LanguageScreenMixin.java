@@ -1,5 +1,8 @@
 package me.srrapero720.embeddiumplus.mixins.impl.language;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import me.srrapero720.embeddiumplus.EmbyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.LanguageSelectScreen;
@@ -16,9 +19,13 @@ import java.util.concurrent.CompletableFuture;
 public class LanguageScreenMixin extends OptionsSubScreen {
     public LanguageScreenMixin(Screen screen, Options options, Component component) { super(screen, options, component); }
 
-    @Redirect(method = "onDone", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks()Ljava/util/concurrent/CompletableFuture;"))
-    public CompletableFuture<Void> redirectResourceManagerReload(Minecraft instance) {
-        this.minecraft.getLanguageManager().onResourceManagerReload(this.minecraft.getResourceManager());
-        return null;
+    @WrapOperation(method = "onDone", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks()Ljava/util/concurrent/CompletableFuture;"))
+    public CompletableFuture<Void> redirectResourceManagerReload(Minecraft instance, Operation<CompletableFuture<Void>> original) {
+        if (EmbyConfig.fastLanguageReloadCache) {
+            this.minecraft.getLanguageManager().onResourceManagerReload(this.minecraft.getResourceManager());
+            return null;
+        } else {
+            return original.call(instance);
+        }
     }
 }

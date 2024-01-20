@@ -42,33 +42,6 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
             }
         }
 
-        if (mixin.endsWith("language.LanguageScreenMixin")) {
-            if (!EmbyMixinConfig.mixin$LanguageScreen$fastreload.get()) {
-                LOGGER.warn(IT, "Disabled LanguageReload feature mixins by user config");
-                return false;
-            } else {
-                return true;
-            }
-        }
-//
-//        if (mixin.contains("mixins.impl.dynlights")) {
-//            if (!EmbyMixinConfig.mixin$DynLights.get()) {
-//                LOGGER.warn(IT,"Disabled DynLights feature mixin '{}' by user config", mixinName);
-//                return false;
-//            } else {
-//                return true;
-//            }
-//        }
-
-        if (mixin.endsWith("borderless.KeyboardF11Mixin")) {
-            if (!EmbyMixinConfig.mixin$Borderless$F11.get()) {
-                LOGGER.warn(IT,"Disabled F11 mixin for Borderless feature by user config");
-                return false;
-            } else {
-                return true;
-            }
-        }
-
         if (mixin.endsWith("JeiOverlayMixin")) {
             if (!EmbyTools.isModInstalled("jei")) {
                 LOGGER.warn(IT, "Disabled JeiOverlayMixin because JEI is not installed");
