@@ -60,7 +60,7 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
 //            }
 //        }
 
-        if (mixin.endsWith("borderless.KeyboardHandlerMixin")) {
+        if (mixin.endsWith("borderless.KeyboardF11Mixin")) {
             if (!EmbyMixinConfig.mixin$Borderless$F11.get()) {
                 LOGGER.warn(IT,"Disabled F11 mixin for Borderless feature by user config");
                 return false;
