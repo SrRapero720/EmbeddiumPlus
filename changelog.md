@@ -8,6 +8,7 @@ Minor things
   - 🛠️ Moved config entries to default config file
     - By default, it will delete old ``embeddium++mixins.toml`` file, because it was no longer used
 - [🛠️] Enabled shadows on text by default again (temporal workaround)
+- [🛠️] Now uses MixinExtra along some mixins (temporal JarInJar until embeddedt includes it on Embeddium)
 - [🔥] Updated translation(s)
   - 🌮 Mexican spanish
 
