@@ -10,9 +10,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
 import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
 @Mixin(EntityType.class)
