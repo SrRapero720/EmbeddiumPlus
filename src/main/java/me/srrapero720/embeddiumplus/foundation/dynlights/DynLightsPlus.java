@@ -12,7 +12,6 @@ package me.srrapero720.embeddiumplus.foundation.dynlights;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.foundation.dynlights.accessors.DynamicLightSource;
-import me.srrapero720.embeddiumplus.foundation.dynlights.events.DynLightsSetupEvent;
 import me.srrapero720.embeddiumplus.foundation.dynlights.item.ItemLightRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -29,7 +28,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
@@ -39,8 +37,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Predicate;
-
-import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
 @OnlyIn(Dist.CLIENT)
 public class DynLightsPlus {
