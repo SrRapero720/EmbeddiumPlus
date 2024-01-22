@@ -95,6 +95,11 @@ jar {
     }
 }
 
+jarJar.enable()
+
+tasks.jarJar.finalizedBy('reobfJarJar')
+tasks.jarJar.archiveClassifier = 'build'
+
 // Process target resources with mod info
 tasks.processResources.outputs.upToDateWhen { false }
 processResources {
