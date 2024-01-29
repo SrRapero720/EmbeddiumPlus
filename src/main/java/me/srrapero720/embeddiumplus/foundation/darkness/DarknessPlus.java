@@ -28,6 +28,7 @@ public class DarknessPlus {
 		if (EmbyConfig.darknessMode.get() == EmbyConfig.DarknessMode.OFF) return false;
 
 		final ResourceKey<Level> dimType = world.dimension();
+
 		if (dimType == Level.OVERWORLD) {
 			return EmbyConfig.darknessOnOverworldCache;
 		} else if (dimType == Level.NETHER) {
