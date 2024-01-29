@@ -5,6 +5,9 @@
   "plugin": "me.srrapero720.embeddiumplus.mixins.EmbMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "embeddiumplus.mixin-refmap.json",
+  "mixins": [
+    "zoom.PlayerInventoryMixin"
+  ],
   "client": [
     "borderless.BorderlessWindowMixin",
     "borderless.DirtyWindowMixin",
@@ -51,6 +54,8 @@
     "fontshadow.FontMixin$StringRenderOutputMixin",
     "frames.GpuUsageMixin",
     "jei.JeiOverlayMixin",
-    "language.LanguageScreenMixin"
+    "language.LanguageScreenMixin",
+    "zoom.GameRendererMixin",
+    "zoom.MouseMixin"
   ]
 }
