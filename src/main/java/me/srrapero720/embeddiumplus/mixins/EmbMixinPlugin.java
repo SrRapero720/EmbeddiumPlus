@@ -1,6 +1,5 @@
 package me.srrapero720.embeddiumplus.mixins;
 
-import me.srrapero720.embeddiumplus.EmbyMixinConfig;
 import me.srrapero720.embeddiumplus.EmbyTools;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.Marker;
@@ -18,14 +17,10 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
     private static final Marker IT = MarkerManager.getMarker("MixinPlugin");
 
     @Override
-    public void onLoad(String mixinPackage) {
-        EmbyMixinConfig.load();
-    }
+    public void onLoad(String mixinPackage) {}
 
     @Override
-    public String getRefMapperConfig() {
-        return null;
-    }
+    public String getRefMapperConfig() { return null; }
 
     @Override
     public boolean shouldApplyMixin(String target, String mixin) {
@@ -57,19 +52,14 @@ public class EmbMixinPlugin implements IMixinConfigPlugin {
     }
 
     @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-    }
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {}
 
     @Override
-    public List<String> getMixins() {
-        return null;
-    }
+    public List<String> getMixins() { return null; }
 
     @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-    }
+    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {}
 
     @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-    }
+    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {}
 }
