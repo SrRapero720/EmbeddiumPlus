@@ -1,5 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.embeddium;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI;
 import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
 import me.srrapero720.embeddiumplus.foundation.embeddium.pages.*;
@@ -18,9 +20,8 @@ import java.util.List;
 public class EmbOptionsMixin {
     @Shadow @Final private List<OptionPage> pages;
 
-    // TODO: we can't inject on constructors :P
-    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1))
-    private <E> boolean redirect$qualityPage(List<E> instance, E e) {
+    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1))
+    private <E> boolean redirect$qualityPage(List instance, E e, Operation<Boolean> original) {
         instance.add(e);
         pages.add(new QualityPlusPage());
         return true;

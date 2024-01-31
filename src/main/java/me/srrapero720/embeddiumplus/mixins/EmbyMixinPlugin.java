@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
-public class EmbMixinPlugin implements IMixinConfigPlugin {
+public class EmbyMixinPlugin implements IMixinConfigPlugin {
     private static final Marker IT = MarkerManager.getMarker("MixinPlugin");
 
     @Override

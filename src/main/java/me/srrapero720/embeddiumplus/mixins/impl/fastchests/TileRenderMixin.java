@@ -14,16 +14,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockEntityRenderDispatcher.class)
-public class BERenderDispatcherMixin {
+public class TileRenderMixin {
     @Inject(method = "getRenderer", at = @At("HEAD"), cancellable = true)
-    private <E extends BlockEntity> void disableChestRender(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
-        if (EmbyTools.canUseFastChests() &&  EmbyConfig.fastChestsCache) {
-            Class<?> beClass = blockEntity.getClass();
+    private <E extends BlockEntity> void inject$disableRenderer(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
+        if (!EmbyTools.canUseFastChests() || !EmbyConfig.fastChestsCache) return;
 
-            if (beClass == ChestBlockEntity.class || beClass == TrappedChestBlockEntity.class || beClass == EnderChestBlockEntity.class ||
-                    beClass.getSuperclass().getName().equals("io.github.cyberanner.ironchests.blocks.blockentities.GenericChestEntity")) {
-                cir.setReturnValue(null);
-            }
+        final Class<?> beClazz = blockEntity.getClass();
+        if ((blockEntity instanceof ChestBlockEntity) || (blockEntity instanceof EnderChestBlockEntity)) {
+            cir.setReturnValue(null);
+        }
+        if (beClazz == ChestBlockEntity.class || beClazz == TrappedChestBlockEntity.class || beClazz == EnderChestBlockEntity.class) {
+            cir.setReturnValue(null);
         }
     }
 }

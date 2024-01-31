@@ -2,7 +2,6 @@ package me.srrapero720.embeddiumplus.mixins.impl.darkness;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.srrapero720.embeddiumplus.foundation.darkness.DarknessPlus;
-import me.srrapero720.embeddiumplus.foundation.darkness.accessors.LightMapAccess;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -20,11 +19,11 @@ public abstract class MixinGameRenderer {
 
 	@Inject(method = "renderLevel", at = @At(value = "HEAD"))
 	private void inject$renderLevel(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
-		var lightmap = (LightMapAccess) lightTexture;
+		var lightmap = (LightTextureAccessor) lightTexture;
 
-		if (lightmap.embPlus$isDirty()) {
+		if (lightmap.isDirty()) {
 			minecraft.getProfiler().push("lightTex");
-			DarknessPlus.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.embPlus$prevFlicker());
+			DarknessPlus.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightmap.getFlicker());
 			minecraft.getProfiler().pop();
 		}
 	}

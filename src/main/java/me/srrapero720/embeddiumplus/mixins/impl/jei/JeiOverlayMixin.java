@@ -23,7 +23,7 @@ public class JeiOverlayMixin {
     @Shadow @Final private ScreenPropertiesCache screenPropertiesCache;
 
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lmezz/jei/gui/overlay/IngredientGridWithNavigation;draw(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;IIF)V"), cancellable = true)
-    public void render(Minecraft minecraft, GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+    public void inject$renderOverlay(Minecraft minecraft, GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         if (!EmbyConfig.hideJREICache) return;
 
         String value = searchField.getValue();
@@ -36,7 +36,7 @@ public class JeiOverlayMixin {
     }
 
     @Inject(method = "drawTooltips", at = @At(value = "HEAD"), cancellable = true)
-    public void render(Minecraft minecraft, GuiGraphics guiGraphics, int mouseX, int mouseY, CallbackInfo ci) {
+    public void inject$renderOverlay(Minecraft minecraft, GuiGraphics guiGraphics, int mouseX, int mouseY, CallbackInfo ci) {
         if (!EmbyConfig.hideJREICache) return;
 
         String value = searchField.getValue();

@@ -15,11 +15,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.concurrent.CompletableFuture;
 
 @Mixin(LanguageSelectScreen.class)
-public class LanguageScreenMixin extends OptionsSubScreen {
-    public LanguageScreenMixin(Screen screen, Options options, Component component) { super(screen, options, component); }
+public class LanguageSelectMixin extends OptionsSubScreen {
+    public LanguageSelectMixin(Screen screen, Options options, Component component) { super(screen, options, component); }
 
     @WrapOperation(method = "onDone", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks()Ljava/util/concurrent/CompletableFuture;"))
-    public CompletableFuture<Void> redirectResourceManagerReload(Minecraft instance, Operation<CompletableFuture<Void>> original) {
+    public CompletableFuture<Void> redirect$resourcesReload(Minecraft instance, Operation<CompletableFuture<Void>> original) {
         if (EmbyConfig.fastLanguageReloadCache) {
             this.minecraft.getLanguageManager().onResourceManagerReload(this.minecraft.getResourceManager());
             return null;

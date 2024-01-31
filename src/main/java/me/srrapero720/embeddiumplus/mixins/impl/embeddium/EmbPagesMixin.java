@@ -39,22 +39,4 @@ public class EmbPagesMixin {
     private static void setPerformanceOptions(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
         EmbPlusOptions.setPerformanceOptions(groups, sodiumOpts);
     }
-
-    @Unique private static OptionGroup.Builder embPlus$advancedBuilder;
-    @Redirect(method = "advanced", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup;createBuilder()Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;"))
-    private static OptionGroup.Builder regroup() {
-        if (embPlus$advancedBuilder == null) embPlus$advancedBuilder = OptionGroup.createBuilder();
-        return embPlus$advancedBuilder;
-    }
-
-    @Redirect(method = "advanced", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
-    private static <E> boolean unlist(List<E> instance, E e) {
-        return true; // NO-OP
-    }
-
-    @Inject(method = "advanced", at = @At(value = "NEW", target = "(Lnet/minecraft/network/chat/Component;Lcom/google/common/collect/ImmutableList;)Lme/jellysquid/mods/sodium/client/gui/options/OptionPage;"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void relist(CallbackInfoReturnable<OptionPage> cir, List<OptionGroup> groups) {
-        groups.add(embPlus$advancedBuilder.build());
-        embPlus$advancedBuilder = null;
-    }
 }

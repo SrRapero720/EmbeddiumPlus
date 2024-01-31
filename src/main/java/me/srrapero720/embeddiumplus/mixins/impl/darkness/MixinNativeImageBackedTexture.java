@@ -29,6 +29,7 @@ public class MixinNativeImageBackedTexture implements TextureAccess {
 		}
 	}
 
+	// TODO: RID OFF OF THIS
 	@Override
 	public void embPlus$enableUploadHook() {
 		embPlus$enableHook = true;
