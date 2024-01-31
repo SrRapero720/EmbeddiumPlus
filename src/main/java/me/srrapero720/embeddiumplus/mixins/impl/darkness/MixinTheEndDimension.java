@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(DimensionSpecialEffects.EndEffects.class)
 public class MixinTheEndDimension {
 	@Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
-	private void inject$BrightFogColor(CallbackInfoReturnable<Vec3> ci) {
-		if (EmbyConfig.darknessMode.get() != EmbyConfig.DarknessMode.OFF) return;
+	private void inject$brightFogColor(CallbackInfoReturnable<Vec3> ci) {
+		if (EmbyConfig.darknessMode.get() == EmbyConfig.DarknessMode.OFF) return;
 		if (!EmbyConfig.darknessOnEndCache) return;
 
 		final double factor = DarknessPlus.darkEndFogBrightness();

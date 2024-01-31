@@ -11,10 +11,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockEntityRenderDispatcher.class)
-public class BERenderDispatcherMixin {
-
+public class TileRenderMixin {
     @Inject(method = "getRenderer", at = @At("HEAD"), cancellable = true)
-    private <E extends BlockEntity> void inject$getRenderer(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
+    private <E extends BlockEntity> void inject$disableRenderer(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
         if (EmbyConfig.fastBedsCache) {
             if (blockEntity instanceof BedBlockEntity) {
                 cir.setReturnValue(null);

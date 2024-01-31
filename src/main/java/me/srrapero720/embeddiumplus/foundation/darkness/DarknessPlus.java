@@ -80,7 +80,7 @@ public class DarknessPlus {
 		return r * 0.2126f + g * 0.7152f + b * 0.0722f;
 	}
 
-	public static void updateLuminance(float tickDelta, Minecraft client, GameRenderer worldRenderer, float prevFlicker) {
+	public static void updateLuminance(float tickDelta, Minecraft client, GameRenderer gameRenderer, float prevFlicker) {
 		final ClientLevel world = client.level;
 		if (world != null) {
 
@@ -116,8 +116,8 @@ public class DarknessPlus {
 				float skyGreen = v;
 				float skyBlue = skyBase;
 
-				if (worldRenderer.getDarkenWorldAmount(tickDelta) > 0.0F) {
-					final float skyDarkness = worldRenderer.getDarkenWorldAmount(tickDelta);
+				if (gameRenderer.getDarkenWorldAmount(tickDelta) > 0.0F) {
+					final float skyDarkness = gameRenderer.getDarkenWorldAmount(tickDelta);
 					skyRed = skyRed * (1.0F - skyDarkness) + skyRed * 0.7F * skyDarkness;
 					skyGreen = skyGreen * (1.0F - skyDarkness) + skyGreen * 0.6F * skyDarkness;
 					skyBlue = skyBlue * (1.0F - skyDarkness) + skyBlue * 0.6F * skyDarkness;

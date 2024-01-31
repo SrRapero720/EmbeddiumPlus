@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EntityRenderDispatcher.class)
 public class EntityDispatcherMixin {
     @Inject(at = @At("HEAD"), method = "shouldRender", cancellable = true)
-    public <E extends Entity> void inject$shouldDoRender(E entity, Frustum clippingHelper, double cameraX, double cameraY, double cameraZ, CallbackInfoReturnable<Boolean> cir) {
+    public <E extends Entity> void inject$shouldRender(E entity, Frustum clippingHelper, double cameraX, double cameraY, double cameraZ, CallbackInfoReturnable<Boolean> cir) {
         if (!EmbyConfig.entityDistanceCullingCache) return;
 
         if (entity instanceof EnderDragon) return;

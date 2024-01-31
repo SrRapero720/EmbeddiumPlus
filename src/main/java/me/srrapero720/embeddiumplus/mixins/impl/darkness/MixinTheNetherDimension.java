@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(DimensionSpecialEffects.NetherEffects.class)
 public class MixinTheNetherDimension {
 	@Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
-	private void inject$BrightFogColor(CallbackInfoReturnable<Vec3> ci) {
+	private void inject$brightFogColor(CallbackInfoReturnable<Vec3> ci) {
 		if (EmbyConfig.darknessMode.get() == EmbyConfig.DarknessMode.OFF) return;
 		if (!EmbyConfig.darknessOnNetherCache) return;
 

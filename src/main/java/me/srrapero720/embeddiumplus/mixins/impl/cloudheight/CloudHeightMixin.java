@@ -14,7 +14,7 @@ public class CloudHeightMixin {
     @Shadow @Final private float cloudLevel;
 
     @Inject(method = "getCloudHeight", at = @At("HEAD"), cancellable = true)
-    private void getCloudHeight(CallbackInfoReturnable<Float> cir) {
+    private void inject$cloudHeight(CallbackInfoReturnable<Float> cir) {
         if (cloudLevel == 192.0F)
             cir.setReturnValue((float) EmbyConfig.cloudsHeightCache);
     }

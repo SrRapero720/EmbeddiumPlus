@@ -2,15 +2,15 @@
   "required": true,
   "minVersion": "0.8",
   "package": "me.srrapero720.embeddiumplus.mixins.impl",
-  "plugin": "me.srrapero720.embeddiumplus.mixins.EmbMixinPlugin",
+  "plugin": "me.srrapero720.embeddiumplus.mixins.EmbyMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "embeddiumplus.mixin-refmap.json",
   "client": [
     "borderless.BorderlessWindowMixin",
-    "borderless.DirtyWindowMixin",
     "borderless.KeyboardF11Mixin",
     "borderless.MainWindowAccessor",
     "cloudheight.CloudHeightMixin",
+    "darkness.LightTextureAccessor",
     "darkness.MixinGameRenderer",
     "darkness.MixinLightMapTextureManager",
     "darkness.MixinNativeImageBackedTexture",
@@ -42,15 +42,14 @@
     "entitydistance.TileDispatcherMixin",
     "entitydistance.TileEntityTypeMixin",
     "fastbeds.BedBlockMixin",
-    "fastbeds.BERenderDispatcherMixin",
-    "fastchests.BERenderDispatcherMixin",
-    "fastchests.ChestBlockMixin",
-    "fastchests.EnderChestBlockMixin",
-    "fog.BackgroundRendererMixin",
+    "fastbeds.TileRenderMixin",
+    "fastchests.ChestsMixin",
+    "fastchests.TileRenderMixin",
     "fontshadow.FontMixin",
     "fontshadow.FontMixin$StringRenderOutputMixin",
     "frames.GpuUsageMixin",
     "jei.JeiOverlayMixin",
-    "language.LanguageScreenMixin"
+    "language.LanguageSelectMixin",
+    "togglefog.FogRendererMixin"
   ]
 }
