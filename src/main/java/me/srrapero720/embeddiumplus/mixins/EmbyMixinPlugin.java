@@ -28,7 +28,7 @@ public class EmbyMixinPlugin implements IMixinConfigPlugin {
 
         final var mixinName = EmbyTools.getLastValue(mixin.split("\\."));
 
-        if (mixin.endsWith("fastchests.BERenderDispatcherMixin") || mixin.endsWith("fastchests.ChestBlockMixin") || mixin.endsWith("fastchests.EnderChestBlockMixin")) {
+        if (mixin.endsWith("fastchests.TileRenderMixin") || mixin.endsWith("fastchests.ChestMixin")) {
             if (EmbyTools.isModInstalled("enhancedblockentities")) {
                 LOGGER.warn(IT, "Disabled FastChest feature mixin '{}' because EBE is installed", mixinName);
                 return false;
