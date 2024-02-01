@@ -1,7 +1,5 @@
 package me.srrapero720.embeddiumplus.mixins;
 
-import me.srrapero720.embeddiumplus.EmbyTools;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.objectweb.asm.tree.ClassNode;
@@ -10,8 +8,6 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 import java.util.List;
 import java.util.Set;
-
-import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
 public class EmbyMixinPlugin implements IMixinConfigPlugin {
     private static final Marker IT = MarkerManager.getMarker("MixinPlugin");
@@ -24,30 +20,6 @@ public class EmbyMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String target, String mixin) {
-        if (FMLEnvironment.dist.isDedicatedServer()) return false;
-
-        final var mixinName = EmbyTools.getLastValue(mixin.split("\\."));
-
-        if (mixin.endsWith("fastchests.TileRenderMixin") || mixin.endsWith("fastchests.ChestMixin")) {
-            if (EmbyTools.isModInstalled("enhancedblockentities")) {
-                LOGGER.warn(IT, "Disabled FastChest feature mixin '{}' because EBE is installed", mixinName);
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        if (mixin.endsWith("JeiOverlayMixin")) {
-            if (!EmbyTools.isModInstalled("jei")) {
-                LOGGER.warn(IT, "Disabled JeiOverlayMixin because JEI is not installed");
-                return false;
-            } else {
-                LOGGER.warn(IT, "Enabled JeiOverlayMixin...");
-                if (EmbyTools.isModInstalled("rei")) throw new IllegalStateException("REI and JEI detected... forcing shutting down");
-                return true;
-            }
-        }
-
         return true;
     }
 
