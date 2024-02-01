@@ -1,7 +1,5 @@
 package me.srrapero720.embeddiumplus;
 
-import com.jozufozu.flywheel.config.BackendType;
-import com.jozufozu.flywheel.config.FlwConfig;
 import it.unimi.dsi.fastutil.longs.LongLongMutablePair;
 import it.unimi.dsi.fastutil.longs.LongLongPair;
 import net.minecraft.ChatFormatting;
@@ -18,14 +16,6 @@ public class EmbyTools {
 
     public static <T> T getLastValue(T[] value) {
         return value[value.length - 1];
-    }
-
-    public static boolean canUseFastChests() {
-        try {
-            return FlwConfig.get().getBackendType() == BackendType.OFF;
-        } catch (Error e) {
-            return true; // no flywheel
-        }
     }
 
     private static final LongLongPair[] BENCHTIMES = new LongLongPair[100];

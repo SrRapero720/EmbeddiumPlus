@@ -12,6 +12,7 @@ import me.srrapero720.embeddiumplus.EmbyConfig.FPSDisplayMode;
 import me.srrapero720.embeddiumplus.EmbyConfig.FPSDisplaySystemMode;
 import me.srrapero720.embeddiumplus.EmbyConfig.FullScreenMode;
 import me.srrapero720.embeddiumplus.EmbyTools;
+import me.srrapero720.embeddiumplus.foundation.fastmodels.ChestHandler;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
@@ -134,7 +135,7 @@ public class EmbPlusOptions {
                         },
                         (options) -> EmbyConfig.fastChestsCache)
                 .setImpact(OptionImpact.HIGH)
-                .setEnabled(EmbyTools.canUseFastChests() && !EmbyTools.isModInstalled("enhancedblockentities"))
+                .setEnabled(ChestHandler.canEnable() && !EmbyTools.isModInstalled("enhancedblockentities"))
                 .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                 .build();
 
@@ -162,7 +163,7 @@ public class EmbPlusOptions {
                             EmbyConfig.hideJREI.set(value);
                             EmbyConfig.hideJREICache = value;
                         },
-                        (options) -> EmbyTools.canUseFastChests() && EmbyConfig.hideJREICache)
+                        (options) -> ChestHandler.canEnable() && EmbyConfig.hideJREICache)
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(EmbyTools.isModInstalled("jei"))
                 .build();
