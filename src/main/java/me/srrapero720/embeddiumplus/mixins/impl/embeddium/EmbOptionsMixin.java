@@ -6,12 +6,9 @@ import me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI;
 import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
 import me.srrapero720.embeddiumplus.foundation.embeddium.pages.*;
 import net.minecraft.client.gui.screens.Screen;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -21,10 +18,9 @@ public class EmbOptionsMixin {
     @Shadow @Final private List<OptionPage> pages;
 
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1))
-    private <E> boolean redirect$qualityPage(List instance, E e, Operation<Boolean> original) {
-        instance.add(e);
-        pages.add(new QualityPlusPage());
-        return true;
+    private <E> boolean redirect$qualityPage(List<E> instance, E e, Operation<Boolean> original) {
+        original.call(instance, e);
+        return pages.add(new QualityPlusPage());
     }
 
     @Inject(method = "<init>", at = @At("RETURN"))
