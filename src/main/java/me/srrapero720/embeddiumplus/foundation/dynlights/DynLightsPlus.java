@@ -28,6 +28,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
@@ -40,7 +42,10 @@ import java.util.function.Predicate;
 
 @OnlyIn(Dist.CLIENT)
 public class DynLightsPlus {
-	private static final Marker IT = MarkerManager.getMarker("DynamicLights");
+	private static final Marker IT = MarkerManager.getMarker("main");
+	public static final Logger LOGGER = LogManager.getLogger("DynLightsPlus");
+
+	// PROPERTIES
 	private static final double MAX_RADIUS = 12;
 	private static final double MAX_RADIUS_SQUARED = MAX_RADIUS * MAX_RADIUS;
 	private static final DynLightsPlus INSTANCE = new DynLightsPlus();
