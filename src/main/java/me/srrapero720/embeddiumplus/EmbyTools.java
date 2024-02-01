@@ -16,7 +16,6 @@ import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
 public class EmbyTools {
 
-
     public static <T> T getLastValue(T[] value) {
         return value[value.length - 1];
     }
