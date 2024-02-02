@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = ArrayLightDataCache.class, remap = false)
 public abstract class ArrayLightDataCacheMixin extends LightDataAccess {
-    @Dynamic
     @Inject(method = "get(III)I", at = @At("HEAD"))
     private void dynLights$storeLightPos(int x, int y, int z, CallbackInfoReturnable<Integer> cir) {
         if (!DynLightsPlus.isEnabled()) return;
