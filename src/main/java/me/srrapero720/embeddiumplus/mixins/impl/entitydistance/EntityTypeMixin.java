@@ -1,6 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
 import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.foundation.entitydistance.EntityWhitelist;
 import me.srrapero720.embeddiumplus.foundation.entitydistance.IWhitelistCheck;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -23,24 +24,11 @@ public abstract class EntityTypeMixin implements IWhitelistCheck {
     @Override
     @Unique
     public boolean embPlus$isAllowed() {
-        EmbyConfig.load();
         if (embPlus$checked) return embPlus$whitelisted;
-        ResourceLocation currentLocation = getDefaultLootTable();
 
-        for (String item : EmbyConfig.entityWhitelist.get()) {
-            String[] result = item.split(":");
+        this.embPlus$whitelisted = EntityWhitelist.isAllowed(getDefaultLootTable(), EmbyConfig.entityWhitelist);
+        this.embPlus$checked = true;
 
-            if (result[1].equals("*") && currentLocation.getNamespace().equals(result[0])) {
-                embPlus$whitelisted = true;
-                break;
-            } else if (currentLocation.toString().equals(result[0] + ":" + result[1])) {
-                embPlus$whitelisted = true;
-                break;
-            }
-        }
-
-        LOGGER.debug(e$IT,"Whitelist checked for {}", currentLocation);
-        embPlus$checked = true;
         return embPlus$whitelisted;
     }
 }

@@ -10,11 +10,5 @@ public class EmbeddiumPlus {
     public static final String ID = "embeddiumplus";
     public static final Logger LOGGER = LogManager.getLogger("Embeddium++");
 
-    public EmbeddiumPlus() {
-        if (FMLLoader.getDist().isClient()) initClient();
-    }
-
-    public void initClient() {
-        EmbyConfig.load();
-    }
+    public EmbeddiumPlus() {}
 }
