@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -27,35 +28,35 @@ public class EmbyConfig {
     public static final ForgeConfigSpec SPECS;
 
     // GENERAL
-    public static final ForgeConfigSpec.EnumValue<FullScreenMode> fullScreen;
-    public static final ForgeConfigSpec.EnumValue<FPSDisplayMode> fpsDisplayMode;
-    public static final ForgeConfigSpec.EnumValue<FPSDisplayGravity> fpsDisplayGravity;
-    public static final ForgeConfigSpec.EnumValue<FPSDisplaySystemMode> fpsDisplaySystemMode;
-    public static final ForgeConfigSpec.IntValue fpsDisplayMargin;
-    public static final ForgeConfigSpec.BooleanValue fpsDisplayShadow;
+    public static final EnumValue<FullScreenMode> fullScreen;
+    public static final EnumValue<FPSDisplayMode> fpsDisplayMode;
+    public static final EnumValue<FPSDisplayGravity> fpsDisplayGravity;
+    public static final EnumValue<FPSDisplaySystemMode> fpsDisplaySystemMode;
+    public static final IntValue fpsDisplayMargin;
+    public static final BooleanValue fpsDisplayShadow;
     public static volatile int fpsDisplayMarginCache;
     public static volatile boolean fpsDisplayShadowCache;
 
     // QUALITY
-    public static final ForgeConfigSpec.BooleanValue fog;
-    public static final ForgeConfigSpec.IntValue cloudsHeight;
-    public static final ForgeConfigSpec.EnumValue<ChunkFadeSpeed> chunkFadeSpeed;
+    public static final BooleanValue fog;
+    public static final IntValue cloudsHeight;
+    public static final EnumValue<ChunkFadeSpeed> chunkFadeSpeed;
     public static volatile boolean fogCache;
     public static volatile int cloudsHeightCache;
 
     // QUALITY: TRUE DARKNESS
-    public static final ForgeConfigSpec.EnumValue<DarknessMode> darknessMode;
-    public static final ForgeConfigSpec.BooleanValue darknessOnOverworld;
-    public static final ForgeConfigSpec.BooleanValue darknessOnNether;
-    public static final ForgeConfigSpec.DoubleValue darknessNetherFogBright;
-    public static final ForgeConfigSpec.BooleanValue darknessOnEnd;
-    public static final ForgeConfigSpec.DoubleValue darknessEndFogBright;
-    public static final ForgeConfigSpec.BooleanValue darknessByDefault;
-    public static final ForgeConfigSpec.BooleanValue darknessOnNoSkyLight;
-    public static final ForgeConfigSpec.BooleanValue darknessBlockLightOnly;
-    public static final ForgeConfigSpec.BooleanValue darknessAffectedByMoonPhase;
-    public static final ForgeConfigSpec.DoubleValue darknessNewMoonBright;
-    public static final ForgeConfigSpec.DoubleValue darknessFullMoonBright;
+    public static final EnumValue<DarknessMode> darknessMode;
+    public static final BooleanValue darknessOnOverworld;
+    public static final BooleanValue darknessOnNether;
+    public static final DoubleValue darknessNetherFogBright;
+    public static final BooleanValue darknessOnEnd;
+    public static final DoubleValue darknessEndFogBright;
+    public static final BooleanValue darknessByDefault;
+    public static final BooleanValue darknessOnNoSkyLight;
+    public static final BooleanValue darknessBlockLightOnly;
+    public static final BooleanValue darknessAffectedByMoonPhase;
+    public static final DoubleValue darknessNewMoonBright;
+    public static final DoubleValue darknessFullMoonBright;
     public static volatile boolean darknessOnOverworldCache;
     public static volatile boolean darknessOnNetherCache;
     public static volatile double darknessNetherFogBrightCache;
@@ -69,23 +70,23 @@ public class EmbyConfig {
     public static volatile double darknessFullMoonBrightCache;
 
     // PERFORMANCE;
-    public static final ForgeConfigSpec.BooleanValue hideJREI;
-    public static final ForgeConfigSpec.BooleanValue fontShadows;
-    public static final ForgeConfigSpec.BooleanValue fastChests;
-    public static final ForgeConfigSpec.BooleanValue fastBeds;
+    public static final BooleanValue hideJREI;
+    public static final BooleanValue fontShadows;
+    public static final BooleanValue fastChests;
+    public static final BooleanValue fastBeds;
     public static volatile boolean hideJREICache;
     public static volatile boolean fontShadowsCache;
     public static volatile boolean fastChestsCache;
     public static volatile boolean fastBedsCache;
 
-    public static final ForgeConfigSpec.BooleanValue tileEntityDistanceCulling;
-    public static final ForgeConfigSpec.IntValue tileEntityCullingDistanceX;
-    public static final ForgeConfigSpec.IntValue tileEntityCullingDistanceY;
-    public static final ForgeConfigSpec.BooleanValue entityDistanceCulling;
-    public static final ForgeConfigSpec.IntValue entityCullingDistanceX;
-    public static final ForgeConfigSpec.IntValue entityCullingDistanceY;
-    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> entityWhitelist; // QUICK CHECK
-    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> tileEntityWhitelist; // QUICK CHECK
+    public static final BooleanValue tileEntityDistanceCulling;
+    public static final IntValue tileEntityCullingDistanceX;
+    public static final IntValue tileEntityCullingDistanceY;
+    public static final BooleanValue entityDistanceCulling;
+    public static final IntValue entityCullingDistanceX;
+    public static final IntValue entityCullingDistanceY;
+    public static final ConfigValue<List<? extends String>> entityWhitelist; // QUICK CHECK
+    public static final ConfigValue<List<? extends String>> tileEntityWhitelist; // QUICK CHECK
     public static volatile boolean tileEntityDistanceCullingCache;
     public static volatile int tileEntityCullingDistanceXCache;
     public static volatile int tileEntityCullingDistanceYCache;
@@ -94,23 +95,23 @@ public class EmbyConfig {
     public static volatile int entityCullingDistanceYCache;
 
     // OTHERS
-    public static final ForgeConfigSpec.EnumValue<AttachMode> borderlessAttachModeF11;
-    public static final ForgeConfigSpec.BooleanValue fastLanguageReload;
+    public static final EnumValue<AttachMode> borderlessAttachModeF11;
+    public static final BooleanValue fastLanguageReload;
     public static boolean fastLanguageReloadCache; // this theoretically wasn't needed,
     // but I am seeing people complaining why fast language reload wasn't cached
     // and takes 0.0001ms extra to update lang by an idiotic check
 
     // DYN LIGHTS
-    public static final ForgeConfigSpec.EnumValue<DynLightsSpeed> dynLightSpeed;
-    public static final ForgeConfigSpec.BooleanValue dynLightsOnEntities;
-    public static final ForgeConfigSpec.BooleanValue dynLightsOnTileEntities;
-    public static final ForgeConfigSpec.BooleanValue dynLightsUpdateOnPositionChange;
+    public static final EnumValue<DynLightsSpeed> dynLightSpeed;
+    public static final BooleanValue dynLightsOnEntities;
+    public static final BooleanValue dynLightsOnTileEntities;
+    public static final BooleanValue dynLightsUpdateOnPositionChange;
     public static volatile boolean dynLightsOnEntitiesCache;
     public static volatile boolean dynLightsOnTileEntitiesCache;
     public static volatile boolean dynLightsUpdateOnPositionChangeCache;
 
     static {
-        var BUILDER = new ForgeConfigSpec.Builder();
+        var BUILDER = new Builder();
 
         // embeddiumplus ->
         BUILDER.push("embeddiumplus");

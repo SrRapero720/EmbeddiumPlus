@@ -1,5 +1,6 @@
 package me.srrapero720.embeddiumplus;
 
+import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.longs.LongLongMutablePair;
 import it.unimi.dsi.fastutil.longs.LongLongPair;
 import net.minecraft.ChatFormatting;
@@ -18,30 +19,13 @@ public class EmbyTools {
         return value[value.length - 1];
     }
 
-    private static final LongLongPair[] BENCHTIMES = new LongLongPair[100];
-    private static int BENCH_POS = 0;
-    public static void benchStart() {
-        BENCHTIMES[BENCH_POS] = new LongLongMutablePair(Util.getNanos(), -1);
-    }
-
-    public static void benchEnd() {
-        BENCHTIMES[BENCH_POS].right(Util.getNanos());
-        LOGGER.debug("Current method takes RIGHT NOW {} nanoseconds", BENCHTIMES[BENCH_POS].rightLong() - BENCHTIMES[BENCH_POS].leftLong());
-
-        if (BENCH_POS == BENCHTIMES.length - 1) {
-            long totalStart = 0;
-            long totalEnd = 0;
-
-            for (int i = 0; i < BENCHTIMES.length; i++) {
-                totalStart += BENCHTIMES[i].firstLong();
-                totalEnd += BENCHTIMES[i].secondLong();
-            }
-
-            LOGGER.info("Current method takes AVG {} nanoseconds", (totalEnd - totalStart) / BENCHTIMES.length);
-
-            BENCH_POS = 0;
-        } else {
-            BENCH_POS++;
+    public static Pair<String, String> resourceLocationPair(String res) {
+        String[] r = res.split(":");
+        try {
+            return Pair.of(r[0], r[1]);
+        } finally {
+            r[0] = null;
+            r[1] = null;
         }
     }
 
@@ -130,5 +114,32 @@ public class EmbyTools {
         }
 
         return false;
+    }
+
+    private static final LongLongPair[] BENCHTIMES = new LongLongPair[100];
+    private static int BENCH_POS = 0;
+    public static void benchStart() {
+        BENCHTIMES[BENCH_POS] = new LongLongMutablePair(Util.getNanos(), -1);
+    }
+
+    public static void benchEnd() {
+        BENCHTIMES[BENCH_POS].right(Util.getNanos());
+        LOGGER.debug("Current method takes RIGHT NOW {} nanoseconds", BENCHTIMES[BENCH_POS].rightLong() - BENCHTIMES[BENCH_POS].leftLong());
+
+        if (BENCH_POS == BENCHTIMES.length - 1) {
+            long totalStart = 0;
+            long totalEnd = 0;
+
+            for (int i = 0; i < BENCHTIMES.length; i++) {
+                totalStart += BENCHTIMES[i].firstLong();
+                totalEnd += BENCHTIMES[i].secondLong();
+            }
+
+            LOGGER.info("Current method takes AVG {} nanoseconds", (totalEnd - totalStart) / BENCHTIMES.length);
+
+            BENCH_POS = 0;
+        } else {
+            BENCH_POS++;
+        }
     }
 }
