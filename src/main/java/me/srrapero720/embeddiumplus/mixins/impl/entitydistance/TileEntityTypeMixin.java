@@ -33,12 +33,12 @@ public abstract class TileEntityTypeMixin implements IWhitelistCheck {
         return embPlus$whitelisted;
     }
 
+    @Shadow @Nullable public static ResourceLocation getKey(BlockEntityType<?> pBlockEntityType) {
+        throw new UnsupportedOperationException("stub!");
+    }
+
     @Unique
     private BlockEntityType<?> embPlus$cast() {
         return (BlockEntityType<?>) ((Object) this);
-    }
-
-    @Shadow @Nullable public static ResourceLocation getKey(BlockEntityType<?> pBlockEntityType) {
-        throw new UnsupportedOperationException("stub!");
     }
 }
