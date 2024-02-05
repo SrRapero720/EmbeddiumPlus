@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LightTexture.class)
-public class MixinLightMapTextureManager {
+public class LightMapTexManagerMixin {
 	@Shadow @Final private DynamicTexture lightTexture;
 
 	@Inject(method = "<init>*", at = @At(value = "RETURN"))

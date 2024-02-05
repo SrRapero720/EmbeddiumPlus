@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.mixins.impl.darkness;
+package me.srrapero720.embeddiumplus.mixins.impl.darkness.accessors;
 
 import net.minecraft.client.renderer.LightTexture;
 import org.spongepowered.asm.mixin.Mixin;

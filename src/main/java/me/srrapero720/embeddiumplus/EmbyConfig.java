@@ -52,12 +52,13 @@ public class EmbyConfig {
     public static final BooleanValue darknessOnEnd;
     public static final DoubleValue darknessEndFogBright;
     public static final BooleanValue darknessByDefault;
+    public static final ConfigValue<List<? extends String>> darknessDimensionWhiteList;
     public static final BooleanValue darknessOnNoSkyLight;
     public static final BooleanValue darknessBlockLightOnly;
     public static final BooleanValue darknessAffectedByMoonPhase;
     public static final DoubleValue darknessNewMoonBright;
     public static final DoubleValue darknessFullMoonBright;
-    public static volatile boolean darknessOnOverworldCache;
+    public static volatile boolean darknessOnOverworldCache = true;
     public static volatile boolean darknessOnNetherCache;
     public static volatile double darknessNetherFogBrightCache;
     public static volatile boolean darknessOnEndCache;
@@ -185,8 +186,12 @@ public class EmbyConfig {
                 .defineInRange("endFogBright", 0.5f, 0d, 1d);
 
         darknessByDefault = BUILDER
-                .comment("Toggle Darkness default mode for modded dimensions", "This option will be replaced with a whitelist in a near future")
+                .comment("Toggle Darkness default mode for modded dimensions")
                 .define("valueByDefault", false);
+
+        darknessDimensionWhiteList = BUILDER
+                .comment("List of all dimensions to use True Darkness", "This option overrides 'valueByDefault' state")
+                .defineListAllowEmpty(Collections.singletonList("dimensionWhitelist"), Collections::emptyList, s -> s.toString().contains(":"));
 
         darknessOnNoSkyLight = BUILDER
                 .comment("Toggle darkness when dimension has no SkyLight")
@@ -250,7 +255,7 @@ public class EmbyConfig {
 
         tileEntityWhitelist = BUILDER
                 .comment("List of all Block Entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:chest\" - Ignores chests only", "Example 2: \"ae2:*\" - ignores all Block entities from Applied Energetics 2")
-                .defineListAllowEmpty(Collections.singletonList("whitelist"), Collections::emptyList, (s) -> s.toString().contains(":"));
+                .defineListAllowEmpty(Collections.singletonList("whitelist"), Collections::emptyList, s -> s.toString().contains(":"));
 
         // embeddiumplus -> performance -> distanceCulling ->
         BUILDER.pop();
