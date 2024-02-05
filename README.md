@@ -2,14 +2,16 @@
 [![Available for](https://cf.way2muchnoise.eu/versions/embeddiumplus.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
 [![Latest Version](https://img.shields.io/curseforge/v/931925?style=for-the-badge&label=curseforge&labelColor=%232d2d2d&color=%23e04e14&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fwatermedia%2Ffiles)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
 [![Discord community](https://dcbadge.vercel.app/api/server/cuYAzzZ)](https://discord.gg/cuYAzzZ)
+[![Static Badge](https://img.shields.io/badge/POWERED_BY-ZUME_(by_nojil)-ff4040?style=for-the-badge&labelColor=%23111111&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fzume)](https://www.curseforge.com/minecraft/mc-mods/zume)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/embeddiumplus?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231bd96a)](https://modrinth.com/mod/embeddiumplus)
+
 
 [![Embeddium++Banner](https://i.imgur.com/oBLXT7n.png)](https://github.com/SrRapero720/EmbeddiumPlus)
 
 The best complement for embeddium, giving it some extras in performance and game quality.<br>
 Provides a bunch of options to speed up your FPS, like fast models, entity distance culling, font shadows toggle, JEI hiding and more
 
-~~It Also includes their own dynamic lights system~~ - *(soon: at the moment has a LambDynLights port)*
+~~It Also includes their own dynamic lights system~~ - *(soon)*
 
 ---
 
@@ -17,8 +19,10 @@ Provides a bunch of options to speed up your FPS, like fast models, entity dista
 
 > **REQUIRES [EMBEDDIUM](https://www.curseforge.com/minecraft/mc-mods/embeddium) AND [TEXTRUE'S EMBEDDIUM OPTIONS](https://www.curseforge.com/minecraft/mc-mods/textrues-embeddium-options)**
 
+> **THIS MOD EMBEDS [ZUME](https://www.curseforge.com/minecraft/mc-mods/zume) mod, EMB++ PROVIDES EXTRA COMPATIBILITY WITH EMBEDDIUM**
+
 This mod is a remplacement of [Magnesium/Rubidium Extras](https://github.com/anthxnymc/MagnesiumExtras), 
-[DynamicLights Reforged](https://github.com/anthxnymc/DynamicLightsReforged)
+~~[DynamicLights Reforged](https://github.com/anthxnymc/DynamicLightsReforged)~~
 and many other mods referenced in the [Gallery](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/screenshots). 
 If you have any of them or similar, you should remove them, may crash, collide or cause lag.
 
@@ -26,8 +30,7 @@ If you have any of them or similar, you should remove them, may crash, collide o
 
 ### [⚡] PERFORMANCE
 
-- **[💡] Dynamic Lights:** Make **Torches** in your hand **Bright** your caves.
-  - ~~Add custom brightness to items and entities with a resource pack~~
+~~- **[💡] Dynamic Lights:**~~ (**Soon™️** will be back)
 - **[🐄] Entity Distance Culling:** Stops rendering and ticking on client side of **Entities** and **Block entities** too far away.
   - You can ignore specific entities in mod config adding them on the whitelist (requires resource name)
   - Example: ``minecraft:bat`` skips bats only, `alexsmobs:*` skips all Alex's Mobs entities.
@@ -44,7 +47,7 @@ If you have any of them or similar, you should remove them, may crash, collide o
     - Using F11 also switch to Borderless FullScreen (can be disabled)
 - **[🌁] Toggle Fog:** Disables overworld fog.
 - **[🔳] Toggle Text Shadows:** Menus have a flat-style and might increase FPS using [BetterF3](https://www.curseforge.com/minecraft/mc-mods/betterf3))
-- **~~[🔍] Zoom Key~~:** (**Soon™️** will be back)
+- **[🔍] Zoom Key:** Powered by [Zume](https://www.curseforge.com/minecraft/mc-mods/zume). Let you see your friends and enemies from far away
 - **~~[👁️] Chunk Fade In~~:** (**Soon™️** will be back)
 
 
