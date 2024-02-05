@@ -22,8 +22,6 @@ public class TileDispatcherMixin {
     public <E extends BlockEntity> void render(E tile, float val, PoseStack matrix, MultiBufferSource bufferSource, CallbackInfo ci) {
         if (!EmbyConfig.tileEntityDistanceCullingCache) return;
 
-        if (tile.getClass().getName().startsWith("me.srrapero720.waterframes")) return; // WATERFrAMES HAVE THEIR OWN DISTANCE CONTROL
-
         if (!((IWhitelistCheck) tile.getType()).embPlus$isAllowed() && !EmbyTools.isEntityWithinDistance(
                 tile.getBlockPos(),
                 camera.getPosition(),

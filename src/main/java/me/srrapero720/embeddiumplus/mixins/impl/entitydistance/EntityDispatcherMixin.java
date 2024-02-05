@@ -19,13 +19,6 @@ public class EntityDispatcherMixin {
     public <E extends Entity> void inject$shouldRender(E entity, Frustum clippingHelper, double cameraX, double cameraY, double cameraZ, CallbackInfoReturnable<Boolean> cir) {
         if (!EmbyConfig.entityDistanceCullingCache) return;
 
-        if (entity instanceof EnderDragon) return;
-        if (entity instanceof Ghast) return;
-
-        String name = entity.getClass().getName().toLowerCase();
-        if (name.startsWith("com.simibubi.create.content.contraptions")) return;
-        if (name.startsWith("com.github.alexthe666.iceandfire.entity") && name.contains("dragon")) return;
-
         if (!((IWhitelistCheck) entity.getType()).embPlus$isAllowed() && !EmbyTools.isEntityWithinDistance(
                 entity,
                 cameraX,
