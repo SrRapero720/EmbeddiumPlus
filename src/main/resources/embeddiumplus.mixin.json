@@ -27,9 +27,9 @@
     "fastmodels.TileRenderMixin",
     "fontshadow.FontMixin",
     "fontshadow.FontMixin$StringRenderOutputMixin",
-    "frames.GpuUsageMixin",
+    "fps.GpuUsageMixin",
     "jei.JeiOverlayMixin",
-    "language.LanguageSelectMixin",
-    "togglefog.FogRendererMixin"
+    "language.LanguageMixin",
+    "togglefog.FogMixin"
   ]
 }

@@ -1,9 +1,9 @@
-package me.srrapero720.embeddiumplus.mixins.impl.frames;
+package me.srrapero720.embeddiumplus.mixins.impl.fps;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.srrapero720.embeddiumplus.EmbyConfig;
-import me.srrapero720.embeddiumplus.foundation.frames.accessors.IUsageGPU;
+import me.srrapero720.embeddiumplus.foundation.fps.accessors.IUsageGPU;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.util.profiling.metrics.profiling.MetricsRecorder;
@@ -18,8 +18,8 @@ import javax.annotation.Nullable;
 
 @Mixin(Minecraft.class)
 public abstract class GpuUsageMixin implements IUsageGPU {
-    @Shadow private double gpuUtilization;
     @Shadow @Nullable public MultiPlayerGameMode gameMode;
+    @Shadow private double gpuUtilization;
     @Unique private double embPlus$gpuUsage = 0;
 
     @WrapOperation(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/metrics/profiling/MetricsRecorder;isRecording()Z"))

@@ -1,4 +1,4 @@
-package me.srrapero720.embeddiumplus.foundation.frames;
+package me.srrapero720.embeddiumplus.foundation.fps;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

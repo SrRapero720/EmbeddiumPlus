@@ -153,7 +153,7 @@ public class EmbyConfig {
                 .define("fog", true);
         cloudsHeight = BUILDER
                 .comment("Raise clouds", "Modify clouds height perfect for a adaptative world experience")
-                .defineInRange("cloudsHeight", 128, 0, 320);
+                .defineInRange("cloudsHeight", 192, 0, 512);
 
         chunkFadeSpeed = BUILDER
                 .comment("Chunks fade in speed", "This option doesn't affect performance, just changes speed")
