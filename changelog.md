@@ -1,3 +1,15 @@
+# RELEASE 1.2.4
+- [🛠️] Removed ported code of Lamb Dynamic Lights
+  - Will be back a new implementation for 1.3.0, more powerful and efficient.
+- [🔥] Featured [ZUME]() embedded
+  - 🔥 Zoom key is back! powered by [ZUME]()
+  - 🔥 Press [C] to zoom
+  - 🛠️ Can be configured zoom behavior on video settings
+- [🐛] Fixed entity whitelist isn't working
+- [🛠️] Moved default ignored entities and tile entities to config defaults
+- [🛠️] Fixed true darkness is inverted
+- [⚡] Optimized true darkness code
+
 # HOTFIX 1.2.3
 Minor things
 - [🐛] Fixed F11 borderless doesn't work
