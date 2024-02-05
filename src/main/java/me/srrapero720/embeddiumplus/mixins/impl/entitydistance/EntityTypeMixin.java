@@ -1,7 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.entitydistance;
 
 import me.srrapero720.embeddiumplus.EmbyConfig;
-import me.srrapero720.embeddiumplus.foundation.entitydistance.EntityWhitelist;
+import me.srrapero720.embeddiumplus.EmbyTools;
 import me.srrapero720.embeddiumplus.foundation.entitydistance.IWhitelistCheck;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +15,7 @@ import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
 
 @Mixin(EntityType.class)
 public abstract class EntityTypeMixin implements IWhitelistCheck {
-    @Unique private static final Marker e$IT = MarkerManager.getMarker("EntityCullingCheck");
+    @Unique private static final Marker e$IT = MarkerManager.getMarker("EntityType");
     @Unique private boolean embPlus$checked = false;
     @Unique private boolean embPlus$whitelisted = false;
 
@@ -26,9 +26,11 @@ public abstract class EntityTypeMixin implements IWhitelistCheck {
     public boolean embPlus$isAllowed() {
         if (embPlus$checked) return embPlus$whitelisted;
 
-        this.embPlus$whitelisted = EntityWhitelist.isAllowed(getDefaultLootTable(), EmbyConfig.entityWhitelist);
+        final var resource = getDefaultLootTable();
+        this.embPlus$whitelisted = EmbyTools.isWhitelisted(resource, EmbyConfig.entityWhitelist);
         this.embPlus$checked = true;
 
+        LOGGER.debug(e$IT,"Whitelist checked for {}", resource.toString());
         return embPlus$whitelisted;
     }
 }
