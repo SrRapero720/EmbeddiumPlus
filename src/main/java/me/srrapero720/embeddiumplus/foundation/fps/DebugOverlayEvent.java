@@ -1,9 +1,9 @@
-package me.srrapero720.embeddiumplus.foundation.frames;
+package me.srrapero720.embeddiumplus.foundation.fps;
 
 import me.srrapero720.embeddiumplus.EmbeddiumPlus;
 import me.srrapero720.embeddiumplus.EmbyConfig;
 import me.srrapero720.embeddiumplus.EmbyTools;
-import me.srrapero720.embeddiumplus.foundation.frames.accessors.IUsageGPU;
+import me.srrapero720.embeddiumplus.foundation.fps.accessors.IUsageGPU;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

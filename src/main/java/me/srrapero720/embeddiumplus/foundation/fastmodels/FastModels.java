@@ -8,9 +8,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE, modid = EmbeddiumPlus.ID)
-public class ChestHandler {
+public class FastModels {
 
-    public static boolean canEnable() {
+    public static boolean canUseOnChests() {
         try {
             return FlwConfig.get().getBackendType() == BackendType.OFF;
         } catch (Error e) { // NO FLYWHEEL
