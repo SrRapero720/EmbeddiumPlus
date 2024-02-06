@@ -27,6 +27,7 @@ public class EmbOptionsMixin {
     private void inject$dynLightsPage(Screen prevScreen, CallbackInfo ci) {
         pages.add(new TrueDarknessPage());
         pages.add(new EntityCullingPage());
+//        pages.add(new ZoomPage());
         pages.add(new OthersPage());
     }
 }

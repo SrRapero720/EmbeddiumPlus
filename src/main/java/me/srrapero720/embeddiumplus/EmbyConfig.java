@@ -3,7 +3,7 @@ package me.srrapero720.embeddiumplus;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.mojang.blaze3d.platform.Window;
-import me.srrapero720.embeddiumplus.mixins.impl.borderless.MainWindowAccessor;
+import me.srrapero720.embeddiumplus.mixins.impl.borderless.accessors.MainWindowAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraftforge.api.distmarker.Dist;
