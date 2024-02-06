@@ -89,4 +89,4 @@ and quality features like Shadow Path Blocks
 Enviddium (Nvidium port) will be a separated mod; I don't think it is a good idea to add it on embeddium++.
 You can speed porting donating me, so I can afford a second-hand GTX 1660), you cannot, and anyway, I'll do it :)
 
-Sodium++ will exist... *soon™️*
+Sodium++ will NOT exist...
