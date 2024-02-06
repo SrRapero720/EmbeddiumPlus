@@ -1,8 +1,8 @@
 # RELEASE 1.2.4
 - [🛠️] Removed ported code of Lamb Dynamic Lights
   - Will be back a new implementation for 1.3.0, more powerful and efficient.
-- [🔥] Featured [ZUME]() embedded
-  - 🔥 Zoom key is back! powered by [ZUME]()
+- [🔥] Featured [ZUME](https://www.curseforge.com/minecraft/mc-mods/zume/files/5082090) embedded
+  - 🔥 Zoom key is back! powered by [ZUME](https://www.curseforge.com/minecraft/mc-mods/zume/files/5082090)
   - 🔥 Press [C] to zoom
   - 🛠️ Can be configured zoom behavior on video settings
 - [🐛] Fixed entity whitelist isn't working
