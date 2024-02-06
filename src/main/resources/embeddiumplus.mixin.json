@@ -7,15 +7,15 @@
   "client": [
     "borderless.BorderlessWindowMixin",
     "borderless.KeyboardF11Mixin",
-    "borderless.MainWindowAccessor",
+    "borderless.accessors.MainWindowAccessor",
     "cloudheight.CloudHeightMixin",
     "darkness.DimensionEffectsMixin",
     "darkness.DimensionEffectsMixin$EndMixin",
     "darkness.DimensionEffectsMixin$NetherMixin",
-    "darkness.accessors.LightTextureAccessor",
     "darkness.GameRendererMixin",
     "darkness.LightMapTexManagerMixin",
     "darkness.NativeImageTextureMixin",
+    "darkness.accessors.LightTextureAccessor",
     "embeddium.EmbOptionsMixin",
     "embeddium.EmbPagesMixin",
     "entitydistance.EntityDispatcherMixin",
@@ -30,6 +30,8 @@
     "fps.GpuUsageMixin",
     "jei.JeiOverlayMixin",
     "language.LanguageMixin",
-    "togglefog.FogMixin"
+    "togglefog.FogMixin",
+    "zume.ZumeKeyBindsForge",
+    "zume.ZumeKeyBindsNeoForge"
   ]
 }

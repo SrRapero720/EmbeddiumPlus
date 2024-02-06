@@ -15,6 +15,9 @@ import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import static me.srrapero720.embeddiumplus.EmbeddiumPlus.LOGGER;
@@ -33,6 +36,31 @@ public class EmbyTools {
         } finally {
             r[0] = null;
             r[1] = null;
+        }
+    }
+
+    public static void setValueInField(Class<?> clazz, String fieldName, Object from, Object value) {
+        try {
+            Field field = clazz.getField(fieldName);
+            field.setAccessible(true);
+            field.set(from, value);
+        } catch (Exception e){
+            LOGGER.error("Cannot set value of '{}' from {}", fieldName, clazz.getName(), e);
+        }
+    }
+
+    public static void invokeMethod(Class<?> clazz, String methodName, Object from, Object... values) {
+        try {
+            Class<?>[] types = new Class[values.length];
+            for (int i = 0; i < types.length; i++) {
+                types[i] = values[i].getClass();
+            }
+
+            Method field = clazz.getMethod(methodName, types);
+            field.setAccessible(true);
+            field.invoke(from, values);
+        } catch (Exception e){
+            LOGGER.error("Cannot invoke method '{}' from {}", methodName, clazz.getName(), e);
         }
     }
 
