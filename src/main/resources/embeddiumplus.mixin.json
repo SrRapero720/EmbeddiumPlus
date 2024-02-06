@@ -31,7 +31,6 @@
     "jei.JeiOverlayMixin",
     "language.LanguageMixin",
     "togglefog.FogMixin",
-    "zume.ZumeKeyBindsForge",
-    "zume.ZumeKeyBindsNeoForge"
+    "zume.ZumeKeyBindsForge"
   ]
 }
