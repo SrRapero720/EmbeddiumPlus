@@ -50,18 +50,6 @@ repositories {
             includeGroup 'curse.maven'
         }
     }
-    exclusiveContent {
-        forRepository {
-            maven {
-                name = "Modrinth"
-                url = "https://api.modrinth.com/maven"
-            }
-        }
-        forRepositories(fg.repository) // Only add this if you're using ForgeGradle, otherwise remove this line
-        filter {
-            includeGroup "maven.modrinth"
-        }
-    }
 }
 
 dependencies {
@@ -75,8 +63,8 @@ dependencies {
     }
 
     // ZUME (sound like a juice brand)
-    implementation(jarJar(fg.deobf("maven.modrinth:zume:0.12.1"))) {
-        jarJar.ranged(it, "[0.12,)")
+    implementation(jarJar(fg.deobf("curse.maven:zume-927564:${zumeversion}"))) {
+        jarJar.ranged(it, "[0.13.2,)")
     }
 
     // DEPENDENCIES
