@@ -133,7 +133,7 @@
   "embeddium.plus.options.zoom.max.title": "Maximum FOV",
   "embeddium.plus.options.zoom.max.desc": "Maximum zoom FOV.",
   "embeddium.plus.options.zoom.min.title": "Minimum FOV",
-  "embeddium.plus.options.zoom.min.desc": "Maximum zoom FOV.",
+  "embeddium.plus.options.zoom.min.desc": "Minimum zoom FOV.",
 
   "embeddium.plus.options.others.page": "Others",
   "embeddium.plus.options.others.borderless.attachmode.title": "Borderless Fullscreen on F11",
