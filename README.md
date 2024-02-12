@@ -5,6 +5,7 @@
 [![Static Badge](https://img.shields.io/badge/POWERED_BY-ZUME_(by_nolij)-ff4040?style=for-the-badge&labelColor=%23111111&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fzume)](https://www.curseforge.com/minecraft/mc-mods/zume)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/embeddiumplus?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231bd96a)](https://modrinth.com/mod/embeddiumplus)
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B8UCUF5)
 
 [![Embeddium++Banner](https://i.imgur.com/oBLXT7n.png)](https://github.com/SrRapero720/EmbeddiumPlus)
 
