@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI;
 import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
+import me.srrapero720.embeddiumplus.EmbyTools;
 import me.srrapero720.embeddiumplus.foundation.embeddium.pages.*;
 import net.minecraft.client.gui.screens.Screen;
 import org.spongepowered.asm.mixin.*;
@@ -27,7 +28,9 @@ public class EmbOptionsMixin {
     private void inject$dynLightsPage(Screen prevScreen, CallbackInfo ci) {
         pages.add(new TrueDarknessPage());
         pages.add(new EntityCullingPage());
-//        pages.add(new ZoomPage());
+        if (EmbyTools.isModInstalled("zume")) {
+            pages.add(new ZoomPage());
+        }
         pages.add(new OthersPage());
     }
 }

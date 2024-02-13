@@ -37,6 +37,13 @@ displayTest="IGNORE_SERVER_VERSION"
     side="CLIENT"
 
 [[dependencies.${modid}]]
+    modId="zume"
+    mandatory=false
+    versionRange="${zumerange}"
+    ordering="AFTER"
+    side="CLIENT"
+
+[[dependencies.${modid}]]
     modId="textrues_embeddium_options"
     mandatory=true
     versionRange="*"

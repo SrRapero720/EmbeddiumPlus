@@ -13,13 +13,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = IngredientListOverlay.class, remap = false)
-@Pseudo
 public class JeiOverlayMixin {
     @Shadow @Final private GuiTextFieldFilter searchField;
     @Shadow @Final private GuiIconToggleButton configButton;
     @Shadow @Final private ScreenPropertiesCache screenPropertiesCache;
 
-    @Dynamic
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lmezz/jei/gui/overlay/IngredientGridWithNavigation;draw(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;IIF)V"), cancellable = true)
     public void inject$renderOverlay(Minecraft minecraft, GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         if (!EmbyConfig.hideJREICache) return;

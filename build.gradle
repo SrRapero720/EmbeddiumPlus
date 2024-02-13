@@ -63,8 +63,7 @@ dependencies {
     }
 
     // ZUME (sound like a juice brand)
-    implementation(jarJar(fg.deobf("curse.maven:zume-927564:${zumeversion}"))) {
-        jarJar.ranged(it, "[0.13.2,)")
+    compileOnly fg.deobf("curse.maven:zume-927564:${zumeversion}") {
     }
 
     // DEPENDENCIES
