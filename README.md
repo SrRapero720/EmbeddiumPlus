@@ -6,21 +6,19 @@
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/embeddiumplus?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231bd96a)](https://modrinth.com/mod/embeddiumplus)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B8UCUF5)
+# ⚠️ IMPORTANT | SOURCE DISCONTINUED
 
-[![Embeddium++Banner](https://i.imgur.com/oBLXT7n.png)](https://github.com/SrRapero720/EmbeddiumPlus)
+> EMBEDDIUM++ SOURCE CODE HAS BEEN DISCONTINUED.
+> FOLLOW THE DEVELOPMENT OF THE NEW SOURCE CODE [HERE](https://github.com/SrRapero720/EmbeddiumAdditions)
 
-The best complement for embeddium, giving it some extras in performance and game quality.<br>
-Provides a bunch of options to speed up your FPS, like fast models, entity distance culling, font shadows toggle, JEI hiding and more
+> THIS MOD WILL STILL HAVE ALL THE SAME FEATURES, BUT **REWRITED FROM SCRAP**.
+> 
+> DISCONECTING IT AT ALL OF MAGNESIUM EXTRAS (WAS ALREADY SINCE 1.2.0 BUT THIS TIME REINFOCING DISCONNECTION),
+> ADDING SOME NEW RESOLUTION FEATURES, COMPAT WITH OTHER MODS, PERFORMANCE AND QUALITY SETTINGS AND MUCH MORE
+> 
+> ALSO (SPOILER) CREATE ITS OWN VIDEO SETTINGS SCREEN (LIKE RESSEE SODIUN VIDEO SETTINGS BUT WITH A DIFFERENT DESIGN)
 
-~~It Also includes their own dynamic lights system~~ - *(soon)*
-
----
-
-# ⚠️ IMPORTANT
-
-> **REQUIRES [EMBEDDIUM](https://www.curseforge.com/minecraft/mc-mods/embeddium) AND [TEXTRUE'S EMBEDDIUM OPTIONS](https://www.curseforge.com/minecraft/mc-mods/textrues-embeddium-options)**
-
-> **THIS MOD EMBEDS [ZUME](https://www.curseforge.com/minecraft/mc-mods/zume) mod, EMB++ PROVIDES EXTRA COMPATIBILITY WITH EMBEDDIUM**
+> THIS TIME WILL BE PORTED TO SODIUM, BUT ON PURPOSE (you need to see what I will do to believe it)
 
 This mod is a remplacement of [Magnesium/Rubidium Extras](https://github.com/anthxnymc/MagnesiumExtras), 
 ~~[DynamicLights Reforged](https://github.com/anthxnymc/DynamicLightsReforged)~~
