@@ -3,27 +3,30 @@
 [![Latest Version](https://img.shields.io/curseforge/v/931925?style=for-the-badge&label=curseforge&labelColor=%232d2d2d&color=%23e04e14&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fwatermedia%2Ffiles)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
 [![Discord community](https://dcbadge.vercel.app/api/server/cuYAzzZ)](https://discord.gg/cuYAzzZ)
 [![Static Badge](https://img.shields.io/badge/POWERED_BY-ZUME_(by_nolij)-ff4040?style=for-the-badge&labelColor=%23111111&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fzume)](https://www.curseforge.com/minecraft/mc-mods/zume)
-[![Modrinth Downloads](https://img.shields.io/modrinth/dt/embeddiumplus?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231bd96a)](https://modrinth.com/mod/embeddiumplus)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B8UCUF5)
-# ⚠️ IMPORTANT | SOURCE DISCONTINUED
+# ⚠️ IMPORTANT | SOURCE DISCONTINUED ⚠️
 
-> EMBEDDIUM++ SOURCE CODE HAS BEEN DISCONTINUED.
-> FOLLOW THE DEVELOPMENT OF THE NEW SOURCE CODE [HERE](https://github.com/SrRapero720/EmbeddiumAdditions)
+> THE SOURCE CODE OF EMBEDDIUM++ HAS BEEN DISCONTINUED.
+> FOLLOW THE DEVELOPMENT [HERE](https://github.com/SrRapero720/EmbeddiumAdditions)
 
-> THIS MOD WILL STILL HAVE ALL THE SAME FEATURES, BUT **REWRITED FROM SCRAP**.
+This mod is going to be **REWRITED FROM SCRATCH**. The purpose is the complete disconnection 
+of any kind of relation to "upstream" (disconnection was already done in 1.2.0 but somehow people considers it "a fork")
+
+Of course, the new version will be renamed to Embeddium++Additions and have more brand-new™ features.
+adding more compat with other mods, more performance features, quality options, enhanced own made video settings screen and much more.
+
+This new version has the mission of really give to Embeddium/Sodium additions who nobody asked but everybody wanted.
+
+**AH, YES, ALSO WILL HAVE A FABRIC PORT FOR EMBEDDIUM FABRIC**
+
+> ### ⚠️ WARNING ⚠️
 > 
-> DISCONECTING IT AT ALL OF MAGNESIUM EXTRAS (WAS ALREADY SINCE 1.2.0 BUT THIS TIME REINFOCING DISCONNECTION),
-> ADDING SOME NEW RESOLUTION FEATURES, COMPAT WITH OTHER MODS, PERFORMANCE AND QUALITY SETTINGS AND MUCH MORE
+> This mod is a remplacement of [Magnesium/Rubidium Extras](https://github.com/anthxnymc/MagnesiumExtras)
+> and many other mods referenced in the [Gallery](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/screenshots). 
+> If you have any of them or similar, you should remove them, may crash, collide or cause lag.
 > 
-> ALSO (SPOILER) CREATE ITS OWN VIDEO SETTINGS SCREEN (LIKE RESSEE SODIUN VIDEO SETTINGS BUT WITH A DIFFERENT DESIGN)
-
-> THIS TIME WILL BE PORTED TO SODIUM, BUT ON PURPOSE (you need to see what I will do to believe it)
-
-This mod is a remplacement of [Magnesium/Rubidium Extras](https://github.com/anthxnymc/MagnesiumExtras), 
-~~[DynamicLights Reforged](https://github.com/anthxnymc/DynamicLightsReforged)~~
-and many other mods referenced in the [Gallery](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/screenshots). 
-If you have any of them or similar, you should remove them, may crash, collide or cause lag.
+> THIS MOD IS NOT COMPATIBLE AND NEVER WILL BE WITH XENON
 
 # 🔧 FEATURES
 
