@@ -163,7 +163,7 @@ public class EmbPlusOptions {
                             EmbyConfig.hideJREI.set(value);
                             EmbyConfig.hideJREICache = value;
                         },
-                        (options) -> FastModels.canUseOnChests() && EmbyConfig.hideJREICache)
+                        (options) -> EmbyConfig.hideJREICache)
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(EmbyTools.isModInstalled("jei"))
                 .build();

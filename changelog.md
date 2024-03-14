@@ -4,6 +4,7 @@
 - [🔥] Added Zoom options on Video settings
   - 🔥 Now you can configure all options of Zume easier and faster.
 - [🛠️] Added crash warning for Xenon (avoid any weird report)
+- [🐛] Fixed hide JEI option can't be used if Flywheel is enabled
 
 # RELEASE 1.2.4
 - [🛠️] Removed ported code of Lamb Dynamic Lights
