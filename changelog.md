@@ -1,6 +1,8 @@
 # RELEASE 1.2.5
 - [🛠️] Removed embedded version of Zume
   - 🛠️ Now is an optional dependency (can be removed)
+- [🔥] Added Zoom options on Video settings
+  - 🔥 Now you can configure all options of Zume easier and faster.
 - [🛠️] Added crash warning for Xenon (avoid any weird report)
 
 # RELEASE 1.2.4
