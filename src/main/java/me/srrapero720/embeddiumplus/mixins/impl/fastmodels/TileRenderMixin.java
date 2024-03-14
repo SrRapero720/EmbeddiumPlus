@@ -1,6 +1,7 @@
 package me.srrapero720.embeddiumplus.mixins.impl.fastmodels;
 
 import me.srrapero720.embeddiumplus.EmbyConfig;
+import me.srrapero720.embeddiumplus.EmbyTools;
 import me.srrapero720.embeddiumplus.foundation.fastmodels.FastModels;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -15,15 +16,16 @@ public class TileRenderMixin {
     @Inject(method = "getRenderer", at = @At("HEAD"), cancellable = true)
     private <E extends BlockEntity> void inject$disableRenderer(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
         // FAST CHESTS (needs FLYWHEEL HANDLING)
-        if (FastModels.canUseOnChests() && EmbyConfig.fastChestsCache) {
-            if ((blockEntity instanceof ChestBlockEntity) || (blockEntity instanceof EnderChestBlockEntity)) {
+        Class<?> beClass = blockEntity.getClass();
+        if (EmbyConfig.fastChestsCache && FastModels.canUseOnChests()) {
+            if (beClass == ChestBlockEntity.class || beClass == EnderChestBlockEntity.class) {
                 cir.setReturnValue(null);
             }
         }
 
         // FAST BEDS (OR BETTER BEDS)
         if (EmbyConfig.fastBedsCache) {
-            if (blockEntity instanceof BedBlockEntity) {
+            if (beClass == BedBlockEntity.class) {
                 cir.setReturnValue(null);
             }
         }
