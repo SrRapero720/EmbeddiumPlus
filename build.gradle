@@ -100,11 +100,10 @@ jar {
                 "MixinConfigs": "${modid}.${mixin_file_suffix}"
         ])
     }
+    finalizedBy('reobfJar')
 }
 
 jarJar.enable()
-
-tasks.jarJar.finalizedBy('reobfJarJar')
 tasks.jarJar.archiveClassifier = ''
 
 // Process target resources with mod info
@@ -114,8 +113,6 @@ processResources {
         expand(rootProject.properties)
     }
 }
-
-jar.finalizedBy('reobfJar')
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = 'UTF-8'
 }
