@@ -63,7 +63,7 @@ dependencies {
     }
 
     // ZUME (sound like a juice brand)
-    compileOnly fg.deobf("curse.maven:zume-927564:${zumeversion}") {
+    implementation fg.deobf("curse.maven:zume-927564:${zumeversion}") {
     }
 
     // DEPENDENCIES
