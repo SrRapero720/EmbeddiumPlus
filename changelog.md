@@ -1,3 +1,8 @@
+# RELEASE 1.2.5
+- [🛠️] Removed embedded version of Zume
+  - 🛠️ Now is an optional dependency (can be removed)
+- [🛠️] Added crash warning for Xenon (avoid any weird report)
+
 # RELEASE 1.2.4
 - [🛠️] Removed ported code of Lamb Dynamic Lights
   - Will be back a new implementation for 1.3.0, more powerful and efficient.
