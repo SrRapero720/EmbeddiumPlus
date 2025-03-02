@@ -1,10 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.srrapero720.embeddiumplus.mixins.impl",
-  "plugin": "me.srrapero720.embeddiumplus.mixins.MixinPlugin",
+  "package": "me.srrapero720.chloride.mixins.impl",
+  "plugin": "me.srrapero720.chloride.mixins.MixinPlugin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "embeddiumplus.mixin-refmap.json",
+  "refmap": "chloride.mixin-refmap.json",
   "client": [
     "borderless.BorderlessWindowMixin",
     "borderless.KeyboardF11Mixin",
