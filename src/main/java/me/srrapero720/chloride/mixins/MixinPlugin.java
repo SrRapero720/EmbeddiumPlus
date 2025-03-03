@@ -1,6 +1,7 @@
 package me.srrapero720.chloride.mixins;
 
-import me.srrapero720.chloride.EmbyTools;
+import me.srrapero720.chloride.Chloride;
+import me.srrapero720.chloride.Tools;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -10,17 +11,18 @@ import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
     @Override
-    public void onLoad(String s) {}
+    public void onLoad(String s) {
+        Chloride.earlyLoad();
+    }
 
     @Override
     public String getRefMapperConfig() { return null; }
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (targetClassName.contains("zume.Zume") && !EmbyTools.isModInstalled("zume")) return false;
-        if (targetClassName.contains("jei_rei_emi.Jei") && !EmbyTools.isModInstalled("jei")) return false;
-        if (targetClassName.contains("jei_rei_emi.Rei") && !EmbyTools.isModInstalled("roughlyenoughitems")) return false;
-        if (targetClassName.contains("jei_rei_emi.Emi") && !EmbyTools.isModInstalled("emi")) return false;
+        if (targetClassName.contains("jei_rei_emi.Jei") && !Tools.isModInstalled("jei")) return false;
+        if (targetClassName.contains("jei_rei_emi.Rei") && !Tools.isModInstalled("roughlyenoughitems")) return false;
+        if (targetClassName.contains("jei_rei_emi.Emi") && !Tools.isModInstalled("emi")) return false;
 
         // go ahead
         return true;

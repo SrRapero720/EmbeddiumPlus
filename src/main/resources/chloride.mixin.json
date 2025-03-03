@@ -33,7 +33,6 @@
     "language.LanguageMixin",
     "leaves_culling.LeavesBlockMixin",
     "skyblueband.FogRendererMixin",
-    "togglefog.FogRendererMixin",
-    "zume.KeyMappingMixin"
+    "togglefog.FogRendererMixin"
   ]
 }

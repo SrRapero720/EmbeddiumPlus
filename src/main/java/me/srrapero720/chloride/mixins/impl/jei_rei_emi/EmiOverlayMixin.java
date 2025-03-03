@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.emi.emi.runtime.EmiDrawContext;
 import dev.emi.emi.screen.EmiScreenManager;
 import dev.emi.emi.screen.widget.EmiSearchWidget;
-import me.srrapero720.chloride.EmbyConfig;
+import me.srrapero720.chloride.ChlorideConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,7 +22,7 @@ public class EmiOverlayMixin {
 
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Ldev/emi/emi/screen/EmiScreenManager$SidebarPanel;render(Ldev/emi/emi/runtime/EmiDrawContext;IIF)V"))
     private static void inject$renderStackOverlay(EmiScreenManager.SidebarPanel instance, EmiDrawContext totalPages, int i, int context, float mouseX, Operation<Void> original) {
-        if (!EmbyConfig.hideJREMICache) {
+        if (!ChlorideConfig.hideJREMI) {
             original.call(instance, totalPages, i, context, mouseX);
         } else {
             if (checkedPos == 1 && search.getValue().isEmpty()) {

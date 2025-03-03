@@ -1,6 +1,6 @@
 package me.srrapero720.chloride.mixins.impl.fastmodels;
 
-import me.srrapero720.chloride.EmbyConfig;
+import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -17,7 +17,7 @@ public abstract class BedMixin extends BlockBehaviour {
 
     @Inject(method = "getRenderShape", at = @At("RETURN"), cancellable = true)
     private void inject$replaceRenderShape(BlockState state, CallbackInfoReturnable<RenderShape> cir) {
-        if (EmbyConfig.fastBedsCache) {
+        if (ChlorideConfig.fastBeds) {
             cir.setReturnValue(RenderShape.MODEL);
         }
     }

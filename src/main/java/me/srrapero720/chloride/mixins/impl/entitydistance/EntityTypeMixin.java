@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.mixins.impl.entitydistance;
 
-import me.srrapero720.chloride.EmbyConfig;
-import me.srrapero720.chloride.EmbyTools;
+import me.srrapero720.chloride.ChlorideConfig;
+import me.srrapero720.chloride.Tools;
 import me.srrapero720.chloride.foundation.entitydistance.IWhitelistCheck;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-import static me.srrapero720.chloride.EmbeddiumPlus.LOGGER;
+import static me.srrapero720.chloride.Chloride.LOGGER;
 
 @Mixin(EntityType.class)
 @SuppressWarnings("deprecation")
@@ -35,7 +35,7 @@ public abstract class EntityTypeMixin implements IWhitelistCheck {
             return false;
         }
 
-        this.embPlus$whitelisted = EmbyTools.isWhitelisted(resource, this.getCategory() == MobCategory.MONSTER ? EmbyConfig.monsterWhitelist : EmbyConfig.entityWhitelist);
+        this.embPlus$whitelisted = Tools.isWhitelisted(resource, this.getCategory() == MobCategory.MONSTER ? ChlorideConfig.monsterWhitelist : ChlorideConfig.entityWhitelist);
         this.embPlus$checked = true;
 
         LOGGER.debug(e$IT,"Whitelist checked for {}", resource.toString());

@@ -1,8 +1,8 @@
 package me.srrapero720.chloride.mixins.impl.entitydistance;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.srrapero720.chloride.EmbyConfig;
-import me.srrapero720.chloride.EmbyTools;
+import me.srrapero720.chloride.ChlorideConfig;
+import me.srrapero720.chloride.Tools;
 import me.srrapero720.chloride.foundation.entitydistance.IWhitelistCheck;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,12 +20,12 @@ public class TileDispatcherMixin {
 
     @Inject(at = @At("HEAD"), method = "render", cancellable = true)
     public <E extends BlockEntity> void render(E tile, float val, PoseStack matrix, MultiBufferSource bufferSource, CallbackInfo ci) {
-        if (!EmbyConfig.tileEntityDistanceCullingCache) return;
+        if (!ChlorideConfig.tileEntityDistanceCulling) return;
 
         boolean isWhitelisted = ((IWhitelistCheck) tile.getType()).embPlus$isWhitelisted();
-        if (!isWhitelisted && !EmbyTools.isEntityInRange(tile.getBlockPos(), camera.getPosition(),
-                EmbyConfig.tileEntityCullingDistanceYCache,
-                EmbyConfig.tileEntityCullingDistanceXCache)
+        if (!isWhitelisted && !Tools.isEntityInRange(tile.getBlockPos(), camera.getPosition(),
+                ChlorideConfig.tileEntityCullingDistanceY,
+                ChlorideConfig.tileEntityCullingDistanceX)
         ) {
             ci.cancel();
         }

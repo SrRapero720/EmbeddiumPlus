@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -31,7 +32,7 @@ public class LeavesBlockMixin extends Block implements ICulleableLeaves {
 
     @Override
     public ResourceLocation embplus$getResourceLocation() {
-        return embPlus$resLoc != null ? embPlus$resLoc : (embPlus$resLoc = );
+        return embPlus$resLoc != null ? embPlus$resLoc : (embPlus$resLoc = ForgeRegistries.BLOCKS.getKey(this));
     }
 
     @Override

@@ -5,10 +5,10 @@ import me.jellysquid.mods.sodium.client.gui.options.*;
 import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
-import me.srrapero720.chloride.EmbeddiumPlus;
-import me.srrapero720.chloride.EmbyConfig;
-import me.srrapero720.chloride.EmbyConfig.FullScreenMode;
-import me.srrapero720.chloride.EmbyTools;
+import me.srrapero720.chloride.Chloride;
+import me.srrapero720.chloride.ChlorideConfig;
+import me.srrapero720.chloride.ChlorideConfig.FullScreenMode;
+import me.srrapero720.chloride.Tools;
 import me.srrapero720.chloride.foundation.embeddium.pages.*;
 import me.srrapero720.chloride.foundation.embeddium.storage.EmbPlusOptionsStorage;
 import net.minecraft.network.chat.Component;
@@ -21,7 +21,7 @@ import org.embeddedt.embeddium.api.OptionGroupConstructionEvent;
 import org.embeddedt.embeddium.api.OptionPageConstructionEvent;
 import org.embeddedt.embeddium.client.gui.options.StandardOptions;
 
-@Mod.EventBusSubscriber(modid = EmbeddiumPlus.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EmbPlusOptions {
     public static final OptionStorage<?> STORAGE = new EmbPlusOptionsStorage();
 
@@ -33,27 +33,17 @@ public class EmbPlusOptions {
         pages.add(new QualityPlusPage());
         pages.add(new TrueDarknessPage());
         pages.add(new EntityCullingPage());
-        if (EmbyTools.isModInstalled("zume")) {
-            for (int i = 0; i < pages.size(); i++) {
-                var page = pages.get(i);
-                if (page.getId() != null && page.getId().getModId().equals("zume")) {
-                    break;
-                }
-                if (i == pages.size() - 1) {
-                    pages.add(new ZoomPage());
-                }
-            }
-        }
         pages.add(new OthersPage());
     }
 
     @SubscribeEvent
     public static void onEmbeddiumPagesRegister(OptionGroupConstructionEvent e) {
         if (e.getId() != null && e.getId().toString().equals(StandardOptions.Group.WINDOW.toString())) {
-            var opions = e.getOptions();
-            for (int i = 0; i < opions.size(); i++) {
-                if (opions.get(i).getId().toString().equals(StandardOptions.Option.FULLSCREEN.toString())) {
-                    opions.set(i, getFullscreenOption());
+            var options = e.getOptions();
+            for (int i = 0; i < options.size(); i++) {
+                var id = options.get(i).getId();
+                if (id != null && id.matches(StandardOptions.Option.FULLSCREEN)) {
+                    options.set(i, getFullscreenOption());
                 }
             }
         }
@@ -65,44 +55,38 @@ public class EmbPlusOptions {
             var builder = OptionGroup.createBuilder();
             var sodiumOpts = SodiumGameOptionPages.getVanillaOpts();
             var fontShadow = OptionImpl.createBuilder(boolean.class, sodiumOpts)
-                    .setId(new ResourceLocation(EmbeddiumPlus.ID, "font_shadow"))
-                    .setName(Component.translatable("embeddium.plus.options.fontshadow.title"))
-                    .setTooltip(Component.translatable("embeddium.plus.options.fontshadow.desc"))
+                    .setId(ResourceLocation.tryBuild(Chloride.ID, "font_shadow"))
+                    .setName(Component.translatable("chloride.options.fontshadow.title"))
+                    .setTooltip(Component.translatable("chloride.options.fontshadow.desc"))
                     .setControl(TickBoxControl::new)
                     .setBinding(
-                            (options, value) -> {
-                                EmbyConfig.fontShadows.set(value);
-                                EmbyConfig.fontShadowsCache = value;
-                            },
-                            (options) -> EmbyConfig.fontShadowsCache)
+                            (opts, value) -> ChlorideConfig.fontShadows = value,
+                            (opts) -> ChlorideConfig.fontShadows)
                     .setImpact(OptionImpact.VARIES)
                     .build();
 
-            var leavesCulling = OptionImpl.createBuilder(EmbyConfig.LeavesCullingMode.class, sodiumOpts)
-                    .setId(new ResourceLocation(EmbeddiumPlus.ID, "leaves_culling"))
-                    .setName(Component.translatable("embeddium.plus.options.leaves_culling.title"))
-                    .setTooltip(Component.translatable("embeddium.plus.options.leaves_culling.desc"))
-                    .setControl(opt -> new CyclingControl<>(opt, EmbyConfig.LeavesCullingMode.class, new Component[] {
-                            Component.translatable("embeddium.plus.options.leaves_culling.all"),
-                            Component.translatable("embeddium.plus.options.leaves_culling.off")
+            var leavesCulling = OptionImpl.createBuilder(ChlorideConfig.LeavesCullingMode.class, sodiumOpts)
+                    .setId(ResourceLocation.tryBuild(Chloride.ID, "leaves_culling"))
+                    .setName(Component.translatable("chloride.options.leaves_culling.title"))
+                    .setTooltip(Component.translatable("chloride.options.leaves_culling.desc"))
+                    .setControl(opt -> new CyclingControl<>(opt, ChlorideConfig.LeavesCullingMode.class, new Component[] {
+                            Component.translatable("chloride.options.leaves_culling.all"),
+                            Component.translatable("chloride.options.leaves_culling.off")
                     }))
-                    .setBinding((opt, v) -> EmbyConfig.leavesCulling.set(v),
-                            (options) -> EmbyConfig.leavesCulling.get())
+                    .setBinding((opt, v) -> ChlorideConfig.leavesCulling = v,
+                            (opts) -> ChlorideConfig.leavesCulling)
                     .setImpact(OptionImpact.HIGH)
                     .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                     .build();
 
             var fastChest = OptionImpl.createBuilder(boolean.class, sodiumOpts)
-                    .setId(new ResourceLocation(EmbeddiumPlus.ID, "fast_chests"))
-                    .setName(Component.translatable("embeddium.plus.options.fastchest.title"))
-                    .setTooltip(Component.translatable("embeddium.plus.options.fastchest.desc"))
+                    .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_chests"))
+                    .setName(Component.translatable("chloride.options.fastchest.title"))
+                    .setTooltip(Component.translatable("chloride.options.fastchest.desc"))
                     .setControl(TickBoxControl::new)
                     .setBinding(
-                            (options, value) -> {
-                                EmbyConfig.fastChests.set(value);
-                                EmbyConfig.fastChestsCache = value;
-                            },
-                            (options) -> EmbyConfig.fastChestsCache)
+                            (opts, value) -> ChlorideConfig.fastChests = value,
+                            (opts) -> ChlorideConfig.fastChests)
                     .setImpact(OptionImpact.HIGH)
 //                .setEnabled(FastModels.canUseOnChests())
                     .setEnabled(false)
@@ -110,16 +94,13 @@ public class EmbPlusOptions {
                     .build();
 
             var fastBeds = OptionImpl.createBuilder(boolean.class, sodiumOpts)
-                    .setId(new ResourceLocation(EmbeddiumPlus.ID, "fast_beds"))
-                    .setName(Component.translatable("embeddium.plus.options.fastbeds.title"))
-                    .setTooltip(Component.translatable("embeddium.plus.options.fastbeds.desc"))
+                    .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_beds"))
+                    .setName(Component.translatable("chloride.options.fastbeds.title"))
+                    .setTooltip(Component.translatable("chloride.options.fastbeds.desc"))
                     .setControl(TickBoxControl::new)
                     .setBinding(
-                            (options, value) -> {
-                                EmbyConfig.fastBeds.set(value);
-                                EmbyConfig.fastBedsCache = value;
-                            },
-                            (options) -> EmbyConfig.fastBedsCache)
+                            (opts, value) -> ChlorideConfig.fastBeds = value,
+                            (opts) -> ChlorideConfig.fastBeds)
                     .setImpact(OptionImpact.LOW)
 //                .setEnabled(EmbyTools.isFlywheelOff())
                     .setEnabled(false)
@@ -127,18 +108,15 @@ public class EmbPlusOptions {
                     .build();
 
             var hideJEI = OptionImpl.createBuilder(boolean.class, sodiumOpts)
-                    .setId(new ResourceLocation(EmbeddiumPlus.ID, "hide_jremi"))
-                    .setName(Component.translatable("embeddium.plus.options.jei.title"))
-                    .setTooltip(Component.translatable("embeddium.plus.options.jei.desc"))
+                    .setId(ResourceLocation.tryBuild(Chloride.ID, "hide_jremi"))
+                    .setName(Component.translatable("chloride.options.jei.title"))
+                    .setTooltip(Component.translatable("chloride.options.jei.desc"))
                     .setControl(TickBoxControl::new)
                     .setBinding(
-                            (options, value) -> {
-                                EmbyConfig.hideJREMI.set(value);
-                                EmbyConfig.hideJREMICache = value;
-                            },
-                            (options) -> EmbyConfig.hideJREMICache)
+                            (opts, value) -> ChlorideConfig.hideJREMI = value,
+                            (opts) -> ChlorideConfig.hideJREMI)
                     .setImpact(OptionImpact.LOW)
-                    .setEnabled(EmbyTools.isModInstalled("jei") || EmbyTools.isModInstalled("roughlyenoughitems") || EmbyTools.isModInstalled("emi"))
+                    .setEnabled(Tools.isModInstalled("jei") || Tools.isModInstalled("roughlyenoughitems") || Tools.isModInstalled("emi"))
                     .build();
 
             builder.add(leavesCulling);
@@ -154,14 +132,14 @@ public class EmbPlusOptions {
     private static Option<FullScreenMode> getFullscreenOption() {
         var options = SodiumGameOptionPages.getVanillaOpts();
         return OptionImpl.createBuilder(FullScreenMode.class, options)
-                .setId(new ResourceLocation(EmbeddiumPlus.ID, "fullscreen"))
-                .setName(Component.translatable("embeddium.plus.options.screen.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.screen.desc"))
+                .setId(ResourceLocation.tryBuild(Chloride.ID, "fullscreen"))
+                .setName(Component.translatable("chloride.options.screen.title"))
+                .setTooltip(Component.translatable("chloride.options.screen.desc"))
                 .setControl((opt) -> new CyclingControl<>(opt, FullScreenMode.class, new Component[] {
-                        Component.translatable("embeddium.plus.options.screen.windowed"),
-                        Component.translatable("embeddium.plus.options.screen.borderless"),
+                        Component.translatable("chloride.options.screen.windowed"),
+                        Component.translatable("chloride.options.screen.borderless"),
                         Component.translatable("options.fullscreen")
                 }))
-                .setBinding(EmbyConfig::setFullScreenMode, (opts) -> EmbyConfig.fullScreen.get()).build();
+                .setBinding(ChlorideConfig::setFullScreenMode, (opts) -> ChlorideConfig.fullScreen).build();
     }
 }

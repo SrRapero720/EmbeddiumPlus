@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.mixins.impl.entitydistance;
 
-import me.srrapero720.chloride.EmbyConfig;
-import me.srrapero720.chloride.EmbyTools;
+import me.srrapero720.chloride.ChlorideConfig;
+import me.srrapero720.chloride.Tools;
 import me.srrapero720.chloride.foundation.entitydistance.IWhitelistCheck;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -21,17 +21,17 @@ public class EntityDispatcherMixin {
         final int distX;
         final MobCategory category = entity.getType().getCategory();
         if (category == MobCategory.MONSTER) {
-            if (!EmbyConfig.monsterDistanceCullingCache) return;
-            distY = EmbyConfig.monsterCullingDistanceYCache;
-            distX = EmbyConfig.monsterCullingDistanceXCache;
+            if (!ChlorideConfig.monsterDistanceCulling) return;
+            distY = ChlorideConfig.monsterCullingDistanceY;
+            distX = ChlorideConfig.monsterCullingDistanceX;
         } else {
-            if (!EmbyConfig.entityDistanceCullingCache) return;
-            distY = EmbyConfig.entityCullingDistanceYCache;
-            distX = EmbyConfig.entityCullingDistanceXCache;
+            if (!ChlorideConfig.entityDistanceCulling) return;
+            distY = ChlorideConfig.entityCullingDistanceY;
+            distX = ChlorideConfig.entityCullingDistanceX;
         }
 
         boolean isWhitelisted = ((IWhitelistCheck) entity.getType()).embPlus$isWhitelisted();
-        if (!isWhitelisted && !EmbyTools.isEntityInRange(entity, x, y, z, distY, distX)) {
+        if (!isWhitelisted && !Tools.isEntityInRange(entity, x, y, z, distY, distX)) {
             cir.setReturnValue(false);
         }
     }

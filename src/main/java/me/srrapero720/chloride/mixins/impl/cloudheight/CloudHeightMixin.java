@@ -1,6 +1,6 @@
 package me.srrapero720.chloride.mixins.impl.cloudheight;
 
-import me.srrapero720.chloride.EmbyConfig;
+import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +16,6 @@ public class CloudHeightMixin {
     @Inject(method = "getCloudHeight", at = @At("HEAD"), cancellable = true)
     private void inject$cloudHeight(CallbackInfoReturnable<Float> cir) {
         if (cloudLevel == 192.0F)
-            cir.setReturnValue((float) EmbyConfig.cloudsHeightCache);
+            cir.setReturnValue((float) ChlorideConfig.cloudsHeight);
     }
 }

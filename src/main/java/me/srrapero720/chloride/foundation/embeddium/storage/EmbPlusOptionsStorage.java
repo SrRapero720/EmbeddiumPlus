@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.foundation.embeddium.storage;
 
 import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
-import me.srrapero720.chloride.EmbyConfig;
+import me.srrapero720.chloride.ChlorideConfig;
 
 public class EmbPlusOptionsStorage implements OptionStorage<Object> {
     @Override
@@ -11,6 +11,6 @@ public class EmbPlusOptionsStorage implements OptionStorage<Object> {
 
     @Override
     public void save() {
-        EmbyConfig.SPECS.save();
+        ChlorideConfig.write();
     }
 }

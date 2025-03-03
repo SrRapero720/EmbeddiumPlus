@@ -1,20 +1,18 @@
 package me.srrapero720.chloride.foundation.fastmodels;
 
-import com.jozufozu.flywheel.config.BackendType;
-import com.jozufozu.flywheel.config.FlwConfig;
-import me.srrapero720.chloride.EmbeddiumPlus;
-import me.srrapero720.chloride.EmbyTools;
+import me.srrapero720.chloride.Chloride;
+import me.srrapero720.chloride.Tools;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE, modid = EmbeddiumPlus.ID)
+@Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE, modid = Chloride.ID)
 public class FastModels {
 
     public static boolean canUseOnChests() {
-        if (EmbyTools.isModInstalled("flywheel")) {
-            return FlwConfig.get().getBackendType() == BackendType.OFF;
+        if (Tools.isModInstalled("flywheel")) {
+            return false;
         } else {
-            return !EmbyTools.isModInstalled("enhancedblockentities");
+            return !Tools.isModInstalled("enhancedblockentities");
         }
     }
 }

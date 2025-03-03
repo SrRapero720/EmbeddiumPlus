@@ -1,6 +1,6 @@
 package me.srrapero720.chloride.mixins.impl.fastmodels;
 
-import me.srrapero720.chloride.EmbyConfig;
+import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.foundation.fastmodels.FastModels;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -16,14 +16,14 @@ public class TileRenderMixin {
     private <E extends BlockEntity> void inject$disableRenderer(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
         // FAST CHESTS (needs FLYWHEEL HANDLING)
         Class<?> beClass = blockEntity.getClass();
-        if (EmbyConfig.fastChestsCache && FastModels.canUseOnChests()) {
+        if (ChlorideConfig.fastChests && FastModels.canUseOnChests()) {
             if (beClass == ChestBlockEntity.class || beClass == EnderChestBlockEntity.class) {
                 cir.setReturnValue(null);
             }
         }
 
         // FAST BEDS (OR BETTER BEDS)
-        if (EmbyConfig.fastBedsCache) {
+        if (ChlorideConfig.fastBeds) {
             if (beClass == BedBlockEntity.class) {
                 cir.setReturnValue(null);
             }

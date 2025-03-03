@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.foundation.darkness;
 
-import me.srrapero720.chloride.EmbyConfig;
-import me.srrapero720.chloride.EmbyTools;
+import me.srrapero720.chloride.ChlorideConfig;
+import me.srrapero720.chloride.Tools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
@@ -23,27 +23,27 @@ public class DarknessPlus {
 	}
 
     private static boolean isDark(Level world) {
-		if (EmbyConfig.darknessMode.get() == EmbyConfig.DarknessMode.OFF) return false;
+		if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.OFF) return false;
 
 		final ResourceKey<Level> dimType = world.dimension();
 
 		if (dimType == Level.OVERWORLD) {
-			return EmbyConfig.darknessOnOverworldCache;
+			return ChlorideConfig.darknessOnOverworld;
 		} else if (dimType == Level.NETHER) {
-			return EmbyConfig.darknessOnNetherCache;
+			return ChlorideConfig.darknessOnNether;
 		} else if (dimType == Level.END) {
-			return EmbyConfig.darknessOnEndCache;
-		} else if (EmbyTools.isWhitelisted(dimType.location(), EmbyConfig.darknessDimensionWhiteList)) {
+			return ChlorideConfig.darknessOnEnd;
+		} else if (Tools.isWhitelisted(dimType.location(), ChlorideConfig.darknessDimensionWhiteList)) {
             return true;
         } else if (world.dimensionType().hasSkyLight()) {
-			return EmbyConfig.darknessByDefaultCache;
+			return ChlorideConfig.darknessByDefault;
 		} else {
-			return EmbyConfig.darknessOnNoSkyLightCache;
+			return ChlorideConfig.darknessOnNoSkyLight;
 		}
 	}
 
 	private static float skyFactor(Level world) {
-        if (EmbyConfig.darknessBlockLightOnlyCache || !isDark(world)) return 1;
+        if (ChlorideConfig.darknessBlockLightOnly || !isDark(world)) return 1;
 
         if (!world.dimensionType().hasSkyLight()) return 0;
 
@@ -52,8 +52,8 @@ public class DarknessPlus {
 
 
 		final float oldWeight = Math.max(0, (Math.abs(angle - 0.5f) - 0.2f)) * 20;
-		final float moon = EmbyConfig.darknessAffectedByMoonPhaseCache ? world.getMoonBrightness() : 0;
-		final float moonInterpolated = (float) Mth.lerp(moon, EmbyConfig.darknessNewMoonBrightCache, EmbyConfig.darknessFullMoonBrightCache);
+		final float moon = ChlorideConfig.darknessAffectedByMoonPhase ? world.getMoonBrightness() : 0;
+		final float moonInterpolated = (float) Mth.lerp(moon, ChlorideConfig.darknessNewMoonBright, ChlorideConfig.darknessFullMoonBright);
 		return Mth.lerp(oldWeight * oldWeight * oldWeight, moonInterpolated, 1f);
     }
 
@@ -100,7 +100,7 @@ public class DarknessPlus {
             skyFactor = 1 - skyFactor * skyFactor * skyFactor * skyFactor;
             skyFactor *= dimSkyFactor;
 
-            var value = EmbyConfig.darknessMode.get().value;
+            var value = ChlorideConfig.darknessMode.value;
             if (value == -1) throw new IllegalStateException("Darkness value can't be negative");
 
             float min = Math.max(skyFactor * 0.05f, value);
@@ -172,7 +172,7 @@ public class DarknessPlus {
                 green = green * (1.0F - gamma) + invGreen * gamma;
                 blue = blue * (1.0F - gamma) + invBlue * gamma;
 
-                min = Math.max(0.03f * f, EmbyConfig.darknessMode.get().value);
+                min = Math.max(0.03f * f, ChlorideConfig.darknessMode.value);
                 red = red * (0.99F - min) + min;
                 green = green * (0.99F - min) + min;
                 blue = blue * (0.99F - min) + min;

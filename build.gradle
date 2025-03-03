@@ -65,12 +65,16 @@ mixin {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven { url 'https://maven.minecraftforge.net/' }
-    maven { url "https://repo.spongepowered.org/maven" }
-    maven { url "https://maven.fabricmc.net/" }
-    maven { url "https://www.cursemaven.com"
+    maven {
+        url "https://www.cursemaven.com"
         content { includeGroup "curse.maven" }
     }
+    maven { url "https://maven.createmod.net" } // Create, Ponder, Flywheel
+    maven { url "https://maven.tterrag.com" } // Registrate
+    maven { url 'https://maven.minecraftforge.net/' }
+    maven { url "https://repo.spongepowered.org/maven" }
+
+    maven { url "https://maven.fabricmc.net/" }
     maven { url 'https://jitpack.io' }
 }
 
@@ -91,21 +95,28 @@ jarJar.enable()
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraftversion}-${forgeversion}"
     annotationProcessor "net.fabricmc:sponge-mixin:${mixin_fabric_version}+mixin.${mixin_version}"
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
 
     // DEPENDENCIES
     implementation fg.deobf("curse.maven:oculus-581495:$irisversion")
     implementation fg.deobf("curse.maven:embeddium-908741:$sodiumversion")
 
-    // JARJAR MIXIN EXTRA
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixinextra_version}"))
-    implementation(jarJar("io.github.llamalad7:mixinextras-forge:${mixinextra_version}")) {
-        jarJar.ranged(it, mixinextra_version_range)
+    // MOD COMPAT
+    compileOnly fg.deobf("curse.maven:jei-238222:$jeiversion")
+    implementation fg.deobf("curse.maven:roughly-enough-items-310111:$reiversion") {
+        implementation fg.deobf("curse.maven:architectury-api-419699:$archversion")
+        implementation fg.deobf("curse.maven:cloth-config-348521:$clothversion")
     }
+    compileOnly fg.deobf("curse.maven:emi-580555:$emiversion")
+    runtimeOnly fg.deobf("curse.maven:oculus-581495:$irisversion")
+
+    // MOD SUPPORT
+    implementation fg.deobf("curse.maven:create-328085:6255513")
 }
 
 tasks.processResources.outputs.upToDateWhen { false }
 processResources {
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta', "${modid}.${mixin_file_suffix}".toString()]) {
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         expand project.properties
     }
 

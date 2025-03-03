@@ -2,7 +2,7 @@ package me.srrapero720.chloride.mixins.impl.language;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import me.srrapero720.chloride.EmbyConfig;
+import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.LanguageSelectScreen;
@@ -20,7 +20,7 @@ public class LanguageMixin extends OptionsSubScreen {
 
     @WrapOperation(method = "onDone", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks()Ljava/util/concurrent/CompletableFuture;"))
     public CompletableFuture<Void> redirect$resourcesReload(Minecraft instance, Operation<CompletableFuture<Void>> original) {
-        if (EmbyConfig.fastLanguageReloadCache) {
+        if (ChlorideConfig.fastLanguageReload) {
             this.minecraft.getLanguageManager().onResourceManagerReload(this.minecraft.getResourceManager());
             return null;
         } else {

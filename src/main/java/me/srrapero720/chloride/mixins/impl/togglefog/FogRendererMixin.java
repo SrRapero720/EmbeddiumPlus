@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.mixins.impl.togglefog;
 
 import com.mojang.blaze3d.shaders.FogShape;
-import me.srrapero720.chloride.EmbyConfig;
+import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.world.entity.Entity;
@@ -20,7 +20,7 @@ public abstract class FogRendererMixin {
 
     @Inject(method = "setupFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
     private static void inject$fogDistance(Camera camera, FogRenderer.FogMode fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci, FogType fogtype, Entity entity, FogRenderer.FogData fogrenderer$fogdata, FogRenderer.MobEffectFogFunction fogrenderer$mobeffectfogfunction) {
-        if (EmbyConfig.fogCache) return;
+        if (ChlorideConfig.fog) return;
 
         fogrenderer$fogdata.start = FOG_START;
         fogrenderer$fogdata.end = FOG_END;

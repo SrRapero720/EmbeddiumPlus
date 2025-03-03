@@ -2,7 +2,7 @@ package me.srrapero720.chloride.mixins.impl.fps;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import me.srrapero720.chloride.EmbyConfig;
+import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.foundation.fps.DebugOverlayEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -31,7 +31,7 @@ public abstract class GpuUsageMixin {
 
     @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/metrics/profiling/MetricsRecorder;isRecording()Z"))
     private boolean redirect$renderDebug(MetricsRecorder instance) {
-        return level == null ? instance.isRecording() : EmbyConfig.fpsDisplaySystemMode.get().gpu() || instance.isRecording();
+        return level == null ? instance.isRecording() : ChlorideConfig.fpsDisplaySystemMode.gpu() || instance.isRecording();
     }
 
     @Redirect(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;gpuUtilization:D", opcode = Opcodes.PUTFIELD))

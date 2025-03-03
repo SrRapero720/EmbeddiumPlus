@@ -7,12 +7,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import java.util.List;
 
-public class EmbyTools {
+public class Tools {
     private static final Marker IT = MarkerManager.getMarker("Tools");
 
     public static Pair<String, String> resourceLocationPair(String res) {
@@ -54,8 +55,8 @@ public class EmbyTools {
                 : ChatFormatting.RESET).toString() + usage;
     }
 
-    public static boolean isWhitelisted(ResourceLocation entityOrTile, ForgeConfigSpec.ConfigValue<List<? extends String>> configValue) {
-        for (final String item: configValue.get()) {
+    public static boolean isWhitelisted(ResourceLocation entityOrTile, List<String> configValue) {
+        for (final String item: configValue) {
             final var resLoc = resourceLocationPair(item);
             if (!resLoc.key().equals(entityOrTile.getNamespace())) continue;
 

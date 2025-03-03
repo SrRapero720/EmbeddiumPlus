@@ -9,19 +9,20 @@ import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatte
 import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
-import me.srrapero720.chloride.EmbeddiumPlus;
-import me.srrapero720.chloride.EmbyConfig;
+import me.srrapero720.chloride.Chloride;
+import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static me.srrapero720.chloride.foundation.embeddium.EmbPlusOptions.STORAGE;
 
 public class QualityPlusPage extends OptionPage {
-    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(new ResourceLocation(EmbeddiumPlus.ID, "quality"));
+    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "quality")));
     public QualityPlusPage() {
         super(ID, Component.translatable("sodium.options.pages.quality").append("++"), create());
     }
@@ -30,37 +31,35 @@ public class QualityPlusPage extends OptionPage {
         final List<OptionGroup> groups = new ArrayList<>();
 
         final var fog = OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("embeddium.plus.options.fog.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.fog.desc"))
+                .setName(Component.translatable("chloride.options.fog.title"))
+                .setTooltip(Component.translatable("chloride.options.fog.desc"))
                 .setControl(TickBoxControl::new)
-                .setBinding((options, value) -> {
-                            EmbyConfig.fog.set(value);
-                            EmbyConfig.fogCache = value;
+                .setBinding((opt, value) -> {
+                            ChlorideConfig.fog = value;
                         },
-                        (options) -> EmbyConfig.fogCache)
+                        (opt) -> ChlorideConfig.fog)
                 .setImpact(OptionImpact.LOW)
                 .build();
 
         final var blueBand = OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("embeddium.plus.options.blueband.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.blueband.desc"))
+                .setName(Component.translatable("chloride.options.blueband.title"))
+                .setTooltip(Component.translatable("chloride.options.blueband.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding((opt, v) -> {
-                    EmbyConfig.blueBand.set(v);
-                    EmbyConfig.blueBandCache = v;
-                }, opt -> EmbyConfig.blueBandCache)
+                    ChlorideConfig.blueBand = v;
+                }, opt -> ChlorideConfig.blueBand)
                 .build();
 
-        final var fadeInQuality = OptionImpl.createBuilder(EmbyConfig.ChunkFadeSpeed.class, STORAGE)
-                .setName(Component.translatable("embeddium.plus.options.fadein.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.fadein.desc"))
-                .setControl((option) -> new CyclingControl<>(option, EmbyConfig.ChunkFadeSpeed.class, new Component[]{
+        final var fadeInQuality = OptionImpl.createBuilder(ChlorideConfig.ChunkFadeSpeed.class, STORAGE)
+                .setName(Component.translatable("chloride.options.fadein.title"))
+                .setTooltip(Component.translatable("chloride.options.fadein.desc"))
+                .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.ChunkFadeSpeed.class, new Component[]{
                         Component.translatable("options.off"),
                         Component.translatable("options.graphics.fast"),
                         Component.translatable("options.graphics.fancy")
                 }))
-                .setBinding((opts, value) -> EmbyConfig.chunkFadeSpeed.set(value),
-                        (opts) -> EmbyConfig.chunkFadeSpeed.get())
+                .setBinding((opts, value) -> ChlorideConfig.chunkFadeSpeed = value,
+                        (opts) -> ChlorideConfig.chunkFadeSpeed)
                 .setImpact(OptionImpact.LOW)
                 .setEnabled(false)
                 .build();
@@ -73,14 +72,11 @@ public class QualityPlusPage extends OptionPage {
         );
 
         final var cloudHeight = OptionImpl.createBuilder(int.class, STORAGE)
-                .setName(Component.translatable("embeddium.plus.options.clouds.height.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.clouds.height.desc"))
-                .setControl((option) -> new SliderControl(option, 64, 364, 4, ControlValueFormatter.biomeBlend()))
-                .setBinding((options, value) -> {
-                            EmbyConfig.cloudsHeight.set(value);
-                            EmbyConfig.cloudsHeightCache = value;
-                        },
-                        (options) -> EmbyConfig.cloudsHeightCache)
+                .setName(Component.translatable("chloride.options.clouds.height.title"))
+                .setTooltip(Component.translatable("chloride.options.clouds.height.desc"))
+                .setControl((opt) -> new SliderControl(opt, 64, 364, 4, ControlValueFormatter.biomeBlend()))
+                .setBinding((opt, value) -> ChlorideConfig.cloudsHeight = value,
+                        opt -> ChlorideConfig.cloudsHeight)
                 .build();
 
         groups.add(OptionGroup.createBuilder()
@@ -89,13 +85,10 @@ public class QualityPlusPage extends OptionPage {
         );
 
         final var disableNameTagRendering = OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("embeddium.plus.options.nametag.disable_rendering.title"))
-                .setTooltip(Component.translatable("embeddium.plus.options.nametag.disable_rendering.desc"))
+                .setName(Component.translatable("chloride.options.nametag.disable_rendering.title"))
+                .setTooltip(Component.translatable("chloride.options.nametag.disable_rendering.desc"))
                 .setControl(TickBoxControl::new)
-                .setBinding((opt, v) -> {
-                    EmbyConfig.disableNameTagRender.set(v);
-                    EmbyConfig.disableNameTagRenderCache = v;
-                }, opt -> EmbyConfig.disableNameTagRenderCache)
+                .setBinding((opt, v) -> ChlorideConfig.disableNameTagRender = v, opt -> ChlorideConfig.disableNameTagRender)
                 .build();
 
         groups.add(OptionGroup.createBuilder()

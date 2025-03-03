@@ -1,8 +1,8 @@
 package me.srrapero720.chloride.foundation.fps;
 
-import me.srrapero720.chloride.EmbeddiumPlus;
-import me.srrapero720.chloride.EmbyConfig;
-import me.srrapero720.chloride.EmbyTools;
+import me.srrapero720.chloride.Chloride;
+import me.srrapero720.chloride.ChlorideConfig;
+import me.srrapero720.chloride.Tools;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = EmbeddiumPlus.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class DebugOverlayEvent {
     private static final FPSDisplay DISPLAY = new FPSDisplay();
 
@@ -49,7 +49,7 @@ public class DebugOverlayEvent {
         // PRECALCULATE
         fps = mc.getFps();
         minFPS = minFPS(mc);
-        memUsage = (int) ((EmbyTools.ramUsed() * 100) / Runtime.getRuntime().maxMemory());
+        memUsage = (int) ((Tools.ramUsed() * 100) / Runtime.getRuntime().maxMemory());
         gpuPercent = Math.min((int) mc.getGpuUtilization(), 100);
         // DELEFATED TO MIXIN CLASS
         // AVERAGE.push(fps).calculate();
@@ -60,8 +60,8 @@ public class DebugOverlayEvent {
     private static void renderFPSChar(Minecraft mc, GuiGraphics graphics, Font font, double scale) {
         if (mc.options.renderDebug || mc.options.renderFpsChart) return; // No render when F3 is open
 
-        final var mode = EmbyConfig.fpsDisplayMode.get();
-        final var systemMode = EmbyConfig.fpsDisplaySystemMode.get();
+        final var mode = ChlorideConfig.fpsDisplayMode;
+        final var systemMode = ChlorideConfig.fpsDisplaySystemMode;
 
         if (mode.off() && systemMode.off()) return; // NOTHING TO DO HERE, BACK TO WORK
 
@@ -69,11 +69,11 @@ public class DebugOverlayEvent {
 
         // FPS
         switch (mode) {
-            case SIMPLE -> DISPLAY.append(EmbyTools.colorByLow(fps)).add(fix(fps)).add(" ").add(MSG_FPS.getString()).add(ChatFormatting.RESET);
+            case SIMPLE -> DISPLAY.append(Tools.colorByLow(fps)).add(fix(fps)).add(" ").add(MSG_FPS.getString()).add(ChatFormatting.RESET);
             case ADVANCED -> {
-                DISPLAY.append(EmbyTools.colorByLow(fps)).add(fix(fps)).add(ChatFormatting.RESET);
-                DISPLAY.append(EmbyTools.colorByLow(minFPS)).add(MSG_MIN).add(" ").add(fix(minFPS)).add(ChatFormatting.RESET);
-                DISPLAY.append(EmbyTools.colorByLow(avgFPS)).add(MSG_AVG).add(" ").add(fix(avgFPS)).add(ChatFormatting.RESET);
+                DISPLAY.append(Tools.colorByLow(fps)).add(fix(fps)).add(ChatFormatting.RESET);
+                DISPLAY.append(Tools.colorByLow(minFPS)).add(MSG_MIN).add(" ").add(fix(minFPS)).add(ChatFormatting.RESET);
+                DISPLAY.append(Tools.colorByLow(avgFPS)).add(MSG_AVG).add(" ").add(fix(avgFPS)).add(ChatFormatting.RESET);
             }
         }
         if (!DISPLAY.isEmpty()) DISPLAY.split();
@@ -81,25 +81,25 @@ public class DebugOverlayEvent {
         // GPU AND RAM
         switch (systemMode) {
             case GPU ->
-                    DISPLAY.append(EmbyTools.colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
+                    DISPLAY.append(Tools.colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
             case RAM ->
-                    DISPLAY.append(EmbyTools.colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
+                    DISPLAY.append(Tools.colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
             case ON -> {
-                DISPLAY.append(EmbyTools.colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
-                DISPLAY.append(EmbyTools.colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
+                DISPLAY.append(Tools.colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
+                DISPLAY.append(Tools.colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
             }
         }
 
         if (DISPLAY.isEmpty()) DISPLAY.add("FATAL ERROR");
 
-        float margin = (scale > 0) ? EmbyConfig.fpsDisplayMarginCache / (float) scale : EmbyConfig.fpsDisplayMarginCache;
+        float margin = (scale > 0) ? ChlorideConfig.fpsDisplayMargin / (float) scale : ChlorideConfig.fpsDisplayMargin;
 
         // Prevent FPS-Display to render outside screenspace
         String displayString = DISPLAY.toString();
         float maxPosX = graphics.guiWidth() - font.width(displayString);
         float posX, posY;
 
-        posX = switch (EmbyConfig.fpsDisplayGravity.get()) {
+        posX = switch (ChlorideConfig.fpsDisplayGravity) {
             case LEFT -> margin;
             case CENTER -> (maxPosX / 2);
             case RIGHT -> maxPosX - margin;
@@ -107,7 +107,7 @@ public class DebugOverlayEvent {
         posY = margin;
 
         graphics.pose().pushPose();
-        if (EmbyConfig.fpsDisplayShadowCache) {
+        if (ChlorideConfig.fpsDisplayShadow) {
             graphics.fill((int) posX - 2, (int) posY - 2, (int) posX + font.width(displayString) + 2, (int) (posY + font.lineHeight) + 1, -1873784752);
             graphics.flush();
         }
