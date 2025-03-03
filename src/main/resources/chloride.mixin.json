@@ -6,6 +6,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "chloride.mixin-refmap.json",
   "client": [
+    "MinecraftMixin",
     "borderless.BorderlessWindowMixin",
     "borderless.KeyboardF11Mixin",
     "borderless.accessors.MainWindowAccessor",

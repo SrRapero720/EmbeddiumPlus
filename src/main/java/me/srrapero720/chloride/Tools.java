@@ -11,10 +11,21 @@ import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tools {
     private static final Marker IT = MarkerManager.getMarker("Tools");
+
+    public static List<ResourceLocation> toId(String... ids) {
+        List<ResourceLocation> result = new ArrayList<>();
+        for (String id: ids) {
+            if (id.endsWith(":*")) id = id.replace(":*", ":all");
+            result.add(ResourceLocation.tryParse(id));
+        }
+
+        return result;
+    }
 
     public static Pair<String, String> resourceLocationPair(String res) {
         String[] r = res.split(":");
@@ -55,15 +66,13 @@ public class Tools {
                 : ChatFormatting.RESET).toString() + usage;
     }
 
-    public static boolean isWhitelisted(ResourceLocation entityOrTile, List<String> configValue) {
-        for (final String item: configValue) {
-            final var resLoc = resourceLocationPair(item);
-            if (!resLoc.key().equals(entityOrTile.getNamespace())) continue;
+    public static boolean isWhitelisted(ResourceLocation entityOrTile, List<ResourceLocation> configValue) {
+        for (final ResourceLocation item: configValue) {
+            if (entityOrTile.equals(item)) return true;
 
             // Wildcard check
-            if (resLoc.value().equals("*") || resLoc.value().equals(entityOrTile.getPath())) {
+            if (entityOrTile.getNamespace().equals(item.getNamespace()) && entityOrTile.getPath().equals(":all"))
                 return true;
-            }
         }
         return false;
     }

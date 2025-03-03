@@ -12,7 +12,7 @@ import java.util.Set;
 public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String s) {
-        Chloride.earlyLoad();
+
     }
 
     @Override

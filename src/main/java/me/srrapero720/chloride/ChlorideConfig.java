@@ -1,19 +1,14 @@
 package me.srrapero720.chloride;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import com.mojang.blaze3d.platform.Window;
 import me.srrapero720.chloride.mixins.impl.borderless.accessors.MainWindowAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.*;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
@@ -25,9 +20,9 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static me.srrapero720.chloride.Chloride.LOGGER;
 
@@ -37,6 +32,8 @@ public class ChlorideConfig {
     private static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .serializeNulls()
+            .registerTypeAdapter(ResourceLocation.class, new ChlorideResourceLocationSerial())
+            .registerTypeAdapter(new TypeToken<List<ResourceLocation>>(){}.getType(), new ListResourceLocationAdapter())
             .registerTypeAdapter(ChlorideConfig.class, new ChlorideConfigSerial())
             .create();
     private static final ChlorideConfig DUMMY = new ChlorideConfig();
@@ -62,7 +59,7 @@ public class ChlorideConfig {
     @ConfigField public static boolean darknessOnEnd = false;
     @ConfigField public static double darknessEndFogBright = 0.5;
     @ConfigField public static boolean darknessByDefault = false;
-    @ConfigField public static List<String> darknessDimensionWhiteList = Collections.emptyList();
+    @ConfigField public static List<ResourceLocation> darknessDimensionWhiteList = Collections.emptyList();
     @ConfigField public static boolean darknessOnNoSkyLight = false;
     @ConfigField public static boolean darknessBlockLightOnly = false;
     @ConfigField public static boolean darknessAffectedByMoonPhase = true;
@@ -84,9 +81,9 @@ public class ChlorideConfig {
     @ConfigField public static boolean monsterDistanceCulling = false;
     @ConfigField public static int monsterCullingDistanceX = 16384;
     @ConfigField public static int monsterCullingDistanceY = 64;
-    @ConfigField public static List<String> entityWhitelist = List.of("minecraft:ghast", "minecraft:ender_dragon", "iceandfire:*", "create:*");
-    @ConfigField public static List<String> monsterWhitelist = Collections.emptyList();
-    @ConfigField public static List<String> tileEntityWhitelist = List.of("waterframes:*");
+    @ConfigField public static List<ResourceLocation> entityWhitelist = Tools.toId("minecraft:ghast", "minecraft:ender_dragon", "iceandfire:all", "create:all");
+    @ConfigField public static List<ResourceLocation> monsterWhitelist = Tools.toId();
+    @ConfigField public static List<ResourceLocation> tileEntityWhitelist = Tools.toId("waterframes:all");
 
     @ConfigField public static AttachMode borderlessAttachModeF11 = AttachMode.ATTACH;
     @ConfigField public static boolean fastLanguageReload = true;
@@ -156,11 +153,12 @@ public class ChlorideConfig {
         }
     }
     public enum DarknessMode {
-        TOTAL_DARKNESS(0.04f),
-        PITCH_BLACK(0f),
-        DARK(0.08f),
-        DIM(0.12f),
-        OFF(-1);
+        OFF(-1),
+        DIM(0.18f),
+        DARK(0.12f),
+        DARKNESS(0.08f),
+        BLACK(0.04f),
+        BLACKNESS(0f);
 
         public final float value;
         DarknessMode(float value) { this.value = value; }
@@ -204,6 +202,7 @@ public class ChlorideConfig {
     }
 
     static void load(Path configPath) {
+        ChlorideConfig_Old.tryRestore();
         configFile = configPath.resolve("chloride-client.json").toFile();
         if (!configFile.exists()) {
             write();
@@ -227,6 +226,38 @@ public class ChlorideConfig {
         } catch (final Exception e) {
             LOGGER.error("Cannot read file, writting to defaults", e);
             write();
+        }
+    }
+
+    public static class ListResourceLocationAdapter implements JsonSerializer<List<ResourceLocation>>, JsonDeserializer<List<ResourceLocation>> {
+        @Override
+        public JsonElement serialize(List<ResourceLocation> src, Type typeOfSrc, JsonSerializationContext context) {
+            return context.serialize(src.stream().map(ResourceLocation::toString).collect(Collectors.toList()));
+        }
+
+        @Override
+        public List<ResourceLocation> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            if (!json.isJsonArray()) {
+                throw new JsonParseException("Expected a JSON array for List<ResourceLocation>");
+            }
+
+            JsonArray jsonArray = json.getAsJsonArray();
+            return jsonArray.asList().stream()
+                    .map(e -> (ResourceLocation) context.deserialize(e, ResourceLocation.class))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    private static final class ChlorideResourceLocationSerial implements JsonSerializer<ResourceLocation>, JsonDeserializer<ResourceLocation> {
+
+        @Override
+        public ResourceLocation deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            return ResourceLocation.tryParse(jsonElement.getAsString().replace(":*", ":all"));
+        }
+
+        @Override
+        public JsonElement serialize(ResourceLocation resourceLocation, Type type, JsonSerializationContext jsonSerializationContext) {
+            return new JsonPrimitive(resourceLocation.toString());
         }
     }
 
@@ -264,7 +295,7 @@ public class ChlorideConfig {
                     if (element.isJsonNull()) continue;
 
                     field.setAccessible(true);
-                    field.set(null, context.deserialize(element, field.getType()));
+                    field.set(null, context.deserialize(element, field.getGenericType()));
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException("Error al asignar el valor al campo: " + field.getName(), e);
                 }
