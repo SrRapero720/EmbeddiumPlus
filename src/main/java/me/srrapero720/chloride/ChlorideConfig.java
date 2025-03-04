@@ -39,6 +39,7 @@ public class ChlorideConfig {
     private static final ChlorideConfig DUMMY = new ChlorideConfig();
     private static File configFile;
 
+    @ConfigField public static boolean modpackMode = false;
     @ConfigField public static FullScreenMode fullScreen = FullScreenMode.WINDOWED;
     @ConfigField public static FPSDisplayMode fpsDisplayMode = FPSDisplayMode.ADVANCED;
     @ConfigField public static FPSDisplayGravity fpsDisplayGravity = FPSDisplayGravity.LEFT;

@@ -10,7 +10,7 @@ import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.ChlorideConfig.FullScreenMode;
 import me.srrapero720.chloride.Tools;
 import me.srrapero720.chloride.foundation.embeddium.pages.*;
-import me.srrapero720.chloride.foundation.embeddium.storage.EmbPlusOptionsStorage;
+import me.srrapero720.chloride.foundation.embeddium.storage.ChlorideOptionsStorage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -21,23 +21,29 @@ import org.embeddedt.embeddium.api.OptionGroupConstructionEvent;
 import org.embeddedt.embeddium.api.OptionPageConstructionEvent;
 import org.embeddedt.embeddium.client.gui.options.StandardOptions;
 
+import static me.srrapero720.chloride.Chloride.LOGGER;
+
 @Mod.EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EmbPlusOptions {
-    public static final OptionStorage<?> STORAGE = new EmbPlusOptionsStorage();
+    public static final OptionStorage<?> STORAGE = new ChlorideOptionsStorage();
 
     @SubscribeEvent
-    public static void onEmbeddiumPagesRegister(OptionGUIConstructionEvent e) {
+    public static void onSodiumPagesRegister(OptionGUIConstructionEvent e) {
         var pages = e.getPages();
 
-        pages.add(new OverlayPage());
-        pages.add(new QualityPlusPage());
-        pages.add(new TrueDarknessPage());
-        pages.add(new EntityCullingPage());
-        pages.add(new OthersPage());
+        if (!ChlorideConfig.modpackMode) {
+            pages.add(new OverlayPage());
+            pages.add(new QualityPlusPage());
+            pages.add(new TrueDarknessPage());
+            pages.add(new EntityCullingPage());
+            pages.add(new OthersPage());
+        } else {
+            LOGGER.info("Modpack Mode is enabled, skipping chloride page registration");
+        }
     }
 
     @SubscribeEvent
-    public static void onEmbeddiumPagesRegister(OptionGroupConstructionEvent e) {
+    public static void onSodiumPagesRegister(OptionGroupConstructionEvent e) {
         if (e.getId() != null && e.getId().toString().equals(StandardOptions.Group.WINDOW.toString())) {
             var options = e.getOptions();
             for (int i = 0; i < options.size(); i++) {
@@ -50,7 +56,7 @@ public class EmbPlusOptions {
     }
 
     @SubscribeEvent
-    public static void onEmbeddiumGroupRegister(OptionPageConstructionEvent e) {
+    public static void onSodiumGroupRegister(OptionPageConstructionEvent e) {
         if (e.getId() != null && e.getId().equals(StandardOptions.Pages.PERFORMANCE)) {
             var builder = OptionGroup.createBuilder();
             var sodiumOpts = SodiumGameOptionPages.getVanillaOpts();
