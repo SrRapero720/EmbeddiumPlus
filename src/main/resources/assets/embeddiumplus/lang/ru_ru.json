@@ -1,4 +1,6 @@
 {
+  "chloride.zoom": "Приближение",
+
   "chloride.options.common.slow": "Медленно",
   "chloride.options.common.normal": "Нормально",
   "chloride.options.common.fast": "Быстро",
@@ -23,7 +25,7 @@
 
   "chloride.options.overlay.page": "Метрики",
   "chloride.options.displayfps.title": "Отображение FPS",
-  "chloride.options.displayfps.desc": "Отображает текущую частоту кадров в секунду. Расширенный режим также отображает минимальную частоту кадров в секунду, а также среднюю за 15 секунд, для оценки производительности.",
+  "chloride.options.displayfps.desc": "Отображает текущую частоту кадров в секунду. Расширенный режим также отображает минимальную частоту кадров, а также среднюю за 15 секунд, для оценки производительности.",
 
   "chloride.options.displayfps.gravity.title": "Текстовая гравитация",
   "chloride.options.displayfps.gravity.desc": "Угловое положение дисплея FPS.",
@@ -35,7 +37,7 @@
   "chloride.options.displayfps.system.desc": "Отображает использование памяти и графического процессора рядом со счетчиком кадров в секунду.",
   "chloride.options.displayfps.system.gpu": "Только графика",
   "chloride.options.displayfps.system.ram": "Только память",
-	
+
   "chloride.options.displayfps.margin.title": "Отступ счётчика FPS",
   "chloride.options.displayfps.margin.desc": "Смещение отображения счётчика кадров в секунду.",
 
@@ -73,6 +75,9 @@
   "chloride.options.darkness.page": "Истинная тьма",
   "chloride.options.darkness.mode.title": "Режим темноты",
   "chloride.options.darkness.mode.desc": "Делает остальной мир более реалистично тёмным. Не влияет на дневной свет или освещение факелами.\nОпределяет, насколько тёмной является истинная тьма.",
+  "chloride.options.darkness.mode.blackness": "Чернота",
+  "chloride.options.darkness.mode.black": "Чёрный",
+  "chloride.options.darkness.mode.darkness": "Темнота",
   "chloride.options.darkness.mode.dark": "Темно",
   "chloride.options.darkness.mode.dim": "Тускло",
   "chloride.options.darkness.others.title": "Включить в других измерениях",
@@ -107,7 +112,7 @@
   "chloride.options.dynlights.speed.desc": "Определяет, как часто будут обновляться динамическое освещение.\n\n Пересчёт света может быть дорогостоящим, поэтому более низкие значения обеспечат лучшую производительность.",
   "chloride.options.fadein.title": "Качество плавного появления чанков",
   "chloride.options.fadein.desc": "Регулирует скорость появления чанков. Производительность не снижается, Fancy просто занимает больше времени, но выглядит немного круче. В данный момент не работает.",
-  
+
   "chloride.options.leaves_culling.title": "Отбраковка листвы",
   "chloride.options.leaves_culling.desc": "Уменьшает количество листьев с видимыми гранями одного типа, контролирует глубину отбраковки.",
   "chloride.options.leaves_culling.all": "Полностью",
@@ -116,6 +121,7 @@
   "chloride.options.leaves_culling.less": "Меньше",
   "chloride.options.leaves_culling.off": "Выключено",
 
+  "chloride.pages.details": "Детали",
   "chloride.options.fastchest.title": "Использовать быстрые сундуки",
   "chloride.options.fastchest.desc": "Если включено, заменяет модель сундуков статической моделью, как обычный блок. Прерывает анимацию сундуков, но работает быстрее в комнатах с сундуками.\n\nОпция не имеет эффектов при Flywheel, установленном и запущенном в серверной части для пакетной обработки или создания экземпляров.",
   "chloride.options.fastbeds.title": "Использовать быстрые кровати",
@@ -132,6 +138,13 @@
   "chloride.options.screen.desc": "Оконный — игра будет отображаться в маленьком окне.\nБезрамочный — игра будет отображаться в полноэкранном режиме и привязана к частоте обновления вашего монитора, но позволит вам легко переключаться между вкладками.\nПолноэкранный — игра будет отображаться в обычном полноэкранном режиме.",
   "chloride.options.screen.borderless": "Безрамочный",
   "chloride.options.screen.windowed": "Оконный",
+
+  "chloride.options.zoom.page": "Приближение",
+  "chloride.options.zoom.title": "Включить приближение",
+  "chloride.options.zoom.desc": "Включает функцию масштабирования, которую можно активировать нажатием ",
+  "chloride.options.zoom.forbidden": "Обнаружен JustZoom или Zume, масштабирование Chloride теперь отключено",
+  "chloride.options.zoom.max.title": "Максимальное приближение",
+  "chloride.options.zoom.max.desc": "Устанавливает максимально возможное приближение с помощью колёсика мыши",
 
   "chloride.options.others.page": "Прочее",
   "chloride.options.others.borderless.attachmode.title": "Полноэкранный безрамочный режим в F11",
