@@ -20,11 +20,11 @@ import net.minecraftforge.fml.common.Mod;
 public class DebugOverlayEvent {
     private static final FPSDisplay DISPLAY = new FPSDisplay();
 
-    private static final Component MSG_FPS = Component.translatable("embeddium.plus.options.displayfps.fps");
-    private static final Component MSG_MIN = Component.translatable("embeddium.plus.options.displayfps.min");
-    private static final Component MSG_AVG = Component.translatable("embeddium.plus.options.displayfps.avg");
-    private static final Component MSG_GPU = Component.translatable("embeddium.plus.options.displayfps.gpu");
-    private static final Component MSG_MEM = Component.translatable("embeddium.plus.options.displayfps.mem");
+    private static final Component MSG_FPS = Component.translatable("chloride.options.displayfps.fps");
+    private static final Component MSG_MIN = Component.translatable("chloride.options.displayfps.min");
+    private static final Component MSG_AVG = Component.translatable("chloride.options.displayfps.avg");
+    private static final Component MSG_GPU = Component.translatable("chloride.options.displayfps.gpu");
+    private static final Component MSG_MEM = Component.translatable("chloride.options.displayfps.mem");
 
     public static final AverageQueue AVERAGE = new AverageQueue();
 
