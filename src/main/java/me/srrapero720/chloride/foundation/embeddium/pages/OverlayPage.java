@@ -16,13 +16,14 @@ import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static me.srrapero720.chloride.foundation.embeddium.EmbPlusOptions.STORAGE;
 
-public class MetricsPage extends OptionPage {
-    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(new ResourceLocation(Chloride.ID, "metrics"));
-    public MetricsPage() {
-        super(ID, Component.translatable("chloride.options.metrics.page"), create());
+public class OverlayPage extends OptionPage {
+    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "metrics")));
+    public OverlayPage() {
+        super(ID, Component.translatable("chloride.options.overlay.page"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {

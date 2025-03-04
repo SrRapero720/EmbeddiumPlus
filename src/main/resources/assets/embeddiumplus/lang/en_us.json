@@ -21,7 +21,7 @@
   "chloride.options.nametag.disable_rendering.title": "Disable NameTag rendering",
   "chloride.options.nametag.disable_rendering.desc": "Do not show me your name!\nDisables nametag rendering for players and entities",
 
-  "chloride.options.metrics.page": "Metrics",
+  "chloride.options.overlay.page": "Metrics",
   "chloride.options.displayfps.title": "Display FPS",
   "chloride.options.displayfps.desc": "Displays the current FPS. Advanced mode also displays minimum FPS, as well as 15 second average FPS, useful for judging performance.",
 

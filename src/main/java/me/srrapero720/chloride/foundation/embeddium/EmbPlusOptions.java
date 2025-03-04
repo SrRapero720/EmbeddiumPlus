@@ -29,7 +29,7 @@ public class EmbPlusOptions {
     public static void onEmbeddiumPagesRegister(OptionGUIConstructionEvent e) {
         var pages = e.getPages();
 
-        pages.add(new MetricsPage());
+        pages.add(new OverlayPage());
         pages.add(new QualityPlusPage());
         pages.add(new TrueDarknessPage());
         pages.add(new EntityCullingPage());

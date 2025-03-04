@@ -16,11 +16,12 @@ import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static me.srrapero720.chloride.foundation.embeddium.EmbPlusOptions.STORAGE;
 
 public class EntityCullingPage extends OptionPage {
-    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(new ResourceLocation(Chloride.ID, "culling"));
+    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "culling")));
     public EntityCullingPage() {
         super(ID, Component.translatable("chloride.options.culling.page"), create());
     }
