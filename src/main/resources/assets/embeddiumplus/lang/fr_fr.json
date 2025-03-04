@@ -26,8 +26,6 @@
 
   "chloride.options.darkness.mode.title": "Mode Véritable Obscurité",
   "chloride.options.darkness.mode.desc": "Contrôle comment est considérée la Vraie Obscurité.",
-  "chloride.options.darkness.mode.pitchblack": "Noir absolu",
-  "chloride.options.darkness.mode.reallydark": "Trés sombre",
   "chloride.options.darkness.mode.dark": "Sombre",
   "chloride.options.darkness.mode.dim": "Peu lumineux",
 
