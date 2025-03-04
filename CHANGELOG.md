@@ -1,3 +1,16 @@
+# RELEASE 1.5.0
+- [✨] Added option "ModpackMode": disables chloride pages registration (forces applied configs)
+- [✨] Added Zoom key defaulted to (C)
+  - 🛠️ It gots disabled by default when JustZoom or Zume is installed
+- [🛠️] Replace ForgeConfigAPI with a custom config utility
+- [🛠️] Renamed Metrics page to Overlay
+- [🛠️] Removed Zume translations
+- [🛠️] Removed Zume integrations
+- [🛠️] Updated all JEI, REI and EMI integrations to their latest versions
+- [🐛] Fixed crashes caused by Create 0.6.1 (new Flywheel Update)
+- [🐛] Fixed crashes with Cubes without Borders
+- [🐛] Fixed crashes with Forgery
+
 # RELEASE 1.2.13
 - [🐛] Fixed crashes due to non-renamed accessors (fixes BadOptimizations mod crashes)
 
