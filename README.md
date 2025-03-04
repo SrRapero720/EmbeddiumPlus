@@ -2,7 +2,6 @@
 [![Available for](https://cf.way2muchnoise.eu/versions/embeddiumplus.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
 [![Latest Version](https://img.shields.io/curseforge/v/931925?style=for-the-badge&label=curseforge&labelColor=%232d2d2d&color=%23e04e14&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fwatermedia%2Ffiles)](https://www.curseforge.com/minecraft/mc-mods/embeddiumplus/files)
 [![Discord community](https://dcbadge.vercel.app/api/server/cuYAzzZ)](https://discord.gg/cuYAzzZ)
-[![Static Badge](https://img.shields.io/badge/POWERED_BY-ZUME_(by_nolij)-ff4040?style=for-the-badge&labelColor=%23111111&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fzume)](https://www.curseforge.com/minecraft/mc-mods/zume)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B8UCUF5)
 This mod is going to be **REWRITED FROM SCRATCH**, to complete disconnect it from "upstream" 
