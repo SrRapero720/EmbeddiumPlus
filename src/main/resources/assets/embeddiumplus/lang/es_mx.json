@@ -16,6 +16,13 @@
   "chloride.options.clouds.height.title": "Altura de Nubes",
   "chloride.options.clouds.height.desc": "Alcanza las nubes, o que ellas te alcancen a ti.\nConfigura que tan alto se posicionan las nubes",
 
+  "chloride.options.nametag.disable_rendering.title": "Desactivar nametags",
+  "chloride.options.nametag.disable_rendering.desc": "No me digas tu nombre!\nDesactiva las nametags de los jugadores y entidades",
+
+  "chloride.options.overlay.page": "Interfaz",
+  "chloride.options.displayfps.title": "Mostrar FPS",
+  "chloride.options.displayfps.desc": "Muestra los FPS actuales. El modo avanzado muestra los FPS minimos, y los FPS promedio de los ultimos 15 segundos, util para juzgar el rendimiento general.",
+
   "chloride.options.culling.page": "Rango de Entidades",
   "chloride.options.culling.entity.title": "Activar para Entidades",
   "chloride.options.culling.entity.desc": "Si se activa, Las entidades fuera del rango configurado no se renderizaran",
