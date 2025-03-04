@@ -5,11 +5,6 @@
 [![Static Badge](https://img.shields.io/badge/POWERED_BY-ZUME_(by_nolij)-ff4040?style=for-the-badge&labelColor=%23111111&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fzume)](https://www.curseforge.com/minecraft/mc-mods/zume)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B8UCUF5)
-# ⚠️ IMPORTANT | SOURCE DISCONTINUED ⚠️
-
-> THE SOURCE CODE OF EMBEDDIUM++ HAS BEEN DISCONTINUED.
-> FOLLOW THE DEVELOPMENT [HERE](https://github.com/SrRapero720/EmbeddiumAdditions)
-
 This mod is going to be **REWRITED FROM SCRATCH**, to complete disconnect it from "upstream" 
 (which was already done in 1.2.0 but somehow people still considers it "a fork").
 
