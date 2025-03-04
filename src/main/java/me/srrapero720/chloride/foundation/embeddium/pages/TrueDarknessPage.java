@@ -17,7 +17,7 @@ import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.srrapero720.chloride.foundation.embeddium.EmbPlusOptions.STORAGE;
+import static me.srrapero720.chloride.foundation.embeddium.ChlorideOptions.STORAGE;
 
 public class TrueDarknessPage extends OptionPage {
     public static final OptionIdentifier<Void> ID = OptionIdentifier.create(new ResourceLocation(Chloride.ID, "true_darkness"));

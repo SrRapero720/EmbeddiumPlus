@@ -24,7 +24,7 @@ import org.embeddedt.embeddium.client.gui.options.StandardOptions;
 import static me.srrapero720.chloride.Chloride.LOGGER;
 
 @Mod.EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class EmbPlusOptions {
+public class ChlorideOptions {
     public static final OptionStorage<?> STORAGE = new ChlorideOptionsStorage();
 
     @SubscribeEvent
@@ -33,9 +33,10 @@ public class EmbPlusOptions {
 
         if (!ChlorideConfig.modpackMode) {
             pages.add(new OverlayPage());
-            pages.add(new QualityPlusPage());
+            pages.add(new DetailsPage());
             pages.add(new TrueDarknessPage());
             pages.add(new EntityCullingPage());
+            pages.add(new ZoomPage());
             pages.add(new OthersPage());
         } else {
             LOGGER.info("Modpack Mode is enabled, skipping chloride page registration");

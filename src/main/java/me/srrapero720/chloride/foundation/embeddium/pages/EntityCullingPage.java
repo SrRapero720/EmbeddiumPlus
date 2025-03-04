@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static me.srrapero720.chloride.foundation.embeddium.EmbPlusOptions.STORAGE;
+import static me.srrapero720.chloride.foundation.embeddium.ChlorideOptions.STORAGE;
 
 public class EntityCullingPage extends OptionPage {
     public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "culling")));

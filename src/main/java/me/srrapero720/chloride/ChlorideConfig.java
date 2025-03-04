@@ -89,6 +89,9 @@ public class ChlorideConfig {
     @ConfigField public static AttachMode borderlessAttachModeF11 = AttachMode.ATTACH;
     @ConfigField public static boolean fastLanguageReload = true;
 
+    @ConfigField public static boolean enableZoom = true;
+    @ConfigField public static double maxZoom = 50;
+
     @ConfigField public static DynLightsSpeed dynLightSpeed = DynLightsSpeed.REALTIME;
     @ConfigField public static boolean dynLightsOnEntities = true;
     @ConfigField public static boolean dynLightsOnTileEntities = true;

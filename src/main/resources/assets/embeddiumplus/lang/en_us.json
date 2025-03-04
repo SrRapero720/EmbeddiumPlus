@@ -1,4 +1,6 @@
 {
+  "chloride.zoom": "Zoom",
+
   "chloride.options.common.slow": "Slow",
   "chloride.options.common.normal": "Normal",
   "chloride.options.common.fast": "Fast",
@@ -119,6 +121,7 @@
   "chloride.options.leaves_culling.less": "Less",
   "chloride.options.leaves_culling.off": "Off",
 
+  "chloride.pages.details": "Details",
   "chloride.options.fastchest.title": "Use Fast Chests",
   "chloride.options.fastchest.desc": "If enabled, replaces chests model with a static model, like a normal block. Breaks chest animation but goes more faster on chest rooms\n\nOption has no effects with flywheel installed and running batching or instancing backend\nIMPORTANT: enabling/disabling it requires also enabling/disabling resourcepack",
   "chloride.options.fastbeds.title": "Use Fast Beds",
@@ -135,6 +138,13 @@
   "chloride.options.screen.desc": "Windowed - the game will display in a small window.\nBorderless - the game will be fullscreened, and locked to your monitor's refresh rate, but allow you to tab out easily.\nFullscreen - the game will display in native fullscreen mode.",
   "chloride.options.screen.borderless": "Borderless",
   "chloride.options.screen.windowed": "Windowed",
+
+  "chloride.options.zoom.page": "Zoom",
+  "chloride.options.zoom.title": "Enable Zoom",
+  "chloride.options.zoom.desc": "Turns on Zoom feature, can be activated by pressing ",
+  "chloride.options.zoom.forbidden": "JustZoom or Zume detected, chloride zoom its now disabled",
+  "chloride.options.zoom.max.title": "Max Zoom",
+  "chloride.options.zoom.max.desc": "Sets maximum zoom possible using mouse wheel",
 
   "chloride.options.others.page": "Others",
   "chloride.options.others.borderless.attachmode.title": "Borderless Fullscreen on F11",

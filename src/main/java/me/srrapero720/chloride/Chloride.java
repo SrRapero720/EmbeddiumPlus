@@ -1,7 +1,9 @@
 package me.srrapero720.chloride;
 
+import me.srrapero720.chloride.foundation.zoom.ZoomFeature;
 import me.srrapero720.chloride.util.MockerInstalledException;
 import me.srrapero720.chloride.util.XenonInstalledException;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -31,5 +33,10 @@ public class Chloride {
     public void load(FMLClientSetupEvent event) {
         if (Tools.isModInstalled("xenon")) throw new XenonInstalledException();
         if (Tools.isModInstalled("embeddiumextras")) throw new MockerInstalledException();
+    }
+
+    @SubscribeEvent
+    public static void registerKeys(RegisterKeyMappingsEvent event) {
+        event.register(ZoomFeature.KEY);
     }
 }

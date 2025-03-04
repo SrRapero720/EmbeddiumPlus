@@ -21,6 +21,7 @@
 
   "chloride.options.overlay.page": "Interfaz",
 
+  "chloride.pages.details": "Detalles",
   "chloride.options.culling.page": "Rango de Entidades",
   "chloride.options.culling.entity.title": "Activar para Entidades",
   "chloride.options.culling.entity.desc": "Si se activa, Las entidades fuera del rango configurado no se renderizaran",
