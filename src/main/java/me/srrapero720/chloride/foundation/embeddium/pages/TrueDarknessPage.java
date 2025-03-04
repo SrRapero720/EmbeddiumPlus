@@ -33,11 +33,12 @@ public class TrueDarknessPage extends OptionPage {
                 .setName(Component.translatable("chloride.options.darkness.mode.title"))
                 .setTooltip(Component.translatable("chloride.options.darkness.mode.desc"))
                 .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.DarknessMode.class, new Component[]{
-                        Component.translatable("chloride.options.darkness.mode.pitchblack"),
-                        Component.translatable("chloride.options.darkness.mode.reallydark"),
-                        Component.translatable("chloride.options.darkness.mode.dark"),
+                        Component.translatable("options.off"),
                         Component.translatable("chloride.options.darkness.mode.dim"),
-                        Component.translatable("options.off")
+                        Component.translatable("chloride.options.darkness.mode.dark"),
+                        Component.translatable("chloride.options.darkness.mode.darkness"),
+                        Component.translatable("chloride.options.darkness.mode.black"),
+                        Component.translatable("chloride.options.darkness.mode.blackness"),
                 }))
                 .setBinding((opts, value) -> ChlorideConfig.darknessMode = value,
                         (opts) -> ChlorideConfig.darknessMode)
