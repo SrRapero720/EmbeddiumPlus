@@ -31,14 +31,13 @@ public class ChlorideOptions {
     public static void onSodiumPagesRegister(OptionGUIConstructionEvent e) {
         var pages = e.getPages();
 
-        if (!ChlorideConfig.modpackMode) {
-            pages.add(new OverlayPage());
-            pages.add(new DetailsPage());
-            pages.add(new TrueDarknessPage());
-            pages.add(new EntityCullingPage());
-            pages.add(new ZoomPage());
-            pages.add(new OthersPage());
-        } else {
+        pages.add(new OverlayPage());
+        pages.add(new DetailsPage());
+        if (ChlorideConfig.modpackMode) pages.add(new TrueDarknessPage());
+        pages.add(new EntityCullingPage());
+        if (ChlorideConfig.modpackMode) pages.add(new ZoomPage());
+        pages.add(new OthersPage());
+        if (ChlorideConfig.modpackMode) {
             LOGGER.info("Modpack Mode is enabled, skipping chloride page registration");
         }
     }
