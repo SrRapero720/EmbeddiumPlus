@@ -1,0 +1,133 @@
+{
+"chloride.zoom": "Zoom",
+
+"chloride.options.common.slow": "Lento",
+"chloride.options.common.normal": "Normal",
+"chloride.options.common.fast": "Rápido",
+"chloride.options.common.superfast": "Súper Rápido",
+"chloride.options.common.fastest": "El Más Rápido",
+"chloride.options.common.realtime": "Tiempo Real",
+"chloride.options.common.off": "Desactivado",
+"chloride.options.common.on": "Activado",
+"chloride.options.common.simple": "Simple",
+"chloride.options.common.advanced": "Avanzado",
+"chloride.options.common.attach": "Adjuntar",
+"chloride.options.common.replace": "Reemplazar",
+"chloride.options.common.experimental": "[EXPERIMENTAL]",
+"chloride.options.common.millis": "ms",
+"chloride.options.common.nojils": "",
+
+"chloride.options.clouds.height.title": "Altura de las Nubes",
+"chloride.options.clouds.height.desc": "Eleva la altura de las nubes.\nConfigura la altura de las nubes",
+
+"chloride.options.nametag.disable_rendering.title": "Desactivar Renderizado de Nombre",
+"chloride.options.nametag.disable_rendering.desc": "¡No me muestres tu nombre!\nDesactiva el renderizado de los nombres para jugadores y entidades",
+
+"chloride.options.overlay.page": "Métricas",
+"chloride.options.displayfps.title": "Mostrar FPS",
+"chloride.options.displayfps.desc": "Muestra los FPS actuales. El modo avanzado también muestra los FPS mínimos y el promedio de 15 segundos, útil para evaluar el rendimiento.",
+
+"chloride.options.displayfps.gravity.title": "Posición del Texto",
+"chloride.options.displayfps.gravity.desc": "Ubicación de la visualización de FPS",
+"chloride.options.displayfps.gravity.left": "Izquierda",
+"chloride.options.displayfps.gravity.center": "Centro",
+"chloride.options.displayfps.gravity.right": "Derecha",
+
+"chloride.options.displayfps.system.title": "Mostrar Métricas",
+"chloride.options.displayfps.system.desc": "Muestra el uso de memoria y GPU junto al contador de FPS",
+"chloride.options.displayfps.system.gpu": "Solo Gráficos",
+"chloride.options.displayfps.system.ram": "Solo Memoria",
+
+"chloride.options.displayfps.margin.title": "Margen del Texto",
+"chloride.options.displayfps.margin.desc": "Desplazamiento de la visualización de FPS",
+
+"chloride.options.displayfps.shadow.title": "Usar Sombra en el Texto",
+"chloride.options.displayfps.shadow.desc": "Añadir una caja de sombra a la visualización de FPS, al estilo puro de F3",
+
+"chloride.options.displayfps.fps": "FPS",
+"chloride.options.displayfps.min": "MÍN",
+"chloride.options.displayfps.avg": "PROM",
+"chloride.options.displayfps.gpu": "GPU",
+"chloride.options.displayfps.mem": "MEM",
+
+"chloride.options.culling.page": "Ocultación de Entidades",
+"chloride.options.culling.entity.title": "Usar Distancia Máxima de Entidad",
+"chloride.options.culling.entity.desc": "Si está activado, las entidades se ocultarán según el límite de distancia configurado",
+"chloride.options.culling.entity.distance.horizontal.title": "Distancia Máxima de Entidades (Horizontal)",
+"chloride.options.culling.entity.distance.horizontal.desc": "Oculta y deja de procesar entidades más allá de esta cantidad de bloques. Gran aumento de rendimiento, especialmente en granjas de mods.",
+"chloride.options.culling.entity.distance.vertical.title": "Distancia Máxima de Entidades (Vertical)",
+"chloride.options.culling.entity.distance.vertical.desc": "Oculta y deja de procesar entidades debajo de esta cantidad de bloques, mejorando el rendimiento sobre las cuevas. Debería ser menor que la distancia horizontal.",
+
+"chloride.options.culling.monster.title": "Usar Distancia Máxima de Monstruos",
+"chloride.options.culling.monster.desc": "Si está activado, los monstruos (entidades hostiles) se ocultarán según el límite de distancia configurado",
+"chloride.options.culling.monster.distance.horizontal.title": "Distancia Máxima de Monstruos (Horizontal)",
+"chloride.options.culling.monster.distance.horizontal.desc": "Oculta y deja de procesar monstruos más allá de esta cantidad de bloques. Gran aumento de rendimiento, especialmente en granjas de experiencia.",
+"chloride.options.culling.monster.distance.vertical.title": "Distancia Máxima de Monstruos (Vertical)",
+"chloride.options.culling.monster.distance.vertical.desc": "Oculta y deja de procesar monstruos debajo de esta cantidad de bloques, mejorando el rendimiento sobre las cuevas. Debería ser menor que la distancia horizontal.",
+
+"chloride.options.darkness.page": "Oscuridad Realista",
+"chloride.options.darkness.mode.title": "Modo de Oscuridad",
+"chloride.options.darkness.mode.desc": "Hace que el resto del mundo sea más oscuramente realista. No afecta la luz diurna ni la luz de las antorchas.\nControla qué tan oscura se considera la oscuridad real.",
+"chloride.options.darkness.mode.blackness": "Negrura",
+"chloride.options.darkness.mode.black": "Negro",
+"chloride.options.darkness.mode.darkness": "Oscuridad",
+"chloride.options.darkness.mode.dark": "Oscuro",
+"chloride.options.darkness.mode.dim": "Tenue",
+
+"chloride.options.dynlights.page": "Luces Dinámicas",
+"chloride.options.dynlights.tiles.title": "Usar para Entidades de Bloques",
+"chloride.options.dynlights.tiles.desc": "Si está activado, la iluminación dinámica se aplicará a las entidades de bloques (hornos, máquinas de mods, etc.).\n\nEsto puede aumentar drásticamente la cantidad de actualizaciones de iluminación, incluso si no estás cerca de un horno.",
+"chloride.options.dynlights.entities.title": "Usar para Entidades",
+"chloride.options.dynlights.entities.desc": "Si está activado, la iluminación dinámica se aplicará a las entidades (objetos caídos, mobs, etc.).\n\nEsto puede aumentar drásticamente la cantidad de actualizaciones de iluminación, incluso si no sostienes una antorcha.",
+
+"chloride.options.fastchest.title": "Usar Cofres Rápidos",
+"chloride.options.fastchest.desc": "Si está activado, reemplaza el modelo de los cofres con un modelo estático, como un bloque normal. Rompe la animación del cofre, pero mejora el rendimiento en salas con muchos cofres.\n\nIMPORTANTE: habilitar/deshabilitar esta opción también requiere habilitar/deshabilitar el paquete de recursos.",
+
+"chloride.options.fog.title": "Usar Niebla",
+"chloride.options.fog.desc": "Si está desactivado, elimina el efecto de niebla solo en el mundo normal.",
+
+"chloride.options.fontshadow.title": "Sombras de Fuente",
+"chloride.options.fontshadow.desc": "Si está desactivado, el texto dejará de renderizar sombras, dando un estilo más plano.\nAumenta los FPS dependiendo de la cantidad de texto en pantalla, especialmente con mods como BetterF3.",
+
+"chloride.options.jei.title": "Ocultar JEI/REI/EMI Hasta Buscar",
+"chloride.options.jei.desc": "Si está activado, la lista de ítems de JEI/REI/EMI estará oculta a menos que busques algo. Presiona espacio para buscar todo.",
+
+"chloride.pages.details": "Detalles",
+"chloride.options.fastchest.title": "Usar Cofres Rápidos",
+"chloride.options.fastchest.desc": "Si está activado, reemplaza el modelo de los cofres por un modelo estático, como un bloque normal. Rompe la animación del cofre, pero mejora el rendimiento en salas con muchos cofres.\n\nEsta opción no tiene efecto si Flywheel está instalado y ejecutando el backend de batching o instancing.\nIMPORTANTE: habilitar/deshabilitar esta opción también requiere habilitar/deshabilitar el paquete de recursos.",
+
+"chloride.options.fastbeds.title": "Usar Camas Rápidas",
+"chloride.options.fastbeds.desc": "Si está activado, reemplaza el modelo dinámico de la cama por un modelo estático, como un bloque normal. Aumenta el rendimiento y también permite usar modelos personalizados con paquetes de recursos.\nIMPORTANTE: habilitar/deshabilitar esta opción también requiere habilitar/deshabilitar el paquete de recursos.",
+
+"chloride.options.fog.title": "Usar Niebla",
+"chloride.options.fog.desc": "Si está desactivado, elimina el efecto de niebla solo en el mundo principal.",
+
+"chloride.options.blueband.title": "Usar Banda Azul del Cielo",
+"chloride.options.blueband.desc": "Si está desactivado, elimina el efecto de Banda Azul en todas las dimensiones.",
+
+"chloride.options.fontshadow.title": "Sombra de Fuente",
+"chloride.options.fontshadow.desc": "Si está desactivado, el texto dejará de renderizar sombras, dándole un estilo plano.\nAumenta los FPS dependiendo de la cantidad de texto en pantalla, especialmente con los mods BetterF3.",
+
+"chloride.options.jei.title": "Ocultar JEI/REI/EMI Hasta Buscar",
+"chloride.options.jei.desc": "Si está activado, la lista de objetos de JEI/REI/EMI estará oculta a menos que busques algo. Presiona espacio para buscar todo.",
+
+"chloride.options.screen.title": "Modo de Pantalla Completa",
+"chloride.options.screen.desc": "Ventana - el juego se mostrará en una ventana pequeña.\nSin Bordes - el juego estará en pantalla completa, bloqueado a la tasa de refresco de tu monitor, pero permitiéndote alternar fácilmente entre aplicaciones.\nPantalla Completa - el juego se mostrará en modo de pantalla completa nativa.",
+
+"chloride.options.screen.borderless": "Sin Bordes",
+"chloride.options.screen.windowed": "Ventana",
+
+"chloride.options.zoom.page": "Zoom",
+"chloride.options.zoom.title": "Habilitar Zoom",
+"chloride.options.zoom.desc": "Activa la función de Zoom, se puede activar presionando ",
+"chloride.options.zoom.forbidden": "Se detectó JustZoom o Zume, el zoom de Chloride está desactivado.",
+"chloride.options.zoom.max.title": "Zoom Máximo",
+"chloride.options.zoom.max.desc": "Define el zoom máximo posible usando la rueda del ratón.",
+
+"chloride.options.others.page": "Otros",
+"chloride.options.others.borderless.attachmode.title": "Pantalla Completa Sin Bordes con F11",
+"chloride.options.others.borderless.attachmode.desc": "Configura cómo se debe adjuntar la Pantalla Completa Sin Bordes.\n\nADJUNTAR - La agrega entre ventana y Pantalla Completa.\nREEMPLAZAR - Reemplaza Pantalla Completa con Pantalla Completa Sin Bordes.\nDESACTIVAR - Deshabilita la función de Pantalla Completa Sin Bordes con la tecla F11.",
+
+"chloride.options.others.languagescreen.fastreload.title": "Carga Rápida de Idioma",
+"chloride.options.others.languagescreen.fastreload.desc": "Si está activado, la actualización del idioma solo recargará el idioma en lugar de todos los recursos, aumentando la velocidad en un 99.9%."
+}
