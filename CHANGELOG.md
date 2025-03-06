@@ -1,3 +1,8 @@
+# RELEASE 1.5.1
+- [🛠️] Tweak modpack mode to only hide Zoom and True darkness page
+- [🌐] Updated translations
+  - [🍾] Updated Russian translation (by mpustovoi)
+
 # RELEASE 1.5.0
 - [✨] Added option "ModpackMode": disables chloride pages registration (forces applied configs)
 - [✨] Added Zoom key defaulted to (C)
