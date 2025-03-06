@@ -33,12 +33,12 @@ public class ChlorideOptions {
 
         pages.add(new OverlayPage());
         pages.add(new DetailsPage());
-        if (ChlorideConfig.modpackMode) pages.add(new TrueDarknessPage());
+        if (!ChlorideConfig.modpackMode) pages.add(new TrueDarknessPage());
         pages.add(new EntityCullingPage());
-        if (ChlorideConfig.modpackMode) pages.add(new ZoomPage());
+        if (!ChlorideConfig.modpackMode) pages.add(new ZoomPage());
         pages.add(new OthersPage());
         if (ChlorideConfig.modpackMode) {
-            LOGGER.info("Modpack Mode is enabled, skipping chloride page registration");
+            LOGGER.info("Modpack Mode is enabled, skipping chloride True Darkness and Zoom page registration");
         }
     }
 
