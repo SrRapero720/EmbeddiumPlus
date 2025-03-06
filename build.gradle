@@ -16,7 +16,7 @@ java {
 
 base {
     archivesName = modid
-    version = "$modloader-mc$minecraftversion-v$modversion"
+    version = "$modloader-mc$mcversion-v$modversion"
 }
 
 java.toolchain {
@@ -93,7 +93,7 @@ minecraft.runs.all {
 jarJar.enable()
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraftversion}-${forgeversion}"
+    minecraft "net.minecraftforge:forge:${mcversion}-${forgeversion}"
     annotationProcessor "net.fabricmc:sponge-mixin:${mixin_fabric_version}+mixin.${mixin_version}"
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
 
@@ -152,12 +152,11 @@ jar {
 }
 
 publishMods {
+    displayName = "$modname-${modloader.toUpperCase()}/mc$mcversion/v$modversion"
+    type = STABLE
     file = jar.archiveFile
     changelog = getChangelogText()
-    type = STABLE
-    displayName = "$modname/$project.properties.version"
     modLoaders.add(modloader.toLowerCase())
-    additionalFiles.from(sourcesJar.archiveFile)
     maxRetries = 2
 
     dryRun = false
@@ -165,20 +164,17 @@ publishMods {
     curseforge {
         accessToken = CF_TOKEN
         projectId = curseforgeid
-        minecraftVersions.addAll(minecraftversion)
+        minecraftVersions.addAll(mcversion)
         javaVersions.addAll(JavaVersion.VERSION_17)
         clientRequired = true
-        serverRequired = true
+        serverRequired = false
         projectSlug = modid
-        additionalFile(sourcesJar) {
-            name = "$modid-sources/${project.properties.version}"
-        }
     }
 
     modrinth {
         accessToken = MT_TOKEN
         projectId = modrinthid
-        minecraftVersions.addAll(minecraftversion)
+        minecraftVersions.addAll(mcversion)
     }
 }
 
