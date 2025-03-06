@@ -1,3 +1,6 @@
+# RELEASE 1.5.2
+- [🐛] Fixed few mistakes
+
 # RELEASE 1.5.1
 - [🛠️] Tweak modpack mode to only hide Zoom and True darkness page
 - [🌐] Updated translations
