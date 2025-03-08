@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.mixins.impl.cloudheight;
+package me.srrapero720.chloride.mixins.impl;
 
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.renderer.DimensionSpecialEffects;

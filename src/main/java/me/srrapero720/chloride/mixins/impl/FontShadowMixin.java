@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.mixins.impl.fontshadow;
+package me.srrapero720.chloride.mixins.impl;
 
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.gui.Font;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Font.class)
-public class FontMixin {
+public class FontShadowMixin {
     @Inject(method = "renderText(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;II)F", at = @At("HEAD"), cancellable = true)
     public void inject$renderText(String pText, float pX, float pY, int pColor, boolean pDropShadow, Matrix4f pMatrix, MultiBufferSource pBuffer, Font.DisplayMode pDisplayMode, int pBackgroundColor, int pPackedLightCoords, CallbackInfoReturnable<Float> cir) {
         if (!ChlorideConfig.fontShadows && pDropShadow) cir.setReturnValue(0f);

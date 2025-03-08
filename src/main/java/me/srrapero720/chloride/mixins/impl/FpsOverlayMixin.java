@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.mixins.impl.fps;
+package me.srrapero720.chloride.mixins.impl;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Locale;
 
 @Mixin(Minecraft.class)
-public abstract class GpuUsageMixin {
+public abstract class FpsOverlayMixin {
     @Shadow public static int fps;
     @Shadow @Final public Options options;
     @Shadow private MetricsRecorder metricsRecorder;

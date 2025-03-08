@@ -1,15 +1,4 @@
-package me.srrapero720.chloride.mixins;
-
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import me.srrapero720.chloride.foundation.zoom.ZoomFeature;
-import net.minecraft.client.Camera;
-import net.minecraft.client.MouseHandler;
-import net.minecraft.client.renderer.GameRenderer;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+package me.srrapero720.chloride.mixins.impl;
 
 // RESERVED FOR FABRIC
 public class ZoomMixins {

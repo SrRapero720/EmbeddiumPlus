@@ -1,11 +1,11 @@
-package me.srrapero720.chloride.mixins.impl.darkness.accessors;
+package me.srrapero720.chloride.mixins.impl.accessors;
 
 import net.minecraft.client.renderer.LightTexture;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(LightTexture.class)
-public interface LightTextureAccessor {
+public interface LightTextureAccessors {
     @Accessor("blockLightRedFlicker")
     float embPlus$getFlicker();
 
