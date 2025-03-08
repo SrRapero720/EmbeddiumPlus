@@ -108,7 +108,6 @@ dependencies {
         implementation fg.deobf("curse.maven:cloth-config-348521:$clothversion")
     }
     compileOnly fg.deobf("curse.maven:emi-580555:$emiversion")
-    runtimeOnly fg.deobf("curse.maven:oculus-581495:$irisversion")
 
     // MOD SUPPORT
     implementation fg.deobf("curse.maven:create-328085:6255513")
