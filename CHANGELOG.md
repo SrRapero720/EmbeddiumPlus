@@ -1,4 +1,7 @@
 # RELEASE 1.5.2
+- [🐛] Fixed crashes on server-side (mod has no srv features, but it might not crash)
+
+# RELEASE 1.5.2
 - [🐛] Fixed few mistakes
 
 # RELEASE 1.5.1
