@@ -1,4 +1,6 @@
 {
+  "chloride.zoom": "缩放",
+
   "chloride.options.common.slow": "慢",
   "chloride.options.common.normal": "正常",
   "chloride.options.common.fast": "快",
@@ -73,8 +75,11 @@
   "chloride.options.darkness.page": "真实黑暗",
   "chloride.options.darkness.mode.title": "真实黑暗的模式",
   "chloride.options.darkness.mode.desc": "真实黑暗功能会使世界其他地方的黑暗更为逼真。这不会影响白天或火把的光照。\n此项可以开关真实黑暗，以及控制什么样的黑暗被视为真正的黑暗。",
-  "chloride.options.darkness.mode.dark": "黑暗",
-  "chloride.options.darkness.mode.dim": "昏暗",
+   "chloride.options.darkness.mode.blackness": "漆黑",
+  "chloride.options.darkness.mode.black": "黑色",
+  "chloride.options.darkness.mode.darkness": "黑暗",
+  "chloride.options.darkness.mode.dark": "昏暗",
+  "chloride.options.darkness.mode.dim": "暗淡",
   "chloride.options.darkness.others.title": "其他维度",
   "chloride.options.darkness.others.desc": "启用后，真实黑暗会在其他维度生效。\n\n[警告] 此项将在不久之后被移除，由黑名单取而代之。",
   "chloride.options.darkness.overworld.title": "主世界",
@@ -116,6 +121,7 @@
   "chloride.options.leaves_culling.less": "较少",
   "chloride.options.leaves_culling.off": "关闭",
 
+  "chloride.pages.details": "细节",
   "chloride.options.fastchest.title": "启用快速箱子",
   "chloride.options.fastchest.desc": "启用后，用静态模型替换箱子原有的模型，就类似普通方块。会破坏箱子动画，但箱子较多的地方变流畅了。\n\n对安装了飞轮，且运行批处理或实例化后端的情况，该选项没有效果。\n重要提示：此选项需要和资源包配套使用，必须一同开启/关闭。",
   "chloride.options.fastbeds.title": "启用快速的床",
@@ -132,6 +138,13 @@
   "chloride.options.screen.desc": "窗口化 - 游戏将在一个小窗口中显示。\n无边框 - 游戏将全屏显示、将帧率锁定到你显示器的刷新率，但允许你随便切换到其他窗口。\n全屏 - 游戏将以原生全屏模式显示。",
   "chloride.options.screen.borderless": "无边框",
   "chloride.options.screen.windowed": "窗口化",
+
+  "chloride.options.zoom.page": "缩放",
+  "chloride.options.zoom.title": "启用缩放",
+  "chloride.options.zoom.desc": "启用缩放功能，可按下激活",
+  "chloride.options.zoom.forbidden": "检测到JustZoom或Zume，chloride缩放现已禁用",
+  "chloride.options.zoom.max.title": "最大缩放程度",
+  "chloride.options.zoom.max.desc": "使用鼠标滚轮设置可能的最大缩放程度",
 
   "chloride.options.others.page": "其他",
   "chloride.options.others.borderless.attachmode.title": "为F11添加无边框",
