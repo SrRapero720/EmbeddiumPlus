@@ -141,8 +141,8 @@
 
   "chloride.options.zoom.page": "缩放",
   "chloride.options.zoom.title": "启用缩放",
-  "chloride.options.zoom.desc": "启用缩放功能，可按下激活",
-  "chloride.options.zoom.forbidden": "检测到JustZoom或Zume，chloride缩放现已禁用",
+  "chloride.options.zoom.desc": "启用缩放功能，默认可按下C键激活",
+  "chloride.options.zoom.forbidden": "检测到JustZoom或Zume，Chloride缩放现已禁用",
   "chloride.options.zoom.max.title": "最大缩放程度",
   "chloride.options.zoom.max.desc": "使用鼠标滚轮设置可能的最大缩放程度",
 
