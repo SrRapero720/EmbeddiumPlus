@@ -3,15 +3,6 @@
 [![Latest Version](https://img.shields.io/curseforge/v/931925?style=for-the-badge&label=curseforge&labelColor=%232d2d2d&color=%23e04e14&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fwatermedia%2Ffiles)](https://www.curseforge.com/minecraft/mc-mods/chloride-mod/files)
 [![Discord community](https://dcbadge.vercel.app/api/server/cuYAzzZ)](https://discord.gg/cuYAzzZ)
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B8UCUF5)
-This mod is going to be **REWRITED FROM SCRATCH**, to complete disconnect it from "upstream" 
-(which was already done in 1.2.0 but somehow people still considers it "a fork").
-
-New version will be renamed to Embeddium++Additions with brand-new™ features on quality, performance, compat.
-enhanced own made video settings screen and much more.
-
-**AH, YES, ALSO WILL HAVE A FABRIC PORT FOR EMBEDDIUM FABRIC**
-
 # 🔧 FEATURES
 
 ### [⚡] PERFORMANCE
