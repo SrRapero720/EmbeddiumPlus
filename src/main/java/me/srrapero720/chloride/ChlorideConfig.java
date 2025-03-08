@@ -3,7 +3,7 @@ package me.srrapero720.chloride;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.blaze3d.platform.Window;
-import me.srrapero720.chloride.mixins.impl.borderless.accessors.MainWindowAccessor;
+import me.srrapero720.chloride.mixins.impl.accessors.WindowAccessors;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.resources.ResourceLocation;
@@ -111,7 +111,7 @@ public class ChlorideConfig {
         }
 
         if (opts.fullscreen.get()) {
-            ((MainWindowAccessor) (Object) window).setDirty(true);
+            ((WindowAccessors) (Object) window).setDirty(true);
             window.changeFullscreenVideoMode();
         }
     }
