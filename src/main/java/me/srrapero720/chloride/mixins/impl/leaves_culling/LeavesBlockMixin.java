@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.mixins.impl.leaves_culling;
 
-import me.srrapero720.chloride.foundation.leaves_culling.ICulleableLeaves;
-import me.srrapero720.chloride.foundation.leaves_culling.LeavesCulling;
+import me.srrapero720.chloride.features.leaves_culling.ICulleableLeaves;
+import me.srrapero720.chloride.features.leaves_culling.LeavesCulling;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;

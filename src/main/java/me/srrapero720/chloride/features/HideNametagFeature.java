@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.foundation.nametag;
+package me.srrapero720.chloride.features;
 
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
@@ -10,7 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-public class NameTagToggle {
+public class HideNametagFeature {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRenderNameTagEvent(RenderNameTagEvent e) {

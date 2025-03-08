@@ -1,6 +1,6 @@
 package me.srrapero720.chloride;
 
-import me.srrapero720.chloride.foundation.zoom.ZoomFeature;
+import me.srrapero720.chloride.features.ZoomFeature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;

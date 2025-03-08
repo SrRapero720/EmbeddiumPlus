@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.foundation.embeddium.pages;
+package me.srrapero720.chloride.features.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
@@ -17,7 +17,7 @@ import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.srrapero720.chloride.foundation.embeddium.ChlorideOptions.STORAGE;
+import static me.srrapero720.chloride.features.sodium.ChlorideOptions.STORAGE;
 
 public class TrueDarknessPage extends OptionPage {
     public static final OptionIdentifier<Void> ID = OptionIdentifier.create(new ResourceLocation(Chloride.ID, "true_darkness"));

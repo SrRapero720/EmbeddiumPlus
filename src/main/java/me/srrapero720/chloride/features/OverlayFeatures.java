@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.foundation.fps;
+package me.srrapero720.chloride.features;
 
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
@@ -16,9 +16,11 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Arrays;
+
 @Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-public class DebugOverlayEvent {
-    private static final FPSDisplay DISPLAY = new FPSDisplay();
+public class OverlayFeatures {
+    private static final FPSDisplayBuilder DISPLAY = new FPSDisplayBuilder();
 
     private static final Component MSG_FPS = Component.translatable("chloride.options.displayfps.fps");
     private static final Component MSG_MIN = Component.translatable("chloride.options.displayfps.min");
@@ -26,13 +28,38 @@ public class DebugOverlayEvent {
     private static final Component MSG_GPU = Component.translatable("chloride.options.displayfps.gpu");
     private static final Component MSG_MEM = Component.translatable("chloride.options.displayfps.mem");
 
-    public static final AverageQueue AVERAGE = new AverageQueue();
-
     private static int fps = -1;
     private static int minFPS = -1;
     private static int avgFPS = -1;
     private static int gpuPercent = -1;
     private static int memUsage = -1;
+
+    // AVG
+    private static final int[] avgCount = new int[24];
+    private static boolean avgFilled = false;
+    private static int avgIndex = 0;
+
+    public static void pushAvgFps(int value) {
+        if (avgIndex == avgCount.length) {
+            avgIndex = 0;
+            avgFilled = true;
+        }
+
+        if (!avgFilled) {
+            Arrays.fill(avgCount, avgIndex, avgCount.length, value);
+        }
+
+        avgCount[avgIndex++] = value;
+    }
+
+    public static int calculateAverage() {
+        int times = 0;
+        for (int i: avgCount) {
+            times += i;
+        }
+
+        return times / avgCount.length;
+    }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onRenderOverlayItem(RenderGuiOverlayEvent.Pre event) {
@@ -51,9 +78,7 @@ public class DebugOverlayEvent {
         minFPS = minFPS(mc);
         memUsage = (int) ((Tools.ramUsed() * 100) / Runtime.getRuntime().maxMemory());
         gpuPercent = Math.min((int) mc.getGpuUtilization(), 100);
-        // DELEFATED TO MIXIN CLASS
-        // AVERAGE.push(fps).calculate();
-        avgFPS = AVERAGE.calculate();
+        avgFPS = calculateAverage();
         renderFPSChar(mc, event.getGuiGraphics(), mc.font, event.getWindow().getGuiScale());
     }
 
@@ -148,5 +173,63 @@ public class DebugOverlayEvent {
         }
 
         return (int) (1 / ((double) maxNS / 1000000000));
+    }
+
+    private static class FPSDisplayBuilder {
+        private StringBuilder builder = new StringBuilder();
+        private boolean split = false;
+        private boolean divisor = false;
+
+        public FPSDisplayBuilder append(String param) {
+            if (split) builder.append(" - ");
+            if (divisor) builder.append(" | ");
+            builder.append(param);
+
+            split = false;
+            divisor = true;
+            return this;
+        }
+
+        public FPSDisplayBuilder append(ChatFormatting formatting) {
+            return append(formatting.toString());
+        }
+
+        public FPSDisplayBuilder add(int param) {
+            builder.append(param);
+            return this;
+        }
+
+        public FPSDisplayBuilder add(String param) {
+            builder.append(param);
+            return this;
+        }
+
+        public FPSDisplayBuilder add(Component component) {
+            return add(component.getString());
+        }
+
+        public FPSDisplayBuilder add(ChatFormatting formatting) {
+            return add(formatting.toString());
+        }
+
+        public void split() {
+            split = true;
+            divisor = false;
+        }
+
+        public boolean isEmpty() {
+            return builder.isEmpty();
+        }
+
+        public void release() {
+            builder = new StringBuilder();
+            split = false;
+            divisor = false;
+        }
+
+        @Override
+        public String toString() {
+            return builder.toString();
+        }
     }
 }

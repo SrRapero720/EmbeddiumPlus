@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.foundation.leaves_culling;
+package me.srrapero720.chloride.features.leaves_culling;
 
 import net.minecraft.resources.ResourceLocation;
 

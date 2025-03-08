@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.foundation.darkness;
+package me.srrapero720.chloride.features;
 
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.Tools;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
 
 
-public class DarknessPlus {
+public class TrueDarknessFeature {
 	public static final double MIN = 0.03D;
 
 	public static Vec3 getDarkFogColor(Vec3 vanilla, double factor) {
@@ -80,7 +80,7 @@ public class DarknessPlus {
 		final ClientLevel level = client.level;
         if (level == null) return;
 
-        boolean isDarkOnLevel = DarknessPlus.isDark(level);
+        boolean isDarkOnLevel = TrueDarknessFeature.isDark(level);
 
 		enabled = !(
                 !isDarkOnLevel
@@ -91,7 +91,7 @@ public class DarknessPlus {
 
         if (!enabled) return;
 
-        final float dimSkyFactor = DarknessPlus.skyFactor(level);
+        final float dimSkyFactor = TrueDarknessFeature.skyFactor(level);
         final float ambient = level.getSkyDarken(1.0F);
         final DimensionType dim = level.dimensionType();
 
@@ -181,7 +181,7 @@ public class DarknessPlus {
                 green = Mth.clamp(green, 0.0f, 1.0f);
                 blue = Mth.clamp(blue, 0.0f, 1.0f);
 
-                LUMINANCE[blockIndex][skyIndex] = DarknessPlus.luminance(red, green, blue);
+                LUMINANCE[blockIndex][skyIndex] = TrueDarknessFeature.luminance(red, green, blue);
             }
         }
     }

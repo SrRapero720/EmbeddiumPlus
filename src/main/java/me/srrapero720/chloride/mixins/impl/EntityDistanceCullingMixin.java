@@ -3,7 +3,7 @@ package me.srrapero720.chloride.mixins.impl;
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.Tools;
-import me.srrapero720.chloride.foundation.entitydistance.IWhitelistCheck;
+import me.srrapero720.chloride.features.DistanceCullingFeature;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
@@ -48,7 +48,7 @@ public class EntityDistanceCullingMixin {
                 distX = ChlorideConfig.entityCullingDistanceX;
             }
 
-            boolean isWhitelisted = ((IWhitelistCheck) entity.getType()).embPlus$isWhitelisted();
+            boolean isWhitelisted = ((DistanceCullingFeature) entity.getType()).chloride$whitelisted();
             if (!isWhitelisted && !Tools.isEntityInRange(entity, x, y, z, distY, distX)) {
                 cir.setReturnValue(false);
             }
@@ -57,7 +57,7 @@ public class EntityDistanceCullingMixin {
 
     @Mixin(EntityType.class)
     @SuppressWarnings("deprecation")
-    public abstract static class EntityTypeMixin implements IWhitelistCheck {
+    public abstract static class EntityTypeMixin implements DistanceCullingFeature {
         @Unique
         private static final Marker e$IT = MarkerManager.getMarker("EntityType");
         @Unique private boolean embPlus$checked = false;
@@ -68,7 +68,7 @@ public class EntityDistanceCullingMixin {
 
         @Override
         @Unique
-        public boolean embPlus$isWhitelisted() {
+        public boolean chloride$whitelisted() {
             if (embPlus$checked) return embPlus$whitelisted;
 
             final var resource = embPlus$resourceLocation();
@@ -103,7 +103,7 @@ public class EntityDistanceCullingMixin {
         public <E extends BlockEntity> void render(E tile, float val, PoseStack matrix, MultiBufferSource bufferSource, CallbackInfo ci) {
             if (!ChlorideConfig.tileEntityDistanceCulling) return;
 
-            boolean isWhitelisted = ((IWhitelistCheck) tile.getType()).embPlus$isWhitelisted();
+            boolean isWhitelisted = ((DistanceCullingFeature) tile.getType()).chloride$whitelisted();
             if (!isWhitelisted && !Tools.isEntityInRange(tile.getBlockPos(), camera.getPosition(),
                     ChlorideConfig.tileEntityCullingDistanceY,
                     ChlorideConfig.tileEntityCullingDistanceX)
@@ -114,13 +114,13 @@ public class EntityDistanceCullingMixin {
     }
 
     @Mixin(BlockEntityType.class)
-    public abstract static class TileEntityTypeMixin implements IWhitelistCheck {
+    public abstract static class TileEntityTypeMixin implements DistanceCullingFeature {
         @Unique private static final Marker e$IT = MarkerManager.getMarker("BlockEntityType");
         @Unique private boolean embPlus$checked = false;
         @Unique private boolean embPlus$whitelisted = false;
 
         @Override
-        public boolean embPlus$isWhitelisted() {
+        public boolean chloride$whitelisted() {
             if (embPlus$checked) return embPlus$whitelisted;
             ResourceLocation resource = BlockEntityType.getKey(embPlus$cast());
             if (resource == null) {

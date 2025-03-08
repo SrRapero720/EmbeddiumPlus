@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.foundation.embeddium.storage;
+package me.srrapero720.chloride.features.sodium.storage;
 
 import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
 import me.srrapero720.chloride.ChlorideConfig;

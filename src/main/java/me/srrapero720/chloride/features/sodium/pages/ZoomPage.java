@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.foundation.embeddium.pages;
+package me.srrapero720.chloride.features.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
@@ -9,7 +9,7 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.foundation.zoom.ZoomFeature;
+import me.srrapero720.chloride.features.ZoomFeature;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static me.srrapero720.chloride.foundation.embeddium.ChlorideOptions.STORAGE;
+import static me.srrapero720.chloride.features.sodium.ChlorideOptions.STORAGE;
 
 public class ZoomPage extends OptionPage {
     public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "zoom")));

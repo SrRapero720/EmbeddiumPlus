@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.foundation.embeddium;
+package me.srrapero720.chloride.features.sodium;
 
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptionPages;
 import me.jellysquid.mods.sodium.client.gui.options.*;
@@ -9,8 +9,8 @@ import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.ChlorideConfig.FullScreenMode;
 import me.srrapero720.chloride.Tools;
-import me.srrapero720.chloride.foundation.embeddium.pages.*;
-import me.srrapero720.chloride.foundation.embeddium.storage.ChlorideOptionsStorage;
+import me.srrapero720.chloride.features.sodium.pages.*;
+import me.srrapero720.chloride.features.sodium.storage.ChlorideOptionsStorage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;

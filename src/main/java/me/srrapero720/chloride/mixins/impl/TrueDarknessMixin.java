@@ -3,7 +3,7 @@ package me.srrapero720.chloride.mixins.impl;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.foundation.darkness.DarknessPlus;
+import me.srrapero720.chloride.features.TrueDarknessFeature;
 import me.srrapero720.chloride.mixins.impl.accessors.LightTextureAccessors;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
@@ -34,7 +34,7 @@ public class TrueDarknessMixin {
 
             if (lightTexAccessor.embPlus$isDirty()) {
                 minecraft.getProfiler().push("lightTex");
-                DarknessPlus.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightTexAccessor.embPlus$getFlicker());
+                TrueDarknessFeature.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightTexAccessor.embPlus$getFlicker());
                 minecraft.getProfiler().pop();
             }
         }
@@ -49,7 +49,7 @@ public class TrueDarknessMixin {
 
         @Inject(method = "upload", at = @At(value = "HEAD"))
         private void inject$onUpload(CallbackInfo ci) {
-            if (!DarknessPlus.enabled) return;
+            if (!TrueDarknessFeature.enabled) return;
             // LightMapTextureManager uploads all pixels sets to -1 on the first call
             //  I tested it and without this check it runs well, but doesn't cost much to me keep it
             if (chloride$firstCall) {
@@ -60,7 +60,7 @@ public class TrueDarknessMixin {
             final NativeImage img = pixels;
             for (int b = 0; b < 16; b++) {
                 for (int s = 0; s < 16; s++) {
-                    final int color = DarknessPlus.darken(img.getPixelRGBA(b, s), b, s);
+                    final int color = TrueDarknessFeature.darken(img.getPixelRGBA(b, s), b, s);
                     img.setPixelRGBA(b, s, color);
                 }
             }
@@ -77,7 +77,7 @@ public class TrueDarknessMixin {
                 if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.OFF) return;
                 if (!ChlorideConfig.darknessOnNether) return;
 
-                cir.setReturnValue(DarknessPlus.getDarkFogColor(
+                cir.setReturnValue(TrueDarknessFeature.getDarkFogColor(
                         cir.getReturnValue(),
                         ChlorideConfig.darknessNetherFogBright)
                 );
@@ -91,7 +91,7 @@ public class TrueDarknessMixin {
                 if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.OFF) return;
                 if (!ChlorideConfig.darknessOnEnd) return;
 
-                cir.setReturnValue(DarknessPlus.getDarkFogColor(
+                cir.setReturnValue(TrueDarknessFeature.getDarkFogColor(
                         cir.getReturnValue(),
                         ChlorideConfig.darknessEndFogBright)
                 );

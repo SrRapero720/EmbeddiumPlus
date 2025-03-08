@@ -3,7 +3,7 @@ package me.srrapero720.chloride.mixins.impl;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.foundation.fps.DebugOverlayEvent;
+import me.srrapero720.chloride.features.OverlayFeatures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -42,7 +42,7 @@ public abstract class FpsOverlayMixin {
     @Inject(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;gpuUtilization:D", opcode = Opcodes.GETFIELD, ordinal = 0, shift = At.Shift.BEFORE))
     private void inject$getGPU(boolean pRenderLevel, CallbackInfo ci) {
         this.gpuUtilization = embPlus$gpuUsage;
-        DebugOverlayEvent.AVERAGE.push(fps);
+        OverlayFeatures.pushAvgFps(fps);
     }
 
     @WrapOperation(method = "runTick", at = @At(value = "INVOKE", target = "Ljava/lang/String;format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"))

@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.foundation.fastmodels;
+package me.srrapero720.chloride.features;
 
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.Tools;
@@ -6,7 +6,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE, modid = Chloride.ID)
-public class FastModels {
+public class FastBlocksFeature {
 
     public static boolean canUseOnChests() {
         if (Tools.isModInstalled("flywheel")) {

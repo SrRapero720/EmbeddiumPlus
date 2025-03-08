@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.mixins.impl;
 
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.foundation.fastmodels.FastModels;
+import me.srrapero720.chloride.features.FastBlocksFeature;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.core.Direction;
@@ -43,14 +43,14 @@ public class FastBlocksMixins {
     public static class ChestsMixin {
         @Inject(method = "getTicker", at = @At("HEAD"), cancellable = true)
         private <T extends BlockEntity> void inject$removeTicker(Level level, BlockState state, BlockEntityType<T> type, CallbackInfoReturnable<BlockEntityTicker<T>> cir) {
-            if (FastModels.canUseOnChests() && ChlorideConfig.fastChests) {
+            if (FastBlocksFeature.canUseOnChests() && ChlorideConfig.fastChests) {
                 cir.setReturnValue(null);
             }
         }
 
         @Inject(method = "getRenderShape", at = @At("HEAD"), cancellable = true)
         private void inject$replaceRenderShape(BlockState state, CallbackInfoReturnable<RenderShape> cir) {
-            if (FastModels.canUseOnChests() && ChlorideConfig.fastChests) {
+            if (FastBlocksFeature.canUseOnChests() && ChlorideConfig.fastChests) {
                 cir.setReturnValue(RenderShape.MODEL);
             }
         }
@@ -62,7 +62,7 @@ public class FastBlocksMixins {
         private <E extends BlockEntity> void inject$disableRenderer(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
             // FAST CHESTS (needs FLYWHEEL HANDLING)
             Class<?> beClass = blockEntity.getClass();
-            if (ChlorideConfig.fastChests && FastModels.canUseOnChests()) {
+            if (ChlorideConfig.fastChests && FastBlocksFeature.canUseOnChests()) {
                 if (beClass == ChestBlockEntity.class || beClass == EnderChestBlockEntity.class) {
                     cir.setReturnValue(null);
                 }
