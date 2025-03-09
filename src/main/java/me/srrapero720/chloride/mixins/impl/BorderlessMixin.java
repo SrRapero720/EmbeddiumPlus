@@ -15,7 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static me.srrapero720.chloride.ChlorideConfig.fullScreen;
 
-public class BorderlessMixin {
+class BorderlessMixin {
+
     @Mixin(Window.class)
     public static class WindowMixin {
         @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
@@ -42,16 +43,14 @@ public class BorderlessMixin {
 
     @Mixin(KeyboardHandler.class)
     public static class KeyboardHandlerMixin {
-        @Shadow
-        @Final
-        public Minecraft minecraft;
+        @Shadow @Final public Minecraft minecraft;
 
         @Inject(method = "keyPress", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;toggleFullScreen()V"), cancellable = true)
         public void redirect$handleFullScreenToggle(long pWindowPointer, int pKey, int pScanCode, int pAction, int pModifiers, CallbackInfo ci) {
-            switch (ChlorideConfig.borderlessAttachModeF11) {
-                case ATTACH -> ChlorideConfig.setFullScreenMode(minecraft.options, ChlorideConfig.FullScreenMode.nextOf(fullScreen));
-                case REPLACE -> ChlorideConfig.setFullScreenMode(minecraft.options, ChlorideConfig.FullScreenMode.nextBorderless(fullScreen));
-                case OFF -> ChlorideConfig.setFullScreenMode(minecraft.options, ChlorideConfig.FullScreenMode.nextFullscreen(fullScreen));
+            switch (ChlorideConfig.borderlessAttachModeF11.ordinal()) {
+                case 0 -> ChlorideConfig.setFullScreenMode(minecraft.options, ChlorideConfig.FullScreenMode.nextOf(fullScreen));
+                case 1 -> ChlorideConfig.setFullScreenMode(minecraft.options, ChlorideConfig.FullScreenMode.nextBorderless(fullScreen));
+                case 2 -> ChlorideConfig.setFullScreenMode(minecraft.options, ChlorideConfig.FullScreenMode.nextFullscreen(fullScreen));
             }
             ci.cancel();
         }
