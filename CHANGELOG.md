@@ -1,4 +1,7 @@
-# RELEASE 1.5.2
+# RELEASE 1.5.4
+- [🐛] Fixed crashes clicking F11
+
+# RELEASE 1.5.3
 - [🐛] Fixed crashes on server-side (mod has no srv features, but it might not crash)
 
 # RELEASE 1.5.2
