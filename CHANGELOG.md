@@ -1,3 +1,6 @@
+# RELEASE 1.5.5
+- [🐛] Fixed whitelist wasn't working using `modid:all` wildcard
+
 # RELEASE 1.5.4
 - [🐛] Fixed crashes clicking F11
 
