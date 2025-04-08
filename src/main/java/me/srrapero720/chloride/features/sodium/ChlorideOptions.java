@@ -11,6 +11,7 @@ import me.srrapero720.chloride.ChlorideConfig.FullScreenMode;
 import me.srrapero720.chloride.Tools;
 import me.srrapero720.chloride.features.sodium.pages.*;
 import me.srrapero720.chloride.features.sodium.storage.ChlorideOptionsStorage;
+import net.minecraft.client.Options;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -136,8 +137,7 @@ public class ChlorideOptions {
     }
 
     private static Option<FullScreenMode> getFullscreenOption() {
-        var options = SodiumGameOptionPages.getVanillaOpts();
-        return OptionImpl.createBuilder(FullScreenMode.class, options)
+        return OptionImpl.createBuilder(FullScreenMode.class, STORAGE)
                 .setId(ResourceLocation.tryBuild(Chloride.ID, "fullscreen"))
                 .setName(Component.translatable("chloride.options.screen.title"))
                 .setTooltip(Component.translatable("chloride.options.screen.desc"))
@@ -146,6 +146,9 @@ public class ChlorideOptions {
                         Component.translatable("chloride.options.screen.borderless"),
                         Component.translatable("options.fullscreen")
                 }))
-                .setBinding(ChlorideConfig::setFullScreenMode, (opts) -> ChlorideConfig.fullScreen).build();
+                .setBinding(
+                        (s, g) -> ChlorideConfig.setFullScreenMode(g),
+                        (opts) -> ChlorideConfig.fullScreen
+                ).build();
     }
 }

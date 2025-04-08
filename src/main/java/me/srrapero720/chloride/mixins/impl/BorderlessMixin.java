@@ -48,9 +48,9 @@ class BorderlessMixin {
         @Inject(method = "keyPress", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;toggleFullScreen()V"), cancellable = true)
         public void redirect$handleFullScreenToggle(long pWindowPointer, int pKey, int pScanCode, int pAction, int pModifiers, CallbackInfo ci) {
             switch (ChlorideConfig.borderlessAttachModeF11.ordinal()) {
-                case 0 -> ChlorideConfig.setFullScreenMode(minecraft.options, ChlorideConfig.FullScreenMode.nextOf(fullScreen));
-                case 1 -> ChlorideConfig.setFullScreenMode(minecraft.options, ChlorideConfig.FullScreenMode.nextBorderless(fullScreen));
-                case 2 -> ChlorideConfig.setFullScreenMode(minecraft.options, ChlorideConfig.FullScreenMode.nextFullscreen(fullScreen));
+                case 0 -> ChlorideConfig.setFullScreenMode(ChlorideConfig.FullScreenMode.nextOf(fullScreen));
+                case 1 -> ChlorideConfig.setFullScreenMode(ChlorideConfig.FullScreenMode.nextBorderless(fullScreen));
+                case 2 -> ChlorideConfig.setFullScreenMode(ChlorideConfig.FullScreenMode.nextFullscreen(fullScreen));
             }
             ci.cancel();
         }
