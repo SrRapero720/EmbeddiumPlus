@@ -98,11 +98,13 @@ public class ChlorideConfig {
     @ConfigField public static boolean dynLightsUpdateOnPositionChange = true;
 
 
-    public static void setFullScreenMode(Options opts, FullScreenMode value) {
+    public static void setFullScreenMode(FullScreenMode value) {
+        Minecraft client = Minecraft.getInstance();
+        Options opts = client.options;
+
         fullScreen = value;
         opts.fullscreen.set(value != FullScreenMode.WINDOWED);
 
-        Minecraft client = Minecraft.getInstance();
         Window window = client.getWindow();
 
         if (window.isFullscreen() != opts.fullscreen.get()) {
