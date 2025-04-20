@@ -43,9 +43,9 @@ public class TrueDarknessFeature {
 	}
 
 	private static float skyFactor(Level world) {
-        if (ChlorideConfig.darknessBlockLightOnly || !isDark(world)) return 1;
+        if (!isDark(world)) return 1;
 
-        if (!world.dimensionType().hasSkyLight()) return 0;
+        if (!world.dimensionType().hasSkyLight()) return 0; // alrweady checks for block light only
 
 		final float angle = world.getTimeOfDay(0);
         if (!(angle > 0.25f) || !(angle < 0.75f)) return 1;

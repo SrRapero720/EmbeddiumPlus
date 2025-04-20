@@ -130,7 +130,6 @@ public class TrueDarknessPage extends OptionPage {
                 .setControl(TickBoxControl::new)
                 .setBinding((options, value) -> ChlorideConfig.darknessBlockLightOnly = value,
                         (options) -> ChlorideConfig.darknessBlockLightOnly)
-                .setEnabled(false)
                 .build();
 
 
@@ -138,6 +137,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setName(Component.translatable("chloride.options.darkness.moonphase.title"))
                 .setTooltip(Component.translatable("chloride.options.darkness.moonphase.desc"))
                 .setControl(TickBoxControl::new)
+                .setEnabledPredicate(() -> !ChlorideConfig.darknessBlockLightOnly)
                 .setBinding((options, value) -> ChlorideConfig.darknessAffectedByMoonPhase = value,
                         (options) -> ChlorideConfig.darknessAffectedByMoonPhase)
                 .build();

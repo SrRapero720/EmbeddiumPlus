@@ -28,6 +28,7 @@
     "darkness.DimensionEffectsMixin",
     "darkness.DimensionEffectsMixin$EndMixin",
     "darkness.DimensionEffectsMixin$NetherMixin",
+    "darkness.DimensionTypeMixin",
     "darkness.DynamicTextureMixin",
     "darkness.GameRendererMixin",
     "darkness.LightTextureMixin",
