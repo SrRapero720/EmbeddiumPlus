@@ -6,8 +6,6 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "chloride.mixin-refmap.json",
   "client": [
-    "accessors.LightTextureAccessors",
-    "accessors.WindowAccessors",
     "BorderlessMixin$KeyboardHandlerMixin",
     "BorderlessMixin$WindowMixin",
     "CloudHeightMixin",
@@ -22,15 +20,20 @@
     "FontShadowMixin",
     "FontShadowMixin$StringRenderOutputMixin",
     "FpsOverlayMixin",
-    "jei_rei_emi.EmiOverlayMixin",
-    "jei_rei_emi.JeiOverlayMixin",
-    "jei_rei_emi.ReiOverlayMixin",
-    "leaves_culling.LeavesBlockMixin",
     "MinecraftMixin",
     "NameTagToggleMixin",
     "QuickLanguageReloadMixin",
-    "TrueDarknessMixin$DimensionEffectsMixin",
-    "TrueDarknessMixin$DynamicTextureMixin",
-    "TrueDarknessMixin$GameRendererMixin"
+    "accessors.LightTextureAccessors",
+    "accessors.WindowAccessors",
+    "darkness.DimensionEffectsMixin",
+    "darkness.DimensionEffectsMixin$EndMixin",
+    "darkness.DimensionEffectsMixin$NetherMixin",
+    "darkness.DynamicTextureMixin",
+    "darkness.GameRendererMixin",
+    "darkness.LightTextureMixin",
+    "jei_rei_emi.EmiOverlayMixin",
+    "jei_rei_emi.JeiOverlayMixin",
+    "jei_rei_emi.ReiOverlayMixin",
+    "leaves_culling.LeavesBlockMixin"
   ]
 }

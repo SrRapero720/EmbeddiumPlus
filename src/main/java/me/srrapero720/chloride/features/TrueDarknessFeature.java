@@ -17,7 +17,7 @@ import net.minecraft.world.phys.Vec3;
 public class TrueDarknessFeature {
 	public static final double MIN = 0.03D;
 
-	public static Vec3 getDarkFogColor(Vec3 vanilla, double factor) {
+	public static Vec3 getFogColor(Vec3 vanilla, double factor) {
 		if (factor == 1.0) return vanilla;
         return new Vec3(Math.max(MIN, vanilla.x * factor), Math.max(MIN, vanilla.y * factor), Math.max(MIN, vanilla.z * factor));
 	}
@@ -75,7 +75,6 @@ public class TrueDarknessFeature {
 		return r * 0.2126f + g * 0.7152f + b * 0.0722f;
 	}
 
-    // FIXME: make more understandable
 	public static void updateLuminance(float tickDelta, Minecraft client, GameRenderer gameRenderer, float prevFlicker) {
 		final ClientLevel level = client.level;
         if (level == null) return;
@@ -184,5 +183,9 @@ public class TrueDarknessFeature {
                 LUMINANCE[blockIndex][skyIndex] = TrueDarknessFeature.luminance(red, green, blue);
             }
         }
+    }
+
+    public interface DynamicTextureHook {
+        void chloride$enableDarkness();
     }
 }
