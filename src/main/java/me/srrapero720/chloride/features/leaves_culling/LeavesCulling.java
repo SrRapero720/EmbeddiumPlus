@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.features.leaves_culling;
 
-import me.jellysquid.mods.sodium.client.SodiumClientMod;
 import me.srrapero720.chloride.ChlorideConfig;
+import net.caffeinemc.mods.sodium.client.SodiumClientMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.block.LeavesBlock;
 

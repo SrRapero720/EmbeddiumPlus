@@ -6,6 +6,8 @@ import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.features.OverlayFeatures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
+import net.minecraft.client.gui.components.DebugScreenOverlay;
+import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.util.profiling.metrics.profiling.MetricsRecorder;
 import org.objectweb.asm.Opcodes;
@@ -18,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import javax.annotation.Nullable;
 import java.util.Locale;
 
 @Mixin(Minecraft.class)
@@ -27,6 +30,11 @@ public abstract class FpsOverlayMixin {
     @Shadow private MetricsRecorder metricsRecorder;
     @Shadow public ClientLevel level;
     @Shadow private double gpuUtilization;
+
+    @Shadow @Nullable public abstract Overlay getOverlay();
+
+    @Shadow public abstract DebugScreenOverlay getDebugOverlay();
+
     @Unique private double embPlus$gpuUsage = 0;
 
     @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/metrics/profiling/MetricsRecorder;isRecording()Z"))
@@ -48,7 +56,7 @@ public abstract class FpsOverlayMixin {
     // MICRO OPTIMIZATION
     @WrapOperation(method = "runTick", at = @At(value = "INVOKE", target = "Ljava/lang/String;format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"))
     private String redirect$removeString(Locale l, String format, Object[] args, Operation<String> original) {
-        if (this.options.renderDebug && !this.metricsRecorder.isRecording()) return original.call(l, format, args);
+        if (this.getDebugOverlay().showDebugScreen() && !this.metricsRecorder.isRecording()) return original.call(l, format, args);
         else return "";
     }
 }

@@ -1,18 +1,17 @@
 package me.srrapero720.chloride.features.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
-import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
-import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
-import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
-import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
-import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
-import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionGroup;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionImpl;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
+import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import net.caffeinemc.mods.sodium.client.gui.options.control.CyclingControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +19,8 @@ import java.util.List;
 import static me.srrapero720.chloride.features.sodium.ChlorideOptions.STORAGE;
 
 public class TrueDarknessPage extends OptionPage {
-    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(new ResourceLocation(Chloride.ID, "true_darkness"));
     public TrueDarknessPage() {
-        super(ID, Component.translatable("chloride.options.darkness.page"), create());
+        super(Component.translatable("chloride.options.darkness.page"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
@@ -137,7 +135,7 @@ public class TrueDarknessPage extends OptionPage {
                 .setName(Component.translatable("chloride.options.darkness.moonphase.title"))
                 .setTooltip(Component.translatable("chloride.options.darkness.moonphase.desc"))
                 .setControl(TickBoxControl::new)
-                .setEnabledPredicate(() -> !ChlorideConfig.darknessBlockLightOnly)
+                .setEnabled(() -> !ChlorideConfig.darknessBlockLightOnly)
                 .setBinding((options, value) -> ChlorideConfig.darknessAffectedByMoonPhase = value,
                         (options) -> ChlorideConfig.darknessAffectedByMoonPhase)
                 .build();

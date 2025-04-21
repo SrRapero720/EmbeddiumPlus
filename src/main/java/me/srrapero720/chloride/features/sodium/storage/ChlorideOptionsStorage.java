@@ -1,6 +1,6 @@
 package me.srrapero720.chloride.features.sodium.storage;
 
-import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
+import net.caffeinemc.mods.sodium.client.gui.options.storage.OptionStorage;
 import me.srrapero720.chloride.ChlorideConfig;
 
 public class ChlorideOptionsStorage implements OptionStorage<Object> {

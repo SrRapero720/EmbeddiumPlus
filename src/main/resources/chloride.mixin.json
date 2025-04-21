@@ -35,6 +35,10 @@
     "jei_rei_emi.EmiOverlayMixin",
     "jei_rei_emi.JeiOverlayMixin",
     "jei_rei_emi.ReiOverlayMixin",
-    "leaves_culling.LeavesBlockMixin"
+    "leaves_culling.LeavesBlockMixin",
+    "sodium.SodiumOptionsGUIMixin"
+  ],
+  "mixins": [
+    "sodium.SodiumOptionsMixin"
   ]
 }

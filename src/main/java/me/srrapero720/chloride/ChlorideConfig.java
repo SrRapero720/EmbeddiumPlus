@@ -8,8 +8,8 @@ import me.srrapero720.chloride.mixins.impl.accessors.WindowAccessors;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.common.EventBusSubscriber;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 
 import static me.srrapero720.chloride.Chloride.LOGGER;
 
-@Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ChlorideConfig {
     public static final Marker IT = MarkerManager.getMarker("Config");
     private static final Gson GSON = new GsonBuilder()
@@ -110,16 +109,16 @@ public class ChlorideConfig {
         Options opts = client.options;
 
         fullScreen = value;
-        opts.fullscreen.set(value != FullScreenMode.WINDOWED);
+        opts.fullscreen().set(value != FullScreenMode.WINDOWED);
 
         Window window = client.getWindow();
 
-        if (window.isFullscreen() != opts.fullscreen.get()) {
+        if (window.isFullscreen() != opts.fullscreen().get()) {
             window.toggleFullScreen();
-            opts.fullscreen.set(window.isFullscreen());
+            opts.fullscreen().set(window.isFullscreen());
         }
 
-        if (opts.fullscreen.get()) {
+        if (opts.fullscreen().get()) {
             ((WindowAccessors) (Object) window).setDirty(true);
             window.changeFullscreenVideoMode();
         }
@@ -216,7 +215,6 @@ public class ChlorideConfig {
     }
 
     static void load(Path configPath) {
-        ChlorideConfig_Old.tryRestore();
         configFile = configPath.resolve("chloride-client.json").toFile();
         if (!configFile.exists()) {
             write();
