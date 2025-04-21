@@ -61,7 +61,7 @@ public class ChlorideOptions {
         if (e.getId() != null && e.getId().equals(StandardOptions.Pages.PERFORMANCE)) {
             var builder = OptionGroup.createBuilder();
             var sodiumOpts = SodiumGameOptionPages.getVanillaOpts();
-            var fontShadow = OptionImpl.createBuilder(boolean.class, sodiumOpts)
+            var fontShadow = OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "font_shadow"))
                     .setName(Component.translatable("chloride.options.fontshadow.title"))
                     .setTooltip(Component.translatable("chloride.options.fontshadow.desc"))
@@ -72,7 +72,7 @@ public class ChlorideOptions {
                     .setImpact(OptionImpact.VARIES)
                     .build();
 
-            var leavesCulling = OptionImpl.createBuilder(ChlorideConfig.LeavesCullingMode.class, sodiumOpts)
+            var leavesCulling = OptionImpl.createBuilder(ChlorideConfig.LeavesCullingMode.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "leaves_culling"))
                     .setName(Component.translatable("chloride.options.leaves_culling.title"))
                     .setTooltip(Component.translatable("chloride.options.leaves_culling.desc"))
@@ -86,7 +86,7 @@ public class ChlorideOptions {
                     .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                     .build();
 
-            var fastChest = OptionImpl.createBuilder(boolean.class, sodiumOpts)
+            var fastChest = OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_chests"))
                     .setName(Component.translatable("chloride.options.fastchest.title"))
                     .setTooltip(Component.translatable("chloride.options.fastchest.desc"))
@@ -100,7 +100,7 @@ public class ChlorideOptions {
                     .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                     .build();
 
-            var fastBeds = OptionImpl.createBuilder(boolean.class, sodiumOpts)
+            var fastBeds = OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_beds"))
                     .setName(Component.translatable("chloride.options.fastbeds.title"))
                     .setTooltip(Component.translatable("chloride.options.fastbeds.desc"))
@@ -114,7 +114,7 @@ public class ChlorideOptions {
                     .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                     .build();
 
-            var hideJEI = OptionImpl.createBuilder(boolean.class, sodiumOpts)
+            var hideJEI = OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "hide_jremi"))
                     .setName(Component.translatable("chloride.options.jei.title"))
                     .setTooltip(Component.translatable("chloride.options.jei.desc"))
