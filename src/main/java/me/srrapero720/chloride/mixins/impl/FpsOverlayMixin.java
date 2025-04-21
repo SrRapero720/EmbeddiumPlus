@@ -45,6 +45,7 @@ public abstract class FpsOverlayMixin {
         OverlayFeatures.pushAvgFps(fps);
     }
 
+    // MICRO OPTIMIZATION
     @WrapOperation(method = "runTick", at = @At(value = "INVOKE", target = "Ljava/lang/String;format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"))
     private String redirect$removeString(Locale l, String format, Object[] args, Operation<String> original) {
         if (this.options.renderDebug && !this.metricsRecorder.isRecording()) return original.call(l, format, args);
