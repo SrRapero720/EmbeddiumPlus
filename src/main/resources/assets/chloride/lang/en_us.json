@@ -1,6 +1,8 @@
 {
   "chloride.zoom": "Zoom",
 
+  "chloride.feature.jei_rei_emi.empty_warning": "Search to show items",
+
   "chloride.options.common.slow": "Slow",
   "chloride.options.common.normal": "Normal",
   "chloride.options.common.fast": "Fast",
