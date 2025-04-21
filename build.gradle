@@ -113,15 +113,6 @@ jar {
                 "MixinConfigs"              : "$modid.$mixin_file_suffix"
         ])
     }
-    from {
-        configurations.shadeLibrary.collect {
-            it.isDirectory() ? it.matching {
-                exclude '*', 'META-INF/**'
-            } : zipTree(it).matching {
-                exclude '*', 'META-INF/**'
-            }
-        }
-    }
     from("LICENSE") {
         rename { "${it}_${base.archivesName.get()}"}
     }
@@ -141,7 +132,7 @@ publishMods {
         accessToken = CF_TOKEN
         projectId = curseforgeid
         minecraftVersions.addAll(mcversion)
-        javaVersions.addAll(JavaVersion.VERSION_17)
+        javaVersions.addAll(JavaVersion.VERSION_21)
         clientRequired = true
         serverRequired = false
         projectSlug = modid
