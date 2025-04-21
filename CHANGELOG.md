@@ -1,3 +1,20 @@
+# RELEASE 1.6.0
+- [✨] [1.21.1] Ported to NeoForge (Embeddium)
+- [✨] Added blocklightOnly option to True Darkness
+  - 🛠️ This option will only darken the block light, not the sky light
+  - 🛠️ This option is disabled by default
+- [✨] Enhanced FPS Display alignment
+  - 🛠️ Now you can choose between TOP, CENTER and BOTTOM
+  - 🛠️ Margin is now split for horizontal and vertical
+  - 🛠️ Increased maximum margin
+- [✨] Added a helper text on JEI/REI/EMI when is nothing typed on search bar
+- [✨] Added custom fog configurations
+  - 🛠️ Now you can configure fog start, distance and shape
+- [🐛] Fixed fullscreen mode wasn't saving applying the options
+- [🐛] Fixed maps have a black square on corners
+- [🐛] Fixed certain configurations are not saving
+- [🐛] Fixed fog wasn't enabled under water or lava (acting as a cheat)
+
 # RELEASE 1.5.5
 - [🐛] Fixed whitelist wasn't working using `modid:all` wildcard
 
