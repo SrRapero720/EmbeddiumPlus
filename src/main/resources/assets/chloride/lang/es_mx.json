@@ -69,20 +69,27 @@
 
   "chloride.options.displayfps.title": "Mostrar FPS",
   "chloride.options.displayfps.desc": "Mostrar los FPS. Modo avanzado muestra la cantidad mas baja de FPS, en unos 15 segundos de FPS promedio, util para evaluar el rendimiento.",
-
-  "chloride.options.displayfps.gravity.title": "Gravedad del texto",
-  "chloride.options.displayfps.gravity.desc": "Esquina en la que se posicionara el texto",
-  "chloride.options.displayfps.gravity.left": "Izquierda",
-  "chloride.options.displayfps.gravity.center": "Centro",
-  "chloride.options.displayfps.gravity.right": "Derecha",
-
   "chloride.options.displayfps.system.title": "Mostrar Metricas",
   "chloride.options.displayfps.system.desc": "Mostrar uso de memoria y GPU al lado del contador de FPS",
   "chloride.options.displayfps.system.gpu": "Solo Graficos",
   "chloride.options.displayfps.system.ram": "Solo Memoria",
 
-  "chloride.options.displayfps.margin.title": "Margen del Texto",
-  "chloride.options.displayfps.margin.desc": "Espacio entre la esquina y el texto",
+  "chloride.options.displayfps.align_x.title": "Alineacion Horizontal",
+  "chloride.options.displayfps.align_x.desc": "Horizontal position of the FPS display",
+  "chloride.options.displayfps.align_x.left": "Derecha",
+  "chloride.options.displayfps.align_x.center": "Centro",
+  "chloride.options.displayfps.align_x.right": "Izquierda",
+
+  "chloride.options.displayfps.align_y.title": "Alineacion Vertical",
+  "chloride.options.displayfps.align_y.desc": "Posicion vertical del contador de FPS",
+  "chloride.options.displayfps.align_y.top": "Arriba",
+  "chloride.options.displayfps.align_y.center": "Centro",
+  "chloride.options.displayfps.align_y.bottom": "Abajo",
+
+  "chloride.options.displayfps.margin_x.title": "Margen Horizontal",
+  "chloride.options.displayfps.margin_x.desc": "Margen horizontal del contador de FPS",
+  "chloride.options.displayfps.margin_y.title": "Margen Vertical",
+  "chloride.options.displayfps.margin_y.desc": "Margen vertical del contador de FPS",
 
   "chloride.options.displayfps.shadow.title": "Sombra cuadrada",
   "chloride.options.displayfps.shadow.desc": "Agrega una sombra cuadrada debajo del contador de FPS, al puro estilo del F3",

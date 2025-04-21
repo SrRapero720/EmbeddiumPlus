@@ -10,6 +10,7 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
@@ -29,9 +30,9 @@ public class OverlayPage extends OptionPage {
     private static ImmutableList<OptionGroup> create() {
         final List<OptionGroup> groups = new ArrayList<>();
 
-        var builder = OptionGroup.createBuilder();
+        var fpsBuilder = OptionGroup.createBuilder();
 
-        builder.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplayMode.class, STORAGE)
+        fpsBuilder.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplayMode.class, STORAGE)
                 .setName(Component.translatable("chloride.options.displayfps.title"))
                 .setTooltip(Component.translatable("chloride.options.displayfps.desc"))
                 .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.FPSDisplayMode.class, new Component[]{
@@ -46,7 +47,7 @@ public class OverlayPage extends OptionPage {
                 .build()
         );
 
-        builder.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplaySystemMode.class, STORAGE)
+        fpsBuilder.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplaySystemMode.class, STORAGE)
                 .setName(Component.translatable("chloride.options.displayfps.system.title"))
                 .setTooltip(Component.translatable("chloride.options.displayfps.system.desc"))
                 .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.FPSDisplaySystemMode.class, new Component[]{
@@ -60,34 +61,7 @@ public class OverlayPage extends OptionPage {
                 .build()
         );
 
-        var components = new Component[ChlorideConfig.FPSDisplayGravity.values().length];
-        for (int i = 0; i < components.length; i++) {
-            components[i] = Component.translatable("chloride.options.displayfps.gravity." + ChlorideConfig.FPSDisplayGravity.values()[i].name().toLowerCase());
-        }
-
-        builder.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplayGravity.class, STORAGE)
-                .setName(Component.translatable("chloride.options.displayfps.gravity.title"))
-                .setTooltip(Component.translatable("chloride.options.displayfps.gravity.desc"))
-                .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.FPSDisplayGravity.class, components))
-                .setBinding(
-                        (opts, value) -> ChlorideConfig.fpsDisplayGravity = value,
-                        opts -> ChlorideConfig.fpsDisplayGravity)
-                .build()
-        );
-
-
-        builder.add(OptionImpl.createBuilder(Integer.TYPE, STORAGE)
-                .setName(Component.translatable("chloride.options.displayfps.margin.title"))
-                .setTooltip(Component.translatable("chloride.options.displayfps.margin.desc"))
-                .setControl((option) -> new SliderControl(option, 4, 64, 1, (v) -> Component.literal(v + "px")))
-                .setImpact(OptionImpact.LOW)
-                .setBinding(
-                        (opts, value) -> ChlorideConfig.fpsDisplayMargin = value,
-                        opts -> ChlorideConfig.fpsDisplayMargin)
-                .build()
-        );
-
-        builder.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+        fpsBuilder.add(OptionImpl.createBuilder(boolean.class, STORAGE)
                 .setName(Component.translatable("chloride.options.displayfps.shadow.title"))
                 .setTooltip(Component.translatable("chloride.options.displayfps.shadow.desc"))
                 .setControl(TickBoxControl::new)
@@ -97,7 +71,60 @@ public class OverlayPage extends OptionPage {
                 .build()
         );
 
-        groups.add(builder.build());
+        var alignBuilder = OptionGroup.createBuilder();
+
+        var alignXComponent = new Component[ChlorideConfig.FPSDisplayAlign.values().length];
+        for (int i = 0; i < alignXComponent.length; i++) {
+            alignXComponent[i] = Component.translatable("chloride.options.displayfps.align_x." + ChlorideConfig.FPSDisplayAlign.values()[i].name().toLowerCase());
+        }
+
+        alignBuilder.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplayAlign.class, STORAGE)
+                .setName(Component.translatable("chloride.options.displayfps.align_x.title"))
+                .setTooltip(Component.translatable("chloride.options.displayfps.align_x.desc"))
+                .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.FPSDisplayAlign.class, alignXComponent))
+                .setBinding(
+                        (opts, value) -> ChlorideConfig.fpsDisplayAlign = value,
+                        opts -> ChlorideConfig.fpsDisplayAlign)
+                .build()
+        );
+        alignBuilder.add(OptionImpl.createBuilder(Integer.TYPE, STORAGE)
+                .setName(Component.translatable("chloride.options.displayfps.margin_x.title"))
+                .setTooltip(Component.translatable("chloride.options.displayfps.margin_x.desc"))
+                .setControl((option) -> new SliderControl(option, 0, Minecraft.getInstance().getWindow().getGuiScaledHeight(), 1, (v) -> Component.literal(v + "px")))
+                .setImpact(OptionImpact.LOW)
+                .setBinding(
+                        (opts, value) -> ChlorideConfig.fpsDisplayMargin = value,
+                        opts -> ChlorideConfig.fpsDisplayMargin)
+                .build()
+        );
+
+        var alignYComponent = new Component[ChlorideConfig.FPSDisplayAlign.values().length];
+        for (int i = 0; i < alignYComponent.length; i++) {
+            alignYComponent[i] = Component.translatable("chloride.options.displayfps.align_y." + ChlorideConfig.FPSDisplayVAlign.values()[i].name().toLowerCase());
+        }
+        alignBuilder.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplayVAlign.class, STORAGE)
+                .setName(Component.translatable("chloride.options.displayfps.align_y.title"))
+                .setTooltip(Component.translatable("chloride.options.displayfps.align_y.desc"))
+                .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.FPSDisplayVAlign.class, alignYComponent))
+                .setBinding(
+                        (opts, value) -> ChlorideConfig.fpsDisplayVAlign = value,
+                        opts -> ChlorideConfig.fpsDisplayVAlign)
+                .build()
+        );
+
+        alignBuilder.add(OptionImpl.createBuilder(Integer.TYPE, STORAGE)
+                .setName(Component.translatable("chloride.options.displayfps.margin_y.title"))
+                .setTooltip(Component.translatable("chloride.options.displayfps.margin_y.desc"))
+                .setControl((option) -> new SliderControl(option, 0, Minecraft.getInstance().getWindow().getGuiScaledHeight(), 1, (v) -> Component.literal(v + "px")))
+                .setImpact(OptionImpact.LOW)
+                .setBinding(
+                        (opts, value) -> ChlorideConfig.fpsDisplayVMargin = value,
+                        opts -> ChlorideConfig.fpsDisplayVMargin)
+                .build()
+        );
+
+        groups.add(fpsBuilder.build());
+        groups.add(alignBuilder.build());
 
         return ImmutableList.copyOf(groups);
     }

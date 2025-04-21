@@ -45,9 +45,9 @@ public class ChlorideConfig_Old {
                     .comment("Configure FPS Display mode", "Complete mode gives you min FPS count and average count")
                     .defineEnum("fpsDisplay", FPSDisplayMode.ADVANCED);
 
-            ForgeConfigSpec.EnumValue<FPSDisplayGravity> fpsDisplayGravity = BUILDER
+            ForgeConfigSpec.EnumValue<FPSDisplayAlign> fpsDisplayGravity = BUILDER
                     .comment("Configure FPS Display gravity", "Places counter on specified corner of your screen")
-                    .defineEnum("fpsDisplayGravity", FPSDisplayGravity.LEFT);
+                    .defineEnum("fpsDisplayGravity", FPSDisplayAlign.LEFT);
 
             ForgeConfigSpec.EnumValue<FPSDisplaySystemMode> fpsDisplaySystemMode = BUILDER
                     .comment("Shows GPU and memory usage onto FPS display")
@@ -280,7 +280,7 @@ public class ChlorideConfig_Old {
 
             ChlorideConfig.fullScreen = fullScreen.get();
             ChlorideConfig.fpsDisplayMode = fpsDisplayMode.get();
-            ChlorideConfig.fpsDisplayGravity = fpsDisplayGravity.get();
+            ChlorideConfig.fpsDisplayAlign = fpsDisplayGravity.get();
             ChlorideConfig.fpsDisplaySystemMode = fpsDisplaySystemMode.get();
             ChlorideConfig.fpsDisplayMargin = fpsDisplayMargin.get();
             ChlorideConfig.fpsDisplayShadow = fpsDisplayShadow.get();

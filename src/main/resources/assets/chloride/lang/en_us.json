@@ -29,19 +29,27 @@
   "chloride.options.displayfps.title": "Display FPS",
   "chloride.options.displayfps.desc": "Displays the current FPS. Advanced mode also displays minimum FPS, as well as 15 second average FPS, useful for judging performance.",
 
-  "chloride.options.displayfps.gravity.title": "Text Gravity",
-  "chloride.options.displayfps.gravity.desc": "Corner position of the FPS display",
-  "chloride.options.displayfps.gravity.left": "Left",
-  "chloride.options.displayfps.gravity.center": "Center",
-  "chloride.options.displayfps.gravity.right": "Right",
-
   "chloride.options.displayfps.system.title": "Display Metrics",
   "chloride.options.displayfps.system.desc": "Displays memory usage and GPU usage beside FPS counter",
   "chloride.options.displayfps.system.gpu": "Graphics only",
   "chloride.options.displayfps.system.ram": "Memory only",
 
-  "chloride.options.displayfps.margin.title": "Text Margin",
-  "chloride.options.displayfps.margin.desc": "Offset of the FPS display",
+  "chloride.options.displayfps.align_x.title": "Horizontal Alignment",
+  "chloride.options.displayfps.align_x.desc": "Horizontal position of the FPS display",
+  "chloride.options.displayfps.align_x.left": "Left",
+  "chloride.options.displayfps.align_x.center": "Center",
+  "chloride.options.displayfps.align_x.right": "Right",
+
+  "chloride.options.displayfps.align_y.title": "Vertical Alignment",
+  "chloride.options.displayfps.align_y.desc": "Vertical position of the FPS display",
+  "chloride.options.displayfps.align_y.top": "Top",
+  "chloride.options.displayfps.align_y.center": "Center",
+  "chloride.options.displayfps.align_y.bottom": "Bottom",
+
+  "chloride.options.displayfps.margin_x.title": "Horizontal Margin",
+  "chloride.options.displayfps.margin_x.desc": "Horizontal offset of the FPS display",
+  "chloride.options.displayfps.margin_y.title": "Vertical Margin",
+  "chloride.options.displayfps.margin_y.desc": "Vetical offset of the FPS display",
 
   "chloride.options.displayfps.shadow.title": "Use Text Shadow Box",
   "chloride.options.displayfps.shadow.desc": "Add a Shadow box onto FPS Display, at the pure style of F3",

@@ -117,19 +117,25 @@ public class OverlayFeatures {
 
         if (DISPLAY.isEmpty()) DISPLAY.add("FATAL ERROR");
 
-        float margin = (scale > 0) ? ChlorideConfig.fpsDisplayMargin / (float) scale : ChlorideConfig.fpsDisplayMargin;
+        float marginX = (scale > 0) ? ChlorideConfig.fpsDisplayMargin / (float) scale : ChlorideConfig.fpsDisplayMargin;
+        float marginY = (scale > 0) ? ChlorideConfig.fpsDisplayVMargin / (float) scale : ChlorideConfig.fpsDisplayVMargin;
 
         // Prevent FPS-Display to render outside screenspace
         String displayString = DISPLAY.toString();
         float maxPosX = graphics.guiWidth() - font.width(displayString);
+        float maxPosY = graphics.guiHeight() - font.lineHeight;
         float posX, posY;
 
-        posX = switch (ChlorideConfig.fpsDisplayGravity) {
-            case LEFT -> margin;
-            case CENTER -> (maxPosX / 2);
-            case RIGHT -> maxPosX - margin;
+        posX = switch (ChlorideConfig.fpsDisplayAlign) {
+            case LEFT -> marginX;
+            case CENTER -> maxPosX / 2;
+            case RIGHT -> maxPosX - marginX;
         };
-        posY = margin;
+        posY = switch (ChlorideConfig.fpsDisplayVAlign) {
+            case TOP -> marginY;
+            case CENTER -> maxPosY / 2;
+            case BOTTOM -> maxPosY - marginY;
+        };
 
         graphics.pose().pushPose();
         if (ChlorideConfig.fpsDisplayShadow) {

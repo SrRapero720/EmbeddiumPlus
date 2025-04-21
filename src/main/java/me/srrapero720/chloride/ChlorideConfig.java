@@ -42,9 +42,11 @@ public class ChlorideConfig {
     @ConfigField public static boolean modpackMode = false;
     @ConfigField public static FullScreenMode fullScreen = FullScreenMode.WINDOWED;
     @ConfigField public static FPSDisplayMode fpsDisplayMode = FPSDisplayMode.ADVANCED;
-    @ConfigField public static FPSDisplayGravity fpsDisplayGravity = FPSDisplayGravity.LEFT;
+    @ConfigField public static FPSDisplayAlign fpsDisplayAlign = FPSDisplayAlign.LEFT;
+    @ConfigField public static FPSDisplayVAlign fpsDisplayVAlign = FPSDisplayVAlign.TOP;
     @ConfigField public static FPSDisplaySystemMode fpsDisplaySystemMode = FPSDisplaySystemMode.OFF;
     @ConfigField public static int fpsDisplayMargin = 12;
+    @ConfigField public static int fpsDisplayVMargin = 12;
     @ConfigField public static boolean fpsDisplayShadow = false;
 
     @ConfigField public static boolean fog = true;
@@ -130,7 +132,8 @@ public class ChlorideConfig {
             return this == OFF;
         }
     }
-    public enum FPSDisplayGravity { LEFT, CENTER, RIGHT; }
+    public enum FPSDisplayAlign { LEFT, CENTER, RIGHT; }
+    public enum FPSDisplayVAlign { TOP, CENTER, BOTTOM; }
     public enum ChunkFadeSpeed { OFF, FAST, SLOW; }
     public enum FPSDisplaySystemMode {
         OFF, ON, GPU, RAM;
