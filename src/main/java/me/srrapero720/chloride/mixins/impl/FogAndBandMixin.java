@@ -23,16 +23,21 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = FogRenderer.class, priority = 910)
 public abstract class FogAndBandMixin {
-    @Unique private static final float FOG_START = -8.0F;
     @Unique private static final float FOG_END = 1_000_000.0F;
 
     @Inject(method = "setupFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
     private static void inject$fogToggle_fogDistance(Camera camera, FogRenderer.FogMode fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci, FogType fogtype, Entity entity, FogRenderer.FogData fogrenderer$fogdata, FogRenderer.MobEffectFogFunction fogrenderer$mobeffectfogfunction) {
-        if (ChlorideConfig.fog) return;
+        if (camera.getFluidInCamera() != FogType.NONE) return;
 
-        fogrenderer$fogdata.start = FOG_START;
-        fogrenderer$fogdata.end = FOG_END;
-        fogrenderer$fogdata.shape = FogShape.SPHERE;
+        if (!ChlorideConfig.fog) {
+            fogrenderer$fogdata.start = FOG_END;
+            fogrenderer$fogdata.end = FOG_END;
+            fogrenderer$fogdata.shape = FogShape.SPHERE;
+        } else if (ChlorideConfig.customFog) {
+            fogrenderer$fogdata.start = ChlorideConfig.fogStart;
+            fogrenderer$fogdata.end = ChlorideConfig.fogEnd;
+            fogrenderer$fogdata.shape = ChlorideConfig.fogShape;
+        }
     }
 
     @WrapOperation(method = "setupColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/CubicSampler;gaussianSampleVec3(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/util/CubicSampler$Vec3Fetcher;)Lnet/minecraft/world/phys/Vec3;"))

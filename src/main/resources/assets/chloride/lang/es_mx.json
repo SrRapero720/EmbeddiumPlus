@@ -100,6 +100,22 @@
   "chloride.options.displayfps.gpu": "GPU",
   "chloride.options.displayfps.mem": "MEM",
 
+  "chloride.pages.skies": "Cielos",
+  "chloride.options.fog.title": "Mostrar Niebla",
+  "chloride.options.fog.desc": "Si se desactiva, la niebla no se mostrara en la superficie",
+  "chloride.options.blueband.title": "Usar Banda Azul",
+  "chloride.options.blueband.desc": "Si se activa, la niebla se vera afectada por la banda azul del cielo",
+  "chloride.options.custom_fog.title": "Niebla Personalizada",
+  "chloride.options.custom_fog.desc": "Activa la niebla personalizada.",
+  "chloride.options.custom_fog.start.title": "Inicio de Niebla",
+  "chloride.options.custom_fog.start.desc": "Configura el inicio de la niebla",
+  "chloride.options.custom_fog.end.title": "Fin de Niebla",
+  "chloride.options.custom_fog.end.desc": "Configura el fin de la niebla",
+  "chloride.options.custom_fog.shape.title": "Forma de Niebla",
+  "chloride.options.custom_fog.shape.desc": "Configura la forma de la niebla",
+  "chloride.options.custom_fog.shape.cylinder": "Cilindro",
+  "chloride.options.custom_fog.shape.sphere": "Esfera",
+
   "chloride.options.dynlights.page": "Luz Dinamica",
   "chloride.options.dynlights.tiles.title": "Activar en Entidades de Bloques",
   "chloride.options.dynlights.tiles.desc": "If enabled, dynamic lighting will be showed on tile entities (furnaces, modded machines, etc).\n\nThis can drastically increase the amount of lighting updates, even when you're not around furnaces",
@@ -113,8 +129,6 @@
   "chloride.options.fastchest.desc": "Si se activa, remplazara los cofres con un modelo estatico, como si fuera un bloque. Elimina la animacion del cofre, pero te da mas FPS en salas de cofre\n\nEsta opcion no tiene efecto cuando Create (Flywheel) esta instalado",
   "chloride.options.fastbeds.title": "Activar Camas rapidas",
   "chloride.options.fastbeds.desc": "Si se activa, remplazara las camas con un bloque estatico, somo si se fuera un bloque. Incrementa el rendimiento y te permite utilizar modelos mas complejos en resource packs",
-  "chloride.options.fog.title": "Mostrar Niebla",
-  "chloride.options.fog.desc": "Si se desactiva, la niebla no se mostrara en la superficie",
   "chloride.options.fontshadow.title": "Sombra en los textos",
   "chloride.options.fontshadow.desc": "Si se desactiva, los textos dejaran de renderizar sombras.\nIncrementa el rendimiento en menus con mucho texto, como el BetterF3",
   "chloride.options.jei.title": "Ocultar JEI/REI/EMI hasta buscar",
@@ -143,7 +157,5 @@
   "chloride.options.leaves_culling.more": "More",
   "chloride.options.leaves_culling.half": "Half",
   "chloride.options.leaves_culling.less": "Less",
-  "chloride.options.leaves_culling.off": "Off",
-  "chloride.options.blueband.title": "Use Sky Blue band",
-  "chloride.options.blueband.desc": "If disabled, removed the Blue Band effect in all dimensions"
+  "chloride.options.leaves_culling.off": "Off"
 }

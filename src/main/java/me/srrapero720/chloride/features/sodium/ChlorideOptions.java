@@ -34,6 +34,7 @@ public class ChlorideOptions {
 
         pages.add(new OverlayPage());
         pages.add(new DetailsPage());
+        pages.add(new SkiesPage());
         if (!ChlorideConfig.modpackMode) pages.add(new TrueDarknessPage());
         pages.add(new EntityCullingPage());
         if (!ChlorideConfig.modpackMode) pages.add(new ZoomPage());
@@ -60,7 +61,6 @@ public class ChlorideOptions {
     public static void onSodiumGroupRegister(OptionPageConstructionEvent e) {
         if (e.getId() != null && e.getId().equals(StandardOptions.Pages.PERFORMANCE)) {
             var builder = OptionGroup.createBuilder();
-            var sodiumOpts = SodiumGameOptionPages.getVanillaOpts();
             var fontShadow = OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "font_shadow"))
                     .setName(Component.translatable("chloride.options.fontshadow.title"))

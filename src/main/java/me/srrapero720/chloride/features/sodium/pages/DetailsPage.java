@@ -30,45 +30,6 @@ public class DetailsPage extends OptionPage {
     private static ImmutableList<OptionGroup> create() {
         final List<OptionGroup> groups = new ArrayList<>();
 
-        final var fog = OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.options.fog.title"))
-                .setTooltip(Component.translatable("chloride.options.fog.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((opt, value) -> {
-                            ChlorideConfig.fog = value;
-                        },
-                        (opt) -> ChlorideConfig.fog)
-                .setImpact(OptionImpact.LOW)
-                .build();
-
-        final var blueBand = OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.options.blueband.title"))
-                .setTooltip(Component.translatable("chloride.options.blueband.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((opt, v) -> ChlorideConfig.blueBand = v, opt -> ChlorideConfig.blueBand)
-                .build();
-
-        final var fadeInQuality = OptionImpl.createBuilder(ChlorideConfig.ChunkFadeSpeed.class, STORAGE)
-                .setName(Component.translatable("chloride.options.fadein.title"))
-                .setTooltip(Component.translatable("chloride.options.fadein.desc"))
-                .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.ChunkFadeSpeed.class, new Component[]{
-                        Component.translatable("options.off"),
-                        Component.translatable("options.graphics.fast"),
-                        Component.translatable("options.graphics.fancy")
-                }))
-                .setBinding((opts, value) -> ChlorideConfig.chunkFadeSpeed = value,
-                        (opts) -> ChlorideConfig.chunkFadeSpeed)
-                .setImpact(OptionImpact.LOW)
-                .setEnabled(false)
-                .build();
-
-        groups.add(OptionGroup.createBuilder()
-                .add(fog)
-                .add(blueBand)
-                .add(fadeInQuality)
-                .build()
-        );
-
         final var cloudHeight = OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.options.clouds.height.title"))
                 .setTooltip(Component.translatable("chloride.options.clouds.height.desc"))

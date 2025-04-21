@@ -3,6 +3,7 @@ package me.srrapero720.chloride;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.shaders.FogShape;
 import me.srrapero720.chloride.mixins.impl.accessors.WindowAccessors;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -51,6 +52,10 @@ public class ChlorideConfig {
 
     @ConfigField public static boolean fog = true;
     @ConfigField public static boolean blueBand = true;
+    @ConfigField public static boolean customFog = true;
+    @ConfigField public static int fogStart = 0;
+    @ConfigField public static int fogEnd = 192;
+    @ConfigField public static FogShape fogShape = FogShape.CYLINDER;
     @ConfigField public static int cloudsHeight = 192;
     @ConfigField public static boolean disableNameTagRender = false;
     @ConfigField public static ChunkFadeSpeed chunkFadeSpeed = ChunkFadeSpeed.SLOW;
