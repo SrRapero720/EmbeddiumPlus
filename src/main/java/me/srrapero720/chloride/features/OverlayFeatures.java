@@ -60,12 +60,6 @@ public class OverlayFeatures {
         return times / avgCount.length;
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onRenderOverlayItem(RenderGuiEvent.Pre event) {
-        // cancel rendering text if chart is displaying
-        if (Minecraft.getInstance().getDebugOverlay().showDebugScreen()) event.setCanceled(true);
-    }
-
     @SubscribeEvent
     public static void onRenderOverlay(RenderGuiEvent.Pre event) {
         var mc = Minecraft.getInstance();
