@@ -1,5 +1,5 @@
 # RELEASE 1.6.0
-- [✨] [1.21.1] Ported to NeoForge (Embeddium)
+- [✨] [1.21.1] Ported to NeoForge (Sodium)
 - [✨] Added blocklightOnly option to True Darkness
   - 🛠️ This option will only darken the block light, not the sky light
   - 🛠️ This option is disabled by default
