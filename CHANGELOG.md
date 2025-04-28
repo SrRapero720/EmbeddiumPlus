@@ -1,3 +1,6 @@
+# RELEASE 1.6.0a
+- [🐛] [1.21.1/NeoForge] Fixed F3 overlay not showing.
+
 # RELEASE 1.6.0
 - [✨] [1.21.1] Ported to NeoForge (Sodium)
 - [✨] Added blocklightOnly option to True Darkness
