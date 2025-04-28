@@ -12,7 +12,7 @@ a tasteful experience (`NaCl`).
 [![KineticHosting sponsor code WATERMoDS](https://media.forgecdn.net/banner/console-affiliation-banners/banner_8ee65523-4b2b-41b3-a719-65528534b1c8.png "KineticHosting sponsor code WATERMoDS")](https://www.kinetichosting.net/game-servers/minecraft/order)
 
 # 🔧 FEATURES
-### [⚡] PERFORMANCE
+### ⚡ PERFORMANCE
 - **🐄 ENTITY DISTANCE CULLING** 
   - 📐 Avoid rendering/ticking **Entities** and **Block Entities** from far away.
   - 📋 Features a whitelist, letting important entities (such as ender dragon or ghast)
@@ -33,7 +33,7 @@ a tasteful experience (`NaCl`).
 - **[🌎] FAST LANGUAGE RELOAD** 
   - 📐 Reload quick as possible the language (less than 1 second).
 
-### [🛠️] VISUAL UTILITY
+### 🛠️ VISUAL UTILITY
 - **[🕯️] TRUE DARKNESS**
   - 📐 Adds MANY darkness levels to the game, making it more realistic (and darker)
   - 📋 Toggles between DIM, DARK, DARKNESS, BLACK and BLACKNESS
@@ -49,7 +49,7 @@ a tasteful experience (`NaCl`).
   - ✨ You can scroll to zoom in and out while zooming
 
 
-### [👓] QUALITY
+### 👓 QUALITY
 - **[🌁] FOG/BLUEBAND SETTINGS**
   - 📐 Configure the distance (start, end), and the visibility of the fog and the blueband.
   - 📋 Toggle each individually
