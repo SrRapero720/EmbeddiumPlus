@@ -26,7 +26,7 @@ public class ChlorideOptions {
     public static final OptionStorage<?> STORAGE = new ChlorideOptionsStorage();
 
     @SubscribeEvent
-    public static void onSodiumPagesRegister(OptionGUIConstructionEvent e) {
+    public static void onSodiumPagesRegister(final OptionGUIConstructionEvent e) {
         final var pages = e.getPages();
 
         pages.add(new InterfacePage());
@@ -40,11 +40,11 @@ public class ChlorideOptions {
     }
 
     @SubscribeEvent
-    public static void onSodiumPagesRegister(OptionGroupConstructionEvent e) {
+    public static void onSodiumPagesRegister(final OptionGroupConstructionEvent e) {
         if (e.getId() != null && e.getId().toString().equals(StandardOptions.Group.WINDOW.toString())) {
-            var options = e.getOptions();
+            final var options = e.getOptions();
             for (int i = 0; i < options.size(); i++) {
-                var id = options.get(i).getId();
+                final var id = options.get(i).getId();
                 if (id != null && id.matches(StandardOptions.Option.FULLSCREEN)) {
                     options.set(i, getFullscreenOption());
                 }
@@ -53,11 +53,11 @@ public class ChlorideOptions {
     }
 
     @SubscribeEvent
-    public static void onSodiumGroupRegister(OptionPageConstructionEvent e) {
+    public static void onSodiumGroupRegister(final OptionPageConstructionEvent e) {
         if (e.getId() != null && e.getId().equals(StandardOptions.Pages.PERFORMANCE)) {
-            var builder = OptionGroup.createBuilder();
+            final var builder = OptionGroup.createBuilder();
 
-            var fastChest = OptionImpl.createBuilder(boolean.class, STORAGE)
+            final var fastChest = OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_chests"))
                     .setName(Component.translatable("chloride.performance.fastchest.title"))
                     .setTooltip(Component.translatable("chloride.performance.fastchest.desc"))
@@ -71,7 +71,7 @@ public class ChlorideOptions {
                     .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                     .build();
 
-            var fastBeds = OptionImpl.createBuilder(boolean.class, STORAGE)
+            final var fastBeds = OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_beds"))
                     .setName(Component.translatable("chloride.performance.fastbeds.title"))
                     .setTooltip(Component.translatable("chloride.performance.fastbeds.desc"))

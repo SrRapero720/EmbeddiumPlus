@@ -107,14 +107,14 @@ public class ChlorideConfig {
     @ConfigField public static boolean dynLightsUpdateOnPositionChange = true;
 
 
-    public static void setFullScreenMode(FullScreenMode value) {
-        Minecraft client = Minecraft.getInstance();
-        Options opts = client.options;
+    public static void setFullScreenMode(final FullScreenMode value) {
+        final Minecraft client = Minecraft.getInstance();
+        final Options opts = client.options;
 
         fullScreen = value;
         opts.fullscreen.set(value != FullScreenMode.WINDOWED);
 
-        Window window = client.getWindow();
+        final Window window = client.getWindow();
 
         if (window.isFullscreen() != opts.fullscreen.get()) {
             window.toggleFullScreen();
@@ -128,7 +128,7 @@ public class ChlorideConfig {
     }
 
     public enum AttachMode {
-        ATTACH, REPLACE, OFF;
+        ATTACH, REPLACE, OFF
     }
 
     /* CONFIG VALUES */
@@ -139,9 +139,9 @@ public class ChlorideConfig {
             return this == OFF;
         }
     }
-    public enum FPSDisplayAlign { LEFT, CENTER, RIGHT; }
-    public enum FPSDisplayVAlign { TOP, CENTER, BOTTOM; }
-    public enum ChunkFadeSpeed { OFF, FAST, SLOW; }
+    public enum FPSDisplayAlign { LEFT, CENTER, RIGHT}
+    public enum FPSDisplayVAlign { TOP, CENTER, BOTTOM}
+    public enum ChunkFadeSpeed { OFF, FAST, SLOW}
     public enum FPSDisplaySystemMode {
         OFF, ALL, GPU_ONLY, RAM_ONLY;
 
@@ -159,10 +159,10 @@ public class ChlorideConfig {
         REALTIME(-1);
         private final int delay;
 
-        DynLightsSpeed(int delay) {
+        DynLightsSpeed(final int delay) {
             this.delay = delay;
         }
-        public int getDelay() { return delay; }
+        public int getDelay() { return this.delay; }
 
         public boolean off() {
             return this == OFF;
@@ -177,12 +177,12 @@ public class ChlorideConfig {
         BLACKNESS(0f);
 
         public final float value;
-        DarknessMode(float value) { this.value = value; }
+        DarknessMode(final float value) { this.value = value; }
     }
     public enum FullScreenMode {
         WINDOWED, BORDERLESS, FULLSCREEN;
 
-        public static FullScreenMode nextOf(FullScreenMode current) {
+        public static FullScreenMode nextOf(final FullScreenMode current) {
             return switch (current) {
                 case WINDOWED -> BORDERLESS;
                 case BORDERLESS -> FULLSCREEN;
@@ -190,14 +190,14 @@ public class ChlorideConfig {
             };
         }
 
-        public static FullScreenMode nextBorderless(FullScreenMode current) {
+        public static FullScreenMode nextBorderless(final FullScreenMode current) {
             return switch (current) {
                 case FULLSCREEN, BORDERLESS -> WINDOWED;
                 case WINDOWED -> BORDERLESS;
             };
         }
 
-        public static FullScreenMode nextFullscreen(FullScreenMode current) {
+        public static FullScreenMode nextFullscreen(final FullScreenMode current) {
             return switch (current) {
                 case FULLSCREEN, BORDERLESS -> WINDOWED;
                 case WINDOWED -> FULLSCREEN;
@@ -214,10 +214,10 @@ public class ChlorideConfig {
     }
 
     public enum LeavesCullingMode {
-        ALL, OFF; // MORE, HALF, LESS
+        ALL, OFF // MORE, HALF, LESS
     }
 
-    static void load(Path configPath) {
+    static void load(final Path configPath) {
         ChlorideConfig_Old.tryRestore();
         configFile = configPath.resolve("chloride-client.json").toFile();
         if (!configFile.exists()) {
@@ -231,7 +231,7 @@ public class ChlorideConfig {
     public static void write() {
         try (final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(configFile))) {
             out.write(GSON.toJson(DUMMY).getBytes(StandardCharsets.UTF_8));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             LOGGER.error("Cannot write file", e);
         }
     }
@@ -247,17 +247,17 @@ public class ChlorideConfig {
 
     public static class ListResourceLocationAdapter implements JsonSerializer<List<ResourceLocation>>, JsonDeserializer<List<ResourceLocation>> {
         @Override
-        public JsonElement serialize(List<ResourceLocation> src, Type typeOfSrc, JsonSerializationContext context) {
+        public JsonElement serialize(final List<ResourceLocation> src, final Type typeOfSrc, final JsonSerializationContext context) {
             return context.serialize(src.stream().map(ResourceLocation::toString).collect(Collectors.toList()));
         }
 
         @Override
-        public List<ResourceLocation> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public List<ResourceLocation> deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
             if (!json.isJsonArray()) {
                 throw new JsonParseException("Expected a JSON array for List<ResourceLocation>");
             }
 
-            JsonArray jsonArray = json.getAsJsonArray();
+            final JsonArray jsonArray = json.getAsJsonArray();
             return jsonArray.asList().stream()
                     .map(e -> (ResourceLocation) context.deserialize(e, ResourceLocation.class))
                     .collect(Collectors.toList());
@@ -267,19 +267,19 @@ public class ChlorideConfig {
     private static final class ChlorideResourceLocationSerial implements JsonSerializer<ResourceLocation>, JsonDeserializer<ResourceLocation> {
 
         @Override
-        public ResourceLocation deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        public ResourceLocation deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             return ResourceLocation.tryParse(jsonElement.getAsString().replace(":*", ":all"));
         }
 
         @Override
-        public JsonElement serialize(ResourceLocation resourceLocation, Type type, JsonSerializationContext jsonSerializationContext) {
+        public JsonElement serialize(final ResourceLocation resourceLocation, final Type type, final JsonSerializationContext jsonSerializationContext) {
             return new JsonPrimitive(resourceLocation.toString());
         }
     }
 
     private static final class ChlorideConfigSerial implements JsonSerializer<ChlorideConfig>, JsonDeserializer<ChlorideConfig> {
         @Override
-        public JsonElement serialize(ChlorideConfig src, Type typeOfSrc, JsonSerializationContext context) {
+        public JsonElement serialize(final ChlorideConfig src, final Type typeOfSrc, final JsonSerializationContext context) {
             final JsonObject jsonObject = new JsonObject();
 
             for (final Field field: ChlorideConfig.class.getDeclaredFields()) {
@@ -289,7 +289,7 @@ public class ChlorideConfig {
                 try {
                     field.setAccessible(true);
                     jsonObject.add(field.getName(), context.serialize(field.get(null)));
-                } catch (IllegalAccessException e) {
+                } catch (final IllegalAccessException e) {
                     throw new RuntimeException("Error al acceder al campo: " + field.getName(), e);
                 }
             }
@@ -298,7 +298,7 @@ public class ChlorideConfig {
         }
 
         @Override
-        public ChlorideConfig deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public ChlorideConfig deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
             final JsonObject jsonObject = json.getAsJsonObject();
 
             for (final Field field: ChlorideConfig.class.getDeclaredFields()) {
@@ -312,7 +312,7 @@ public class ChlorideConfig {
 
                     field.setAccessible(true);
                     field.set(null, context.deserialize(element, field.getGenericType()));
-                } catch (IllegalAccessException e) {
+                } catch (final IllegalAccessException e) {
                     throw new RuntimeException("Error al asignar el valor al campo: " + field.getName(), e);
                 }
             }

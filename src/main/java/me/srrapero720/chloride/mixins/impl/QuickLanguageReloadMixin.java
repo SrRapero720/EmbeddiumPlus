@@ -16,10 +16,10 @@ import java.util.concurrent.CompletableFuture;
 
 @Mixin(LanguageSelectScreen.class)
 public class QuickLanguageReloadMixin extends OptionsSubScreen {
-    public QuickLanguageReloadMixin(Screen screen, Options options, Component component) { super(screen, options, component); }
+    public QuickLanguageReloadMixin(final Screen screen, final Options options, final Component component) { super(screen, options, component); }
 
     @WrapOperation(method = "onDone", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks()Ljava/util/concurrent/CompletableFuture;"))
-    public CompletableFuture<Void> redirect$resourcesReload(Minecraft instance, Operation<CompletableFuture<Void>> original) {
+    public CompletableFuture<Void> redirect$resourcesReload(final Minecraft instance, final Operation<CompletableFuture<Void>> original) {
         if (ChlorideConfig.fastLanguageReload) {
             this.minecraft.getLanguageManager().onResourceManagerReload(this.minecraft.getResourceManager());
             return null;

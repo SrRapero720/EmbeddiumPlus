@@ -14,8 +14,8 @@ public class CloudHeightMixin {
     @Shadow @Final private float cloudLevel;
 
     @Inject(method = "getCloudHeight", at = @At("HEAD"), cancellable = true)
-    private void inject$cloudHeight(CallbackInfoReturnable<Float> cir) {
-        if (cloudLevel == 192.0F)
+    private void inject$cloudHeight(final CallbackInfoReturnable<Float> cir) {
+        if (this.cloudLevel == 192.0F)
             cir.setReturnValue((float) ChlorideConfig.cloudsHeight);
     }
 }

@@ -15,7 +15,7 @@ public class DimensionEffectsMixin {
     @Mixin(DimensionSpecialEffects.NetherEffects.class)
     public static class NetherMixin {
         @Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
-        private void inject$brightFogColor(CallbackInfoReturnable<Vec3> cir) {
+        private void inject$brightFogColor(final CallbackInfoReturnable<Vec3> cir) {
             if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.VANILLA || !ChlorideConfig.darknessOnNether) return;
 
             cir.setReturnValue(TrueDarknessFeature.getFogColor(cir.getReturnValue(), ChlorideConfig.darknessNetherFogBright));
@@ -25,7 +25,7 @@ public class DimensionEffectsMixin {
     @Mixin(DimensionSpecialEffects.EndEffects.class)
     public static class EndMixin {
         @Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
-        private void inject$brightFogColor(CallbackInfoReturnable<Vec3> cir) {
+        private void inject$brightFogColor(final CallbackInfoReturnable<Vec3> cir) {
             if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.VANILLA || !ChlorideConfig.darknessOnEnd) return;
 
             cir.setReturnValue(TrueDarknessFeature.getFogColor(cir.getReturnValue(), ChlorideConfig.darknessEndFogBright));

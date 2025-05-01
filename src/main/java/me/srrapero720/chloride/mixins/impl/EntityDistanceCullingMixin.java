@@ -33,7 +33,7 @@ public class EntityDistanceCullingMixin {
     @Mixin(EntityRenderDispatcher.class)
     public static class EntityDispatcherMixin {
         @Inject(at = @At("HEAD"), method = "shouldRender", cancellable = true)
-        public <E extends Entity> void inject$shouldRender(E entity, Frustum clippingHelper, double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
+        public <E extends Entity> void inject$shouldRender(final E entity, final Frustum clippingHelper, final double x, final double y, final double z, final CallbackInfoReturnable<Boolean> cir) {
 
             final int distY;
             final int distX;
@@ -48,7 +48,7 @@ public class EntityDistanceCullingMixin {
                 distX = ChlorideConfig.entityCullingDistanceX;
             }
 
-            boolean isWhitelisted = ((DistanceCullingFeature) entity.getType()).chloride$whitelisted();
+            final boolean isWhitelisted = ((DistanceCullingFeature) entity.getType()).chloride$whitelisted();
             if (!isWhitelisted && !Tools.isEntityInRange(entity, x, y, z, distY, distX)) {
                 cir.setReturnValue(false);
             }
@@ -69,9 +69,9 @@ public class EntityDistanceCullingMixin {
         @Override
         @Unique
         public boolean chloride$whitelisted() {
-            if (embPlus$checked) return embPlus$whitelisted;
+            if (this.embPlus$checked) return this.embPlus$whitelisted;
 
-            final var resource = embPlus$resourceLocation();
+            final var resource = this.embPlus$resourceLocation();
             if (resource == null) {
                 LOGGER.warn(e$IT, "key for '{}' is null, some mod decides to broke itself, not whitelisting", this.getClass().getName());
                 return false;
@@ -81,12 +81,12 @@ public class EntityDistanceCullingMixin {
             this.embPlus$checked = true;
 
             LOGGER.debug(e$IT,"Whitelist checked for {}", resource.toString());
-            return embPlus$whitelisted;
+            return this.embPlus$whitelisted;
         }
 
         @Unique
         public ResourceLocation embPlus$resourceLocation() {
-            return BuiltInRegistries.ENTITY_TYPE.getKey(embPlus$cast());
+            return BuiltInRegistries.ENTITY_TYPE.getKey(this.embPlus$cast());
         }
 
         @Unique
@@ -100,11 +100,11 @@ public class EntityDistanceCullingMixin {
         @Shadow public Camera camera;
 
         @Inject(at = @At("HEAD"), method = "render", cancellable = true)
-        public <E extends BlockEntity> void render(E tile, float val, PoseStack matrix, MultiBufferSource bufferSource, CallbackInfo ci) {
+        public <E extends BlockEntity> void render(final E tile, final float val, final PoseStack matrix, final MultiBufferSource bufferSource, final CallbackInfo ci) {
             if (!ChlorideConfig.tileEntityDistanceCulling) return;
 
-            boolean isWhitelisted = ((DistanceCullingFeature) tile.getType()).chloride$whitelisted();
-            if (!isWhitelisted && !Tools.isEntityInRange(tile.getBlockPos(), camera.getPosition(),
+            final boolean isWhitelisted = ((DistanceCullingFeature) tile.getType()).chloride$whitelisted();
+            if (!isWhitelisted && !Tools.isEntityInRange(tile.getBlockPos(), this.camera.getPosition(),
                     ChlorideConfig.tileEntityCullingDistanceY,
                     ChlorideConfig.tileEntityCullingDistanceX)
             ) {
@@ -121,8 +121,8 @@ public class EntityDistanceCullingMixin {
 
         @Override
         public boolean chloride$whitelisted() {
-            if (embPlus$checked) return embPlus$whitelisted;
-            ResourceLocation resource = BlockEntityType.getKey(embPlus$cast());
+            if (this.embPlus$checked) return this.embPlus$whitelisted;
+            final ResourceLocation resource = BlockEntityType.getKey(this.embPlus$cast());
             if (resource == null) {
                 LOGGER.warn(e$IT, "key for '{}' is null, some mod decides to broke itself, not whitelisting", this.getClass().getName());
                 return false;
@@ -131,7 +131,7 @@ public class EntityDistanceCullingMixin {
             this.embPlus$checked = true;
 
             LOGGER.debug(e$IT,"Whitelist checked for {}", resource.toString());
-            return embPlus$whitelisted;
+            return this.embPlus$whitelisted;
         }
 
         @Unique

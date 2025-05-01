@@ -22,25 +22,25 @@ public class JeiOverlayMixin {
     @Shadow @Final private ScreenPropertiesCache screenPropertiesCache;
 
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lmezz/jei/gui/overlay/IngredientGridWithNavigation;draw(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;IIF)V"), cancellable = true)
-    public void inject$renderOverlay(Minecraft minecraft, GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+    public void inject$renderOverlay(final Minecraft minecraft, final GuiGraphics guiGraphics, final int mouseX, final int mouseY, final float partialTicks, final CallbackInfo ci) {
         if (!ChlorideConfig.hideJREMI) return;
 
-        String value = searchField.getValue();
+        final String value = this.searchField.getValue();
         if (value.isEmpty()) {
-            if (screenPropertiesCache.hasValidScreen()) {
-                configButton.draw(guiGraphics, mouseX, mouseY, partialTicks);
-                IGuiProperties props = screenPropertiesCache.getGuiProperties().get();
-                guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), searchField.getX() + (searchField.getWidth() / 2), props.getScreenHeight() / 2, 0xFFFFFF);
+            if (this.screenPropertiesCache.hasValidScreen()) {
+                this.configButton.draw(guiGraphics, mouseX, mouseY, partialTicks);
+                final IGuiProperties props = this.screenPropertiesCache.getGuiProperties().get();
+                guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), this.searchField.getX() + (this.searchField.getWidth() / 2), props.getScreenHeight() / 2, 0xFFFFFF);
             }
             ci.cancel();
         }
     }
 
     @Inject(method = "drawTooltips", at = @At(value = "HEAD"), cancellable = true)
-    public void inject$renderOverlay(Minecraft minecraft, GuiGraphics guiGraphics, int mouseX, int mouseY, CallbackInfo ci) {
+    public void inject$renderOverlay(final Minecraft minecraft, final GuiGraphics guiGraphics, final int mouseX, final int mouseY, final CallbackInfo ci) {
         if (!ChlorideConfig.hideJREMI) return;
 
-        String value = searchField.getValue();
+        final String value = this.searchField.getValue();
         if (value.isEmpty()) {
             ci.cancel();
         }

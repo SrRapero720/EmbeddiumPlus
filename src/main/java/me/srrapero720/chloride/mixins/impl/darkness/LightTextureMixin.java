@@ -17,7 +17,7 @@ public class LightTextureMixin {
     @Shadow @Final private DynamicTexture lightTexture;
 
     @Inject(method = "<init>*", at = @At("RETURN"))
-    public void inject$init(GameRenderer pRenderer, Minecraft pMinecraft, CallbackInfo ci) {
-        ((TrueDarknessFeature.DynamicTextureHook) lightTexture).chloride$enableDarkness();
+    public void inject$init(final GameRenderer pRenderer, final Minecraft pMinecraft, final CallbackInfo ci) {
+        ((TrueDarknessFeature.DynamicTextureHook) this.lightTexture).chloride$enableDarkness();
     }
 }

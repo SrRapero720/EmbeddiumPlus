@@ -16,13 +16,13 @@ public class DynamicTextureMixin implements TrueDarknessFeature.DynamicTextureHo
     @Unique private boolean chloride$enabled;
 
     @Inject(method = "upload", at = @At(value = "HEAD"))
-    private void inject$onUpload(CallbackInfo ci) {
-        if (!TrueDarknessFeature.enabled || !chloride$enabled) return;
+    private void inject$onUpload(final CallbackInfo ci) {
+        if (!TrueDarknessFeature.enabled || !this.chloride$enabled) return;
 
         for (int b = 0; b < 16; b++) {
             for (int s = 0; s < 16; s++) {
-                final int color = TrueDarknessFeature.darken(pixels.getPixelRGBA(b, s), b, s);
-                pixels.setPixelRGBA(b, s, color);
+                final int color = TrueDarknessFeature.darken(this.pixels.getPixelRGBA(b, s), b, s);
+                this.pixels.setPixelRGBA(b, s, color);
             }
         }
     }

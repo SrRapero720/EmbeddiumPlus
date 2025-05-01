@@ -35,7 +35,7 @@ public class Chloride {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public void load(FMLClientSetupEvent event) {
+    public void load(final FMLClientSetupEvent event) {
         if (Tools.isModInstalled("xenon")) throw new RuntimeException("Xenon is incompatible with Chloride, please use Embeddium or Sodium instead");
         if (Tools.isModInstalled("embeddiumextras")) throw new RuntimeException("Embeddium/Sodium Extras is incompatible with Chloride, chloride replaces it");
         if (Tools.isModInstalled("embeddiumplus")) throw new RuntimeException("You have a old-duplicated version of chloride, please remove Embeddium++ (old chloride)");
@@ -43,7 +43,7 @@ public class Chloride {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public static void registerKeys(RegisterKeyMappingsEvent event) {
+    public static void registerKeys(final RegisterKeyMappingsEvent event) {
         event.register(ZoomFeature.KEY);
     }
 }

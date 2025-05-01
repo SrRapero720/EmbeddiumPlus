@@ -39,7 +39,7 @@ public class OverlayFeatures {
     private static boolean avgFilled = false;
     private static int avgIndex = 0;
 
-    public static void pushAvgFps(int value) {
+    public static void pushAvgFps(final int value) {
         if (avgIndex == avgCount.length) {
             avgIndex = 0;
             avgFilled = true;
@@ -54,7 +54,7 @@ public class OverlayFeatures {
 
     public static int calculateAverage() {
         int times = 0;
-        for (int i: avgCount) {
+        for (final int i: avgCount) {
             times += i;
         }
 
@@ -62,7 +62,7 @@ public class OverlayFeatures {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onRenderOverlayItem(RenderGuiOverlayEvent.Pre event) {
+    public static void onRenderOverlayItem(final RenderGuiOverlayEvent.Pre event) {
         if (!event.getOverlay().id().getPath().equals("debug_text")) return;
 
         // cancel rendering text if chart is displaying
@@ -70,8 +70,8 @@ public class OverlayFeatures {
     }
 
     @SubscribeEvent
-    public static void onRenderOverlay(RenderGuiEvent.Pre event) {
-        var mc = Minecraft.getInstance();
+    public static void onRenderOverlay(final RenderGuiEvent.Pre event) {
+        final var mc = Minecraft.getInstance();
 
         // PRECALCULATE
         fps = mc.getFps();
@@ -82,7 +82,7 @@ public class OverlayFeatures {
         renderFPSChar(mc, event.getGuiGraphics(), mc.font, event.getWindow().getGuiScale());
     }
 
-    private static void renderFPSChar(Minecraft mc, GuiGraphics graphics, Font font, double scale) {
+    private static void renderFPSChar(final Minecraft mc, final GuiGraphics graphics, final Font font, final double scale) {
         if (mc.options.renderDebug || mc.options.renderFpsChart) return; // No render when F3 is open
 
         final var mode = ChlorideConfig.fpsDisplayMode;
@@ -117,14 +117,15 @@ public class OverlayFeatures {
 
         if (DISPLAY.isEmpty()) DISPLAY.add("FATAL ERROR");
 
-        float marginX = (scale > 0) ? ChlorideConfig.fpsDisplayMargin / (float) scale : ChlorideConfig.fpsDisplayMargin;
-        float marginY = (scale > 0) ? ChlorideConfig.fpsDisplayVMargin / (float) scale : ChlorideConfig.fpsDisplayVMargin;
+        final float marginX = (scale > 0) ? ChlorideConfig.fpsDisplayMargin / (float) scale : ChlorideConfig.fpsDisplayMargin;
+        final float marginY = (scale > 0) ? ChlorideConfig.fpsDisplayVMargin / (float) scale : ChlorideConfig.fpsDisplayVMargin;
 
         // Prevent FPS-Display to render outside screenspace
-        String displayString = DISPLAY.toString();
-        float maxPosX = graphics.guiWidth() - font.width(displayString);
-        float maxPosY = graphics.guiHeight() - font.lineHeight;
-        float posX, posY;
+        final String displayString = DISPLAY.toString();
+        final float maxPosX = graphics.guiWidth() - font.width(displayString);
+        final float maxPosY = graphics.guiHeight() - font.lineHeight;
+        final float posX;
+        final float posY;
 
         posX = switch (ChlorideConfig.fpsDisplayAlign) {
             case LEFT -> marginX;
@@ -148,28 +149,28 @@ public class OverlayFeatures {
         graphics.pose().popPose();
     }
 
-    private static String fix(int value) {
+    private static String fix(final int value) {
         return (value == -1) ? "--" : "" + value;
     }
 
-    private static int minFPS(Minecraft mc) {
-        FrameTimer timer = mc.getFrameTimer();
+    private static int minFPS(final Minecraft mc) {
+        final FrameTimer timer = mc.getFrameTimer();
 
-        int start = timer.getLogStart();
-        int end = timer.getLogEnd();
+        final int start = timer.getLogStart();
+        final int end = timer.getLogEnd();
 
         if (end == start) return minFPS;
 
         int fps = mc.getFps();
         if (fps <= 0) fps = 1;
 
-        long[] frames = timer.getLog();
+        final long[] frames = timer.getLog();
         long maxNS = (long) (1 / (double) fps * 1000000000);
         long totalNS = 0;
 
         int index = Math.floorMod(end - 1, frames.length);
         while (index != start && (double) totalNS < 1000000000) {
-            long timeNs = frames[index];
+            final long timeNs = frames[index];
             if (timeNs > maxNS) {
                 maxNS = timeNs;
             }
@@ -186,56 +187,56 @@ public class OverlayFeatures {
         private boolean split = false;
         private boolean divisor = false;
 
-        public FPSDisplayBuilder append(String param) {
-            if (split) builder.append(" - ");
-            if (divisor) builder.append(" | ");
-            builder.append(param);
+        public FPSDisplayBuilder append(final String param) {
+            if (this.split) this.builder.append(" - ");
+            if (this.divisor) this.builder.append(" | ");
+            this.builder.append(param);
 
-            split = false;
-            divisor = true;
+            this.split = false;
+            this.divisor = true;
             return this;
         }
 
-        public FPSDisplayBuilder append(ChatFormatting formatting) {
-            return append(formatting.toString());
+        public FPSDisplayBuilder append(final ChatFormatting formatting) {
+            return this.append(formatting.toString());
         }
 
-        public FPSDisplayBuilder add(int param) {
-            builder.append(param);
+        public FPSDisplayBuilder add(final int param) {
+            this.builder.append(param);
             return this;
         }
 
-        public FPSDisplayBuilder add(String param) {
-            builder.append(param);
+        public FPSDisplayBuilder add(final String param) {
+            this.builder.append(param);
             return this;
         }
 
-        public FPSDisplayBuilder add(Component component) {
-            return add(component.getString());
+        public FPSDisplayBuilder add(final Component component) {
+            return this.add(component.getString());
         }
 
-        public FPSDisplayBuilder add(ChatFormatting formatting) {
-            return add(formatting.toString());
+        public FPSDisplayBuilder add(final ChatFormatting formatting) {
+            return this.add(formatting.toString());
         }
 
         public void split() {
-            split = true;
-            divisor = false;
+            this.split = true;
+            this.divisor = false;
         }
 
         public boolean isEmpty() {
-            return builder.isEmpty();
+            return this.builder.isEmpty();
         }
 
         public void release() {
-            builder = new StringBuilder();
-            split = false;
-            divisor = false;
+            this.builder = new StringBuilder();
+            this.split = false;
+            this.divisor = false;
         }
 
         @Override
         public String toString() {
-            return builder.toString();
+            return this.builder.toString();
         }
     }
 }

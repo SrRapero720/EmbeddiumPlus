@@ -30,24 +30,24 @@ public abstract class FpsOverlayMixin {
     @Unique private double embPlus$gpuUsage = 0;
 
     @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/metrics/profiling/MetricsRecorder;isRecording()Z"))
-    private boolean redirect$renderDebug(MetricsRecorder instance) {
-        return level == null ? instance.isRecording() : ChlorideConfig.fpsDisplaySystemMode.gpu() || instance.isRecording();
+    private boolean redirect$renderDebug(final MetricsRecorder instance) {
+        return this.level == null ? instance.isRecording() : ChlorideConfig.fpsDisplaySystemMode.gpu() || instance.isRecording();
     }
 
     @Redirect(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;gpuUtilization:D", opcode = Opcodes.PUTFIELD))
-    private void redirect$assign(Minecraft instance, double value) {
+    private void redirect$assign(final Minecraft instance, final double value) {
         this.embPlus$gpuUsage = value;
     }
 
     @Inject(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;gpuUtilization:D", opcode = Opcodes.GETFIELD, ordinal = 0, shift = At.Shift.BEFORE))
-    private void inject$getGPU(boolean pRenderLevel, CallbackInfo ci) {
-        this.gpuUtilization = embPlus$gpuUsage;
+    private void inject$getGPU(final boolean pRenderLevel, final CallbackInfo ci) {
+        this.gpuUtilization = this.embPlus$gpuUsage;
         OverlayFeatures.pushAvgFps(fps);
     }
 
     // MICRO OPTIMIZATION
     @WrapOperation(method = "runTick", at = @At(value = "INVOKE", target = "Ljava/lang/String;format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"))
-    private String redirect$removeString(Locale l, String format, Object[] args, Operation<String> original) {
+    private String redirect$removeString(final Locale l, final String format, final Object[] args, final Operation<String> original) {
         if (this.options.renderDebug && !this.metricsRecorder.isRecording()) return original.call(l, format, args);
         else return "";
     }

@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
     @Override
-    public void onLoad(String s) {
+    public void onLoad(final String s) {
 
     }
 
@@ -19,24 +19,23 @@ public class MixinPlugin implements IMixinConfigPlugin {
     public String getRefMapperConfig() { return null; }
 
     @Override
-    public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+    public boolean shouldApplyMixin(final String targetClassName, final String mixinClassName) {
         if (targetClassName.contains("jei_rei_emi.Jei") && !Tools.isModInstalled("jei")) return false;
         if (targetClassName.contains("jei_rei_emi.Rei") && !Tools.isModInstalled("roughlyenoughitems")) return false;
-        if (targetClassName.contains("jei_rei_emi.Emi") && !Tools.isModInstalled("emi")) return false;
+        return !targetClassName.contains("jei_rei_emi.Emi") || Tools.isModInstalled("emi");
 
         // go ahead
-        return true;
     }
 
     @Override
-    public void acceptTargets(Set<String> set, Set<String> set1) {}
+    public void acceptTargets(final Set<String> set, final Set<String> set1) {}
 
     @Override
     public List<String> getMixins() { return null; }
 
     @Override
-    public void preApply(String s, ClassNode classNode, String s1, IMixinInfo iMixinInfo) {}
+    public void preApply(final String s, final ClassNode classNode, final String s1, final IMixinInfo iMixinInfo) {}
 
     @Override
-    public void postApply(String s, ClassNode classNode, String s1, IMixinInfo iMixinInfo) {}
+    public void postApply(final String s, final ClassNode classNode, final String s1, final IMixinInfo iMixinInfo) {}
 }

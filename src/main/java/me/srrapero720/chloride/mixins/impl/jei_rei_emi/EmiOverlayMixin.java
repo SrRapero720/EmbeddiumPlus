@@ -20,26 +20,26 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Pseudo
 public class EmiOverlayMixin {
     @Shadow public static EmiSearchWidget search;
-    @Unique private static int checkedPos = 0;
+    @Unique private static int chloride$checkedPos = 0;
 
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Ldev/emi/emi/screen/EmiScreenManager$SidebarPanel;render(Ldev/emi/emi/runtime/EmiDrawContext;IIF)V"))
-    private static void inject$renderStackOverlay(EmiScreenManager.SidebarPanel instance, EmiDrawContext ctx, int i, int context, float mouseX, Operation<Void> original) {
+    private static void inject$renderStackOverlay(final EmiScreenManager.SidebarPanel instance, final EmiDrawContext ctx, final int i, final int context, final float mouseX, final Operation<Void> original) {
         if (!ChlorideConfig.hideJREMI) {
             original.call(instance, ctx, i, context, mouseX);
         } else {
-            if (checkedPos == 1 && search.getValue().isEmpty()) {
-                checkedPos++;
-                Bounds bounds = instance.getBounds();
+            if (chloride$checkedPos == 1 && search.getValue().isEmpty()) {
+                chloride$checkedPos++;
+                final Bounds bounds = instance.getBounds();
                 ctx.drawCenteredTextWithShadow(Component.translatable("chloride.jei.message"), bounds.x() + (bounds.width() / 2), bounds.y() + (bounds.height() / 2), 0xFFFFFF);
                 return;
             }
             original.call(instance, ctx, i, context, mouseX);
-            checkedPos++;
+            chloride$checkedPos++;
         }
     }
 
     @Inject(method = "render", at = @At("RETURN"))
-    private static void inject$renderCleanup(EmiDrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        checkedPos = 0;
+    private static void inject$renderCleanup(final EmiDrawContext context, final int mouseX, final int mouseY, final float delta, final CallbackInfo ci) {
+        chloride$checkedPos = 0;
     }
 }

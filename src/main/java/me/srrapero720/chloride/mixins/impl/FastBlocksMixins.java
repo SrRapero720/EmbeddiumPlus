@@ -21,10 +21,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class FastBlocksMixins {
     @Mixin(BedBlock.class)
     public abstract static class BedMixin extends BlockBehaviour {
-        public BedMixin(Properties pProperties) { super(pProperties); }
+        public BedMixin(final Properties pProperties) { super(pProperties); }
 
         @Inject(method = "getRenderShape", at = @At("RETURN"), cancellable = true)
-        private void inject$replaceRenderShape(BlockState state, CallbackInfoReturnable<RenderShape> cir) {
+        private void inject$replaceRenderShape(final BlockState state, final CallbackInfoReturnable<RenderShape> cir) {
             if (ChlorideConfig.fastBeds) {
                 cir.setReturnValue(RenderShape.MODEL);
             }
@@ -33,7 +33,7 @@ public class FastBlocksMixins {
         // I DON'T LIKE DO THIS WITH MIXINS, BUT IS NECESSARY :P
         @Override
         @SuppressWarnings("deprecation")
-        public boolean skipRendering(BlockState state, BlockState neighborState, Direction direction) {
+        public boolean skipRendering(final BlockState state, final BlockState neighborState, final Direction direction) {
             return neighborState.getBlock() instanceof BedBlock;
         }
     }
@@ -42,14 +42,14 @@ public class FastBlocksMixins {
     @Mixin(value = { ChestBlock.class, EnderChestBlock.class })
     public static class ChestsMixin {
         @Inject(method = "getTicker", at = @At("HEAD"), cancellable = true)
-        private <T extends BlockEntity> void inject$removeTicker(Level level, BlockState state, BlockEntityType<T> type, CallbackInfoReturnable<BlockEntityTicker<T>> cir) {
+        private <T extends BlockEntity> void inject$removeTicker(final Level level, final BlockState state, final BlockEntityType<T> type, final CallbackInfoReturnable<BlockEntityTicker<T>> cir) {
             if (FastBlocksFeature.canUseOnChests() && ChlorideConfig.fastChests) {
                 cir.setReturnValue(null);
             }
         }
 
         @Inject(method = "getRenderShape", at = @At("HEAD"), cancellable = true)
-        private void inject$replaceRenderShape(BlockState state, CallbackInfoReturnable<RenderShape> cir) {
+        private void inject$replaceRenderShape(final BlockState state, final CallbackInfoReturnable<RenderShape> cir) {
             if (FastBlocksFeature.canUseOnChests() && ChlorideConfig.fastChests) {
                 cir.setReturnValue(RenderShape.MODEL);
             }
@@ -59,9 +59,9 @@ public class FastBlocksMixins {
     @Mixin(BlockEntityRenderDispatcher.class)
     public static class TileRenderMixin {
         @Inject(method = "getRenderer", at = @At("HEAD"), cancellable = true)
-        private <E extends BlockEntity> void inject$disableRenderer(E blockEntity, CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
+        private <E extends BlockEntity> void inject$disableRenderer(final E blockEntity, final CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
             // FAST CHESTS (needs FLYWHEEL HANDLING)
-            Class<?> beClass = blockEntity.getClass();
+            final Class<?> beClass = blockEntity.getClass();
             if (ChlorideConfig.fastChests && FastBlocksFeature.canUseOnChests()) {
                 if (beClass == ChestBlockEntity.class || beClass == EnderChestBlockEntity.class) {
                     cir.setReturnValue(null);

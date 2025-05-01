@@ -20,7 +20,7 @@ class BorderlessMixin {
     @Mixin(Window.class)
     public static class WindowMixin {
         @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
-        private void redirect$glfwSetWindowMonitor(long window, long monitor, int xpos, int ypos, int width, int height, int refreshRate) {
+        private void redirect$glfwSetWindowMonitor(final long window, final long monitor, final int xpos, final int ypos, final int width, final int height, final int refreshRate) {
             if (ChlorideConfig.fullScreen.isBorderless()) {
                 if (monitor != 0L) {
                     GLFW.glfwSetWindowSizeLimits(window, 0, 0, width, height);
@@ -33,7 +33,7 @@ class BorderlessMixin {
         }
 
         @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwGetWindowMonitor(J)J"))
-        private long redirect$glfwGetWindowMonitor(long window) {
+        private long redirect$glfwGetWindowMonitor(final long window) {
             if (ChlorideConfig.fullScreen.isBorderless()) {
                 return 1L;
             }
@@ -46,7 +46,7 @@ class BorderlessMixin {
         @Shadow @Final public Minecraft minecraft;
 
         @Inject(method = "keyPress", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;toggleFullScreen()V"), cancellable = true)
-        public void redirect$handleFullScreenToggle(long pWindowPointer, int pKey, int pScanCode, int pAction, int pModifiers, CallbackInfo ci) {
+        public void redirect$handleFullScreenToggle(final long pWindowPointer, final int pKey, final int pScanCode, final int pAction, final int pModifiers, final CallbackInfo ci) {
             switch (ChlorideConfig.borderlessAttachModeF11.ordinal()) {
                 case 0 -> ChlorideConfig.setFullScreenMode(ChlorideConfig.FullScreenMode.nextOf(fullScreen));
                 case 1 -> ChlorideConfig.setFullScreenMode(ChlorideConfig.FullScreenMode.nextBorderless(fullScreen));

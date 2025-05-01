@@ -19,13 +19,13 @@ public abstract class GameRendererMixin {
     @Shadow @Final public Minecraft minecraft;
 
     @Inject(method = "renderLevel", at = @At(value = "HEAD"))
-    private void inject$renderLevel(float tickDelta, long nanos, PoseStack matrixStack, CallbackInfo ci) {
-        final var lightTexAccessor = (LightTextureAccessors) lightTexture;
+    private void inject$renderLevel(final float tickDelta, final long nanos, final PoseStack matrixStack, final CallbackInfo ci) {
+        final var lightTexAccessor = (LightTextureAccessors) this.lightTexture;
 
         if (lightTexAccessor.embPlus$isDirty()) {
-            minecraft.getProfiler().push("darkenLightTexture");
-            TrueDarknessFeature.updateLuminance(tickDelta, minecraft, (GameRenderer) (Object) this, lightTexAccessor.embPlus$getFlicker());
-            minecraft.getProfiler().pop();
+            this.minecraft.getProfiler().push("darkenLightTexture");
+            TrueDarknessFeature.updateLuminance(tickDelta, this.minecraft, (GameRenderer) (Object) this, lightTexAccessor.embPlus$getFlicker());
+            this.minecraft.getProfiler().pop();
         }
     }
 }

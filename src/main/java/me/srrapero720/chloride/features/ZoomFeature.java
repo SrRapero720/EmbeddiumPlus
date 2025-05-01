@@ -28,7 +28,7 @@ public class ZoomFeature {
                     InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, "Chloride"
     );
 
-    public static double zoom(double fov) {
+    public static double zoom(final double fov) {
         final var mouseSetting = Minecraft.getInstance().options.sensitivity();
 
         if (value == -1) value = DEFAULT;
@@ -53,7 +53,7 @@ public class ZoomFeature {
         return fov / value;
     }
 
-    public static boolean scroll(double amount) {
+    public static boolean scroll(final double amount) {
         if(!KEY.isDown()) return false;
 
         if (value == -1) value = DEFAULT;
@@ -67,13 +67,13 @@ public class ZoomFeature {
     }
 
     @SubscribeEvent
-    public static void onMouseScrolling(InputEvent.MouseScrollingEvent e) {
+    public static void onMouseScrolling(final InputEvent.MouseScrollingEvent e) {
         if (canUseZoom() && ChlorideConfig.enableZoom)
             e.setCanceled(scroll(e.getScrollDelta()));
     }
 
     @SubscribeEvent
-    public static void onGetFovEvent(ViewportEvent.ComputeFov e) {
+    public static void onGetFovEvent(final ViewportEvent.ComputeFov e) {
         if (canUseZoom() && ChlorideConfig.enableZoom)
             e.setFOV(zoom(e.getFOV()));
     }

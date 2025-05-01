@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 public class HideNametagFeature {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onRenderNameTagEvent(RenderNameTagEvent e) {
+    public static void onRenderNameTagEvent(final RenderNameTagEvent e) {
         final EntityRenderer<?> renderer = e.getEntityRenderer();
         if (!ChlorideConfig.itemNametagRendering && renderer instanceof ItemFrameRenderer || renderer instanceof ItemEntityRenderer) {
             e.setResult(Event.Result.DENY);

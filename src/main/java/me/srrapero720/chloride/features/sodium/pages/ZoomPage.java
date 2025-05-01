@@ -30,9 +30,9 @@ public class ZoomPage extends OptionPage {
     private static ImmutableList<OptionGroup> create() {
         final List<OptionGroup> groups = new ArrayList<>();
 
-        var base = OptionGroup.createBuilder();
+        final var base = OptionGroup.createBuilder();
 
-        var specialZoomEnableTooltip = Component.translatable("chloride.options.zoom.desc").append("[").append(Component.keybind("chloride.zoom").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)).append(Component.literal("]").append("\n"));
+        final var specialZoomEnableTooltip = Component.translatable("chloride.options.zoom.desc").append("[").append(Component.keybind("chloride.zoom").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)).append(Component.literal("]").append("\n"));
         if (!ZoomFeature.canUseZoom()) specialZoomEnableTooltip.append(Component.translatable("chloride.options.zoom.forbidden"));
         base.add(OptionImpl.createBuilder(boolean.class, STORAGE)
                 .setName(Component.translatable("chloride.zoom.title"))

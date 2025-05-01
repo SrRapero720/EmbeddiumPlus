@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
     @WrapOperation(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;fpsString:Ljava/lang/String;"))
-    private void inject$init(Minecraft instance, String value, Operation<Void> original) {
+    private void inject$init(final Minecraft instance, final String value, final Operation<Void> original) {
         original.call(instance, value);
         Chloride.earlyLoad();
     }

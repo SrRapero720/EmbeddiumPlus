@@ -26,7 +26,7 @@ public abstract class FogAndBandMixin {
     @Unique private static final float FOG_END = 1_000_000.0F;
 
     @Inject(method = "setupFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void inject$fogToggle_fogDistance(Camera camera, FogRenderer.FogMode fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci, FogType fogtype, Entity entity, FogRenderer.FogData fogrenderer$fogdata, FogRenderer.MobEffectFogFunction fogrenderer$mobeffectfogfunction) {
+    private static void inject$fogToggle_fogDistance(final Camera camera, final FogRenderer.FogMode fogType, final float viewDistance, final boolean thickFog, final float tickDelta, final CallbackInfo ci, final FogType fogtype, final Entity entity, final FogRenderer.FogData fogrenderer$fogdata, final FogRenderer.MobEffectFogFunction fogrenderer$mobeffectfogfunction) {
         if (camera.getFluidInCamera() != FogType.NONE) return;
 
         if (!ChlorideConfig.fog) {
@@ -41,7 +41,7 @@ public abstract class FogAndBandMixin {
     }
 
     @WrapOperation(method = "setupColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/CubicSampler;gaussianSampleVec3(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/util/CubicSampler$Vec3Fetcher;)Lnet/minecraft/world/phys/Vec3;"))
-    private static Vec3 redirect$blueband_gaussianSampleColor(Vec3 vec, CubicSampler.Vec3Fetcher fetcher, Operation<Vec3> original) {
+    private static Vec3 redirect$blueband_gaussianSampleColor(final Vec3 vec, final CubicSampler.Vec3Fetcher fetcher, final Operation<Vec3> original) {
         if (!ChlorideConfig.blueBand) {
             final Minecraft mc = Minecraft.getInstance();
 
@@ -54,19 +54,19 @@ public abstract class FogAndBandMixin {
     }
 
     @WrapOperation(method = "setupColor", at = @At(value = "INVOKE", target = "Lorg/joml/Vector3f;dot(Lorg/joml/Vector3fc;)F", remap = false))
-    private static float redirect$blueband_dot(Vector3f instance, Vector3fc v, Operation<Float> original) {
+    private static float redirect$blueband_dot(final Vector3f instance, final Vector3fc v, final Operation<Float> original) {
         if (!ChlorideConfig.blueBand) return 0;
         return original.call(instance, v);
     }
 
     @WrapOperation(method = "setupColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getRainLevel(F)F"))
-    private static float redirect$blueband_getRainLevel(ClientLevel instance, float v, Operation<Float> original) {
+    private static float redirect$blueband_getRainLevel(final ClientLevel instance, final float v, final Operation<Float> original) {
         if (!ChlorideConfig.blueBand) return 0;
         return original.call(instance, v);
     }
 
     @WrapOperation(method = "setupColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getThunderLevel(F)F"))
-    private static float redirect$blueband_getThunderLevel(ClientLevel instance, float v, Operation<Float> original) {
+    private static float redirect$blueband_getThunderLevel(final ClientLevel instance, final float v, final Operation<Float> original) {
         if (!ChlorideConfig.blueBand) return 0;
         return original.call(instance, v);
     }

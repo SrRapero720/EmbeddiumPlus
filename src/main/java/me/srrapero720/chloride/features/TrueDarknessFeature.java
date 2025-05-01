@@ -17,12 +17,12 @@ import net.minecraft.world.phys.Vec3;
 public class TrueDarknessFeature {
 	public static final double MIN = 0.03D;
 
-	public static Vec3 getFogColor(Vec3 vanilla, double factor) {
+	public static Vec3 getFogColor(final Vec3 vanilla, final double factor) {
 		if (factor == 1.0) return vanilla;
         return new Vec3(Math.max(MIN, vanilla.x * factor), Math.max(MIN, vanilla.y * factor), Math.max(MIN, vanilla.z * factor));
 	}
 
-    private static boolean isDark(Level world) {
+    private static boolean isDark(final Level world) {
 		if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.VANILLA) return false;
 
 		final ResourceKey<Level> dimType = world.dimension();
@@ -42,7 +42,7 @@ public class TrueDarknessFeature {
 		}
 	}
 
-	private static float skyFactor(Level world) {
+	private static float skyFactor(final Level world) {
         if (!isDark(world)) return 1;
 
         if (!world.dimensionType().hasSkyLight()) return 0; // alrweady checks for block light only
@@ -60,7 +60,7 @@ public class TrueDarknessFeature {
 	public static boolean enabled = false;
 	private static final float[][] LUMINANCE = new float[16][16];
 
-	public static int darken(int c, int blockIndex, int skyIndex) {
+	public static int darken(final int c, final int blockIndex, final int skyIndex) {
 		final float lTarget = LUMINANCE[blockIndex][skyIndex];
 		final float r = (c & 0xFF) / 255f;
 		final float g = ((c >> 8) & 0xFF) / 255f;
@@ -71,15 +71,15 @@ public class TrueDarknessFeature {
 		return f == 1f ? c : 0xFF000000 | Math.round(f * r * 255) | (Math.round(f * g * 255) << 8) | (Math.round(f * b * 255) << 16);
 	}
 
-	public static float luminance(float r, float g, float b) {
+	public static float luminance(final float r, final float g, final float b) {
 		return r * 0.2126f + g * 0.7152f + b * 0.0722f;
 	}
 
-	public static void updateLuminance(float tickDelta, Minecraft client, GameRenderer gameRenderer, float prevFlicker) {
+	public static void updateLuminance(final float tickDelta, final Minecraft client, final GameRenderer gameRenderer, final float prevFlicker) {
 		final ClientLevel level = client.level;
         if (level == null) return;
 
-        boolean isDarkOnLevel = TrueDarknessFeature.isDark(level);
+        final boolean isDarkOnLevel = TrueDarknessFeature.isDark(level);
 
 		enabled = !(
                 !isDarkOnLevel
@@ -99,7 +99,7 @@ public class TrueDarknessFeature {
             skyFactor = 1 - skyFactor * skyFactor * skyFactor * skyFactor;
             skyFactor *= dimSkyFactor;
 
-            var value = ChlorideConfig.darknessMode.value;
+            final var value = ChlorideConfig.darknessMode.value;
             if (value == -1) throw new IllegalStateException("Darkness value can't be negative");
 
             float min = Math.max(skyFactor * 0.05f, value);
@@ -108,7 +108,7 @@ public class TrueDarknessFeature {
             final float skyBase = LightTexture.getBrightness(dim, skyIndex) * minAmbient;
 
             min = Math.max(0.35f * skyFactor, value);
-            float v = skyBase * (rawAmbient * (1 - min) + min);
+            final float v = skyBase * (rawAmbient * (1 - min) + min);
             float skyRed = v;
             float skyGreen = v;
             float skyBlue = skyBase;

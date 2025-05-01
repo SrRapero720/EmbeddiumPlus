@@ -18,26 +18,26 @@ public class LeavesBlockMixin extends Block implements IGameLeaves {
     @Unique private ResourceLocation embPlus$resLoc;
     @Unique private int leaves_neighbor;
 
-    public LeavesBlockMixin(Properties pProperties) {
+    public LeavesBlockMixin(final Properties pProperties) {
         super(pProperties);
     }
 
     @Override
-    public boolean skipRendering(BlockState state, BlockState neighborState, Direction direction) {
-        if (neighborState.getBlock() instanceof IGameLeaves leaves) {
-            return LeavesFeatures.should(chloride$cast(), this, (LeavesBlock) leaves, leaves) || super.skipRendering(state, neighborState, direction);
+    public boolean skipRendering(final BlockState state, final BlockState neighborState, final Direction direction) {
+        if (neighborState.getBlock() instanceof final IGameLeaves leaves) {
+            return LeavesFeatures.should(this.chloride$cast(), this, (LeavesBlock) leaves, leaves) || super.skipRendering(state, neighborState, direction);
         }
         return super.skipRendering(state, neighborState, direction);
     }
 
     @Override
     public ResourceLocation chloride$getRL() {
-        return embPlus$resLoc != null ? embPlus$resLoc : (embPlus$resLoc = ForgeRegistries.BLOCKS.getKey(this));
+        return this.embPlus$resLoc != null ? this.embPlus$resLoc : (this.embPlus$resLoc = ForgeRegistries.BLOCKS.getKey(this));
     }
 
     @Override
     public int chloride$neighborCount() {
-        return leaves_neighbor;
+        return this.leaves_neighbor;
     }
 
     @Unique

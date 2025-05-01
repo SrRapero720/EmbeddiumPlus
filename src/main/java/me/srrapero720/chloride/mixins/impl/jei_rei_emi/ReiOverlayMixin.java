@@ -19,12 +19,12 @@ import org.spongepowered.asm.mixin.injection.At;
 @Pseudo
 public class ReiOverlayMixin {
     @WrapOperation(method = "renderWidgets", at = @At(value = "INVOKE", target = "Lme/shedaniel/rei/api/client/gui/widgets/Widget;render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"))
-    private void redirect$rendering(Widget instance, GuiGraphics graphics, int mouseX, int mouseY, float deltaTick, Operation<Void> original) {
-        if (instance instanceof EntryListWidget widget) {
+    private void redirect$rendering(final Widget instance, final GuiGraphics graphics, final int mouseX, final int mouseY, final float deltaTick, final Operation<Void> original) {
+        if (instance instanceof final EntryListWidget widget) {
             if (!ChlorideConfig.hideJREMI || !REIRuntimeImpl.getSearchField().getText().isEmpty()) {
                 original.call(instance, graphics, mouseX, mouseY, deltaTick);
             } else {
-                Rectangle rectangle = widget.getBounds();
+                final Rectangle rectangle = widget.getBounds();
                 graphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), rectangle.getCenterX(), rectangle.getCenterY(), 0xFFFFFF);
             }
         } else {

@@ -18,7 +18,7 @@ public class ChlorideConfig_Old {
     public static ForgeConfigSpec SPECS;
 
     public static void tryRestore() {
-        var path = FMLPaths.CONFIGDIR.get().resolve("embeddium++.toml").toFile();
+        final var path = FMLPaths.CONFIGDIR.get().resolve("embeddium++.toml").toFile();
         if (!path.exists()) return;
         
         LOGGER.warn(IT, "Restoring config from old Embeddium++Config");
@@ -29,7 +29,7 @@ public class ChlorideConfig_Old {
             configData.load();
 
             // SPEC DEFINE
-            var BUILDER = new ForgeConfigSpec.Builder();
+            final var BUILDER = new ForgeConfigSpec.Builder();
 
             // embeddiumplus ->
             BUILDER.push("embeddiumplus");
@@ -37,27 +37,27 @@ public class ChlorideConfig_Old {
             // embeddiumplus -> general ->
             BUILDER.push("general");
             // GENERAL
-            ForgeConfigSpec.EnumValue<FullScreenMode> fullScreen = BUILDER
+            final ForgeConfigSpec.EnumValue<FullScreenMode> fullScreen = BUILDER
                     .comment("Set Fullscreen mode", "Borderless let you change between screens more faster and move your mouse across monitors")
                     .defineEnum("fullscreen", FullScreenMode.WINDOWED);
 
-            ForgeConfigSpec.EnumValue<FPSDisplayMode> fpsDisplayMode = BUILDER
+            final ForgeConfigSpec.EnumValue<FPSDisplayMode> fpsDisplayMode = BUILDER
                     .comment("Configure FPS Display mode", "Complete mode gives you min FPS count and average count")
                     .defineEnum("fpsDisplay", FPSDisplayMode.ADVANCED);
 
-            ForgeConfigSpec.EnumValue<FPSDisplayAlign> fpsDisplayGravity = BUILDER
+            final ForgeConfigSpec.EnumValue<FPSDisplayAlign> fpsDisplayGravity = BUILDER
                     .comment("Configure FPS Display gravity", "Places counter on specified corner of your screen")
                     .defineEnum("fpsDisplayGravity", FPSDisplayAlign.LEFT);
 
-            ForgeConfigSpec.EnumValue<FPSDisplaySystemMode> fpsDisplaySystemMode = BUILDER
+            final ForgeConfigSpec.EnumValue<FPSDisplaySystemMode> fpsDisplaySystemMode = BUILDER
                     .comment("Shows GPU and memory usage onto FPS display")
                     .defineEnum("fpsDisplaySystem", FPSDisplaySystemMode.OFF);
 
-            ForgeConfigSpec.IntValue fpsDisplayMargin = BUILDER
+            final ForgeConfigSpec.IntValue fpsDisplayMargin = BUILDER
                     .comment("Configure FPS Display margin", "Give some space between corner and text")
                     .defineInRange("fpsDisplayMargin", 12, 0, 48);
 
-            ForgeConfigSpec.BooleanValue fpsDisplayShadow = BUILDER
+            final ForgeConfigSpec.BooleanValue fpsDisplayShadow = BUILDER
                     .comment("Toggle FPS Display shadow", "In case sometimes you can't see the text")
                     .define("fpsDisplayShadow", false);
 
@@ -67,76 +67,76 @@ public class ChlorideConfig_Old {
             // embeddiumplus -> quality
             BUILDER.push("quality");
             // QUALITY
-            ForgeConfigSpec.BooleanValue fog = BUILDER
+            final ForgeConfigSpec.BooleanValue fog = BUILDER
                     .comment("Toggle fog feature", "Fog was a vanilla feature")
                     .define("fog", true);
-            ForgeConfigSpec.BooleanValue blueBand = BUILDER
+            final ForgeConfigSpec.BooleanValue blueBand = BUILDER
                     .comment("Clean my skies", "Blue band was a vanilla feature, toggle off will show sky color directly")
                     .define("blueBand", true);
-            ForgeConfigSpec.IntValue cloudsHeight = BUILDER
+            final ForgeConfigSpec.IntValue cloudsHeight = BUILDER
                     .comment("Raise clouds", "Modify clouds height perfect for a adaptative world experience")
                     .defineInRange("cloudsHeight", 192, 0, 512);
 
-            ForgeConfigSpec.BooleanValue disableNameTagRender = BUILDER
+            final ForgeConfigSpec.BooleanValue disableNameTagRender = BUILDER
                     .comment("Do not show me your name", "disables nametag rendering for players and entities")
                     .define("disableNameTagRendering", false);
 
-            ForgeConfigSpec.EnumValue<ChunkFadeSpeed> chunkFadeSpeed = BUILDER
+            final ForgeConfigSpec.EnumValue<ChunkFadeSpeed> chunkFadeSpeed = BUILDER
                     .comment("Chunks fade in speed", "This option doesn't affect performance, just changes speed")
                     .defineEnum("chunkFadeSpeed", ChunkFadeSpeed.SLOW);
 
             // embeddiumplus -> quality -> darkness
             BUILDER.push("darkness");
             // QUALITY: TRUE DARKNESS
-            ForgeConfigSpec.EnumValue<DarknessMode> darknessMode = BUILDER
+            final ForgeConfigSpec.EnumValue<DarknessMode> darknessMode = BUILDER
                     .comment("Configure Darkness Mode", "Each config changes what is considered 'true darkness'")
                     .defineEnum("mode", DarknessMode.VANILLA);
 
-            ForgeConfigSpec.BooleanValue darknessOnOverworld = BUILDER
+            final ForgeConfigSpec.BooleanValue darknessOnOverworld = BUILDER
                     .comment("Toggle Darkness on Overworld dimension")
                     .define("enableOnOverworld", true);
 
-            ForgeConfigSpec.BooleanValue darknessOnNether = BUILDER
+            final ForgeConfigSpec.BooleanValue darknessOnNether = BUILDER
                     .comment("Toggle Darkness on Nether dimension")
                     .define("enableOnNether", false);
 
-            ForgeConfigSpec.DoubleValue darknessNetherFogBright = BUILDER
+            final ForgeConfigSpec.DoubleValue darknessNetherFogBright = BUILDER
                     .comment("Configure fog brightness on nether when darkness is enabled")
                     .defineInRange("netherFogBright", 0.5f, 0d, 1d);
 
-            ForgeConfigSpec.BooleanValue darknessOnEnd = BUILDER
+            final ForgeConfigSpec.BooleanValue darknessOnEnd = BUILDER
                     .comment("Toggle Darkness on End dimension")
                     .define("enableOnEnd", false);
 
-            ForgeConfigSpec.DoubleValue darknessEndFogBright = BUILDER
+            final ForgeConfigSpec.DoubleValue darknessEndFogBright = BUILDER
                     .comment("Configure fog brightness on nether when darkness is enabled")
                     .defineInRange("endFogBright", 0.5f, 0d, 1d);
 
-            ForgeConfigSpec.BooleanValue darknessByDefault = BUILDER
+            final ForgeConfigSpec.BooleanValue darknessByDefault = BUILDER
                     .comment("Toggle Darkness default mode for modded dimensions")
                     .define("valueByDefault", false);
 
-            ForgeConfigSpec.ConfigValue<List<? extends String>> darknessDimensionWhiteList = BUILDER
+            final ForgeConfigSpec.ConfigValue<List<? extends String>> darknessDimensionWhiteList = BUILDER
                     .comment("List of all dimensions to use True Darkness", "This option overrides 'valueByDefault' state")
                     .defineListAllowEmpty(Collections.singletonList("dimensionWhitelist"), Collections::emptyList, s -> s.toString().contains(":"));
 
-            ForgeConfigSpec.BooleanValue darknessOnNoSkyLight = BUILDER
+            final ForgeConfigSpec.BooleanValue darknessOnNoSkyLight = BUILDER
                     .comment("Toggle darkness when dimension has no SkyLight")
                     .define("enableOnNoSkyLight", false);
 
-            ForgeConfigSpec.BooleanValue darknessBlockLightOnly = BUILDER
+            final ForgeConfigSpec.BooleanValue darknessBlockLightOnly = BUILDER
                     .comment("Disables all bright sources of darkness like moon or fog", "Only affects darkness effect")
                     .define("enableBlockLightOnly", false);
 
-            ForgeConfigSpec.BooleanValue darknessAffectedByMoonPhase = BUILDER
+            final ForgeConfigSpec.BooleanValue darknessAffectedByMoonPhase = BUILDER
                     .comment("Toggles if moon phases affects darkness in the overworld")
                     .define("affectedByMoonPhase", true);
 
-            ForgeConfigSpec.DoubleValue darknessFullMoonBright = BUILDER
+            final ForgeConfigSpec.DoubleValue darknessFullMoonBright = BUILDER
                     .comment("Configure max moon brightness level with darkness")
                     .defineInRange("fullMoonBright", 0.25d, 0, 1d);
 
-            ForgeConfigSpec.DoubleValue darknessNewMoonBright = BUILDER
+            final ForgeConfigSpec.DoubleValue darknessNewMoonBright = BUILDER
                     .comment("Configure min moon brightness level with darkness")
                     .defineInRange("newMoonBright", 0, 0, 1d);
 
@@ -147,26 +147,26 @@ public class ChlorideConfig_Old {
             // embeddiumplus -> performance
             BUILDER.push("performance");
 
-            ForgeConfigSpec.EnumValue<LeavesCullingMode> leavesCulling = BUILDER
+            final ForgeConfigSpec.EnumValue<LeavesCullingMode> leavesCulling = BUILDER
                     .comment("Sets culling mode", "Reduces number of visible faces when the neighbor blocks are leaves")
                     .defineEnum("leavesCulling", LeavesCullingMode.OFF);
 
             // PERFORMANCE;
-            ForgeConfigSpec.BooleanValue hideJREMI = BUILDER
+            final ForgeConfigSpec.BooleanValue hideJREMI = BUILDER
                     .comment("Toggles JREI item rendering until searching", "Increases performance a little bit and cleans your screen when you don't want to use it")
                     .define("hideJREI", false);
 
-            ForgeConfigSpec.BooleanValue fontShadows = BUILDER
+            final ForgeConfigSpec.BooleanValue fontShadows = BUILDER
                     .comment("Toggles Minecraft Fonts shadows", "Depending of the case may increase performance", "Gives a flat style text")
                     .define("fontShadows", true);
 
             // embeddiumplus -> performance -> fastModels
             BUILDER.push("fastModels");
-            ForgeConfigSpec.BooleanValue fastChests = BUILDER
+            final ForgeConfigSpec.BooleanValue fastChests = BUILDER
                     .comment("Toggles FastChest feature", "Without flywheel installed or using any backend, it increases FPS significatly on chest rooms")
                     .define("enableChests", false);
 
-            ForgeConfigSpec.BooleanValue fastBeds = BUILDER
+            final ForgeConfigSpec.BooleanValue fastBeds = BUILDER
                     .comment("Toggles FastBeds feature")
                     .define("enableBeds", false);
 
@@ -178,20 +178,20 @@ public class ChlorideConfig_Old {
 
             // embeddiumplus -> performance -> distanceCulling -> tileEntities
             BUILDER.push("tileEntities");
-            ForgeConfigSpec.BooleanValue tileEntityDistanceCulling = BUILDER
+            final ForgeConfigSpec.BooleanValue tileEntityDistanceCulling = BUILDER
                     .comment("Toggles distance culling for Block Entities", "Maybe you use another mod for that :(")
                     .define("enable", true);
 
-            ForgeConfigSpec.IntValue tileEntityCullingDistanceX = BUILDER
+            final ForgeConfigSpec.IntValue tileEntityCullingDistanceX = BUILDER
                     .comment("Configure horizontal max distance before cull Block entities", "Value is squared, default was 64^2 (or 64x64)")
                     .defineInRange("cullingMaxDistanceX", 4096, 0, Integer.MAX_VALUE);
 
-            ForgeConfigSpec.IntValue tileEntityCullingDistanceY = BUILDER
+            final ForgeConfigSpec.IntValue tileEntityCullingDistanceY = BUILDER
                     .comment("Configure vertical max distance before cull Block entities", "Value is raw")
                     .defineInRange("cullingMaxDistanceY", 32, 0, 512);
 
             // QUICK CHECK
-            ForgeConfigSpec.ConfigValue<List<? extends String>> tileEntityWhitelist = BUILDER
+            final ForgeConfigSpec.ConfigValue<List<? extends String>> tileEntityWhitelist = BUILDER
                     .comment("List of all Block Entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:chest\" - Ignores chests only", "Example 2: \"ae2:all\" - ignores all Block entities from Applied Energetics 2")
                     .defineListAllowEmpty(Collections.singletonList("whitelist"), Collections.emptyList(), s -> s.toString().contains(":"));
 
@@ -200,38 +200,38 @@ public class ChlorideConfig_Old {
 
             // embeddiumplus -> performance -> distanceCulling -> entities
             BUILDER.push("entities");
-            ForgeConfigSpec.BooleanValue entityDistanceCulling = BUILDER
+            final ForgeConfigSpec.BooleanValue entityDistanceCulling = BUILDER
                     .comment("Toggles distance culling for entities, doesn't affect monsters culling", "Check the options below")
                     .define("enable", true);
-            ForgeConfigSpec.IntValue entityCullingDistanceX = BUILDER
+            final ForgeConfigSpec.IntValue entityCullingDistanceX = BUILDER
                     .comment("Configure horizontal max distance before cull entities", "Value is squared, default was 64^2 (or 64x64)")
                     .defineInRange("cullingMaxDistanceX", 4096, 0, Integer.MAX_VALUE);
 
-            ForgeConfigSpec.IntValue entityCullingDistanceY = BUILDER
+            final ForgeConfigSpec.IntValue entityCullingDistanceY = BUILDER
                     .comment("Configure vertical max distance before cull entities", "Value is raw")
                     .defineInRange("cullingMaxDistanceY", 32, 0, 512);
 
             // QUICK CHECK
-            ForgeConfigSpec.ConfigValue<List<? extends String>> entityWhitelist = BUILDER
+            final ForgeConfigSpec.ConfigValue<List<? extends String>> entityWhitelist = BUILDER
                     .comment("List of all Entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:bat\" - Ignores bats only", "Example 2: \"alexsmobs:*\" - ignores all entities for alexmobs mod")
                     .defineListAllowEmpty(Collections.singletonList("whitelist"), Collections.emptyList(), (s) -> s.toString().contains(":"));
 
             // embeddiumplus -> performance -> distanceCulling -> entities -> monsters
             BUILDER.push("monsters");
-            ForgeConfigSpec.BooleanValue monsterDistanceCulling = BUILDER
+            final ForgeConfigSpec.BooleanValue monsterDistanceCulling = BUILDER
                     .comment("Toggles distance culling for monsters (or hostile entities, whatever you want to call it), doesn't affect neutral/pacific entities", "Check the options above")
                     .define("enable", false);
 
-            ForgeConfigSpec.IntValue monsterCullingDistanceX = BUILDER
+            final ForgeConfigSpec.IntValue monsterCullingDistanceX = BUILDER
                     .comment("Configure horizontal max distance before cull monster entities", "Value is squared, default was 64^2 (or 64x64)")
                     .defineInRange("cullingMaxDistanceX", 16384, 0, Integer.MAX_VALUE);
 
-            ForgeConfigSpec.IntValue monsterCullingDistanceY = BUILDER
+            final ForgeConfigSpec.IntValue monsterCullingDistanceY = BUILDER
                     .comment("Configure vertical max distance before cull monster entities", "Value is raw")
                     .defineInRange("cullingMaxDistanceY", 64, 0, 512);
 
             // QUICK CHECK
-            ForgeConfigSpec.ConfigValue<List<? extends String>> monsterWhitelist = BUILDER
+            final ForgeConfigSpec.ConfigValue<List<? extends String>> monsterWhitelist = BUILDER
                     .comment("List of all monster entities to be ignored by distance culling", "Uses ResourceLocation to identify it", "Example 1: \"minecraft:bat\" - Ignores bats only", "Example 2: \"alexsmobs:*\" - ignores all entities for alexmobs mod")
                     .defineListAllowEmpty(Collections.singletonList("whitelist"), Collections.emptyList(), (s) -> s.toString().contains(":"));
 
@@ -241,10 +241,10 @@ public class ChlorideConfig_Old {
             // embeddiumplus -> others
             BUILDER.push("others");
             // OTHERS
-            ForgeConfigSpec.EnumValue<AttachMode> borderlessAttachModeF11 = BUILDER
+            final ForgeConfigSpec.EnumValue<AttachMode> borderlessAttachModeF11 = BUILDER
                     .comment("Configure if borderless fullscreen option should be attached to F11 or replace vanilla fullscreen")
                     .defineEnum("borderlessAttachModeOnF11", AttachMode.ATTACH);
-            ForgeConfigSpec.BooleanValue fastLanguageReload = BUILDER
+            final ForgeConfigSpec.BooleanValue fastLanguageReload = BUILDER
                     .comment("Toggles fast language reload", "Embeddedt points it maybe cause troubles to JEI, so ¿why not add it as a toggleable option?")
                     .define("fastLanguageReload", true);
 
@@ -253,19 +253,19 @@ public class ChlorideConfig_Old {
             // embeddiumplus -> dynlights
             BUILDER.push("dynlights");
             // DYN LIGHTS
-            ForgeConfigSpec.EnumValue<DynLightsSpeed> dynLightSpeed = BUILDER
+            final ForgeConfigSpec.EnumValue<DynLightsSpeed> dynLightSpeed = BUILDER
                     .comment("Configure how fast light whould be updated")
                     .defineEnum("updateSpeed", DynLightsSpeed.REALTIME);
 
-            ForgeConfigSpec.BooleanValue dynLightsOnEntities = BUILDER
+            final ForgeConfigSpec.BooleanValue dynLightsOnEntities = BUILDER
                     .comment("Toggle if Entities should have dynamic lights")
                     .define("onEntities", true);
 
-            ForgeConfigSpec.BooleanValue dynLightsOnTileEntities = BUILDER
+            final ForgeConfigSpec.BooleanValue dynLightsOnTileEntities = BUILDER
                     .comment("Toggle if Block Entities should have dynamic lights")
                     .define("onTileEntities", true);
 
-            ForgeConfigSpec.BooleanValue dynLightsUpdateOnPositionChange = BUILDER
+            final ForgeConfigSpec.BooleanValue dynLightsUpdateOnPositionChange = BUILDER
                     .define("updateOnlyOnPositionChange", true);
 
             // embeddiumplus ->
@@ -336,7 +336,7 @@ public class ChlorideConfig_Old {
 
             configData.close();
             if (!path.delete()) LOGGER.error(IT, "Cannot delete old config file '{}', it requires manual deletion", path);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             if (!path.delete()) throw new RuntimeException("Failed to remove corrupted configuration file");
         }
     }

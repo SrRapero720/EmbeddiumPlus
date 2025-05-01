@@ -11,7 +11,7 @@ public class LeavesFeatures {
         return !SodiumClientMod.options().quality.leavesQuality.isFancy(Minecraft.getInstance().options.graphicsMode().get());
     }
 
-    public static boolean should(LeavesBlock block, IGameLeaves casted, LeavesBlock neighbor, IGameLeaves castedNeighbor) {
+    public static boolean should(final LeavesBlock block, final IGameLeaves casted, final LeavesBlock neighbor, final IGameLeaves castedNeighbor) {
         if (fastLeaves()) return true;
         return switch (ChlorideConfig.leavesCulling) {
             case ALL -> casted.chloride$getRL().equals(castedNeighbor.chloride$getRL());
