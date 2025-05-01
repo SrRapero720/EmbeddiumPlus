@@ -22,11 +22,11 @@ import java.util.Arrays;
 public class OverlayFeatures {
     private static final FPSDisplayBuilder DISPLAY = new FPSDisplayBuilder();
 
-    private static final Component MSG_FPS = Component.translatable("chloride.options.displayfps.fps");
-    private static final Component MSG_MIN = Component.translatable("chloride.options.displayfps.min");
-    private static final Component MSG_AVG = Component.translatable("chloride.options.displayfps.avg");
-    private static final Component MSG_GPU = Component.translatable("chloride.options.displayfps.gpu");
-    private static final Component MSG_MEM = Component.translatable("chloride.options.displayfps.mem");
+    private static final Component MSG_FPS = Component.translatable("chloride.interface.fps");
+    private static final Component MSG_MIN = Component.translatable("chloride.interface.fps.min");
+    private static final Component MSG_AVG = Component.translatable("chloride.interface.fps.avg");
+    private static final Component MSG_GPU = Component.translatable("chloride.interface.fps.gpu");
+    private static final Component MSG_MEM = Component.translatable("chloride.interface.fps.mem");
 
     private static int fps = -1;
     private static int minFPS = -1;
@@ -105,11 +105,11 @@ public class OverlayFeatures {
 
         // GPU AND RAM
         switch (systemMode) {
-            case GPU ->
+            case GPU_ONLY ->
                     DISPLAY.append(Tools.colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
-            case RAM ->
+            case RAM_ONLY ->
                     DISPLAY.append(Tools.colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
-            case ON -> {
+            case ALL -> {
                 DISPLAY.append(Tools.colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
                 DISPLAY.append(Tools.colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
             }

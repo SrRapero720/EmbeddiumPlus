@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.mixins.impl.leaves_culling;
 
-import me.srrapero720.chloride.features.leaves_culling.ICulleableLeaves;
-import me.srrapero720.chloride.features.leaves_culling.LeavesCulling;
+import me.srrapero720.chloride.api.leaves.IGameLeaves;
+import me.srrapero720.chloride.features.LeavesFeatures;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Unique;
 
 @SuppressWarnings("deprecation")
 @Mixin(LeavesBlock.class)
-public class LeavesBlockMixin extends Block implements ICulleableLeaves {
+public class LeavesBlockMixin extends Block implements IGameLeaves {
     // TODO: cull less leaves (maybe delegate to 2.0.0)
     @Unique private ResourceLocation embPlus$resLoc;
     @Unique private int leaves_neighbor;
@@ -23,24 +23,25 @@ public class LeavesBlockMixin extends Block implements ICulleableLeaves {
     }
 
     @Override
-    public boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
-        if (adjacentState.getBlock() instanceof ICulleableLeaves leaves) {
-            return LeavesCulling.should(embplus$cast(), this, (LeavesBlock) leaves, leaves) || super.skipRendering(state, adjacentState, direction);
+    public boolean skipRendering(BlockState state, BlockState neighborState, Direction direction) {
+        if (neighborState.getBlock() instanceof IGameLeaves leaves) {
+            return LeavesFeatures.should(chloride$cast(), this, (LeavesBlock) leaves, leaves) || super.skipRendering(state, neighborState, direction);
         }
-        return super.skipRendering(state, adjacentState, direction);
+        return super.skipRendering(state, neighborState, direction);
     }
 
     @Override
-    public ResourceLocation embplus$getResourceLocation() {
+    public ResourceLocation chloride$getRL() {
         return embPlus$resLoc != null ? embPlus$resLoc : (embPlus$resLoc = ForgeRegistries.BLOCKS.getKey(this));
     }
 
     @Override
-    public int embplus$activeNeighbors() {
+    public int chloride$neighborCount() {
         return leaves_neighbor;
     }
 
-    public LeavesBlock embplus$cast() {
+    @Unique
+    private LeavesBlock chloride$cast() {
         return (LeavesBlock) (Object) this;
     }
 }

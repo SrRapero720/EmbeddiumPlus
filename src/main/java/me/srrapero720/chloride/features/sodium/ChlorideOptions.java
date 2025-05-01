@@ -1,6 +1,5 @@
 package me.srrapero720.chloride.features.sodium;
 
-import me.jellysquid.mods.sodium.client.gui.SodiumGameOptionPages;
 import me.jellysquid.mods.sodium.client.gui.options.*;
 import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
@@ -8,10 +7,8 @@ import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.ChlorideConfig.FullScreenMode;
-import me.srrapero720.chloride.Tools;
 import me.srrapero720.chloride.features.sodium.pages.*;
 import me.srrapero720.chloride.features.sodium.storage.ChlorideOptionsStorage;
-import net.minecraft.client.Options;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,15 +27,13 @@ public class ChlorideOptions {
 
     @SubscribeEvent
     public static void onSodiumPagesRegister(OptionGUIConstructionEvent e) {
-        var pages = e.getPages();
+        final var pages = e.getPages();
 
-        pages.add(new OverlayPage());
-        pages.add(new DetailsPage());
-        pages.add(new SkiesPage());
-        if (!ChlorideConfig.modpackMode) pages.add(new TrueDarknessPage());
-        pages.add(new EntityCullingPage());
+        pages.add(new InterfacePage());
+        pages.add(new WorldPage());
+        if (!ChlorideConfig.modpackMode) pages.add(new DarknessPage());
+        pages.add(new EntitiesPage());
         if (!ChlorideConfig.modpackMode) pages.add(new ZoomPage());
-        pages.add(new OthersPage());
         if (ChlorideConfig.modpackMode) {
             LOGGER.info("Modpack Mode is enabled, skipping chloride True Darkness and Zoom page registration");
         }
@@ -61,35 +56,11 @@ public class ChlorideOptions {
     public static void onSodiumGroupRegister(OptionPageConstructionEvent e) {
         if (e.getId() != null && e.getId().equals(StandardOptions.Pages.PERFORMANCE)) {
             var builder = OptionGroup.createBuilder();
-            var fontShadow = OptionImpl.createBuilder(boolean.class, STORAGE)
-                    .setId(ResourceLocation.tryBuild(Chloride.ID, "font_shadow"))
-                    .setName(Component.translatable("chloride.options.fontshadow.title"))
-                    .setTooltip(Component.translatable("chloride.options.fontshadow.desc"))
-                    .setControl(TickBoxControl::new)
-                    .setBinding(
-                            (opts, value) -> ChlorideConfig.fontShadows = value,
-                            (opts) -> ChlorideConfig.fontShadows)
-                    .setImpact(OptionImpact.VARIES)
-                    .build();
-
-            var leavesCulling = OptionImpl.createBuilder(ChlorideConfig.LeavesCullingMode.class, STORAGE)
-                    .setId(ResourceLocation.tryBuild(Chloride.ID, "leaves_culling"))
-                    .setName(Component.translatable("chloride.options.leaves_culling.title"))
-                    .setTooltip(Component.translatable("chloride.options.leaves_culling.desc"))
-                    .setControl(opt -> new CyclingControl<>(opt, ChlorideConfig.LeavesCullingMode.class, new Component[] {
-                            Component.translatable("chloride.options.leaves_culling.all"),
-                            Component.translatable("chloride.options.leaves_culling.off")
-                    }))
-                    .setBinding((opt, v) -> ChlorideConfig.leavesCulling = v,
-                            (opts) -> ChlorideConfig.leavesCulling)
-                    .setImpact(OptionImpact.HIGH)
-                    .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
-                    .build();
 
             var fastChest = OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_chests"))
-                    .setName(Component.translatable("chloride.options.fastchest.title"))
-                    .setTooltip(Component.translatable("chloride.options.fastchest.desc"))
+                    .setName(Component.translatable("chloride.performance.fastchest.title"))
+                    .setTooltip(Component.translatable("chloride.performance.fastchest.desc"))
                     .setControl(TickBoxControl::new)
                     .setBinding(
                             (opts, value) -> ChlorideConfig.fastChests = value,
@@ -102,8 +73,8 @@ public class ChlorideOptions {
 
             var fastBeds = OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_beds"))
-                    .setName(Component.translatable("chloride.options.fastbeds.title"))
-                    .setTooltip(Component.translatable("chloride.options.fastbeds.desc"))
+                    .setName(Component.translatable("chloride.performance.fastbeds.title"))
+                    .setTooltip(Component.translatable("chloride.performance.fastbeds.desc"))
                     .setControl(TickBoxControl::new)
                     .setBinding(
                             (opts, value) -> ChlorideConfig.fastBeds = value,
@@ -114,23 +85,8 @@ public class ChlorideOptions {
                     .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
                     .build();
 
-            var hideJEI = OptionImpl.createBuilder(boolean.class, STORAGE)
-                    .setId(ResourceLocation.tryBuild(Chloride.ID, "hide_jremi"))
-                    .setName(Component.translatable("chloride.options.jei.title"))
-                    .setTooltip(Component.translatable("chloride.options.jei.desc"))
-                    .setControl(TickBoxControl::new)
-                    .setBinding(
-                            (opts, value) -> ChlorideConfig.hideJREMI = value,
-                            (opts) -> ChlorideConfig.hideJREMI)
-                    .setImpact(OptionImpact.LOW)
-                    .setEnabled(Tools.isModInstalled("jei") || Tools.isModInstalled("roughlyenoughitems") || Tools.isModInstalled("emi"))
-                    .build();
-
-            builder.add(leavesCulling);
-            builder.add(fontShadow);
             builder.add(fastChest);
             builder.add(fastBeds);
-            builder.add(hideJEI);
 
             e.addGroup(builder.build());
         }
@@ -139,12 +95,12 @@ public class ChlorideOptions {
     private static Option<FullScreenMode> getFullscreenOption() {
         return OptionImpl.createBuilder(FullScreenMode.class, STORAGE)
                 .setId(ResourceLocation.tryBuild(Chloride.ID, "fullscreen"))
-                .setName(Component.translatable("chloride.options.screen.title"))
-                .setTooltip(Component.translatable("chloride.options.screen.desc"))
+                .setName(Component.translatable("options.fullscreen"))
+                .setTooltip(Component.translatable("chloride.general.screen.desc"))
                 .setControl((opt) -> new CyclingControl<>(opt, FullScreenMode.class, new Component[] {
-                        Component.translatable("chloride.options.screen.windowed"),
-                        Component.translatable("chloride.options.screen.borderless"),
-                        Component.translatable("options.fullscreen")
+                        Component.translatable("chloride.general.screen.windowed"),
+                        Component.translatable("chloride.general.screen.borderless"),
+                        Component.translatable("chloride.general.screen.fullscreen")
                 }))
                 .setBinding(
                         (s, g) -> ChlorideConfig.setFullScreenMode(g),

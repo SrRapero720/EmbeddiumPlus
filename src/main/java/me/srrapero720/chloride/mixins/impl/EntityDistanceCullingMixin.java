@@ -3,7 +3,7 @@ package me.srrapero720.chloride.mixins.impl;
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.Tools;
-import me.srrapero720.chloride.features.DistanceCullingFeature;
+import me.srrapero720.chloride.api.entities.DistanceCullingFeature;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;

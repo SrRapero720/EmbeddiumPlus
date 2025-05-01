@@ -24,7 +24,7 @@ import static me.srrapero720.chloride.features.sodium.ChlorideOptions.STORAGE;
 public class ZoomPage extends OptionPage {
     public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "zoom")));
     public ZoomPage() {
-        super(ID, Component.translatable("chloride.options.zoom.page"), create());
+        super(ID, Component.translatable("chloride.zoom"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
@@ -35,7 +35,7 @@ public class ZoomPage extends OptionPage {
         var specialZoomEnableTooltip = Component.translatable("chloride.options.zoom.desc").append("[").append(Component.keybind("chloride.zoom").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)).append(Component.literal("]").append("\n"));
         if (!ZoomFeature.canUseZoom()) specialZoomEnableTooltip.append(Component.translatable("chloride.options.zoom.forbidden"));
         base.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.options.zoom.title"))
+                .setName(Component.translatable("chloride.zoom.title"))
                 .setTooltip(specialZoomEnableTooltip)
                 .setControl(TickBoxControl::new)
                 .setBinding((opt, value) -> ChlorideConfig.enableZoom = value, opt -> ChlorideConfig.enableZoom)
@@ -45,8 +45,8 @@ public class ZoomPage extends OptionPage {
         );
 
         base.add(OptionImpl.createBuilder(int.class, STORAGE)
-                .setName(Component.translatable("chloride.options.zoom.max.title"))
-                .setTooltip(Component.translatable("chloride.options.zoom.max.desc"))
+                .setName(Component.translatable("chloride.zoom.max.title"))
+                .setTooltip(Component.translatable("chloride.zoom.max.desc"))
                 .setControl((option) -> new SliderControl(option, 10, 100, 1, v -> Component.literal(v + "°")))
                 .setBinding((opts, v) -> ChlorideConfig.maxZoom = (double) v, opts -> Math.toIntExact(Math.round(ChlorideConfig.maxZoom)))
                 .build()

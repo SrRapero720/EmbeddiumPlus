@@ -57,10 +57,12 @@ public class ChlorideConfig {
     @ConfigField public static int fogEnd = 192;
     @ConfigField public static FogShape fogShape = FogShape.CYLINDER;
     @ConfigField public static int cloudsHeight = 192;
-    @ConfigField public static boolean disableNameTagRender = false;
+    @ConfigField public static boolean entityNametagRendering = true;
+    @ConfigField public static boolean playerNametagRendering = true;
+    @ConfigField public static boolean itemNametagRendering = true;
     @ConfigField public static ChunkFadeSpeed chunkFadeSpeed = ChunkFadeSpeed.SLOW;
 
-    @ConfigField public static DarknessMode darknessMode = DarknessMode.OFF;
+    @ConfigField public static DarknessMode darknessMode = DarknessMode.VANILLA;
     @ConfigField public static boolean darknessOnOverworld = true;
     @ConfigField public static boolean darknessOnNether = false;
     @ConfigField public static double darknessNetherFogBright = 0.5;
@@ -141,10 +143,10 @@ public class ChlorideConfig {
     public enum FPSDisplayVAlign { TOP, CENTER, BOTTOM; }
     public enum ChunkFadeSpeed { OFF, FAST, SLOW; }
     public enum FPSDisplaySystemMode {
-        OFF, ON, GPU, RAM;
+        OFF, ALL, GPU_ONLY, RAM_ONLY;
 
-        public boolean ram() { return this == RAM || this == ON; }
-        public boolean gpu() { return this == GPU || this == ON; }
+        public boolean ram() { return this == RAM_ONLY || this == ALL; }
+        public boolean gpu() { return this == GPU_ONLY || this == ALL; }
         public boolean off() { return this == OFF; }
     }
     public enum DynLightsSpeed {
@@ -167,7 +169,7 @@ public class ChlorideConfig {
         }
     }
     public enum DarknessMode {
-        OFF(-1),
+        VANILLA(-1),
         DIM(0.18f),
         DARK(0.12f),
         DARKNESS(0.08f),

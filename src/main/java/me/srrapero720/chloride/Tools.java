@@ -3,10 +3,10 @@ package me.srrapero720.chloride;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
@@ -16,6 +16,15 @@ import java.util.List;
 
 public class Tools {
     private static final Marker IT = MarkerManager.getMarker("Tools");
+
+    public static <T extends Enum<T>> Component[] tEnumComponent(String translation, Class<T> clazz) {
+        final T[] constants = clazz.getEnumConstants();
+        final Component[] result = new Component[constants.length];
+        for (int i = 0; i < constants.length; i++) {
+            result[i] = Component.translatable(translation + "." + constants[i].name().toLowerCase());
+        }
+        return result;
+    }
 
     public static List<ResourceLocation> toId(String... ids) {
         List<ResourceLocation> result = new ArrayList<>();

@@ -23,7 +23,7 @@ public class TrueDarknessFeature {
 	}
 
     private static boolean isDark(Level world) {
-		if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.OFF) return false;
+		if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.VANILLA) return false;
 
 		final ResourceKey<Level> dimType = world.dimension();
 

@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE, modid = Chloride.ID)
 public class FastBlocksFeature {
-
     public static boolean canUseOnChests() {
         if (Tools.isModInstalled("flywheel")) {
             return false;

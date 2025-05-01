@@ -90,7 +90,7 @@ public class ChlorideConfig_Old {
             // QUALITY: TRUE DARKNESS
             ForgeConfigSpec.EnumValue<DarknessMode> darknessMode = BUILDER
                     .comment("Configure Darkness Mode", "Each config changes what is considered 'true darkness'")
-                    .defineEnum("mode", DarknessMode.OFF);
+                    .defineEnum("mode", DarknessMode.VANILLA);
 
             ForgeConfigSpec.BooleanValue darknessOnOverworld = BUILDER
                     .comment("Toggle Darkness on Overworld dimension")
@@ -288,7 +288,7 @@ public class ChlorideConfig_Old {
             ChlorideConfig.fog = fog.get();
             ChlorideConfig.blueBand = blueBand.get();
             ChlorideConfig.cloudsHeight = cloudsHeight.get();
-            ChlorideConfig.disableNameTagRender = disableNameTagRender.get();
+            ChlorideConfig.entityNametagRendering = disableNameTagRender.get();
             ChlorideConfig.chunkFadeSpeed = chunkFadeSpeed.get();
 
             ChlorideConfig.darknessMode = darknessMode.get();

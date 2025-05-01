@@ -30,7 +30,7 @@ public class EmiOverlayMixin {
             if (checkedPos == 1 && search.getValue().isEmpty()) {
                 checkedPos++;
                 Bounds bounds = instance.getBounds();
-                ctx.drawCenteredTextWithShadow(Component.translatable("chloride.feature.jei_rei_emi.empty_warning"), bounds.x() + (bounds.width() / 2), bounds.y() + (bounds.height() / 2), 0xFFFFFF);
+                ctx.drawCenteredTextWithShadow(Component.translatable("chloride.jei.message"), bounds.x() + (bounds.width() / 2), bounds.y() + (bounds.height() / 2), 0xFFFFFF);
                 return;
             }
             original.call(instance, ctx, i, context, mouseX);
