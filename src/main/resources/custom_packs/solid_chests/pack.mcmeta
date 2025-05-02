@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "description": "Solid chest pack",
+    "pack_format": ${modpackformat},
+    "hidden": true
+  }
+}

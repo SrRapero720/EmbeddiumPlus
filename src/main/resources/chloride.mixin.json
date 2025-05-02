@@ -15,6 +15,7 @@
     "EntityDistanceCullingMixin$TileEntityTypeMixin",
     "FastBlocksMixins$BedMixin",
     "FastBlocksMixins$ChestsMixin",
+    "FastBlocksMixins$PackMixin",
     "FastBlocksMixins$TileRenderMixin",
     "FogAndBandMixin",
     "FontShadowMixin",

@@ -7,11 +7,14 @@ import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.ChlorideConfig.FullScreenMode;
+import me.srrapero720.chloride.api.FastModelSettingsUpdate;
+import me.srrapero720.chloride.features.FastBlocksFeature;
 import me.srrapero720.chloride.features.sodium.pages.*;
 import me.srrapero720.chloride.features.sodium.storage.ChlorideOptionsStorage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.embeddedt.embeddium.api.OptionGUIConstructionEvent;
@@ -19,7 +22,7 @@ import org.embeddedt.embeddium.api.OptionGroupConstructionEvent;
 import org.embeddedt.embeddium.api.OptionPageConstructionEvent;
 import org.embeddedt.embeddium.client.gui.options.StandardOptions;
 
-import static me.srrapero720.chloride.Chloride.LOGGER;
+import static me.srrapero720.chloride.Chloride.*;
 
 @Mod.EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ChlorideOptions {
@@ -63,26 +66,29 @@ public class ChlorideOptions {
                     .setTooltip(Component.translatable("chloride.performance.fastchest.desc"))
                     .setControl(TickBoxControl::new)
                     .setBinding(
-                            (opts, value) -> ChlorideConfig.fastChests = value,
+                            (opts, value) -> {
+                                ChlorideConfig.fastChests = value;
+                                MinecraftForge.EVENT_BUS.post(new FastModelSettingsUpdate.ChestEvent());
+                            },
                             (opts) -> ChlorideConfig.fastChests)
-                    .setImpact(OptionImpact.HIGH)
-//                .setEnabled(FastModels.canUseOnChests())
-                    .setEnabled(false)
-                    .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
+                    .setImpact(OptionImpact.MEDIUM)
+                    .setEnabledPredicate(FastBlocksFeature::canUseOnChests)
+                    .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD, OptionFlag.REQUIRES_GAME_RESTART)
                     .build();
 
             final var fastBeds = OptionImpl.createBuilder(boolean.class, STORAGE)
-                    .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_beds"))
+                    .setId(ResourceLocation.tryBuild(ID, "fast_beds"))
                     .setName(Component.translatable("chloride.performance.fastbeds.title"))
                     .setTooltip(Component.translatable("chloride.performance.fastbeds.desc"))
                     .setControl(TickBoxControl::new)
                     .setBinding(
-                            (opts, value) -> ChlorideConfig.fastBeds = value,
+                            (opts, value) -> {
+                                ChlorideConfig.fastBeds = value;
+                                MinecraftForge.EVENT_BUS.post(new FastModelSettingsUpdate.BedEvent());
+                            },
                             (opts) -> ChlorideConfig.fastBeds)
-                    .setImpact(OptionImpact.LOW)
-//                .setEnabled(EmbyTools.isFlywheelOff())
-                    .setEnabled(false)
-                    .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
+                    .setImpact(OptionImpact.MEDIUM)
+                    .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD, OptionFlag.REQUIRES_GAME_RESTART)
                     .build();
 
             builder.add(fastChest);

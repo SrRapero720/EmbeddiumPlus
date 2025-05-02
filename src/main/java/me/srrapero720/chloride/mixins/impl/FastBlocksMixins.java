@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public class FastBlocksMixins {
     @Mixin(BedBlock.class)
-    public abstract static class BedMixin extends BlockBehaviour {
+    public static abstract class BedMixin extends BlockBehaviour {
         public BedMixin(final Properties pProperties) { super(pProperties); }
 
         @Inject(method = "getRenderShape", at = @At("RETURN"), cancellable = true)

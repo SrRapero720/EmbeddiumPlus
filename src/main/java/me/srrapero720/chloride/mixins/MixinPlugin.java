@@ -1,6 +1,5 @@
 package me.srrapero720.chloride.mixins;
 
-import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.Tools;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;

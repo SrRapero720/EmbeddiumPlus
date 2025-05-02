@@ -2,7 +2,7 @@ package me.srrapero720.chloride.features;
 
 import me.jellysquid.mods.sodium.client.SodiumClientMod;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.api.leaves.IGameLeaves;
+import me.srrapero720.chloride.features.accessors.IGameLeaves;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.block.LeavesBlock;
 

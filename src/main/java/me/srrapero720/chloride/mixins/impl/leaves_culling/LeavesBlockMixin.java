@@ -1,6 +1,6 @@
 package me.srrapero720.chloride.mixins.impl.leaves_culling;
 
-import me.srrapero720.chloride.api.leaves.IGameLeaves;
+import me.srrapero720.chloride.features.accessors.IGameLeaves;
 import me.srrapero720.chloride.features.LeavesFeatures;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;

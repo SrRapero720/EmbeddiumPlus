@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.api.entities;
+package me.srrapero720.chloride.features.accessors;
 
 public interface DistanceCullingFeature {
     boolean chloride$whitelisted();
