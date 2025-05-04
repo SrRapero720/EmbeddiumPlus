@@ -1,6 +1,6 @@
 package me.srrapero720.chloride.mixins;
 
-import me.srrapero720.chloride.Tools;
+import me.srrapero720.chloride.Chloride;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -19,9 +19,9 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(final String targetClassName, final String mixinClassName) {
-        if (targetClassName.contains("jei_rei_emi.Jei") && !Tools.isModInstalled("jei")) return false;
-        if (targetClassName.contains("jei_rei_emi.Rei") && !Tools.isModInstalled("roughlyenoughitems")) return false;
-        return !targetClassName.contains("jei_rei_emi.Emi") || Tools.isModInstalled("emi");
+        if (targetClassName.contains("jei_rei_emi.Jei") && !Chloride.installed("jei")) return false;
+        if (targetClassName.contains("jei_rei_emi.Rei") && !Chloride.installed("roughlyenoughitems")) return false;
+        return !targetClassName.contains("jei_rei_emi.Emi") || Chloride.installed("emi");
 
         // go ahead
     }

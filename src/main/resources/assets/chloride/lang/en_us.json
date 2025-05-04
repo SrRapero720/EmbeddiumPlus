@@ -93,7 +93,7 @@
   "chloride.world.fade.title": "Chunk Fade in",
   "chloride.world.fade.desc": "If enabled, chunks will fade in when loading.",
 
-  "chloride.darkness": "True Darkness",
+  "chloride.darkness": "Darkness",
   "chloride.darkness.level.title": "Darkness Level",
   "chloride.darkness.level.desc": "Makes darkness more darker, making darkness attenuation more intense.",
   "chloride.darkness.level.blackness": "Blackness",

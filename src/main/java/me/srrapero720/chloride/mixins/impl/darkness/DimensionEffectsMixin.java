@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.mixins.impl.darkness;
 
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.features.TrueDarknessFeature;
+import me.srrapero720.chloride.impl.Darkness;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,9 +16,9 @@ public class DimensionEffectsMixin {
     public static class NetherMixin {
         @Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
         private void inject$brightFogColor(final CallbackInfoReturnable<Vec3> cir) {
-            if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.VANILLA || !ChlorideConfig.darknessOnNether) return;
+            if (ChlorideConfig.darknessMode == Darkness.Level.VANILLA || !ChlorideConfig.darknessOnNether) return;
 
-            cir.setReturnValue(TrueDarknessFeature.getFogColor(cir.getReturnValue(), ChlorideConfig.darknessNetherFogBright));
+            cir.setReturnValue(Darkness.getFogColor(cir.getReturnValue(), ChlorideConfig.darknessNetherFogBright));
         }
     }
 
@@ -26,9 +26,9 @@ public class DimensionEffectsMixin {
     public static class EndMixin {
         @Inject(method = "getBrightnessDependentFogColor", at = @At(value = "RETURN"), cancellable = true)
         private void inject$brightFogColor(final CallbackInfoReturnable<Vec3> cir) {
-            if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.VANILLA || !ChlorideConfig.darknessOnEnd) return;
+            if (ChlorideConfig.darknessMode == Darkness.Level.VANILLA || !ChlorideConfig.darknessOnEnd) return;
 
-            cir.setReturnValue(TrueDarknessFeature.getFogColor(cir.getReturnValue(), ChlorideConfig.darknessEndFogBright));
+            cir.setReturnValue(Darkness.getFogColor(cir.getReturnValue(), ChlorideConfig.darknessEndFogBright));
         }
     }
 }

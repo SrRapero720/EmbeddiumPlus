@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.mixins.impl;
 
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.features.FastBlocksFeature;
+import me.srrapero720.chloride.impl.FastBlocks;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.core.Direction;
@@ -43,14 +43,14 @@ public class FastBlocksMixins {
     public static class ChestsMixin {
         @Inject(method = "getTicker", at = @At("HEAD"), cancellable = true)
         private <T extends BlockEntity> void inject$removeTicker(final Level level, final BlockState state, final BlockEntityType<T> type, final CallbackInfoReturnable<BlockEntityTicker<T>> cir) {
-            if (FastBlocksFeature.canUseOnChests() && ChlorideConfig.fastChests) {
+            if (FastBlocks.canUseOnChests() && ChlorideConfig.fastChests) {
                 cir.setReturnValue(null);
             }
         }
 
         @Inject(method = "getRenderShape", at = @At("HEAD"), cancellable = true)
         private void inject$replaceRenderShape(final BlockState state, final CallbackInfoReturnable<RenderShape> cir) {
-            if (FastBlocksFeature.canUseOnChests() && ChlorideConfig.fastChests) {
+            if (FastBlocks.canUseOnChests() && ChlorideConfig.fastChests) {
                 cir.setReturnValue(RenderShape.MODEL);
             }
         }
@@ -62,7 +62,7 @@ public class FastBlocksMixins {
         private <E extends BlockEntity> void inject$disableRenderer(final E blockEntity, final CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
             // FAST CHESTS (needs FLYWHEEL HANDLING)
             final Class<?> beClass = blockEntity.getClass();
-            if (ChlorideConfig.fastChests && FastBlocksFeature.canUseOnChests()) {
+            if (ChlorideConfig.fastChests && FastBlocks.canUseOnChests()) {
                 if (beClass == ChestBlockEntity.class || beClass == EnderChestBlockEntity.class) {
                     cir.setReturnValue(null);
                 }

@@ -1,6 +1,6 @@
 package me.srrapero720.chloride.mixins.impl.darkness;
 
-import me.srrapero720.chloride.features.TrueDarknessFeature;
+import me.srrapero720.chloride.impl.Darkness;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -18,6 +18,6 @@ public class LightTextureMixin {
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void inject$init(final GameRenderer pRenderer, final Minecraft pMinecraft, final CallbackInfo ci) {
-        ((TrueDarknessFeature.DynamicTextureHook) this.lightTexture).chloride$enableDarkness();
+        ((Darkness.DynamicTextureHook) this.lightTexture).chloride$enableDarkness();
     }
 }

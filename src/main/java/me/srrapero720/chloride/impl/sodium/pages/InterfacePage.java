@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.features.sodium.pages;
+package me.srrapero720.chloride.impl.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
@@ -10,7 +10,9 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.Tools;
+import me.srrapero720.chloride.impl.Borderless;
+import me.srrapero720.chloride.impl.Overlay;
+import me.srrapero720.chloride.impl.sodium.controls.BetterCyclingControl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static me.srrapero720.chloride.features.sodium.ChlorideOptions.STORAGE;
+import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
 public class InterfacePage extends OptionPage {
     public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "interface")));
@@ -32,26 +34,26 @@ public class InterfacePage extends OptionPage {
         final List<OptionGroup> groups = new ArrayList<>();
 
         final var fps = OptionGroup.createBuilder();
-        fps.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplayMode.class, STORAGE)
+        fps.add(OptionImpl.createBuilder(Overlay.FPS.class, STORAGE)
                 .setName(Component.translatable("chloride.interface.fps.title"))
                 .setTooltip(Component.translatable("chloride.interface.fps.desc"))
-                .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.FPSDisplayMode.class, Tools.tEnumComponent("chloride.interface.fps.mode", ChlorideConfig.FPSDisplayMode.class)))
+                .setControl((option) -> new CyclingControl<>(option, Overlay.FPS.class, BetterCyclingControl.tEnumComponent("chloride.interface.fps.mode", Overlay.FPS.class)))
                 .setBinding((opts, value) -> ChlorideConfig.fpsDisplayMode = value, opts -> ChlorideConfig.fpsDisplayMode)
                 .setImpact(OptionImpact.LOW)
                 .build()
         );
-        fps.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplaySystemMode.class, STORAGE)
+        fps.add(OptionImpl.createBuilder(Overlay.FPSDetails.class, STORAGE)
                 .setName(Component.translatable("chloride.interface.fps.system.title"))
                 .setTooltip(Component.translatable("chloride.interface.fps.system.desc"))
-                .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.FPSDisplaySystemMode.class, Tools.tEnumComponent("chloride.interface.fps.system", ChlorideConfig.FPSDisplaySystemMode.class)))
+                .setControl((option) -> new CyclingControl<>(option, Overlay.FPSDetails.class, BetterCyclingControl.tEnumComponent("chloride.interface.fps.system", Overlay.FPSDetails.class)))
                 .setBinding((options, value) -> ChlorideConfig.fpsDisplaySystemMode = value,
                         (options) -> ChlorideConfig.fpsDisplaySystemMode)
                 .build()
         );
-        fps.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplayAlign.class, STORAGE)
+        fps.add(OptionImpl.createBuilder(Overlay.FPSAlign.class, STORAGE)
                 .setName(Component.translatable("chloride.interface.fps.align_x.title"))
                 .setTooltip(Component.translatable("chloride.interface.fps.align_x.desc"))
-                .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.FPSDisplayAlign.class, Tools.tEnumComponent("chloride.interface.fps.align_x", ChlorideConfig.FPSDisplayAlign.class)))
+                .setControl((option) -> new CyclingControl<>(option, Overlay.FPSAlign.class, BetterCyclingControl.tEnumComponent("chloride.interface.fps.align_x", Overlay.FPSAlign.class)))
                 .setBinding(
                         (opts, value) -> ChlorideConfig.fpsDisplayAlign = value,
                         opts -> ChlorideConfig.fpsDisplayAlign)
@@ -67,10 +69,10 @@ public class InterfacePage extends OptionPage {
                         opts -> ChlorideConfig.fpsDisplayMargin)
                 .build()
         );
-        fps.add(OptionImpl.createBuilder(ChlorideConfig.FPSDisplayVAlign.class, STORAGE)
+        fps.add(OptionImpl.createBuilder(Overlay.FPSVAlign.class, STORAGE)
                 .setName(Component.translatable("chloride.interface.fps.align_y.title"))
                 .setTooltip(Component.translatable("chloride.interface.fps.align_y.desc"))
-                .setControl((option) -> new CyclingControl<>(option, ChlorideConfig.FPSDisplayVAlign.class, Tools.tEnumComponent("chloride.interface.fps.align_y", ChlorideConfig.FPSDisplayVAlign.class)))
+                .setControl((option) -> new CyclingControl<>(option, Overlay.FPSVAlign.class, BetterCyclingControl.tEnumComponent("chloride.interface.fps.align_y", Overlay.FPSVAlign.class)))
                 .setBinding(
                         (opts, value) -> ChlorideConfig.fpsDisplayVAlign = value,
                         opts -> ChlorideConfig.fpsDisplayVAlign)
@@ -119,15 +121,15 @@ public class InterfacePage extends OptionPage {
                         (opts, value) -> ChlorideConfig.hideJREMI = value,
                         (opts) -> ChlorideConfig.hideJREMI)
                 .setImpact(OptionImpact.LOW)
-                .setEnabled(Tools.isModInstalled("jei") || Tools.isModInstalled("roughlyenoughitems") || Tools.isModInstalled("emi"))
+                .setEnabled(Chloride.installed("jei") || Chloride.installed("roughlyenoughitems") || Chloride.installed("emi"))
                 .build()
         );
 
         final var misc = OptionGroup.createBuilder();
-        misc.add(OptionImpl.createBuilder(ChlorideConfig.AttachMode.class, STORAGE)
+        misc.add(OptionImpl.createBuilder(Borderless.AttachMode.class, STORAGE)
                 .setName(Component.translatable("chloride.interface.borderless.f11.title"))
                 .setTooltip(Component.translatable("chloride.interface.borderless.f11.desc"))
-                .setControl(option -> new CyclingControl<>(option, ChlorideConfig.AttachMode.class, Tools.tEnumComponent("chloride.interface.borderless.f11", ChlorideConfig.AttachMode.class)))
+                .setControl(option -> new CyclingControl<>(option, Borderless.AttachMode.class, BetterCyclingControl.tEnumComponent("chloride.interface.borderless.f11", Borderless.AttachMode.class)))
                 .setBinding((options, value) -> ChlorideConfig.borderlessAttachModeF11 = value,
                         (options) -> ChlorideConfig.borderlessAttachModeF11)
                 .build());

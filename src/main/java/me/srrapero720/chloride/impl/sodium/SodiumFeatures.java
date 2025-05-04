@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.features.sodium;
+package me.srrapero720.chloride.impl.sodium;
 
 import me.jellysquid.mods.sodium.client.gui.options.*;
 import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
@@ -6,11 +6,11 @@ import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.ChlorideConfig.FullScreenMode;
-import me.srrapero720.chloride.api.FastModelSettingsUpdate;
-import me.srrapero720.chloride.features.FastBlocksFeature;
-import me.srrapero720.chloride.features.sodium.pages.*;
-import me.srrapero720.chloride.features.sodium.storage.ChlorideOptionsStorage;
+import me.srrapero720.chloride.impl.Borderless;
+import me.srrapero720.chloride.impl.Borderless.Mode;
+import me.srrapero720.chloride.api.events.FastModelSettingsUpdate;
+import me.srrapero720.chloride.impl.FastBlocks;
+import me.srrapero720.chloride.impl.sodium.pages.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,8 +25,11 @@ import org.embeddedt.embeddium.client.gui.options.StandardOptions;
 import static me.srrapero720.chloride.Chloride.*;
 
 @Mod.EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class ChlorideOptions {
-    public static final OptionStorage<?> STORAGE = new ChlorideOptionsStorage();
+public class SodiumFeatures {
+    public static final OptionStorage<?> STORAGE = new OptionStorage<>() {
+        @Override public Object getData() { return new Object(); }
+        @Override public void save() { ChlorideConfig.write(); }
+    };
 
     @SubscribeEvent
     public static void onSodiumPagesRegister(final OptionGUIConstructionEvent e) {
@@ -72,7 +75,7 @@ public class ChlorideOptions {
                             },
                             (opts) -> ChlorideConfig.fastChests)
                     .setImpact(OptionImpact.MEDIUM)
-                    .setEnabledPredicate(FastBlocksFeature::canUseOnChests)
+                    .setEnabledPredicate(FastBlocks::canUseOnChests)
                     .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD, OptionFlag.REQUIRES_GAME_RESTART)
                     .build();
 
@@ -98,18 +101,18 @@ public class ChlorideOptions {
         }
     }
 
-    private static Option<FullScreenMode> getFullscreenOption() {
-        return OptionImpl.createBuilder(FullScreenMode.class, STORAGE)
+    private static Option<Mode> getFullscreenOption() {
+        return OptionImpl.createBuilder(Mode.class, STORAGE)
                 .setId(ResourceLocation.tryBuild(Chloride.ID, "fullscreen"))
                 .setName(Component.translatable("options.fullscreen"))
                 .setTooltip(Component.translatable("chloride.general.screen.desc"))
-                .setControl((opt) -> new CyclingControl<>(opt, FullScreenMode.class, new Component[] {
+                .setControl((opt) -> new CyclingControl<>(opt, Mode.class, new Component[] {
                         Component.translatable("chloride.general.screen.windowed"),
                         Component.translatable("chloride.general.screen.borderless"),
                         Component.translatable("chloride.general.screen.fullscreen")
                 }))
                 .setBinding(
-                        (s, g) -> ChlorideConfig.setFullScreenMode(g),
+                        (s, g) -> Borderless.setFullScreenMode(g),
                         (opts) -> ChlorideConfig.fullScreen
                 ).build();
     }

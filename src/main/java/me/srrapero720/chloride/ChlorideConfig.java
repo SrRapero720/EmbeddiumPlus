@@ -2,11 +2,8 @@ package me.srrapero720.chloride;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.shaders.FogShape;
-import me.srrapero720.chloride.mixins.impl.accessors.WindowAccessors;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
+import me.srrapero720.chloride.impl.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +18,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,11 +39,11 @@ public class ChlorideConfig {
     private static File configFile;
 
     @ConfigField public static boolean modpackMode = false;
-    @ConfigField public static FullScreenMode fullScreen = FullScreenMode.WINDOWED;
-    @ConfigField public static FPSDisplayMode fpsDisplayMode = FPSDisplayMode.ADVANCED;
-    @ConfigField public static FPSDisplayAlign fpsDisplayAlign = FPSDisplayAlign.LEFT;
-    @ConfigField public static FPSDisplayVAlign fpsDisplayVAlign = FPSDisplayVAlign.TOP;
-    @ConfigField public static FPSDisplaySystemMode fpsDisplaySystemMode = FPSDisplaySystemMode.OFF;
+    @ConfigField public static Borderless.Mode fullScreen = Borderless.Mode.WINDOWED;
+    @ConfigField public static Overlay.FPS fpsDisplayMode = Overlay.FPS.ADVANCED;
+    @ConfigField public static Overlay.FPSAlign fpsDisplayAlign = Overlay.FPSAlign.LEFT;
+    @ConfigField public static Overlay.FPSVAlign fpsDisplayVAlign = Overlay.FPSVAlign.TOP;
+    @ConfigField public static Overlay.FPSDetails fpsDisplaySystemMode = Overlay.FPSDetails.OFF;
     @ConfigField public static int fpsDisplayMargin = 12;
     @ConfigField public static int fpsDisplayVMargin = 12;
     @ConfigField public static boolean fpsDisplayShadow = false;
@@ -60,9 +58,9 @@ public class ChlorideConfig {
     @ConfigField public static boolean entityNametagRendering = true;
     @ConfigField public static boolean playerNametagRendering = true;
     @ConfigField public static boolean itemNametagRendering = true;
-    @ConfigField public static ChunkFadeSpeed chunkFadeSpeed = ChunkFadeSpeed.SLOW;
+    @ConfigField public static ChunkFade.Speed chunkFadeSpeed = ChunkFade.Speed.SLOW;
 
-    @ConfigField public static DarknessMode darknessMode = DarknessMode.VANILLA;
+    @ConfigField public static Darkness.Level darknessMode = Darkness.Level.VANILLA;
     @ConfigField public static boolean darknessOnOverworld = true;
     @ConfigField public static boolean darknessOnNether = false;
     @ConfigField public static double darknessNetherFogBright = 0.5;
@@ -78,7 +76,7 @@ public class ChlorideConfig {
 
     @ConfigField public static boolean hideJREMI = false;
     @ConfigField public static boolean fontShadows = true;
-    @ConfigField public static LeavesCullingMode leavesCulling = LeavesCullingMode.OFF;
+    @ConfigField public static LeavesCulling.LeavesCullingMode leavesCulling = LeavesCulling.LeavesCullingMode.OFF;
     @ConfigField public static boolean fastChests = false;
     @ConfigField public static boolean fastBeds = false;
 
@@ -91,134 +89,28 @@ public class ChlorideConfig {
     @ConfigField public static boolean monsterDistanceCulling = false;
     @ConfigField public static int monsterCullingDistanceX = 16384;
     @ConfigField public static int monsterCullingDistanceY = 64;
-    @ConfigField public static List<ResourceLocation> entityWhitelist = Tools.toId("minecraft:ghast", "minecraft:ender_dragon", "iceandfire:all", "create:all");
-    @ConfigField public static List<ResourceLocation> monsterWhitelist = Tools.toId();
-    @ConfigField public static List<ResourceLocation> tileEntityWhitelist = Tools.toId("waterframes:all");
+    @ConfigField public static List<ResourceLocation> entityWhitelist = toId("minecraft:ghast", "minecraft:ender_dragon", "iceandfire:all", "create:all");
+    @ConfigField public static List<ResourceLocation> monsterWhitelist = toId();
+    @ConfigField public static List<ResourceLocation> tileEntityWhitelist = toId("waterframes:all");
 
-    @ConfigField public static AttachMode borderlessAttachModeF11 = AttachMode.ATTACH;
+    @ConfigField public static Borderless.AttachMode borderlessAttachModeF11 = Borderless.AttachMode.ATTACH;
     @ConfigField public static boolean fastLanguageReload = true;
 
     @ConfigField public static boolean enableZoom = true;
     @ConfigField public static double maxZoom = 50;
 
-    @ConfigField public static DynLightsSpeed dynLightSpeed = DynLightsSpeed.REALTIME;
-    @ConfigField public static boolean dynLightsOnEntities = true;
-    @ConfigField public static boolean dynLightsOnTileEntities = true;
-    @ConfigField public static boolean dynLightsUpdateOnPositionChange = true;
 
-
-    public static void setFullScreenMode(final FullScreenMode value) {
-        final Minecraft client = Minecraft.getInstance();
-        final Options opts = client.options;
-
-        fullScreen = value;
-        opts.fullscreen.set(value != FullScreenMode.WINDOWED);
-
-        final Window window = client.getWindow();
-
-        if (window.isFullscreen() != opts.fullscreen.get()) {
-            window.toggleFullScreen();
-            opts.fullscreen.set(window.isFullscreen());
+    public static List<ResourceLocation> toId(final String... ids) {
+        final List<ResourceLocation> result = new ArrayList<>();
+        for (String id: ids) {
+            if (id.endsWith(":*")) id = id.replace(":*", ":all");
+            result.add(ResourceLocation.tryParse(id));
         }
 
-        if (opts.fullscreen.get()) {
-            ((WindowAccessors) (Object) window).setDirty(true);
-            window.changeFullscreenVideoMode();
-        }
-    }
-
-    public enum AttachMode {
-        ATTACH, REPLACE, OFF
-    }
-
-    /* CONFIG VALUES */
-    public enum FPSDisplayMode {
-        OFF, SIMPLE, ADVANCED;
-
-        public boolean off() {
-            return this == OFF;
-        }
-    }
-    public enum FPSDisplayAlign { LEFT, CENTER, RIGHT}
-    public enum FPSDisplayVAlign { TOP, CENTER, BOTTOM}
-    public enum ChunkFadeSpeed { OFF, FAST, SLOW}
-    public enum FPSDisplaySystemMode {
-        OFF, ALL, GPU_ONLY, RAM_ONLY;
-
-        public boolean ram() { return this == RAM_ONLY || this == ALL; }
-        public boolean gpu() { return this == GPU_ONLY || this == ALL; }
-        public boolean off() { return this == OFF; }
-    }
-    public enum DynLightsSpeed {
-        OFF(-1),
-        SLOW(750),
-        NORMAL(500),
-        FAST(250),
-        SUPERFAST(100),
-        FASTESTS(50),
-        REALTIME(-1);
-        private final int delay;
-
-        DynLightsSpeed(final int delay) {
-            this.delay = delay;
-        }
-        public int getDelay() { return this.delay; }
-
-        public boolean off() {
-            return this == OFF;
-        }
-    }
-    public enum DarknessMode {
-        VANILLA(-1),
-        DIM(0.18f),
-        DARK(0.12f),
-        DARKNESS(0.08f),
-        BLACK(0.04f),
-        BLACKNESS(0f);
-
-        public final float value;
-        DarknessMode(final float value) { this.value = value; }
-    }
-    public enum FullScreenMode {
-        WINDOWED, BORDERLESS, FULLSCREEN;
-
-        public static FullScreenMode nextOf(final FullScreenMode current) {
-            return switch (current) {
-                case WINDOWED -> BORDERLESS;
-                case BORDERLESS -> FULLSCREEN;
-                case FULLSCREEN -> WINDOWED;
-            };
-        }
-
-        public static FullScreenMode nextBorderless(final FullScreenMode current) {
-            return switch (current) {
-                case FULLSCREEN, BORDERLESS -> WINDOWED;
-                case WINDOWED -> BORDERLESS;
-            };
-        }
-
-        public static FullScreenMode nextFullscreen(final FullScreenMode current) {
-            return switch (current) {
-                case FULLSCREEN, BORDERLESS -> WINDOWED;
-                case WINDOWED -> FULLSCREEN;
-            };
-        }
-
-        public static FullScreenMode getVanillaConfig() {
-            return Minecraft.getInstance().options.fullscreen().get() ? BORDERLESS : WINDOWED;
-        }
-
-        public boolean isBorderless() {
-            return this == BORDERLESS;
-        }
-    }
-
-    public enum LeavesCullingMode {
-        ALL, OFF // MORE, HALF, LESS
+        return result;
     }
 
     static void load(final Path configPath) {
-        ChlorideConfig_Old.tryRestore();
         configFile = configPath.resolve("chloride-client.json").toFile();
         if (!configFile.exists()) {
             write();
@@ -243,6 +135,11 @@ public class ChlorideConfig {
             LOGGER.error("Cannot read file, writting to defaults", e);
             write();
         }
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface ConfigField {
+
     }
 
     public static class ListResourceLocationAdapter implements JsonSerializer<List<ResourceLocation>>, JsonDeserializer<List<ResourceLocation>> {
@@ -319,11 +216,5 @@ public class ChlorideConfig {
 
             return new ChlorideConfig(); // Devuelve una instancia vacía; solo usa campos estáticos
         }
-    }
-
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface ConfigField {
-
     }
 }

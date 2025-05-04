@@ -1,8 +1,7 @@
-package me.srrapero720.chloride.features;
+package me.srrapero720.chloride.impl;
 
 import me.srrapero720.chloride.Chloride;
-import me.srrapero720.chloride.Tools;
-import me.srrapero720.chloride.api.FastModelSettingsUpdate;
+import me.srrapero720.chloride.api.events.FastModelSettingsUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -13,9 +12,9 @@ import static me.srrapero720.chloride.Chloride.SOLID_BEDS_PACK;
 import static me.srrapero720.chloride.Chloride.SOLID_CHESTS_PACK;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE, modid = Chloride.ID)
-public class FastBlocksFeature {
+public class FastBlocks {
     public static boolean canUseOnChests() {
-        return !Tools.isModInstalled("enhancedblockentities");
+        return !Chloride.installed("enhancedblockentities");
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

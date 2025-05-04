@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.features.sodium.pages;
+package me.srrapero720.chloride.impl.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
@@ -9,7 +9,7 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.features.ZoomFeature;
+import me.srrapero720.chloride.impl.Zoom;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static me.srrapero720.chloride.features.sodium.ChlorideOptions.STORAGE;
+import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
 public class ZoomPage extends OptionPage {
     public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "zoom")));
@@ -32,14 +32,14 @@ public class ZoomPage extends OptionPage {
 
         final var base = OptionGroup.createBuilder();
 
-        final var specialZoomEnableTooltip = Component.translatable("chloride.options.zoom.desc").append("[").append(Component.keybind("chloride.zoom").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)).append(Component.literal("]").append("\n"));
-        if (!ZoomFeature.canUseZoom()) specialZoomEnableTooltip.append(Component.translatable("chloride.options.zoom.forbidden"));
+        final var specialZoomEnableTooltip = Component.translatable("chloride.zoom.desc").append("[").append(Component.keybind("chloride.zoom").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)).append(Component.literal("]").append("\n"));
+        if (!Zoom.canUseZoom()) specialZoomEnableTooltip.append(Component.translatable("chloride.zoom.forbidden"));
         base.add(OptionImpl.createBuilder(boolean.class, STORAGE)
                 .setName(Component.translatable("chloride.zoom.title"))
                 .setTooltip(specialZoomEnableTooltip)
                 .setControl(TickBoxControl::new)
                 .setBinding((opt, value) -> ChlorideConfig.enableZoom = value, opt -> ChlorideConfig.enableZoom)
-                .setEnabled(ZoomFeature.canUseZoom())
+                .setEnabled(Zoom.canUseZoom())
                 .setImpact(OptionImpact.LOW)
                 .build()
         );

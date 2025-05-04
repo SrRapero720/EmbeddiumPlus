@@ -1,8 +1,7 @@
-package me.srrapero720.chloride.features;
+package me.srrapero720.chloride.impl;
 
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.Tools;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -19,7 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Arrays;
 
 @Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-public class OverlayFeatures {
+public class Overlay {
     private static final FPSDisplayBuilder DISPLAY = new FPSDisplayBuilder();
 
     private static final Component MSG_FPS = Component.translatable("chloride.interface.fps");
@@ -76,7 +75,7 @@ public class OverlayFeatures {
         // PRECALCULATE
         fps = mc.getFps();
         minFPS = minFPS(mc);
-        memUsage = (int) ((Tools.ramUsed() * 100) / Runtime.getRuntime().maxMemory());
+        memUsage = (int) ((ramUsed() * 100) / Runtime.getRuntime().maxMemory());
         gpuPercent = Math.min((int) mc.getGpuUtilization(), 100);
         avgFPS = calculateAverage();
         renderFPSChar(mc, event.getGuiGraphics(), mc.font, event.getWindow().getGuiScale());
@@ -94,11 +93,11 @@ public class OverlayFeatures {
 
         // FPS
         switch (mode) {
-            case SIMPLE -> DISPLAY.append(Tools.colorByLow(fps)).add(fix(fps)).add(" ").add(MSG_FPS.getString()).add(ChatFormatting.RESET);
+            case SIMPLE -> DISPLAY.append(colorByLow(fps)).add(fix(fps)).add(" ").add(MSG_FPS.getString()).add(ChatFormatting.RESET);
             case ADVANCED -> {
-                DISPLAY.append(Tools.colorByLow(fps)).add(fix(fps)).add(ChatFormatting.RESET);
-                DISPLAY.append(Tools.colorByLow(minFPS)).add(MSG_MIN).add(" ").add(fix(minFPS)).add(ChatFormatting.RESET);
-                DISPLAY.append(Tools.colorByLow(avgFPS)).add(MSG_AVG).add(" ").add(fix(avgFPS)).add(ChatFormatting.RESET);
+                DISPLAY.append(colorByLow(fps)).add(fix(fps)).add(ChatFormatting.RESET);
+                DISPLAY.append(colorByLow(minFPS)).add(MSG_MIN).add(" ").add(fix(minFPS)).add(ChatFormatting.RESET);
+                DISPLAY.append(colorByLow(avgFPS)).add(MSG_AVG).add(" ").add(fix(avgFPS)).add(ChatFormatting.RESET);
             }
         }
         if (!DISPLAY.isEmpty()) DISPLAY.split();
@@ -106,12 +105,12 @@ public class OverlayFeatures {
         // GPU AND RAM
         switch (systemMode) {
             case GPU_ONLY ->
-                    DISPLAY.append(Tools.colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
+                    DISPLAY.append(colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
             case RAM_ONLY ->
-                    DISPLAY.append(Tools.colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
+                    DISPLAY.append(colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
             case ALL -> {
-                DISPLAY.append(Tools.colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
-                DISPLAY.append(Tools.colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
+                DISPLAY.append(colorByPercent(gpuPercent)).add(MSG_GPU).add(" ").add(fix(gpuPercent)).add("%").add(ChatFormatting.RESET);
+                DISPLAY.append(colorByPercent(memUsage)).add(MSG_MEM).add(" ").add(fix(memUsage)).add("%").add(ChatFormatting.RESET);
             }
         }
 
@@ -180,6 +179,53 @@ public class OverlayFeatures {
         }
 
         return (int) (1 / ((double) maxNS / 1000000000));
+    }
+
+    public static ChatFormatting colorByLow(final int usage) {
+        return ((usage < 9) ? ChatFormatting.DARK_RED
+                : (usage < 16) ? ChatFormatting.RED
+                : (usage < 30) ? ChatFormatting.GOLD
+                : ChatFormatting.RESET);
+    }
+
+    public static ChatFormatting colorByPercent(final int usage) {
+        return ((usage >= 100) ? ChatFormatting.DARK_RED
+                : (usage >= 90) ? ChatFormatting.RED
+                : (usage >= 75) ? ChatFormatting.GOLD
+                : ChatFormatting.RESET);
+    }
+
+    // JAVA USES STUPID AND CONFUSING NAMES
+    // max memory is the assigned memory (ej: -Xmx8G)
+    // total memory is the allocated memory (normally isn't much)
+    // used memory needs to be calculated using total memory - free memory, same with percent
+    public static long ramUsed() {
+        return Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+    }
+
+    public static long bytesToMB(final long input) {
+        return input / 1024 / 1024;
+    }
+
+    /* CONFIG VALUES */
+    public enum FPS {
+        OFF, SIMPLE, ADVANCED;
+
+        public boolean off() {
+            return this == OFF;
+        }
+    }
+
+    public enum FPSAlign { LEFT, CENTER, RIGHT}
+
+    public enum FPSVAlign { TOP, CENTER, BOTTOM}
+
+    public enum FPSDetails {
+        OFF, ALL, GPU_ONLY, RAM_ONLY;
+
+        public boolean ram() { return this == RAM_ONLY || this == ALL; }
+        public boolean gpu() { return this == GPU_ONLY || this == ALL; }
+        public boolean off() { return this == OFF; }
     }
 
     private static class FPSDisplayBuilder {

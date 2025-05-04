@@ -3,7 +3,7 @@ package me.srrapero720.chloride.mixins.impl;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.features.OverlayFeatures;
+import me.srrapero720.chloride.impl.Overlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -21,13 +21,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Locale;
 
 @Mixin(Minecraft.class)
-public abstract class FpsOverlayMixin {
+public abstract class OverlayMixin {
     @Shadow public static int fps;
     @Shadow @Final public Options options;
     @Shadow private MetricsRecorder metricsRecorder;
     @Shadow public ClientLevel level;
     @Shadow private double gpuUtilization;
-    @Unique private double embPlus$gpuUsage = 0;
+    @Unique private double chloride$gpuUsage = 0;
 
     @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/metrics/profiling/MetricsRecorder;isRecording()Z"))
     private boolean redirect$renderDebug(final MetricsRecorder instance) {
@@ -36,13 +36,13 @@ public abstract class FpsOverlayMixin {
 
     @Redirect(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;gpuUtilization:D", opcode = Opcodes.PUTFIELD))
     private void redirect$assign(final Minecraft instance, final double value) {
-        this.embPlus$gpuUsage = value;
+        this.chloride$gpuUsage = value;
     }
 
     @Inject(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;gpuUtilization:D", opcode = Opcodes.GETFIELD, ordinal = 0, shift = At.Shift.BEFORE))
     private void inject$getGPU(final boolean pRenderLevel, final CallbackInfo ci) {
-        this.gpuUtilization = this.embPlus$gpuUsage;
-        OverlayFeatures.pushAvgFps(fps);
+        this.gpuUtilization = this.chloride$gpuUsage;
+        Overlay.pushAvgFps(fps);
     }
 
     // MICRO OPTIMIZATION

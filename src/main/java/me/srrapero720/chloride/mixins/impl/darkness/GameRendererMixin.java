@@ -1,8 +1,7 @@
 package me.srrapero720.chloride.mixins.impl.darkness;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.srrapero720.chloride.features.TrueDarknessFeature;
-import me.srrapero720.chloride.mixins.impl.accessors.LightTextureAccessors;
+import me.srrapero720.chloride.impl.Darkness;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -20,11 +19,9 @@ public abstract class GameRendererMixin {
 
     @Inject(method = "renderLevel", at = @At(value = "HEAD"))
     private void inject$renderLevel(final float tickDelta, final long nanos, final PoseStack matrixStack, final CallbackInfo ci) {
-        final var lightTexAccessor = (LightTextureAccessors) this.lightTexture;
-
-        if (lightTexAccessor.embPlus$isDirty()) {
+        if (this.lightTexture.updateLightTexture) {
             this.minecraft.getProfiler().push("darkenLightTexture");
-            TrueDarknessFeature.updateLuminance(tickDelta, this.minecraft, (GameRenderer) (Object) this, lightTexAccessor.embPlus$getFlicker());
+            Darkness.updateLuminance(tickDelta, this.minecraft, (GameRenderer) (Object) this, this.lightTexture.blockLightRedFlicker);
             this.minecraft.getProfiler().pop();
         }
     }

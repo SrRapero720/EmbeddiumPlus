@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.features.sodium.pages;
+package me.srrapero720.chloride.impl.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.shaders.FogShape;
@@ -9,7 +9,9 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.Tools;
+import me.srrapero720.chloride.impl.ChunkFade;
+import me.srrapero720.chloride.impl.LeavesCulling;
+import me.srrapero720.chloride.impl.sodium.controls.BetterCyclingControl;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static me.srrapero720.chloride.features.sodium.ChlorideOptions.STORAGE;
+import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
 public class WorldPage extends OptionPage {
     public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "skies")));
@@ -78,17 +80,17 @@ public class WorldPage extends OptionPage {
         customFog.add(OptionImpl.createBuilder(FogShape.class, STORAGE)
                 .setName(Component.translatable("chloride.world.custom_fog.shape.title"))
                 .setTooltip(Component.translatable("chloride.world.custom_fog.shape.desc"))
-                .setControl(option -> new CyclingControl<>(option, FogShape.class, Tools.tEnumComponent("chloride.world.custom_fog.shape", FogShape.class)))
+                .setControl(option -> new CyclingControl<>(option, FogShape.class, BetterCyclingControl.tEnumComponent("chloride.world.custom_fog.shape", FogShape.class)))
                 .setBinding((opts, value) -> ChlorideConfig.fogShape = value, opts -> ChlorideConfig.fogShape)
                 .build()
         );
 
         final var worldVisuals = OptionGroup.createBuilder();
-        worldVisuals.add(OptionImpl.createBuilder(ChlorideConfig.LeavesCullingMode.class, STORAGE)
+        worldVisuals.add(OptionImpl.createBuilder(LeavesCulling.LeavesCullingMode.class, STORAGE)
                 .setId(ResourceLocation.tryBuild(Chloride.ID, "leaves_culling"))
                 .setName(Component.translatable("chloride.world.leaves_culling.title"))
                 .setTooltip(Component.translatable("chloride.world.leaves_culling.desc"))
-                .setControl(opt -> new CyclingControl<>(opt, ChlorideConfig.LeavesCullingMode.class, Tools.tEnumComponent("chloride.world.leaves_culling", ChlorideConfig.LeavesCullingMode.class)))
+                .setControl(opt -> new CyclingControl<>(opt, LeavesCulling.LeavesCullingMode.class, BetterCyclingControl.tEnumComponent("chloride.world.leaves_culling", LeavesCulling.LeavesCullingMode.class)))
                 .setBinding((opt, v) -> ChlorideConfig.leavesCulling = v, opts -> ChlorideConfig.leavesCulling)
                 .setImpact(OptionImpact.HIGH)
                 .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
@@ -104,10 +106,10 @@ public class WorldPage extends OptionPage {
         );
 
         final var worldAmazings = OptionGroup.createBuilder();
-        worldAmazings.add(OptionImpl.createBuilder(ChlorideConfig.ChunkFadeSpeed.class, STORAGE)
+        worldAmazings.add(OptionImpl.createBuilder(ChunkFade.Speed.class, STORAGE)
                 .setName(Component.translatable("chloride.world.fade.title"))
                 .setTooltip(Component.translatable("chloride.world.fade.desc"))
-                .setControl(option -> new CyclingControl<>(option, ChlorideConfig.ChunkFadeSpeed.class, new Component[]{
+                .setControl(option -> new CyclingControl<>(option, ChunkFade.Speed.class, new Component[]{
                         Component.translatable("options.off"),
                         Component.translatable("options.graphics.fast"), // a literal fade
                         Component.translatable("options.graphics.fancy") // chunks comes from the ground

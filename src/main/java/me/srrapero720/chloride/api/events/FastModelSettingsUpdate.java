@@ -1,7 +1,7 @@
-package me.srrapero720.chloride.api;
+package me.srrapero720.chloride.api.events;
 
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.features.FastBlocksFeature;
+import me.srrapero720.chloride.impl.FastBlocks;
 import net.minecraftforge.eventbus.api.Event;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -17,7 +17,7 @@ public sealed abstract class FastModelSettingsUpdate extends Event {
     public static final class ChestEvent extends FastModelSettingsUpdate {
         @Override
         public boolean isEnabled() {
-            return FastBlocksFeature.canUseOnChests() && ChlorideConfig.fastChests;
+            return FastBlocks.canUseOnChests() && ChlorideConfig.fastChests;
         }
     }
 

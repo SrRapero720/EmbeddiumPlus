@@ -1,7 +1,6 @@
-package me.srrapero720.chloride.features;
+package me.srrapero720.chloride.impl;
 
 import me.srrapero720.chloride.ChlorideConfig;
-import me.srrapero720.chloride.Tools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
@@ -9,12 +8,11 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
 
 
-public class TrueDarknessFeature {
+public class Darkness {
 	public static final double MIN = 0.03D;
 
 	public static Vec3 getFogColor(final Vec3 vanilla, final double factor) {
@@ -22,18 +20,18 @@ public class TrueDarknessFeature {
         return new Vec3(Math.max(MIN, vanilla.x * factor), Math.max(MIN, vanilla.y * factor), Math.max(MIN, vanilla.z * factor));
 	}
 
-    private static boolean isDark(final Level world) {
-		if (ChlorideConfig.darknessMode == ChlorideConfig.DarknessMode.VANILLA) return false;
+    private static boolean isDark(final net.minecraft.world.level.Level world) {
+		if (ChlorideConfig.darknessMode == Level.VANILLA) return false;
 
-		final ResourceKey<Level> dimType = world.dimension();
+		final ResourceKey<net.minecraft.world.level.Level> dimType = world.dimension();
 
-		if (dimType == Level.OVERWORLD) {
+		if (dimType == net.minecraft.world.level.Level.OVERWORLD) {
 			return ChlorideConfig.darknessOnOverworld;
-		} else if (dimType == Level.NETHER) {
+		} else if (dimType == net.minecraft.world.level.Level.NETHER) {
 			return ChlorideConfig.darknessOnNether;
-		} else if (dimType == Level.END) {
+		} else if (dimType == net.minecraft.world.level.Level.END) {
 			return ChlorideConfig.darknessOnEnd;
-		} else if (Tools.isWhitelisted(dimType.location(), ChlorideConfig.darknessDimensionWhiteList)) {
+		} else if (EntityCulling.isWhitelisted(dimType.location(), ChlorideConfig.darknessDimensionWhiteList)) {
             return true;
         } else if (world.dimensionType().hasSkyLight()) {
 			return ChlorideConfig.darknessByDefault;
@@ -42,7 +40,7 @@ public class TrueDarknessFeature {
 		}
 	}
 
-	private static float skyFactor(final Level world) {
+	private static float skyFactor(final net.minecraft.world.level.Level world) {
         if (!isDark(world)) return 1;
 
         if (!world.dimensionType().hasSkyLight()) return 0; // alrweady checks for block light only
@@ -79,7 +77,7 @@ public class TrueDarknessFeature {
 		final ClientLevel level = client.level;
         if (level == null) return;
 
-        final boolean isDarkOnLevel = TrueDarknessFeature.isDark(level);
+        final boolean isDarkOnLevel = Darkness.isDark(level);
 
 		enabled = !(
                 !isDarkOnLevel
@@ -90,7 +88,7 @@ public class TrueDarknessFeature {
 
         if (!enabled) return;
 
-        final float dimSkyFactor = TrueDarknessFeature.skyFactor(level);
+        final float dimSkyFactor = Darkness.skyFactor(level);
         final float ambient = level.getSkyDarken(1.0F);
         final DimensionType dim = level.dimensionType();
 
@@ -142,7 +140,7 @@ public class TrueDarknessFeature {
                 blue = blue * (0.99F - min) + min;
 
                 //the end
-                if (level.dimension() == Level.END) {
+                if (level.dimension() == net.minecraft.world.level.Level.END) {
                     red = skyFactor * 0.22F + blockBase * 0.75f;
                     green = skyFactor * 0.28F + blockGreen * 0.75f;
                     blue = skyFactor * 0.25F + blockBlue * 0.75f;
@@ -180,9 +178,21 @@ public class TrueDarknessFeature {
                 green = Mth.clamp(green, 0.0f, 1.0f);
                 blue = Mth.clamp(blue, 0.0f, 1.0f);
 
-                LUMINANCE[blockIndex][skyIndex] = TrueDarknessFeature.luminance(red, green, blue);
+                LUMINANCE[blockIndex][skyIndex] = Darkness.luminance(red, green, blue);
             }
         }
+    }
+
+    public enum Level {
+        VANILLA(-1),
+        DIM(0.18f),
+        DARK(0.12f),
+        DARKNESS(0.08f),
+        BLACK(0.04f),
+        BLACKNESS(0f);
+
+        public final float value;
+        Level(final float value) { this.value = value; }
     }
 
     public interface DynamicTextureHook {

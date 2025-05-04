@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.features;
+package me.srrapero720.chloride.impl;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import me.srrapero720.chloride.Chloride;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-public class ZoomFeature {
+public class Zoom {
     private static final double EASE_DELTA = 0.15;
     private static final double DEFAULT = 3;
 

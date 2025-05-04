@@ -1,7 +1,6 @@
 package me.srrapero720.chloride;
 
-import me.srrapero720.chloride.features.ZoomFeature;
-import net.minecraft.client.Minecraft;
+import me.srrapero720.chloride.impl.Zoom;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
@@ -9,13 +8,10 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.IModBusEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.forgespi.locating.IModFile;
@@ -48,9 +44,9 @@ public class Chloride {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void load(final FMLClientSetupEvent event) {
-        if (Tools.isModInstalled("xenon")) throw new RuntimeException("Xenon is incompatible with Chloride, please use Embeddium or Sodium instead");
-        if (Tools.isModInstalled("embeddiumextras")) throw new RuntimeException("Embeddium/Sodium Extras is incompatible with Chloride, chloride replaces it");
-        if (Tools.isModInstalled("embeddiumplus")) throw new RuntimeException("You have a old-duplicated version of chloride, please remove Embeddium++ (old chloride)");
+        if (installed("xenon")) throw new RuntimeException("Xenon is incompatible with Chloride, please use Embeddium or Sodium instead");
+        if (installed("embeddiumextras")) throw new RuntimeException("Embeddium/Sodium Extras is replaced by cloride, you must remove that mod");
+        if (installed("embeddiumplus")) throw new RuntimeException("You have a old-duplicated version of chloride, please remove Embeddium++ (old chloride)");
         LOGGER.info("LOADED CHLORIDE");
     }
 
@@ -89,7 +85,7 @@ public class Chloride {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void registerKeys(final RegisterKeyMappingsEvent event) {
-        event.register(ZoomFeature.KEY);
+        event.register(Zoom.KEY);
     }
 
     private static PathPackResources getPathResources(String name, String path) {
@@ -109,4 +105,6 @@ public class Chloride {
             }
         };
     }
+
+    public static boolean installed(final String modid) { return FMLLoader.getLoadingModList().getModFileById(modid) != null; }
 }

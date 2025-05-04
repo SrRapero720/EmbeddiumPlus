@@ -2,6 +2,7 @@ package me.srrapero720.chloride.mixins.impl;
 
 import com.mojang.blaze3d.platform.Window;
 import me.srrapero720.chloride.ChlorideConfig;
+import me.srrapero720.chloride.impl.Borderless;
 import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
@@ -48,9 +49,9 @@ class BorderlessMixin {
         @Inject(method = "keyPress", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;toggleFullScreen()V"), cancellable = true)
         public void redirect$handleFullScreenToggle(final long pWindowPointer, final int pKey, final int pScanCode, final int pAction, final int pModifiers, final CallbackInfo ci) {
             switch (ChlorideConfig.borderlessAttachModeF11.ordinal()) {
-                case 0 -> ChlorideConfig.setFullScreenMode(ChlorideConfig.FullScreenMode.nextOf(fullScreen));
-                case 1 -> ChlorideConfig.setFullScreenMode(ChlorideConfig.FullScreenMode.nextBorderless(fullScreen));
-                case 2 -> ChlorideConfig.setFullScreenMode(ChlorideConfig.FullScreenMode.nextFullscreen(fullScreen));
+                case 0 -> Borderless.setFullScreenMode(Borderless.Mode.nextOf(fullScreen));
+                case 1 -> Borderless.setFullScreenMode(Borderless.Mode.nextBorderless(fullScreen));
+                case 2 -> Borderless.setFullScreenMode(Borderless.Mode.nextFullscreen(fullScreen));
             }
             ci.cancel();
         }

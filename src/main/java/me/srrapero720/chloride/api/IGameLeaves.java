@@ -1,4 +1,4 @@
-package me.srrapero720.chloride.features.accessors;
+package me.srrapero720.chloride.api;
 
 import net.minecraft.resources.ResourceLocation;
 
