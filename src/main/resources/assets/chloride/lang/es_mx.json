@@ -25,7 +25,7 @@
   "chloride.interface.fps.system.ram_only": "Solo RAM",
   "chloride.interface.fps.system.all": "TODAS",
 
-  "chloride.interface.fps.fps": "FPS",
+  "chloride.interface.fps": "FPS",
   "chloride.interface.fps.min": "MIN",
   "chloride.interface.fps.avg": "AVG",
   "chloride.interface.fps.gpu": "GPU",
@@ -124,6 +124,18 @@
   "chloride.darkness.moonphase.fresh.desc": "Configura el brillo en una luna nueva, o el nivel de brillo mínimo en la fase de luna negra",
   "chloride.darkness.moonphase.full.title": "Brillo de Luna llena (max)",
   "chloride.darkness.moonphase.full.desc": "Configura el brillo en una luna llena, o el nivel de brillo máximo en la fase de luna llena",
+
+  "chloride.particles": "Particulas",
+  "chloride.particles.rain.title": "Particulas de Lluvia",
+  "chloride.particles.rain.desc": "Activa las particulas de agua cayendo de la lluvia.",
+  "chloride.particles.rain.drop.title": "Particulas de Gota de Agua",
+  "chloride.particles.rain.drop.desc": "Activa las particulas de agua golpeando al suelo de la lluvia.",
+  "chloride.particles.block.cracking.title": "Particulas de Bloque Rompiendose",
+  "chloride.particles.block.cracking.desc": "Activa las particulas de bloques rompiendose al estar rompiendo un bloque.",
+  "chloride.particles.block.destroy.title": "Particulas de Bloque Roto",
+  "chloride.particles.block.destroy.desc": "Activa las particulas de los bloques al romperse.",
+  "chloride.particles.provider.unknown": "Desconocido",
+  "chloride.particles.provider": "Particula generada por: %s",
 
   "chloride.entities": "Entidades",
   "chloride.entities.nametag.players.title": "Nametag en Jugadores",

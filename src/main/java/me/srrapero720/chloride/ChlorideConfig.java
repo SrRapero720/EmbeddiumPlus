@@ -80,6 +80,12 @@ public class ChlorideConfig {
     @ConfigField public static boolean fastChests = false;
     @ConfigField public static boolean fastBeds = false;
 
+    @ConfigField public static boolean rainParticles = true;
+    @ConfigField public static boolean rainDropParticles = true;
+    @ConfigField public static boolean crackingBlockParticles = true;
+    @ConfigField public static boolean destroyedBlockParticles = true;
+    @ConfigField public static List<ResourceLocation> disabledParticles = toId();
+
     @ConfigField public static boolean tileEntityDistanceCulling = true;
     @ConfigField public static int tileEntityCullingDistanceX = 4096;
     @ConfigField public static int tileEntityCullingDistanceY = 32;

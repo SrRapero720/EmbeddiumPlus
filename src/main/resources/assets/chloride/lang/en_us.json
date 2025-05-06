@@ -125,6 +125,18 @@
   "chloride.darkness.moonphase.full.title": "Full Moon Bright (max)",
   "chloride.darkness.moonphase.full.desc": "Configure brightness on a full moon, or maximum bright level on black moon phase",
 
+  "chloride.particles": "Particles",
+  "chloride.particles.rain.title": "Rain Particles",
+  "chloride.particles.rain.desc": "Enables the water falling particles when raining",
+  "chloride.particles.rain.drop.title": "Rain Drop Particles",
+  "chloride.particles.rain.drop.desc": "Enables the water drop in floor particles of the rain",
+  "chloride.particles.block.cracking.title": "Block Cracking Particles",
+  "chloride.particles.block.cracking.desc": "Enables the block cracking particles when breaking blocks",
+  "chloride.particles.block.destroy.title": "Block Breaking Particles",
+  "chloride.particles.block.destroy.desc": "Enables the block breaking particles when breaking blocks",
+  "chloride.particles.provider.unknown": "Unknown",
+  "chloride.particles.provider": "Particle provided by: §6§l%s",
+
   "chloride.entities": "Entities",
   "chloride.entities.nametag.players.title": "Nametag on Players",
   "chloride.entities.nametag.players.desc": "Disable it prevents nametag rendering for all Players",

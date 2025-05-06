@@ -38,6 +38,7 @@ public class SodiumFeatures {
         pages.add(new InterfacePage());
         pages.add(new WorldPage());
         if (!ChlorideConfig.modpackMode) pages.add(new DarknessPage());
+        pages.add(new ParticlesPage());
         pages.add(new EntitiesPage());
         if (!ChlorideConfig.modpackMode) pages.add(new ZoomPage());
         if (ChlorideConfig.modpackMode) {
