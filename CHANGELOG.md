@@ -1,3 +1,20 @@
+# RELEASE 1.7.0
+- [✨] Refurbished menus of the mod
+  - 🛠️ Now are more organized and easier to use
+- [✨] Refurbished translations of the mod (EN, ES_MX)
+  - 🛠️ This removes the French, Russian, Chinese traditional and Chinese simplified translations
+- [✨] Reimplemented Fast models feature (FastChests and FastBeds)
+  - 🛠️ Turning it off requires close and reopen the world
+  - 🛠️ Disabling this option will also disable the static resource pack (avoiding breakage on other mods)
+- [✨] Added particles controlling
+  - 🛠️ Vanilla particles controller (ALL, MINIMAL, NONE) was moved to chloride Particles tab
+  - 🛠️ You can turn off each particle individually, including for other mods
+  - 🛠️ You can also turn off water particles of Rain and Rain drops individually.
+  - 🛠️ You can also turn off block particles on cracking and breaking individually.
+- [✨] Added a _small_ optimization on making particles through particle engine
+- [✨] Added VSEureka compatibility for entity culling
+- [🛠️] Enhanced EMI mixins
+
 # RELEASE 1.6.0
 - [✨] [1.21.1] Ported to NeoForge (Sodium)
 - [✨] Added blocklightOnly option to True Darkness
