@@ -145,6 +145,7 @@
   "chloride.entities.nametag.items.title": "Nametag on Item Frames",
   "chloride.entities.nametag.items.desc": "Disable it prevents nametag rendering for Items, including items inside item frames",
 
+  "chloride.entities.culling.vseureka.warning": "VSEureka detected, vertical distance (raw) is ignored and uses instead horizontal distance (squared)",
   "chloride.entities.culling.title": "Max Entity Distance",
   "chloride.entities.culling.desc": "If enabled, Entities will be hidden based on configured distance limit",
   "chloride.entities.culling.distance.horizontal.title": "Entities Max Distance (Horizontal)",

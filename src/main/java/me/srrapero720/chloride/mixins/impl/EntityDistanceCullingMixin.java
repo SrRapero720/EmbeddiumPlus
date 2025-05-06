@@ -58,8 +58,8 @@ public class EntityDistanceCullingMixin {
     @Mixin(EntityType.class)
     public abstract static class EntityTypeMixin implements IRenderableEntity {
         @Unique private static final Marker e$IT = MarkerManager.getMarker("EntityCulling");
-        @Unique private boolean embPlus$checked = false;
-        @Unique private boolean embPlus$whitelisted = false;
+        @Unique private boolean chloride$checked = false;
+        @Unique private boolean chloride$whitelisted = false;
 
         @Shadow
         public abstract MobCategory getCategory();
@@ -67,7 +67,7 @@ public class EntityDistanceCullingMixin {
         @Override
         @Unique
         public boolean chloride$whitelisted() {
-            if (this.embPlus$checked) return this.embPlus$whitelisted;
+            if (this.chloride$checked) return this.chloride$whitelisted;
 
             final var resource = this.embPlus$resourceLocation();
             if (resource == null) {
@@ -75,11 +75,11 @@ public class EntityDistanceCullingMixin {
                 return false;
             }
 
-            this.embPlus$whitelisted = EntityCulling.isWhitelisted(resource, this.getCategory() == MobCategory.MONSTER ? ChlorideConfig.monsterWhitelist : ChlorideConfig.entityWhitelist);
-            this.embPlus$checked = true;
+            this.chloride$whitelisted = EntityCulling.isWhitelisted(resource, this.getCategory() == MobCategory.MONSTER ? ChlorideConfig.monsterWhitelist : ChlorideConfig.entityWhitelist);
+            this.chloride$checked = true;
 
             LOGGER.debug(e$IT,"Computed Entity whitelist for {}", resource.toString());
-            return this.embPlus$whitelisted;
+            return this.chloride$whitelisted;
         }
 
         @Unique
@@ -102,7 +102,7 @@ public class EntityDistanceCullingMixin {
             if (!ChlorideConfig.tileEntityDistanceCulling) return;
 
             final boolean isWhitelisted = ((IRenderableEntity) tile.getType()).chloride$whitelisted();
-            if (!isWhitelisted && !EntityCulling.isEntityInRange(tile.getBlockPos(), this.camera.getPosition(),
+            if (!isWhitelisted && !EntityCulling.isEntityInRange(tile, this.camera.getPosition(),
                     ChlorideConfig.tileEntityCullingDistanceY,
                     ChlorideConfig.tileEntityCullingDistanceX)
             ) {

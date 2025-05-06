@@ -74,6 +74,14 @@ repositories {
     maven { url "https://maven.fabricmc.net/" }
     maven { url 'https://jitpack.io' }
 
+    maven {
+        url = "https://maven.pkg.github.com/ValkyrienSkies/Valkyrien-Skies-2"
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME_GITHUB")
+            password = project.findProperty("gpr.token") ?: System.getenv("TOKEN_GITHUB")
+        }
+    }
+
     flatDir {
         dirs 'libs'
     }
@@ -97,10 +105,15 @@ dependencies {
         implementation fg.deobf("curse.maven:cloth-config-348521:$clothversion")
     }
     compileOnly fg.deobf("curse.maven:emi-580555:$emiversion")
-//    implementation fg.deobf("blank:betterf3:7.0.2")
 
     // MOD SUPPORT
     implementation fg.deobf("curse.maven:create-328085:6255513")
+    compileOnly fg.deobf("curse.maven:valkyrien-skies-258371:6500814")
+
+    // MOD SUPPORT (TEST VS)
+//    compileOnly fg.deobf("curse.maven:create-328085:6255513")
+//    implementation fg.deobf("curse.maven:valkyrien-skies-258371:6500814")
+//    implementation fg.deobf("curse.maven:kotlin-for-forge-351264:5402061")
 }
 
 tasks.processResources.outputs.upToDateWhen { false }

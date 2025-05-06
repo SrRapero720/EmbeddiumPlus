@@ -10,6 +10,8 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
+import me.srrapero720.chloride.impl.EntityCulling;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
@@ -56,6 +58,7 @@ public class EntitiesPage extends OptionPage {
         }
 
         final var entityGroup = OptionGroup.createBuilder();
+        final var vsWarning = Component.translatable("chloride.entities.culling.vseureka.warning").withStyle(ChatFormatting.GOLD);
         entityGroup.add(OptionImpl.createBuilder(boolean.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.desc"))
@@ -78,8 +81,9 @@ public class EntitiesPage extends OptionPage {
 
         entityGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.distance.vertical.title"))
-                .setTooltip(Component.translatable("chloride.entities.culling.distance.vertical.desc"))
+                .setTooltip(Component.translatable("chloride.entities.culling.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
                 .setControl(option -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
+                .setEnabledPredicate(() -> !EntityCulling.VS_I)
                 .setBinding(
                         (opt, value) -> ChlorideConfig.entityCullingDistanceY = value,
                         opt -> ChlorideConfig.entityCullingDistanceY)
@@ -112,8 +116,9 @@ public class EntitiesPage extends OptionPage {
 
         monsterGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.monster.distance.vertical.title"))
-                .setTooltip(Component.translatable("chloride.entities.culling.monster.distance.vertical.desc"))
+                .setTooltip(Component.translatable("chloride.entities.culling.monster.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
                 .setControl(option -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
+                .setEnabledPredicate(() -> !EntityCulling.VS_I)
                 .setBinding(
                         (opt, value) -> ChlorideConfig.monsterCullingDistanceY = value,
                         opt -> ChlorideConfig.monsterCullingDistanceY)
@@ -145,8 +150,9 @@ public class EntitiesPage extends OptionPage {
 
         tileGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.tile.distance.vertical.title"))
-                .setTooltip(Component.translatable("chloride.entities.culling.tile.distance.vertical.desc"))
+                .setTooltip(Component.translatable("chloride.entities.culling.tile.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
                 .setControl(option -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
+                .setEnabledPredicate(() -> !EntityCulling.VS_I)
                 .setBinding((opt, value) -> ChlorideConfig.tileEntityCullingDistanceY = value,
                         opt -> ChlorideConfig.tileEntityCullingDistanceY)
                 .setImpact(OptionImpact.HIGH)

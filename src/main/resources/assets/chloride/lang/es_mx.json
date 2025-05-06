@@ -145,6 +145,7 @@
   "chloride.entities.nametag.items.title": "Nametag en Cuadro de Items",
   "chloride.entities.nametag.items.desc": "Desactivarla evita el renderizado de etiquetas de nombre para los cuadros de items",
 
+  "chloride.entities.culling.vseureka.warning": "Se detecto VSEureka, la distancia vertical (simple) no se aplicara y usara en su lugar la distancia horizontal (al cuadrado)",
   "chloride.entities.culling.title": "Max. Dist. de Entidades",
   "chloride.entities.culling.desc": "Si se habilita, las entidades se ocultaran en base a la distancia configurada",
   "chloride.entities.culling.distance.horizontal.title": "Max. Dist. de Entidades (Horizontal)",
