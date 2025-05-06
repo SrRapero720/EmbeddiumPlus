@@ -46,6 +46,8 @@ public class SodiumFeatures {
         }
     }
 
+    private static Option<?> particles;
+
     @SubscribeEvent
     public static void onSodiumPagesRegister(final OptionGroupConstructionEvent e) {
         if (e.getId() != null && e.getId().toString().equals(StandardOptions.Group.WINDOW.toString())) {
@@ -54,8 +56,25 @@ public class SodiumFeatures {
                 final var id = options.get(i).getId();
                 if (id != null && id.matches(StandardOptions.Option.FULLSCREEN)) {
                     options.set(i, getFullscreenOption());
+                    break;
                 }
             }
+        }
+        if (e.getId() != null && e.getId().toString().equals(StandardOptions.Group.DETAILS.toString())) {
+            final var options = e.getOptions();
+            for (final Option<?> option: options) {
+                final var id = option.getId();
+                if (id != null && id.matches(StandardOptions.Option.PARTICLES)) {
+                    particles = option;
+                    options.remove(option);
+                    break;
+                }
+            }
+        }
+
+        if (e.getId() != null && e.getId().equals(ParticlesPage.PARTICLE_BASE_PAGE)) {
+            final var options = e.getOptions();
+            options.add(0, particles);
         }
     }
 

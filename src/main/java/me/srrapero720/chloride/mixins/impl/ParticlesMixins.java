@@ -3,6 +3,7 @@ package me.srrapero720.chloride.mixins.impl;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.api.IParticleTypeData;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.FireworkParticles;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;

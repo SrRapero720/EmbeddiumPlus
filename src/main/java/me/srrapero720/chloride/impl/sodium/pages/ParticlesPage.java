@@ -26,12 +26,16 @@ import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
 public class ParticlesPage extends OptionPage {
     public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "particles")));
+    public static final OptionIdentifier<Void> PARTICLE_BASE_PAGE = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "particles_page_base")));
     public ParticlesPage() {
         super(ID, Component.translatable("chloride.particles"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
         final List<OptionGroup> groups = new ArrayList<>();
+
+        final var particles = OptionGroup.createBuilder();
+        particles.setId(PARTICLE_BASE_PAGE);
 
         final var base = OptionGroup.createBuilder();
         base.add(OptionImpl.createBuilder(boolean.class, STORAGE)
@@ -96,6 +100,7 @@ public class ParticlesPage extends OptionPage {
             );
         }
 
+        groups.add(particles.build());
         groups.add(base.build());
         groups.add(disabled.build());
         groups.add(enabled.build());
