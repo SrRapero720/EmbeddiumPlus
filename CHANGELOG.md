@@ -1,3 +1,6 @@
+# RELEASE 1.7.1
+- [🛠️] Structural changes on codebase with no visible changes (NeoForge re-porting)
+
 # RELEASE 1.7.0
 - [✨] Refurbished menus of the mod
   - 🛠️ Now are more organized and easier to use
