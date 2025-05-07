@@ -51,12 +51,12 @@ public class FastBlocks {
 
         @SubscribeEvent
         public static void registerResourcePacks(AddPackFindersEvent e) {
-            Chloride.LOGGER.info("Register CHLORIDE packs");
+            Chloride.LOGGER.info("Registering CHLORIDE built-in packs");
             if (e.getPackType() == PackType.CLIENT_RESOURCES) {
                 SOLID_BEDS_PACK = Pack.readMetaAndCreate(Chloride.ID + "_solid_beds",
                         Component.literal("Chloride: Solid Beds"),
                         false,
-                        id -> getPathResources(Chloride.ID, "custom_packs/solid_beds"),
+                        id -> getPathResources(id, "custom_packs/solid_beds"),
                         PackType.CLIENT_RESOURCES,
                         Pack.Position.TOP,
                         PackSource.BUILT_IN);
@@ -64,7 +64,7 @@ public class FastBlocks {
                 SOLID_CHESTS_PACK = Pack.readMetaAndCreate(Chloride.ID + "_solid_chests",
                         Component.literal("Chloride: Solid Chests"),
                         false,
-                        id -> getPathResources(Chloride.ID, "custom_packs/solid_chests"),
+                        id -> getPathResources(id, "custom_packs/solid_chests"),
                         PackType.CLIENT_RESOURCES,
                         Pack.Position.TOP,
                         PackSource.BUILT_IN);
@@ -78,9 +78,9 @@ public class FastBlocks {
 
     }
 
-    private static PathPackResources getPathResources(String name, String path) {
+    private static PathPackResources getPathResources(String packId, String path) {
         final IModFile modFile = ModList.get().getModFileById(Chloride.ID).getFile();
-        return new PathPackResources(name, true, modFile.findResource(path)) {
+        return new PathPackResources(packId, true, modFile.findResource(path)) {
             @NotNull
             protected Path resolve(String... paths) {
                 final String[] allPaths = new String[paths.length + 1];
