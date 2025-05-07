@@ -1,33 +1,29 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
-import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpact;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
-import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
-import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
-import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
-import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionGroup;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionImpact;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionImpl;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
+import net.caffeinemc.mods.sodium.client.gui.options.control.CyclingControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.Borderless;
 import me.srrapero720.chloride.impl.Overlay;
 import me.srrapero720.chloride.impl.sodium.controls.BetterCyclingControl;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
+import net.minecraft.network.chat.Component; 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
 public class InterfacePage extends OptionPage {
-    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "interface")));
     public InterfacePage() {
-        super(ID, Component.translatable("chloride.interface"), create());
+        super(Component.translatable("chloride.interface"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
@@ -101,7 +97,6 @@ public class InterfacePage extends OptionPage {
         final var screens = OptionGroup.createBuilder();
 
         screens.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setId(ResourceLocation.tryBuild(Chloride.ID, "font_shadow"))
                 .setName(Component.translatable("chloride.interface.font.shadow.title"))
                 .setTooltip(Component.translatable("chloride.interface.font.shadow.desc"))
                 .setControl(TickBoxControl::new)
@@ -113,7 +108,6 @@ public class InterfacePage extends OptionPage {
         );
 
         screens.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setId(ResourceLocation.tryBuild(Chloride.ID, "hide_jremi"))
                 .setName(Component.translatable("chloride.interface.jei.title"))
                 .setTooltip(Component.translatable("chloride.interface.jei.desc"))
                 .setControl(TickBoxControl::new)
@@ -121,7 +115,7 @@ public class InterfacePage extends OptionPage {
                         (opts, value) -> ChlorideConfig.hideJREMI = value,
                         (opts) -> ChlorideConfig.hideJREMI)
                 .setImpact(OptionImpact.LOW)
-                .setEnabled(Chloride.installed("jei") || Chloride.installed("roughlyenoughitems") || Chloride.installed("emi"))
+                .setEnabled(() -> Chloride.installed("jei") || Chloride.installed("roughlyenoughitems") || Chloride.installed("emi"))
                 .build()
         );
 

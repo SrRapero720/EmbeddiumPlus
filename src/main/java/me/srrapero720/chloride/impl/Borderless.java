@@ -11,16 +11,16 @@ public class Borderless {
         final Options opts = client.options;
 
         ChlorideConfig.fullScreen = value;
-        opts.fullscreen.set(value != Mode.WINDOWED);
+        opts.fullscreen().set(value != Mode.WINDOWED);
 
         final Window window = client.getWindow();
 
-        if (window.isFullscreen() != opts.fullscreen.get()) {
+        if (window.isFullscreen() != opts.fullscreen().get()) {
             window.toggleFullScreen();
-            opts.fullscreen.set(window.isFullscreen());
+            opts.fullscreen().set(window.isFullscreen());
         }
 
-        if (opts.fullscreen.get()) {
+        if (opts.fullscreen().get()) {
             window.dirty = true;
             window.changeFullscreenVideoMode();
         }

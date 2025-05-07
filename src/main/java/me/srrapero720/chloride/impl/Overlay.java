@@ -7,17 +7,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.FrameTimer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGuiEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 import java.util.Arrays;
 
-@Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Chloride.ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class Overlay {
     private static final FPSDisplayBuilder DISPLAY = new FPSDisplayBuilder();
 
@@ -60,29 +57,21 @@ public class Overlay {
         return times / avgCount.length;
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onRenderOverlayItem(final RenderGuiOverlayEvent.Pre event) {
-        if (!event.getOverlay().id().getPath().equals("debug_text")) return;
-
-        // cancel rendering text if chart is displaying
-        if (Minecraft.getInstance().options.renderFpsChart) event.setCanceled(true);
-    }
-
     @SubscribeEvent
     public static void onRenderOverlay(final RenderGuiEvent.Pre event) {
         final var mc = Minecraft.getInstance();
 
         // PRECALCULATE
         fps = mc.getFps();
-        minFPS = minFPS(mc);
+//        minFPS = minFPS(mc);
         memUsage = (int) ((ramUsed() * 100) / Runtime.getRuntime().maxMemory());
         gpuPercent = Math.min((int) mc.getGpuUtilization(), 100);
         avgFPS = calculateAverage();
-        renderFPSChar(mc, event.getGuiGraphics(), mc.font, event.getWindow().getGuiScale());
+        renderFPSChar(mc, event.getGuiGraphics(), mc.font, Minecraft.getInstance().getWindow().getGuiScale());
     }
 
     private static void renderFPSChar(final Minecraft mc, final GuiGraphics graphics, final Font font, final double scale) {
-        if (mc.options.renderDebug || mc.options.renderFpsChart) return; // No render when F3 is open
+        if (Minecraft.getInstance().getDebugOverlay().showDebugScreen() || Minecraft.getInstance().getDebugOverlay().showProfilerChart()) return; // No render when F3 is open
 
         final var mode = ChlorideConfig.fpsDisplayMode;
         final var systemMode = ChlorideConfig.fpsDisplaySystemMode;
@@ -96,7 +85,7 @@ public class Overlay {
             case SIMPLE -> DISPLAY.append(colorByLow(fps)).add(fix(fps)).add(" ").add(MSG_FPS.getString()).add(ChatFormatting.RESET);
             case ADVANCED -> {
                 DISPLAY.append(colorByLow(fps)).add(fix(fps)).add(ChatFormatting.RESET);
-                DISPLAY.append(colorByLow(minFPS)).add(MSG_MIN).add(" ").add(fix(minFPS)).add(ChatFormatting.RESET);
+//                DISPLAY.append(colorByLow(minFPS)).add(MSG_MIN).add(" ").add(fix(minFPS)).add(ChatFormatting.RESET);
                 DISPLAY.append(colorByLow(avgFPS)).add(MSG_AVG).add(" ").add(fix(avgFPS)).add(ChatFormatting.RESET);
             }
         }
@@ -152,34 +141,34 @@ public class Overlay {
         return (value == -1) ? "--" : "" + value;
     }
 
-    private static int minFPS(final Minecraft mc) {
-        final FrameTimer timer = mc.getFrameTimer();
-
-        final int start = timer.getLogStart();
-        final int end = timer.getLogEnd();
-
-        if (end == start) return minFPS;
-
-        int fps = mc.getFps();
-        if (fps <= 0) fps = 1;
-
-        final long[] frames = timer.getLog();
-        long maxNS = (long) (1 / (double) fps * 1000000000);
-        long totalNS = 0;
-
-        int index = Math.floorMod(end - 1, frames.length);
-        while (index != start && (double) totalNS < 1000000000) {
-            final long timeNs = frames[index];
-            if (timeNs > maxNS) {
-                maxNS = timeNs;
-            }
-
-            totalNS += timeNs;
-            index = Math.floorMod(index - 1, frames.length);
-        }
-
-        return (int) (1 / ((double) maxNS / 1000000000));
-    }
+//    private static int minFPS(final Minecraft mc) {
+//        final FrameTimer timer = mc.getFrameTimer();
+//
+//        final int start = timer.getLogStart();
+//        final int end = timer.getLogEnd();
+//
+//        if (end == start) return minFPS;
+//
+//        int fps = mc.getFps();
+//        if (fps <= 0) fps = 1;
+//
+//        final long[] frames = timer.getLog();
+//        long maxNS = (long) (1 / (double) fps * 1000000000);
+//        long totalNS = 0;
+//
+//        int index = Math.floorMod(end - 1, frames.length);
+//        while (index != start && (double) totalNS < 1000000000) {
+//            final long timeNs = frames[index];
+//            if (timeNs > maxNS) {
+//                maxNS = timeNs;
+//            }
+//
+//            totalNS += timeNs;
+//            index = Math.floorMod(index - 1, frames.length);
+//        }
+//
+//        return (int) (1 / ((double) maxNS / 1000000000));
+//    }
 
     public static ChatFormatting colorByLow(final int usage) {
         return ((usage < 9) ? ChatFormatting.DARK_RED

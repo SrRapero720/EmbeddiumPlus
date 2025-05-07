@@ -2,11 +2,11 @@ package me.srrapero720.chloride.impl.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.shaders.FogShape;
-import me.jellysquid.mods.sodium.client.gui.options.*;
-import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
-import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
-import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
-import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import net.caffeinemc.mods.sodium.client.gui.options.*;
+import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import net.caffeinemc.mods.sodium.client.gui.options.control.CyclingControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.ChunkFade;
@@ -14,18 +14,15 @@ import me.srrapero720.chloride.impl.LeavesCulling;
 import me.srrapero720.chloride.impl.sodium.controls.BetterCyclingControl;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
 public class WorldPage extends OptionPage {
-    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "skies")));
     public WorldPage() {
-        super(ID, Component.translatable("chloride.world"), create());
+        super(Component.translatable("chloride.world"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
@@ -87,7 +84,6 @@ public class WorldPage extends OptionPage {
 
         final var worldVisuals = OptionGroup.createBuilder();
         worldVisuals.add(OptionImpl.createBuilder(LeavesCulling.LeavesCullingMode.class, STORAGE)
-                .setId(ResourceLocation.tryBuild(Chloride.ID, "leaves_culling"))
                 .setName(Component.translatable("chloride.world.leaves_culling.title"))
                 .setTooltip(Component.translatable("chloride.world.leaves_culling.desc"))
                 .setControl(opt -> new CyclingControl<>(opt, LeavesCulling.LeavesCullingMode.class, BetterCyclingControl.tEnumComponent("chloride.world.leaves_culling", LeavesCulling.LeavesCullingMode.class)))
@@ -117,7 +113,7 @@ public class WorldPage extends OptionPage {
                 .setBinding((opts, value) -> ChlorideConfig.chunkFadeSpeed = value,
                         opts -> ChlorideConfig.chunkFadeSpeed)
                 .setImpact(OptionImpact.LOW)
-                .setEnabled(false)
+                .setEnabled(() -> false)
                 .build()
         );
 

@@ -30,7 +30,7 @@ public class JeiOverlayMixin {
             if (this.screenPropertiesCache.hasValidScreen()) {
                 this.configButton.draw(guiGraphics, mouseX, mouseY, partialTicks);
                 final IGuiProperties props = this.screenPropertiesCache.getGuiProperties().get();
-                guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), this.searchField.getX() + (this.searchField.getWidth() / 2), props.getScreenHeight() / 2, 0xFFFFFF);
+                guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), this.searchField.getX() + (this.searchField.getWidth() / 2), props.screenHeight() / 2, 0xFFFFFF);
             }
             ci.cancel();
         }

@@ -46,7 +46,7 @@ public abstract class FogAndBandMixin {
             final Minecraft mc = Minecraft.getInstance();
 
             if (mc.level.dimensionType().hasSkyLight())
-                return mc.level.getSkyColor(mc.gameRenderer.getMainCamera().getPosition(), mc.getFrameTime());
+                return mc.level.getSkyColor(mc.gameRenderer.getMainCamera().getPosition(), mc.getFrameTimeNs());
 
             return vec;
         }
