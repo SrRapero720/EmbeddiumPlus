@@ -6,7 +6,9 @@ import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
@@ -76,5 +78,14 @@ public class Zoom {
     public static void onGetFovEvent(final ViewportEvent.ComputeFov e) {
         if (canUseZoom() && ChlorideConfig.enableZoom)
             e.setFOV(zoom(e.getFOV()));
+    }
+
+    @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD, modid = Chloride.ID)
+    public static final class ModEvents {
+        @SubscribeEvent
+        @OnlyIn(Dist.CLIENT)
+        public static void registerKeys(final RegisterKeyMappingsEvent event) {
+            event.register(KEY);
+        }
     }
 }
