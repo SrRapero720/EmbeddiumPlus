@@ -19,21 +19,21 @@ public class Borderless {
 
         previousMode = ChlorideConfig.fullScreen;
         ChlorideConfig.fullScreen = value;
-        opts.fullscreen.set(value != Mode.WINDOWED);
+        opts.fullscreen().set(value != Mode.WINDOWED);
 
         // options.fullscreen.set() ALREADY CALLS window.toggleFullscreen() AS A SIDE-EFFECT WHEN THE
         // BOOLEAN CHANGES, SO THIS BRANCH USUALLY NO-OPS. IT ONLY FIRES FOR BORDERLESS <-> FULLSCREEN
         // (BOTH SHARE WINDOW.FULLSCREEN=TRUE) WHERE VANILLA'S UPDATEDISPLAY PATH WON'T TRIGGER SETMODE.
         final boolean toggled;
-        if (window.isFullscreen() != opts.fullscreen.get()) {
+        if (window.isFullscreen() != opts.fullscreen().get()) {
             window.toggleFullScreen();
-            opts.fullscreen.set(window.isFullscreen());
+            opts.fullscreen().set(window.isFullscreen());
             toggled = true;
         } else {
             toggled = false;
         }
 
-        if (!toggled && opts.fullscreen.get()) {
+        if (!toggled && opts.fullscreen().get()) {
             window.dirty = true;
             window.changeFullscreenVideoMode();
         }

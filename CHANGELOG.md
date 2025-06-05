@@ -18,6 +18,9 @@
 - [🛠️] Reverted fix of true darkness applied on full brightness biomes (like alex caves)
   - Fixes bugs on true darkness support
 - [🐛] Fixed window border was still shown on borderless mode and fix bad performance
+- [🐛] [1.21.1] Fixed FPS overlay wasn't hidden pressing F1 or opening F3
+- [🐛] [1.21.1] Fixed missing MIN fps overlay
+- [🐛] [1.21.1] Fixed crashes enabling modpack mode
 
 # RELEASE 1.7.5
 - [🐛] Fixed JEI integration crashes on latest versions of JEI

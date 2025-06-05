@@ -1,5 +1,6 @@
 package me.srrapero720.chloride.impl;
 
+import dev.ryanhcode.sable.companion.SableCompanion;
 import me.srrapero720.chloride.Chloride;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -8,14 +9,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fml.ModList;
-import org.valkyrienskies.mod.common.VSGameUtilsKt;
+//import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class EntityCulling {
     public static final boolean VS_I = Chloride.installed("valkyrienskies");
+    public static final boolean SABLE_I = Chloride.installed("sable");
     public static final Comparator<Entity> DISTANCE_COMPARATOR = (entityOne, entityTwo) -> {
         assert Minecraft.getInstance().player != null;
         final double dist1 = entityOne.distanceTo(Minecraft.getInstance().player);
@@ -43,8 +44,11 @@ public class EntityCulling {
     }
 
     private static boolean isEntityInRange(Level level, final Vec3 position, final Vec3 camera, final int maxHeight, final int maxDistanceSquared) {
-        if (VS_I) {
-            return VSGameUtilsKt.squaredDistanceBetweenInclShips(level, position.x, position.y, position.z, camera.x, camera.y, camera.z) < maxDistanceSquared;
+//        if (VS_I) {
+//            return VSGameUtilsKt.squaredDistanceBetweenInclShips(level, position.x, position.y, position.z, camera.x, camera.y, camera.z) < maxDistanceSquared;
+//        }
+        if (SABLE_I) {
+            return SableCompanion.INSTANCE.distanceSquaredWithSubLevels(level, position, camera) <= maxDistanceSquared;
         }
         if (Math.abs(position.y - camera.y - 4) < maxHeight) {
             final double x = position.x - camera.x;

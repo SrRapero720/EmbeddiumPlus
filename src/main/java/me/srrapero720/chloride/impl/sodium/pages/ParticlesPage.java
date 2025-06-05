@@ -1,41 +1,32 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
-import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
-import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
-import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
-import me.srrapero720.chloride.Chloride;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionGroup;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionImpl;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
+import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLLoader;
-import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
+import net.neoforged.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
 public class ParticlesPage extends OptionPage {
-    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "particles")));
-    public static final OptionIdentifier<Void> PARTICLE_BASE_PAGE = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "particles_page_base")));
     public ParticlesPage() {
-        super(ID, Component.translatable("chloride.particles"), create());
+        super(Component.translatable("chloride.particles"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
         final List<OptionGroup> groups = new ArrayList<>();
 
         final var particles = OptionGroup.createBuilder();
-        particles.setId(PARTICLE_BASE_PAGE);
 
         final var base = OptionGroup.createBuilder();
         base.add(OptionImpl.createBuilder(boolean.class, STORAGE)
@@ -72,6 +63,8 @@ public class ParticlesPage extends OptionPage {
 
         final var enabled = OptionGroup.createBuilder();
         final var disabled = OptionGroup.createBuilder();
+        var hasEnabled = false;
+        var hasDisabled = false;
         final var cachedDisplayNames = new HashMap<String, String>();
 
         for (final var key: BuiltInRegistries.PARTICLE_TYPE.keySet()) {
@@ -84,8 +77,14 @@ public class ParticlesPage extends OptionPage {
                 return I18n.get("chloride.particles.provider.unknown");
             });
 
-            (ChlorideConfig.disabledParticles.contains(key) ? disabled : enabled).add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                    .setId(ResourceLocation.tryBuild(Chloride.ID, "particle_" + key.getNamespace() + "_" + key.getPath()))
+            boolean contains = ChlorideConfig.disabledParticles.contains(key);
+
+            if (contains) {
+                hasDisabled = true;
+            } else {
+                hasEnabled = true;
+            }
+            (contains ? disabled : enabled).add(OptionImpl.createBuilder(boolean.class, STORAGE)
                     .setName(Component.literal(key.toString()))
                     .setTooltip(Component.translatable("chloride.particles.provider", Component.literal(displayName).withStyle(ChatFormatting.GOLD)))
                     .setControl(TickBoxControl::new)
@@ -100,10 +99,10 @@ public class ParticlesPage extends OptionPage {
             );
         }
 
-        groups.add(particles.build());
+//        groups.add(particles.build());
         groups.add(base.build());
-        groups.add(disabled.build());
-        groups.add(enabled.build());
+        if (hasDisabled) groups.add(disabled.build());
+        if (hasEnabled) groups.add(enabled.build());
 
         return ImmutableList.copyOf(groups);
     }

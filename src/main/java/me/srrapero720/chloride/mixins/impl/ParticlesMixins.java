@@ -1,5 +1,6 @@
 package me.srrapero720.chloride.mixins.impl;
 
+import it.unimi.dsi.fastutil.ints.IntList;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.api.IParticleTypeData;
 import net.minecraft.client.Camera;
@@ -94,7 +95,7 @@ public class ParticlesMixins {
         @Unique private ResourceLocation chloride$id;
 
         @Inject(method = "createParticle", at = @At(value = "HEAD"), cancellable = true)
-        public void inject$create(double x, double y, double z, double velocityX, double velocityY, double velocityZ, int[] colors, int[] fadeColors, boolean trail, boolean flicker, CallbackInfo ci) {
+        public void inject$create(double x, double y, double z, double velocityX, double velocityY, double velocityZ, IntList colors, IntList fadeColors, boolean trail, boolean flicker, CallbackInfo ci) {
             if (ChlorideConfig.disabledParticles.contains(this.getId())) {
                 ci.cancel();
             }

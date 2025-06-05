@@ -2,7 +2,7 @@ package me.srrapero720.chloride.api.events;
 
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.FastBlocks;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
 import org.jetbrains.annotations.ApiStatus;
 
 /**

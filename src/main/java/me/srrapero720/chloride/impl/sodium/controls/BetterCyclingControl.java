@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.impl.sodium.controls;
 
-import me.jellysquid.mods.sodium.client.gui.options.Option;
-import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
+import net.caffeinemc.mods.sodium.client.gui.options.Option;
+import net.caffeinemc.mods.sodium.client.gui.options.control.CyclingControl;
 import net.minecraft.network.chat.Component;
 
 public class BetterCyclingControl<T extends Enum<T>> extends CyclingControl<T> {
