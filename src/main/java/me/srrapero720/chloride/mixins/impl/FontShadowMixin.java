@@ -15,23 +15,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Font.class)
 public class FontShadowMixin {
-    @Inject(method = "renderText(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;II)F", at = @At("HEAD"), cancellable = true)
-    public void inject$renderText(final String pText, final float pX, final float pY, final int pColor, final boolean pDropShadow, final Matrix4f pMatrix, final MultiBufferSource pBuffer, final Font.DisplayMode pDisplayMode, final int pBackgroundColor, final int pPackedLightCoords, final CallbackInfoReturnable<Float> cir) {
-        if (!ChlorideConfig.fontShadows && pDropShadow) cir.setReturnValue(0f);
+    @Inject(method = "renderText(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;IIZ)F", at = @At("HEAD"), cancellable = true)
+    public void inject$renderText(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, Font.DisplayMode displayMode, int backgroundColor, int packedLightCoords, boolean p_381721_, CallbackInfoReturnable<Float> cir) {
+        if (!ChlorideConfig.fontShadows && dropShadow) cir.setReturnValue(0f);
     }
 
-    @Inject(method = "renderText(Lnet/minecraft/util/FormattedCharSequence;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;II)F", at = @At("HEAD"), cancellable = true)
-    public void inject$renderText(final FormattedCharSequence pText, final float pX, final float pY, final int pColor, final boolean pDropShadow, final Matrix4f pMatrix, final MultiBufferSource pBuffer, final Font.DisplayMode pDisplayMode, final int pBackgroundColor, final int pPackedLightCoords, final CallbackInfoReturnable<Float> cir) {
-        if (!ChlorideConfig.fontShadows && pDropShadow) cir.setReturnValue(0f);
+    @Inject(method = "renderText(Lnet/minecraft/util/FormattedCharSequence;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;IIZ)F", at = @At("HEAD"), cancellable = true)
+    public void inject$renderText(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, Font.DisplayMode displayMode, int backgroundColor, int packedLightCoords, boolean p_381718_, CallbackInfoReturnable<Float> cir) {
+        if (!ChlorideConfig.fontShadows && dropShadow) cir.setReturnValue(0f);
     }
 
     @Mixin(value = Font.StringRenderOutput.class)
     public static class StringRenderOutputMixin {
-        @Shadow @Final private boolean dropShadow;
+        @Shadow @Final private boolean drawShadow;
 
         @Inject(method = "accept", at = @At("HEAD"), cancellable = true)
         public void inject$accept(final int pPositionInCurrentSequence, final Style pStyle, final int pCodePoint, final CallbackInfoReturnable<Boolean> cir) {
-            if (!ChlorideConfig.fontShadows && this.dropShadow) cir.setReturnValue(false);
+            if (!ChlorideConfig.fontShadows && this.drawShadow) cir.setReturnValue(false);
         }
     }
 }

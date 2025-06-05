@@ -66,6 +66,7 @@ public class SodiumOptionsMixin {
                 .setName(Component.translatable("chloride.performance.fastchest.title"))
                 .setTooltip(Component.translatable("chloride.performance.fastchest.desc"))
                 .setControl(TickBoxControl::new)
+                .setEnabled(() -> FastBlocks.SOLID_CHESTS_PACK != null)
                 .setBinding(
                         (opts, value) -> {
                             ChlorideConfig.fastChests = value;
@@ -74,13 +75,14 @@ public class SodiumOptionsMixin {
                         (opts) -> ChlorideConfig.fastChests)
                 .setImpact(OptionImpact.MEDIUM)
                 .setEnabled(FastBlocks::canUseOnChests)
-                .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD, OptionFlag.REQUIRES_GAME_RESTART)
+                .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
                 .build();
 
         final var fastBeds = OptionImpl.createBuilder(boolean.class, STORAGE)
                 .setName(Component.translatable("chloride.performance.fastbeds.title"))
                 .setTooltip(Component.translatable("chloride.performance.fastbeds.desc"))
                 .setControl(TickBoxControl::new)
+                .setEnabled(() -> FastBlocks.SOLID_BEDS_PACK != null)
                 .setBinding(
                         (opts, value) -> {
                             ChlorideConfig.fastBeds = value;
@@ -88,7 +90,7 @@ public class SodiumOptionsMixin {
                         },
                         (opts) -> ChlorideConfig.fastBeds)
                 .setImpact(OptionImpact.MEDIUM)
-                .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD, OptionFlag.REQUIRES_GAME_RESTART)
+                .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD)
                 .build();
 
         builder.add(fastChest);

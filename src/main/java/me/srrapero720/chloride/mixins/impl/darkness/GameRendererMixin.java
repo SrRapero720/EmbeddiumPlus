@@ -5,6 +5,8 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,9 +22,10 @@ public abstract class GameRendererMixin {
     @Inject(method = "renderLevel", at = @At(value = "HEAD"))
     private void inject$renderLevel(DeltaTracker p_348589_, CallbackInfo ci) {
         if (this.lightTexture.updateLightTexture) {
-            this.minecraft.getProfiler().push("darkenLightTexture");
+            ProfilerFiller filler = Profiler.get();
+            filler.push("darkenLightTexture");
             Darkness.updateLuminance(p_348589_.getGameTimeDeltaTicks(), this.minecraft, (GameRenderer) (Object) this, this.lightTexture.blockLightRedFlicker);
-            this.minecraft.getProfiler().pop();
+            filler.pop();
         }
     }
 }

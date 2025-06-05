@@ -1,5 +1,6 @@
 package me.srrapero720.chloride.mixins.impl.darkness;
 
+import com.mojang.blaze3d.textures.GpuTexture;
 import me.srrapero720.chloride.impl.Darkness;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LightTexture.class)
 public class LightTextureMixin {
-    @Shadow @Final private DynamicTexture lightTexture;
+    @Shadow(aliases = "texture") @Final private GpuTexture lightTexture;
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void inject$init(final GameRenderer pRenderer, final Minecraft pMinecraft, final CallbackInfo ci) {

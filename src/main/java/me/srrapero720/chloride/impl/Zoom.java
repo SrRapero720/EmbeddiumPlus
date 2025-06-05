@@ -17,7 +17,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
-@EventBusSubscriber(modid = Chloride.ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
 public class Zoom {
     private static final double EASE_DELTA = 0.15;
     private static final double DEFAULT = 3;
@@ -37,7 +37,7 @@ public class Zoom {
                     InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, "Chloride"
     );
 
-    public static double zoom(final double fov) {
+    public static float zoom(final double fov) {
         final var mouseSetting = Minecraft.getInstance().options.sensitivity();
 
         if (value == -1) value = DEFAULT;
@@ -50,7 +50,7 @@ public class Zoom {
                 mouseSensitivity = -1;
             }
 
-            return fov;
+            return (float) fov;
         }
 
         if (mouseSensitivity == -1)
@@ -59,7 +59,7 @@ public class Zoom {
         // ZOOM VALUE AFFECTS MOUSE SENSITIVITY
         mouseSetting.set(mouseSensitivity * (1.0 / value));
 
-        return fov / value;
+        return (float) (fov / value);
     }
 
     public static boolean scroll(final double amount) {
@@ -91,7 +91,7 @@ public class Zoom {
             e.setFOV(zoom(e.getFOV()));
     }
 
-    @EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD, modid = Chloride.ID)
+    @EventBusSubscriber(value = Dist.CLIENT, modid = Chloride.ID)
     public static final class ModEvents {
         @SubscribeEvent
         @OnlyIn(Dist.CLIENT)

@@ -16,11 +16,12 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.neoforgespi.locating.IModFile;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
-@EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.GAME, modid = Chloride.ID)
+@EventBusSubscriber(value = Dist.CLIENT, modid = Chloride.ID)
 public class FastBlocks {
     public static Pack SOLID_BEDS_PACK;
     public static Pack SOLID_CHESTS_PACK;
@@ -47,35 +48,56 @@ public class FastBlocks {
         }
     }
 
-    @EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD, modid = Chloride.ID)
+    @EventBusSubscriber(value = Dist.CLIENT, modid = Chloride.ID)
     public static final class ModEvents {
 
         @SubscribeEvent
         public static void registerResourcePacks(AddPackFindersEvent e) {
             Chloride.LOGGER.info("Registering CHLORIDE built-in packs");
             if (e.getPackType() == PackType.CLIENT_RESOURCES) {
-                final ModContainer modFile = ModList.get().getModContainerById(Chloride.ID).get();
+                final IModFile modFile = ModList.get().getModFileById(Chloride.ID).getFile();
 
-//                e.addPackFinders();
-                final Path bedsPath = modFile.getModInfo().getOwningFile().getFile().findResource("custom_packs/solid_beds");
                 SOLID_BEDS_PACK = Pack.readMetaAndCreate(
-                        new PackLocationInfo(Chloride.ID + "_solid_beds", Component.literal("Chloride: Solid Beds"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_beds", "1.0.0"))),
-                        BuiltInPackSource.fromName((path) -> getPathResources(path, bedsPath)),
+                        new PackLocationInfo(Chloride.ID + "_solid_beds", Component.literal("Chloride: Solid Chests"), PackSource.BUILT_IN, Optional.empty()),
+                        new Pack.ResourcesSupplier() {
+                            @Override
+                            public PackResources openPrimary(PackLocationInfo p_326301_) {
+                                return getPathResources(p_326301_, modFile.getFilePath().resolve("custom_packs/solid_beds"));
+                            }
+
+                            @Override
+                            public PackResources openFull(PackLocationInfo p_326241_, Pack.Metadata p_325959_) {
+                                return getPathResources(p_326241_, modFile.getFilePath().resolve("custom_packs/solid_beds"));
+
+                            }
+                        },
                         PackType.CLIENT_RESOURCES,
                         new PackSelectionConfig(false, Pack.Position.TOP, true)
                 );
-
-                final Path chestsPath = modFile.getModInfo().getOwningFile().getFile().findResource("custom_packs/solid_chests");
                 SOLID_CHESTS_PACK = Pack.readMetaAndCreate(
-                        new PackLocationInfo(Chloride.ID + "_solid_chests", Component.literal("Chloride: Solid Chests"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_beds", "1.0.0"))),
-                        BuiltInPackSource.fromName((path) -> getPathResources(path, chestsPath)),
+                        new PackLocationInfo(Chloride.ID + "_solid_chests", Component.literal("Chloride: Solid Chests"), PackSource.BUILT_IN, Optional.empty()),
+                        new Pack.ResourcesSupplier() {
+                            @Override
+                            public PackResources openPrimary(PackLocationInfo p_326301_) {
+                                return getPathResources(p_326301_, modFile.getFilePath().resolve("custom_packs/solid_chests"));
+                            }
+
+                            @Override
+                            public PackResources openFull(PackLocationInfo p_326241_, Pack.Metadata p_325959_) {
+                                return getPathResources(p_326241_, modFile.getFilePath().resolve("custom_packs/solid_chests"));
+
+                            }
+                        },
                         PackType.CLIENT_RESOURCES,
                         new PackSelectionConfig(false, Pack.Position.TOP, true)
                 );
 
                 e.addRepositorySource(consumer -> {
-                    consumer.accept(SOLID_BEDS_PACK);
-                    consumer.accept(SOLID_CHESTS_PACK);
+                    if (SOLID_BEDS_PACK != null) consumer.accept(SOLID_BEDS_PACK);
+                    else Chloride.LOGGER.warn("SOLID_BEDS_PACK is null");
+
+                    if (SOLID_CHESTS_PACK != null) consumer.accept(SOLID_CHESTS_PACK);
+                    else Chloride.LOGGER.warn("SOLID_CHESTS_PACK is null");
                 });
             }
         }

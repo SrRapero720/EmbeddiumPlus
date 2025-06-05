@@ -1,6 +1,6 @@
 package me.srrapero720.chloride.impl;
 
-import dev.ryanhcode.sable.companion.SableCompanion;
+//import dev.ryanhcode.sable.companion.SableCompanion;
 import me.srrapero720.chloride.Chloride;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -47,9 +47,9 @@ public class EntityCulling {
 //        if (VS_I) {
 //            return VSGameUtilsKt.squaredDistanceBetweenInclShips(level, position.x, position.y, position.z, camera.x, camera.y, camera.z) < maxDistanceSquared;
 //        }
-        if (SABLE_I) {
-            return SableCompanion.INSTANCE.distanceSquaredWithSubLevels(level, position, camera) <= maxDistanceSquared;
-        }
+//        if (SABLE_I) {
+//            return SableCompanion.INSTANCE.distanceSquaredWithSubLevels(level, position, camera) <= maxDistanceSquared;
+//        }
         if (Math.abs(position.y - camera.y - 4) < maxHeight) {
             final double x = position.x - camera.x;
             final double z = position.z - camera.z;

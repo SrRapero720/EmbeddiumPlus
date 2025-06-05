@@ -77,19 +77,20 @@ dependencies {
     implementation "curse.maven:sodium-394468:$sodiumversion"
 
     // MOD COMPAT
-    implementation "curse.maven:jei-238222:$jeiversion"
+    compileOnly "curse.maven:jei-238222:$jeiversion"
     compileOnly ("curse.maven:roughly-enough-items-310111:$reiversion") {
         compileOnly "curse.maven:architectury-api-419699:$archversion"
         compileOnly "curse.maven:cloth-config-348521:$clothversion"
     }
     compileOnly "curse.maven:emi-580555:$emiversion"
-    implementation "curse.maven:sable-1312371:8007005"
+//    implementation "curse.maven:sable-1312371:8007005"
 //    implementation "blank:betterf3:7.0.2"
 
     // MOD SUPPORT
-    compileOnly("dev.ryanhcode.sable-companion:sable-companion-common-$mcversion:$sableversion") {
-        transitive = false
-    }
+//    compileOnly("dev.ryanhcode.sable-companion:sable-companion-common-$mcversion:$sableversion") {
+//        transitive = false
+//    }
+    compileOnly "curse.maven:create-328085:6323264"
 }
 
 tasks.processResources.outputs.upToDateWhen { false }

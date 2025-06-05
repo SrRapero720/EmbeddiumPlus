@@ -15,7 +15,7 @@ import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 import java.util.Arrays;
 
-@EventBusSubscriber(modid = Chloride.ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
 public class Overlay {
     private static final FPSDisplayBuilder DISPLAY = new FPSDisplayBuilder();
 

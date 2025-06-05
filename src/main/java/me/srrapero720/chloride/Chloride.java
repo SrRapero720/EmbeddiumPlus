@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 @Mod(Chloride.ID)
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT)
 public class Chloride {
     public static final String ID = "chloride";
     public static final Logger LOGGER = LogManager.getLogger("chloride");
