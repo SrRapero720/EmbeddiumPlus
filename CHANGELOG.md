@@ -1,3 +1,6 @@
+# RELEASE 1.7.2
+- [✨] Fixed crashes clicking on Video Settings button after update Chloride
+
 # RELEASE 1.7.1
 - [🛠️] Structural changes on codebase with no visible changes (NeoForge re-porting)
 
