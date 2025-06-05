@@ -1,20 +1,19 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
-import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpact;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
-import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
-import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
-import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
-import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionGroup;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionImpact;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionImpl;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
+import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.EntityCulling;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +22,8 @@ import java.util.Objects;
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
 public class EntitiesPage extends OptionPage {
-    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "culling")));
     public EntitiesPage() {
-        super(ID, Component.translatable("chloride.entities"), create());
+        super(Component.translatable("chloride.entities"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
@@ -83,7 +81,7 @@ public class EntitiesPage extends OptionPage {
                 .setName(Component.translatable("chloride.entities.culling.distance.vertical.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
                 .setControl(option -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
-                .setEnabledPredicate(() -> !EntityCulling.VS_I)
+                .setEnabled(() -> !EntityCulling.VS_I)
                 .setBinding(
                         (opt, value) -> ChlorideConfig.entityCullingDistanceY = value,
                         opt -> ChlorideConfig.entityCullingDistanceY)
@@ -118,7 +116,7 @@ public class EntitiesPage extends OptionPage {
                 .setName(Component.translatable("chloride.entities.culling.monster.distance.vertical.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.monster.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
                 .setControl(option -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
-                .setEnabledPredicate(() -> !EntityCulling.VS_I)
+                .setEnabled(() -> !EntityCulling.VS_I)
                 .setBinding(
                         (opt, value) -> ChlorideConfig.monsterCullingDistanceY = value,
                         opt -> ChlorideConfig.monsterCullingDistanceY)
@@ -152,7 +150,7 @@ public class EntitiesPage extends OptionPage {
                 .setName(Component.translatable("chloride.entities.culling.tile.distance.vertical.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.tile.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
                 .setControl(option -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
-                .setEnabledPredicate(() -> !EntityCulling.VS_I)
+                .setEnabled(() -> !EntityCulling.VS_I)
                 .setBinding((opt, value) -> ChlorideConfig.tileEntityCullingDistanceY = value,
                         opt -> ChlorideConfig.tileEntityCullingDistanceY)
                 .setImpact(OptionImpact.HIGH)

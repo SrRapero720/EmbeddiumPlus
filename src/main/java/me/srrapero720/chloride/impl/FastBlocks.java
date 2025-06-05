@@ -4,22 +4,23 @@ import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.api.events.FastModelSettingsUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.*;
+import net.minecraft.server.packs.repository.BuiltInPackSource;
+import net.minecraft.server.packs.repository.KnownPack;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.AddPackFindersEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forgespi.locating.IModFile;
-import net.minecraftforge.resource.PathPackResources;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE, modid = Chloride.ID)
+@EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.GAME, modid = Chloride.ID)
 public class FastBlocks {
     public static Pack SOLID_BEDS_PACK;
     public static Pack SOLID_CHESTS_PACK;
@@ -46,28 +47,31 @@ public class FastBlocks {
         }
     }
 
-    @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD, modid = Chloride.ID)
+    @EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD, modid = Chloride.ID)
     public static final class ModEvents {
 
         @SubscribeEvent
         public static void registerResourcePacks(AddPackFindersEvent e) {
             Chloride.LOGGER.info("Registering CHLORIDE built-in packs");
             if (e.getPackType() == PackType.CLIENT_RESOURCES) {
-                SOLID_BEDS_PACK = Pack.readMetaAndCreate(Chloride.ID + "_solid_beds",
-                        Component.literal("Chloride: Solid Beds"),
-                        false,
-                        id -> getPathResources(id, "custom_packs/solid_beds"),
-                        PackType.CLIENT_RESOURCES,
-                        Pack.Position.TOP,
-                        PackSource.BUILT_IN);
+                final ModContainer modFile = ModList.get().getModContainerById(Chloride.ID).get();
 
-                SOLID_CHESTS_PACK = Pack.readMetaAndCreate(Chloride.ID + "_solid_chests",
-                        Component.literal("Chloride: Solid Chests"),
-                        false,
-                        id -> getPathResources(id, "custom_packs/solid_chests"),
+//                e.addPackFinders();
+                final Path bedsPath = modFile.getModInfo().getOwningFile().getFile().findResource("custom_packs/solid_beds");
+                SOLID_BEDS_PACK = Pack.readMetaAndCreate(
+                        new PackLocationInfo(Chloride.ID + "_solid_beds", Component.literal("Chloride: Solid Beds"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_beds", "1.0.0"))),
+                        BuiltInPackSource.fromName((path) -> getPathResources(path, bedsPath)),
                         PackType.CLIENT_RESOURCES,
-                        Pack.Position.TOP,
-                        PackSource.BUILT_IN);
+                        new PackSelectionConfig(false, Pack.Position.TOP, true)
+                );
+
+                final Path chestsPath = modFile.getModInfo().getOwningFile().getFile().findResource("custom_packs/solid_chests");
+                SOLID_CHESTS_PACK = Pack.readMetaAndCreate(
+                        new PackLocationInfo(Chloride.ID + "_solid_chests", Component.literal("Chloride: Solid Chests"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_beds", "1.0.0"))),
+                        BuiltInPackSource.fromName((path) -> getPathResources(path, chestsPath)),
+                        PackType.CLIENT_RESOURCES,
+                        new PackSelectionConfig(false, Pack.Position.TOP, true)
+                );
 
                 e.addRepositorySource(consumer -> {
                     consumer.accept(SOLID_BEDS_PACK);
@@ -78,20 +82,11 @@ public class FastBlocks {
 
     }
 
-    private static PathPackResources getPathResources(String packId, String path) {
-        final IModFile modFile = ModList.get().getModFileById(Chloride.ID).getFile();
-        return new PathPackResources(packId, true, modFile.findResource(path)) {
-            @NotNull
-            protected Path resolve(String... paths) {
-                final String[] allPaths = new String[paths.length + 1];
-                allPaths[0] = path;
-                System.arraycopy(paths, 0, allPaths, 1, paths.length);
-                return modFile.findResource(allPaths);
-            }
+    private static PathPackResources getPathResources(PackLocationInfo info, Path path) {
+        return new PathPackResources(info, path) {
 
-            @Override
-            public boolean isHidden() {
-                return true;
+            @Override public boolean isHidden() {
+                return false;
             }
         };
     }

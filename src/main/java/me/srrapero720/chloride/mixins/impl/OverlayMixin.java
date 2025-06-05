@@ -6,6 +6,7 @@ import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.Overlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
+import net.minecraft.client.gui.components.DebugScreenOverlay;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.util.profiling.metrics.profiling.MetricsRecorder;
 import org.objectweb.asm.Opcodes;
@@ -27,6 +28,9 @@ public abstract class OverlayMixin {
     @Shadow private MetricsRecorder metricsRecorder;
     @Shadow public ClientLevel level;
     @Shadow private double gpuUtilization;
+
+    @Shadow public abstract DebugScreenOverlay getDebugOverlay();
+
     @Unique private double chloride$gpuUsage = 0;
 
     @Redirect(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/metrics/profiling/MetricsRecorder;isRecording()Z"))
@@ -48,7 +52,7 @@ public abstract class OverlayMixin {
     // MICRO OPTIMIZATION
     @WrapOperation(method = "runTick", at = @At(value = "INVOKE", target = "Ljava/lang/String;format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"))
     private String redirect$removeString(final Locale l, final String format, final Object[] args, final Operation<String> original) {
-        if (this.options.renderDebug && !this.metricsRecorder.isRecording()) return original.call(l, format, args);
+        if (this.getDebugOverlay().showDebugScreen() && !this.metricsRecorder.isRecording()) return original.call(l, format, args);
         else return "";
     }
 }

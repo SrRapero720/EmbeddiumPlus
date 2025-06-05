@@ -1,19 +1,18 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
-import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpact;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
-import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
-import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
-import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionGroup;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionImpact;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionImpl;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
+import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.Zoom;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +21,8 @@ import java.util.Objects;
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
 public class ZoomPage extends OptionPage {
-    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "zoom")));
     public ZoomPage() {
-        super(ID, Component.translatable("chloride.zoom"), create());
+        super(Component.translatable("chloride.zoom"), create());
     }
 
     private static ImmutableList<OptionGroup> create() {
@@ -39,7 +37,7 @@ public class ZoomPage extends OptionPage {
                 .setTooltip(specialZoomEnableTooltip)
                 .setControl(TickBoxControl::new)
                 .setBinding((opt, value) -> ChlorideConfig.enableZoom = value, opt -> ChlorideConfig.enableZoom)
-                .setEnabled(Zoom.canUseZoom())
+                .setEnabled(Zoom::canUseZoom)
                 .setImpact(OptionImpact.LOW)
                 .build()
         );

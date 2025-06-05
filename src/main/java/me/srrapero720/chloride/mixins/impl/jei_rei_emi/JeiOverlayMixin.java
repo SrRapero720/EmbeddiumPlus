@@ -2,7 +2,7 @@ package me.srrapero720.chloride.mixins.impl.jei_rei_emi;
 
 import me.srrapero720.chloride.ChlorideConfig;
 import mezz.jei.api.gui.handlers.IGuiProperties;
-import mezz.jei.gui.elements.GuiIconToggleButton;
+import mezz.jei.gui.elements.IconButton;
 import mezz.jei.gui.input.GuiTextFieldFilter;
 import mezz.jei.gui.overlay.IngredientListOverlay;
 import mezz.jei.gui.overlay.ScreenPropertiesCache;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Pseudo
 public class JeiOverlayMixin {
     @Shadow @Final private GuiTextFieldFilter searchField;
-    @Shadow @Final private GuiIconToggleButton configButton;
+    @Shadow @Final private IconButton configButton;
     @Shadow @Final private ScreenPropertiesCache screenPropertiesCache;
 
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lmezz/jei/gui/overlay/IngredientGridWithNavigation;draw(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;IIF)V"), cancellable = true)
@@ -31,7 +31,7 @@ public class JeiOverlayMixin {
                 this.configButton.draw(guiGraphics, mouseX, mouseY, partialTicks);
                 if (!ChlorideConfig.hideJREMIHint) {
                     final IGuiProperties props = this.screenPropertiesCache.getGuiProperties().get();
-                    guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), this.searchField.getX() + (this.searchField.getWidth() / 2), props.getScreenHeight() / 2, 0xFFFFFF);
+                    guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), this.searchField.getX() + (this.searchField.getWidth() / 2), props.screenHeight() / 2, 0xFFFFFF);
                 }
             }
             ci.cancel();

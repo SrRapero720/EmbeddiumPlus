@@ -5,8 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import com.mojang.blaze3d.shaders.FogShape;
 import me.srrapero720.chloride.impl.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.common.EventBusSubscriber;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 
 import static me.srrapero720.chloride.Chloride.LOGGER;
 
-@Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ChlorideConfig {
     public static final Marker IT = MarkerManager.getMarker("Config");
     private static final HashMap<String, Object> DEFAULTS = new HashMap<>();
