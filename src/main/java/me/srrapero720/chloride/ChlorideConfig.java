@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,9 +29,9 @@ import static me.srrapero720.chloride.Chloride.LOGGER;
 @Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ChlorideConfig {
     public static final Marker IT = MarkerManager.getMarker("Config");
+    private static final HashMap<String, Object> DEFAULTS = new HashMap<>();
     private static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
-            .serializeNulls()
             .registerTypeAdapter(ResourceLocation.class, new ChlorideResourceLocationSerial())
             .registerTypeAdapter(new TypeToken<List<ResourceLocation>>(){}.getType(), new ListResourceLocationAdapter())
             .registerTypeAdapter(ChlorideConfig.class, new ChlorideConfigSerial())
@@ -118,11 +119,38 @@ public class ChlorideConfig {
 
     static void load(final Path configPath) {
         configFile = configPath.resolve("chloride-client.json").toFile();
+        for (Field field: ChlorideConfig.class.getDeclaredFields()) {
+            if (!Modifier.isStatic(field.getModifiers()) || !field.isAnnotationPresent(ConfigField.class))
+                continue;
+
+            try {
+                field.setAccessible(true);
+                DEFAULTS.put(field.getName(), field.get(null));
+            } catch (final IllegalAccessException e) {
+                LOGGER.error(IT,"Cannot access field: {}", field.getName(), e);
+            }
+        }
         if (!configFile.exists()) {
             write();
         } else {
             read();
             write();
+        }
+
+        // Ensure no field is null
+        for (Field field: ChlorideConfig.class.getDeclaredFields()) {
+            if (!Modifier.isStatic(field.getModifiers()) || !field.isAnnotationPresent(ConfigField.class))
+                continue;
+
+            try {
+                field.setAccessible(true);
+                if (field.get(null) == null) {
+                    LOGGER.warn(IT, "Field {} is null, setting to default value", field.getName());
+                    field.set(null, DEFAULTS.get(field.getName()));
+                }
+            } catch (final IllegalAccessException e) {
+                LOGGER.error(IT,"Cannot access field: {}", field.getName(), e);
+            }
         }
     }
 
@@ -210,8 +238,14 @@ public class ChlorideConfig {
 
                 try {
                     final JsonElement element = jsonObject.get(field.getName());
-                    if (element == null) continue;
-                    if (element.isJsonNull()) continue;
+                    if (element == null || element.isJsonNull()) {
+                        if (DEFAULTS.containsKey(field.getName())) {
+                            field.set(null, DEFAULTS.get(field.getName()));
+                            continue;
+                        } else {
+                            throw new JsonParseException("Missing default field: " + field.getName());
+                        }
+                    }
 
                     field.setAccessible(true);
                     field.set(null, context.deserialize(element, field.getGenericType()));
