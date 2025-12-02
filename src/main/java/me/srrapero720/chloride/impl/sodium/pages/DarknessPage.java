@@ -48,10 +48,10 @@ public class DarknessPage extends OptionPage {
         );
 
         darknessBasics.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.forceonfullbright.title"))
-                .setTooltip(Component.translatable("chloride.darkness.forceonfullbright.desc"))
+                .setName(Component.translatable("chloride.darkness.fullbrightbiomes.title"))
+                .setTooltip(Component.translatable("chloride.darkness.fullbrightbiomes.desc"))
                 .setControl(TickBoxControl::new)
-                .setBinding((opts, value) -> ChlorideConfig.forceDarknessOnFullBrightBiomes = value, opts -> ChlorideConfig.forceDarknessOnFullBrightBiomes)
+                .setBinding((opts, value) -> ChlorideConfig.darknessOnFullBrightBiomes = value, opts -> ChlorideConfig.darknessOnFullBrightBiomes)
                 .build()
         );
 

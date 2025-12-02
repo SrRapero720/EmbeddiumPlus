@@ -62,7 +62,7 @@ public class ChlorideConfig {
     @ConfigField public static ChunkFade.Speed chunkFadeSpeed = ChunkFade.Speed.SLOW;
 
     @ConfigField public static Darkness.DarkMode darknessMode = Darkness.DarkMode.VANILLA;
-    @ConfigField public static boolean forceDarknessOnFullBrightBiomes = false;
+    @ConfigField public static boolean darknessOnFullBrightBiomes = false;
     @ConfigField public static boolean darknessOnOverworld = true;
     @ConfigField public static boolean darknessOnNether = false;
     @ConfigField public static double darknessNetherFogBright = 0.5;

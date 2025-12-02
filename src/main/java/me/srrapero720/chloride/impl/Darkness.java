@@ -87,7 +87,7 @@ public class Darkness {
 				|| (client.player.hasEffect(MobEffects.CONDUIT_POWER) && client.player.getWaterVision() > 0)
 				|| level.getSkyFlashTime() > 0
                 || level.effects().forceBrightLightmap()
-                || (ChlorideConfig.forceDarknessOnFullBrightBiomes && ambient >= 0.99F && level.getBrightness(LightLayer.SKY, client.player.blockPosition()) < 8) // TURN OFF WHEN LEVEL GIVES FULL BRIGHTNESS BUT SKY LIGHT IS LOW (eg: creative mode / debug screen)
+                || (!ChlorideConfig.darknessOnFullBrightBiomes && ambient >= 0.99F && level.getBrightness(LightLayer.SKY, client.player.blockPosition()) < 8) // TURN OFF WHEN LEVEL GIVES FULL BRIGHTNESS BUT SKY LIGHT IS LOW (eg: creative mode / debug screen)
         );
 
         if (!enabled) return;
