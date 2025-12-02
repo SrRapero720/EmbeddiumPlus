@@ -1,3 +1,11 @@
+# RELEASE 1.7.3
+- [✨] Added a config option to hide the "Hide JREMI until searching" message
+- [🐛] Fixed darkeness not working with Chloride's entity culling
+- [🐛] Fixed biomes with full brightness (like Alex's Caves) are affected by True Darkness
+- [🐛] Fixed chart was not rendering when BetterF3 is installed
+- [🐛] Fixed player effects (potions like blindness) are not working with custom fog
+- [🐛] Fixed dimensions with no skylight (like The Nether) shows broken coloring when blueband is disabled
+
 # RELEASE 1.7.2
 - [✨] Fixed crashes clicking on Video Settings button after update Chloride
 
