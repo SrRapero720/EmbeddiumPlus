@@ -31,10 +31,10 @@ public class DarknessPage extends OptionPage {
         final List<OptionGroup> groups = new ArrayList<>();
 
         final var darknessBasics = OptionGroup.createBuilder();
-        darknessBasics.add(OptionImpl.createBuilder(Darkness.Level.class, STORAGE)
+        darknessBasics.add(OptionImpl.createBuilder(Darkness.DarkMode.class, STORAGE)
                 .setName(Component.translatable("chloride.darkness.level.title"))
                 .setTooltip(Component.translatable("chloride.darkness.level.desc"))
-                .setControl(option -> new BetterCyclingControl<>(option, Darkness.Level.class,"chloride.darkness.level"))
+                .setControl(option -> new BetterCyclingControl<>(option, Darkness.DarkMode.class,"chloride.darkness.level"))
                 .setBinding((opts, value) -> ChlorideConfig.darknessMode = value, opts -> ChlorideConfig.darknessMode)
                 .build()
         );
@@ -44,6 +44,14 @@ public class DarknessPage extends OptionPage {
                 .setTooltip(Component.translatable("chloride.darkness.noskylight.desc"))
                 .setControl(TickBoxControl::new)
                 .setBinding((opts, value) -> ChlorideConfig.darknessOnNoSkyLight = value, opts -> ChlorideConfig.darknessOnNoSkyLight)
+                .build()
+        );
+
+        darknessBasics.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.darkness.forceonfullbright.title"))
+                .setTooltip(Component.translatable("chloride.darkness.forceonfullbright.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opts, value) -> ChlorideConfig.forceDarknessOnFullBrightBiomes = value, opts -> ChlorideConfig.forceDarknessOnFullBrightBiomes)
                 .build()
         );
 
