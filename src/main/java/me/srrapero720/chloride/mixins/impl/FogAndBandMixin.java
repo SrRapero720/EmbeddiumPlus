@@ -48,8 +48,6 @@ public abstract class FogAndBandMixin {
 
             if (mc.level.dimensionType().hasSkyLight())
                 return mc.level.getSkyColor(mc.gameRenderer.getMainCamera().getPosition(), mc.getFrameTime());
-
-            return vec;
         }
         return original.call(vec, fetcher);
     }
