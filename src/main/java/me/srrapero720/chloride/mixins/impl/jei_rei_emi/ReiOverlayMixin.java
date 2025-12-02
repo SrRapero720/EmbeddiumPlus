@@ -23,8 +23,10 @@ public class ReiOverlayMixin {
             if (!ChlorideConfig.hideJREMI || !REIRuntimeImpl.getSearchField().getText().isEmpty()) {
                 original.call(instance, graphics, mouseX, mouseY, deltaTick);
             } else {
-                final Rectangle rectangle = widget.getBounds();
-                graphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), rectangle.getCenterX(), rectangle.getCenterY(), 0xFFFFFF);
+                if (!ChlorideConfig.hideJREMIHint) {
+                    final Rectangle rectangle = widget.getBounds();
+                    graphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), rectangle.getCenterX(), rectangle.getCenterY(), 0xFFFFFF);
+                }
             }
         } else {
             original.call(instance, graphics, mouseX, mouseY, deltaTick);

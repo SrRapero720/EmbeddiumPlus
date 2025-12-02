@@ -63,6 +63,8 @@
   "chloride.interface.font.shadow.desc": "If disabled, text will stop rendering shadows giving a flat style.\nIncreases FPS depending of how much text is on the screen, specially with BetterF3 mods",
   "chloride.interface.jei.title": "Hide JEI/REI/EMI until Searching",
   "chloride.interface.jei.desc": "Hides JEI/REI/EMI item list unless you search something. Type space to show it without searching",
+  "chloride.interface.jei.hint.title": "Hide hint message",
+  "chloride.interface.jei.hint.desc": "Hides JEI/REI/EMI search hint message that appears when hiding the item list",
   "chloride.jei.message": "Search to show items",
 
   "chloride.world": "World",

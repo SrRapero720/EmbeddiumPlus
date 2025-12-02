@@ -1,10 +1,7 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
 import com.google.common.collect.ImmutableList;
-import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpact;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
-import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
+import me.jellysquid.mods.sodium.client.gui.options.*;
 import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
@@ -112,7 +109,8 @@ public class InterfacePage extends OptionPage {
                 .build()
         );
 
-        screens.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+        Option<?> hideJREMI = null;
+        screens.add(hideJREMI = OptionImpl.createBuilder(boolean.class, STORAGE)
                 .setId(ResourceLocation.tryBuild(Chloride.ID, "hide_jremi"))
                 .setName(Component.translatable("chloride.interface.jei.title"))
                 .setTooltip(Component.translatable("chloride.interface.jei.desc"))
@@ -120,8 +118,21 @@ public class InterfacePage extends OptionPage {
                 .setBinding(
                         (opts, value) -> ChlorideConfig.hideJREMI = value,
                         (opts) -> ChlorideConfig.hideJREMI)
-                .setImpact(OptionImpact.LOW)
+                .setImpact(OptionImpact.MEDIUM)
                 .setEnabled(Chloride.installed("jei") || Chloride.installed("roughlyenoughitems") || Chloride.installed("emi"))
+                .build()
+        );
+
+        screens.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setId(ResourceLocation.tryBuild(Chloride.ID, "hide_jremi_hint"))
+                .setName(Component.translatable("chloride.interface.jei.hint.title"))
+                .setTooltip(Component.translatable("chloride.interface.jei.hint.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (opts, value) -> ChlorideConfig.hideJREMIHint = value,
+                        (opts) -> ChlorideConfig.hideJREMIHint)
+                .setImpact(OptionImpact.LOW)
+                .setEnabled(hideJREMI.isAvailable() && (Boolean) hideJREMI.getValue())
                 .build()
         );
 

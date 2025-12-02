@@ -63,6 +63,8 @@
   "chloride.interface.font.shadow.desc": "Si se deshabilita, elimina la sombra de todos los textos, dando un aspecto más limpio y moderno, aumenta el rendimiento en pantallas con muchos textos",
   "chloride.interface.jei.title": "Ocultar JEI/REI/EMI hasta buscar",
   "chloride.interface.jei.desc": "Oculta el menu de JEI/REI/EMI hasta buscar algo. Puedes escribir un espacio para mostrar el menu",
+  "chloride.interface.jei.hint.title": "Ocultar Mensaje de Sugerencia",
+  "chloride.interface.jei.hint.desc": "Oculta el mensaje de sugerencia que aparece cuando el menu de JEI/REI/EMI esta oculto",
   "chloride.jei.message": "Busca algo para mostrar el menu",
 
   "chloride.world": "Entorno",

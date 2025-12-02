@@ -77,6 +77,7 @@ public class ChlorideConfig {
     @ConfigField public static double darknessFullMoonBright = 0.25;
 
     @ConfigField public static boolean hideJREMI = false;
+    @ConfigField public static boolean hideJREMIHint = false;
     @ConfigField public static boolean fontShadows = true;
     @ConfigField public static LeavesCulling.LeavesCullingMode leavesCulling = LeavesCulling.LeavesCullingMode.OFF;
     @ConfigField public static boolean fastChests = false;

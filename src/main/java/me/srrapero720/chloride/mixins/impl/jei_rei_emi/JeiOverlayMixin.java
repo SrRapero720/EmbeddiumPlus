@@ -29,8 +29,10 @@ public class JeiOverlayMixin {
         if (value.isEmpty()) {
             if (this.screenPropertiesCache.hasValidScreen()) {
                 this.configButton.draw(guiGraphics, mouseX, mouseY, partialTicks);
-                final IGuiProperties props = this.screenPropertiesCache.getGuiProperties().get();
-                guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), this.searchField.getX() + (this.searchField.getWidth() / 2), props.getScreenHeight() / 2, 0xFFFFFF);
+                if (!ChlorideConfig.hideJREMIHint) {
+                    final IGuiProperties props = this.screenPropertiesCache.getGuiProperties().get();
+                    guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), this.searchField.getX() + (this.searchField.getWidth() / 2), props.getScreenHeight() / 2, 0xFFFFFF);
+                }
             }
             ci.cancel();
         }
