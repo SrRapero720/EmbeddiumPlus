@@ -60,14 +60,6 @@ public class Overlay {
         return times / avgCount.length;
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onRenderOverlayItem(final RenderGuiOverlayEvent.Pre event) {
-        if (!event.getOverlay().id().getPath().equals("debug_text")) return;
-
-        // cancel rendering text if chart is displaying
-        if (Minecraft.getInstance().options.renderFpsChart) event.setCanceled(true);
-    }
-
     @SubscribeEvent
     public static void onRenderOverlay(final RenderGuiEvent.Pre event) {
         final var mc = Minecraft.getInstance();
