@@ -28,6 +28,7 @@ public abstract class FogAndBandMixin {
     @Inject(method = "setupFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
     private static void inject$fogToggle_fogDistance(final Camera camera, final FogRenderer.FogMode fogType, final float viewDistance, final boolean thickFog, final float tickDelta, final CallbackInfo ci, final FogType fogtype, final Entity entity, final FogRenderer.FogData fogrenderer$fogdata, final FogRenderer.MobEffectFogFunction fogrenderer$mobeffectfogfunction) {
         if (camera.getFluidInCamera() != FogType.NONE) return;
+        if (fogrenderer$mobeffectfogfunction != null)  return;
 
         if (!ChlorideConfig.fog) {
             fogrenderer$fogdata.start = FOG_END;
