@@ -1,3 +1,6 @@
+# RELEASE 1.7.4
+- [🐛] Fixed whitelist wasn't working for elements with wildcards (modid:all)
+
 # RELEASE 1.7.3
 - [✨] Added a config option to hide the "Hide JREMI until searching" message
 - [🐛] Fixed darkeness not working with Chloride's entity culling
