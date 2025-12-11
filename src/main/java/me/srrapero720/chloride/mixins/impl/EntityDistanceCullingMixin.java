@@ -78,7 +78,7 @@ public class EntityDistanceCullingMixin {
             this.chloride$whitelisted = EntityCulling.isWhitelisted(resource, this.getCategory() == MobCategory.MONSTER ? ChlorideConfig.monsterWhitelist : ChlorideConfig.entityWhitelist);
             this.chloride$checked = true;
 
-            LOGGER.debug(e$IT,"Computed Entity whitelist for {}", resource.toString());
+            LOGGER.debug(e$IT,"Computed Entity whitelist with type {} for {}-{}", this.getCategory().name(), resource.toString(), this.chloride$whitelisted);
             return this.chloride$whitelisted;
         }
 
@@ -128,7 +128,7 @@ public class EntityDistanceCullingMixin {
             this.chloride$whitelisted = EntityCulling.isWhitelisted(resource, ChlorideConfig.tileEntityWhitelist);
             this.chloride$checked = true;
 
-            LOGGER.debug(e$IT,"Computed BlockEntity whitelist for {}", resource.toString());
+            LOGGER.debug(e$IT,"Computed BlockEntity whitelist for {}-{}", resource.toString(), this.chloride$whitelisted);
             return this.chloride$whitelisted;
         }
     }

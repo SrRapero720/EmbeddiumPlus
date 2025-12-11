@@ -20,7 +20,7 @@ public class EntityCulling {
             if (entityOrTile.equals(item)) return true;
 
             // Wildcard check
-            if (entityOrTile.getNamespace().equals(item.getNamespace()) && entityOrTile.getPath().equals("all"))
+            if (entityOrTile.getNamespace().equals(item.getNamespace()) && item.getPath().equals("all"))
                 return true;
         }
         return false;
