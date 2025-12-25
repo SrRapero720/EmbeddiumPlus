@@ -99,10 +99,10 @@ dependencies {
     implementation fg.deobf("curse.maven:embeddium-908741:$sodiumversion")
 
     // MOD COMPAT
-    compileOnly fg.deobf("curse.maven:jei-238222:$jeiversion")
-    implementation fg.deobf("curse.maven:roughly-enough-items-310111:$reiversion") {
-        implementation fg.deobf("curse.maven:architectury-api-419699:$archversion")
-        implementation fg.deobf("curse.maven:cloth-config-348521:$clothversion")
+    implementation fg.deobf("curse.maven:jei-238222:$jeiversion")
+    compileOnly fg.deobf("curse.maven:roughly-enough-items-310111:$reiversion") {
+        compileOnly fg.deobf("curse.maven:architectury-api-419699:$archversion")
+        compileOnly fg.deobf("curse.maven:cloth-config-348521:$clothversion")
     }
     compileOnly fg.deobf("curse.maven:emi-580555:$emiversion")
 
