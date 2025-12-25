@@ -1,3 +1,6 @@
+# RELEASE 1.7.5
+- [🐛] Fixed JEI integration crashes on latest versions of JEI
+
 # RELEASE 1.7.4
 - [🐛] Fixed whitelist wasn't working for elements with wildcards (modid:all)
 
