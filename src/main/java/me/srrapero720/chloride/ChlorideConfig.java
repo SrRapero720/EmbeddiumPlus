@@ -50,6 +50,10 @@ public class ChlorideConfig {
     @ConfigField public static boolean fpsDisplayShadow = false;
 
     @ConfigField public static boolean fog = true;
+    @ConfigField public static boolean fogOnOverworld = true;
+    @ConfigField public static boolean fogOnNether = true;
+    @ConfigField public static boolean fogOnEnd = true;
+
     @ConfigField public static boolean blueBand = true;
     @ConfigField public static boolean customFog = true;
     @ConfigField public static int fogStart = 0;

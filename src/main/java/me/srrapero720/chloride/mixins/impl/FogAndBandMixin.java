@@ -10,6 +10,8 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.util.CubicSampler;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
@@ -30,14 +32,30 @@ public abstract class FogAndBandMixin {
         if (camera.getFluidInCamera() != FogType.NONE) return;
         if (fogrenderer$mobeffectfogfunction != null)  return;
 
-        if (!ChlorideConfig.fog) {
+
+        if (!ChlorideConfig.fog) { // FOG IS DISABLED
             fogrenderer$fogdata.start = FOG_END;
             fogrenderer$fogdata.end = FOG_END;
             fogrenderer$fogdata.shape = FogShape.SPHERE;
-        } else if (ChlorideConfig.customFog) {
+            return;
+        } else if (ChlorideConfig.customFog) { // OVERRIDE FOG AT ALL
             fogrenderer$fogdata.start = ChlorideConfig.fogStart;
             fogrenderer$fogdata.end = ChlorideConfig.fogEnd;
             fogrenderer$fogdata.shape = ChlorideConfig.fogShape;
+            return;
+        }
+
+        // TOGGLE PER LEVEL
+        if (entity instanceof final Player player) {
+            final Level level = player.level();
+            if ((level.dimension() == Level.OVERWORLD && !ChlorideConfig.fogOnOverworld)
+                    || (level.dimension() == Level.NETHER && !ChlorideConfig.fogOnNether)
+                    || (level.dimension() == Level.END && !ChlorideConfig.fogOnEnd)) {
+                fogrenderer$fogdata.start = FOG_END;
+                fogrenderer$fogdata.end = FOG_END;
+                fogrenderer$fogdata.shape = FogShape.SPHERE;
+            }
+
         }
     }
 

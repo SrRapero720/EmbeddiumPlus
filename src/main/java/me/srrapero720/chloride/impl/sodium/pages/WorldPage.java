@@ -51,6 +51,30 @@ public class WorldPage extends OptionPage {
                 .build()
         );
         customFog.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.world.fog.overworld.title"))
+                .setTooltip(Component.translatable("chloride.world.fog.overworld.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.fogOnOverworld = value, opt -> ChlorideConfig.fogOnOverworld)
+                .setImpact(OptionImpact.LOW)
+                .build()
+        );
+        customFog.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.world.fog.nether.title"))
+                .setTooltip(Component.translatable("chloride.world.fog.nether.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.fogOnNether = value, opt -> ChlorideConfig.fogOnNether)
+                .setImpact(OptionImpact.LOW)
+                .build()
+        );
+        customFog.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.world.fog.end.title"))
+                .setTooltip(Component.translatable("chloride.world.fog.end.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.fogOnEnd = value, opt -> ChlorideConfig.fogOnEnd)
+                .setImpact(OptionImpact.LOW)
+                .build()
+        );
+        customFog.add(OptionImpl.createBuilder(boolean.class, STORAGE)
                 .setName(Component.translatable("chloride.world.custom_fog.title"))
                 .setTooltip(Component.translatable("chloride.world.custom_fog.desc"))
                 .setControl(TickBoxControl::new)
@@ -123,7 +147,10 @@ public class WorldPage extends OptionPage {
 
 
         groups.add(band.build());
-        groups.add(customFog.build());
+        if (!ChlorideConfig.modpackMode) {
+            Chloride.LOGGER.info("Modpack Mode enabled, unregistered customFog");
+            groups.add(customFog.build());
+        }
         groups.add(worldVisuals.build());
         groups.add(worldAmazings.build());
 
