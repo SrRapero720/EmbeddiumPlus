@@ -110,8 +110,6 @@
   "chloride.darkness.overworld.desc": "If enabled, true darkness will be applied in the Overworld.",
   "chloride.darkness.noskylight.title": "Enable on SkyLess dimensions",
   "chloride.darkness.noskylight.desc": "If enabled, true darkness will be applied on dimensions without skylight",
-  "chloride.darkness.fullbrightbiomes.title": "Enable on Full Bright Biomes",
-  "chloride.darkness.fullbrightbiomes.desc": "If enabled, true darkness will be applied on biomes that provide full brightness (specially modded biomes like Alex's Caves)",
   "chloride.darkness.nether.title": "Enable on Nether",
   "chloride.darkness.nether.desc": "If enabled, true darkness will be applied in the Nether.",
   "chloride.darkness.nether.brightness.title": "Nether Fog Brightness",

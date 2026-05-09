@@ -47,14 +47,6 @@ public class DarknessPage extends OptionPage {
                 .build()
         );
 
-        darknessBasics.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.fullbrightbiomes.title"))
-                .setTooltip(Component.translatable("chloride.darkness.fullbrightbiomes.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((opts, value) -> ChlorideConfig.darknessOnFullBrightBiomes = value, opts -> ChlorideConfig.darknessOnFullBrightBiomes)
-                .build()
-        );
-
         final var darknessOverworld = OptionGroup.createBuilder();
         darknessOverworld.add(OptionImpl.createBuilder(boolean.class, STORAGE)
                 .setName(Component.translatable("chloride.darkness.others.title"))

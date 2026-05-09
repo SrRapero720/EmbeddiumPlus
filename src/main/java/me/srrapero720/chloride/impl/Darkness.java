@@ -8,8 +8,6 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
 
@@ -22,16 +20,16 @@ public class Darkness {
         return new Vec3(Math.max(MIN, vanilla.x * factor), Math.max(MIN, vanilla.y * factor), Math.max(MIN, vanilla.z * factor));
 	}
 
-    private static boolean isDark(final Level world) {
+    private static boolean isDark(final net.minecraft.world.level.Level world) {
 		if (ChlorideConfig.darknessMode == DarkMode.VANILLA) return false;
 
-		final ResourceKey<Level> dimType = world.dimension();
+		final ResourceKey<net.minecraft.world.level.Level> dimType = world.dimension();
 
-		if (dimType == Level.OVERWORLD) {
+		if (dimType == net.minecraft.world.level.Level.OVERWORLD) {
 			return ChlorideConfig.darknessOnOverworld;
-		} else if (dimType == Level.NETHER) {
+		} else if (dimType == net.minecraft.world.level.Level.NETHER) {
 			return ChlorideConfig.darknessOnNether;
-		} else if (dimType == Level.END) {
+		} else if (dimType == net.minecraft.world.level.Level.END) {
 			return ChlorideConfig.darknessOnEnd;
 		} else if (EntityCulling.isWhitelisted(dimType.location(), ChlorideConfig.darknessDimensionWhiteList)) {
             return true;
@@ -42,13 +40,14 @@ public class Darkness {
 		}
 	}
 
-	private static float skyFactor(final Level world) {
+	private static float skyFactor(final net.minecraft.world.level.Level world) {
         if (!isDark(world)) return 1;
 
         if (!world.dimensionType().hasSkyLight()) return 0; // alrweady checks for block light only
 
 		final float angle = world.getTimeOfDay(0);
         if (!(angle > 0.25f) || !(angle < 0.75f)) return 1;
+
 
 		final float oldWeight = Math.max(0, (Math.abs(angle - 0.5f) - 0.2f)) * 20;
 		final float moon = ChlorideConfig.darknessAffectedByMoonPhase ? world.getMoonBrightness() : 0;
@@ -75,25 +74,24 @@ public class Darkness {
 	}
 
 	public static void updateLuminance(final float tickDelta, final Minecraft client, final GameRenderer gameRenderer, final float prevFlicker) {
-        final ClientLevel level = client.level;
+		final ClientLevel level = client.level;
         if (level == null) return;
 
         final boolean isDarkOnLevel = Darkness.isDark(level);
-        final float ambient = level.getSkyDarken(tickDelta);
 
-        enabled = !(
+		enabled = !(
                 !isDarkOnLevel
 				|| client.player.hasEffect(MobEffects.NIGHT_VISION)
 				|| (client.player.hasEffect(MobEffects.CONDUIT_POWER) && client.player.getWaterVision() > 0)
 				|| level.getSkyFlashTime() > 0
                 || level.effects().forceBrightLightmap()
-                || (!ChlorideConfig.darknessOnFullBrightBiomes && ambient >= 0.99F && level.getBrightness(LightLayer.SKY, client.player.blockPosition()) < 8) // TURN OFF WHEN LEVEL GIVES FULL BRIGHTNESS BUT SKY LIGHT IS LOW (eg: creative mode / debug screen)
         );
 
         if (!enabled) return;
 
-        final DimensionType dim = level.dimensionType();
         final float dimSkyFactor = Darkness.skyFactor(level);
+        final float ambient = level.getSkyDarken(1.0F);
+        final DimensionType dim = level.dimensionType();
 
         for (int skyIndex = 0; skyIndex < 16; ++skyIndex) {
             float skyFactor = 1f - skyIndex / 15f;

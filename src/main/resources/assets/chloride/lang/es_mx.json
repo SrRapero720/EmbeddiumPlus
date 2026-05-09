@@ -110,8 +110,6 @@
   "chloride.darkness.overworld.desc": "Si se activa, se aplicara la oscuridad en el Overworld",
   "chloride.darkness.noskylight.title": "Activar en dimensiones sin luz infinita",
   "chloride.darkness.noskylight.desc": "Si se activa, se aplicara la oscuridad en dimensiones que no tienen luz infinita del cielo.",
-  "chloride.darkness.fullbrightbiomes.title": "Activar en biomas de brillo completo",
-  "chloride.darkness.fullbrightbiomes.desc": "Si se activa, se aplicara la oscuridad en biomas de brillo completo (en especial en biomas de mods como los del Alex's Caves)",
   "chloride.darkness.nether.title": "Activar en el Nether",
   "chloride.darkness.nether.desc": "Si se activa, se aplicara la oscuridad en el Nether",
   "chloride.darkness.nether.brightness.title": "Brillo de la Niebla del Nether",

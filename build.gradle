@@ -109,8 +109,6 @@ dependencies {
     // MOD SUPPORT
     implementation fg.deobf("curse.maven:create-328085:6255513")
     compileOnly fg.deobf("curse.maven:valkyrien-skies-258371:6500814")
-    runtimeOnly fg.deobf("curse.maven:alexs-caves-924854:5848216")
-    runtimeOnly fg.deobf("curse.maven:citadel-331936:6702068")
 
     // MOD SUPPORT (TEST VS)
 //    compileOnly fg.deobf("curse.maven:create-328085:6255513")
