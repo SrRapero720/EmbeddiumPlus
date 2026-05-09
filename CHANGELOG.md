@@ -1,3 +1,6 @@
+# RELEASE 1.7.7
+- [🐛] Fixed F11 switching (on attached mode}) stucks you in fullscreen mode
+
 # RELEASE 1.7.6
 - [✨] Added toggles to disable fog per level (overworld, nether, end) separately (keeps global toggle
 - [🛠️] Modpack mode now hides custom fog toggles (disabling fog/custom fog)
