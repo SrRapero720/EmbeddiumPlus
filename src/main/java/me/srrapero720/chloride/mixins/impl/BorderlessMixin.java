@@ -22,17 +22,27 @@ class BorderlessMixin {
 
         @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
         private void redirect$glfwSetWindowMonitor(final long window, final long monitor, final int xpos, final int ypos, final int width, final int height, final int refreshRate) {
-            if (!fullScreen.isBorderless()) {
-                // RESTORE BORDER
-                GLFW.glfwSetWindowAttrib(window, GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
+            final boolean targetBorderless = fullScreen.isBorderless();
+            final boolean wasBorderless = Borderless.previousMode.isBorderless();
+
+            if (!targetBorderless) {
+                // BORDERLESS -> FULLSCREEN: GLFW CAN TREAT SETWINDOWMONITOR AS A NO-OP BECAUSE THE
+                // WINDOW ALREADY COVERS THE MONITOR RECT. FORCE AN INTERMEDIATE DETACH WITH DIFFERENT
+                // DIMENSIONS SO GLFW RECOGNIZES THE MODE CHANGE.
+                if (wasBorderless && monitor != 0L) {
+                    GLFW.glfwSetWindowMonitor(window, 0L, xpos, ypos, Math.max(1, width - 1), Math.max(1, height - 1), GLFW.GLFW_DONT_CARE);
+                }
+
+                // DECORATED IS IGNORED IN EXCLUSIVE FULLSCREEN, SO SET IT AFTER SETWINDOWMONITOR TO
+                // AVOID THE INTERMEDIATE WINDOWS RE-LAYOUT THAT PRODUCES FLICKER / "WANTS TO SHRINK".
                 GLFW.glfwSetWindowMonitor(window, monitor, xpos, ypos, width, height, refreshRate);
+                GLFW.glfwSetWindowAttrib(window, GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
                 return;
             }
 
-            // REMOVE BORDER
             GLFW.glfwSetWindowAttrib(window, GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
 
-            // RESOLVE REAL MONITOR CORDINATES
+            // RESOLVE REAL MONITOR COORDINATES FOR MULTI-MONITOR SETUPS.
             int realX = xpos, realY = ypos;
             if (monitor != 0L) {
                 final int[] mx = new int[1];
@@ -42,16 +52,19 @@ class BorderlessMixin {
                 realY = my[0];
             }
 
-            // 3. MONITOR DETACH (EXITS EXCLUSIVE FULLSCREEN), GLFW_DONT_CARE PREVENTS FEFRESHRATE RENEGOTIATION
+            // DETACH FROM MONITOR (EXITS EXCLUSIVE FULLSCREEN). GLFW_DONT_CARE PREVENTS REFRESH
+            // RATE RENEGOTIATION.
             GLFW.glfwSetWindowMonitor(window, 0L, realX, realY, width, height, GLFW.GLFW_DONT_CARE);
-
-            // 4. PREVENT MANUAL RESIZE
             GLFW.glfwSetWindowSizeLimits(window, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE);
         }
 
         @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwGetWindowMonitor(J)J"))
         private long redirect$glfwGetWindowMonitor(final long window) {
-            return fullScreen.isBorderless() ? 1L : GLFW.glfwGetWindowMonitor(window);
+            // VANILLA'S `FLAG = MONITOR != 0L` MEANS "WAS THE PREVIOUS STATE REAL FULLSCREEN?".
+            // BORDERLESS MUST ALSO COUNT AS FULLSCREEN SO SETMODE DOESN'T OVERWRITE WINDOWEDX/Y/W/H
+            // WITH THE CURRENT (BORDERLESS) COORDS. DECISION IS BASED ON THE PREVIOUS MODE, NOT THE
+            // NEW ONE: THE NEW MODE IS ALREADY SET BEFORE SETMODE RUNS.
+            return Borderless.previousMode.isBorderless() ? 1L : GLFW.glfwGetWindowMonitor(window);
         }
     }
 
