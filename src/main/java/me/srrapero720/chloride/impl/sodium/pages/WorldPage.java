@@ -148,7 +148,6 @@ public class WorldPage extends OptionPage {
 
         groups.add(band.build());
         if (!ChlorideConfig.modpackMode) {
-            Chloride.LOGGER.info("Modpack Mode enabled, unregistered customFog");
             groups.add(customFog.build());
         }
         groups.add(worldVisuals.build());
