@@ -17,28 +17,41 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static me.srrapero720.chloride.ChlorideConfig.fullScreen;
 
 class BorderlessMixin {
-
     @Mixin(Window.class)
     public static class WindowMixin {
+
         @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
         private void redirect$glfwSetWindowMonitor(final long window, final long monitor, final int xpos, final int ypos, final int width, final int height, final int refreshRate) {
-            if (ChlorideConfig.fullScreen.isBorderless()) {
-                if (monitor != 0L) {
-                    GLFW.glfwSetWindowSizeLimits(window, 0, 0, width, height);
-                }
-
-                GLFW.glfwSetWindowMonitor(window, 0L, xpos, ypos, width, height, refreshRate);
-            } else {
+            if (!fullScreen.isBorderless()) {
+                // RESTORE BORDER
+                GLFW.glfwSetWindowAttrib(window, GLFW.GLFW_DECORATED, GLFW.GLFW_TRUE);
                 GLFW.glfwSetWindowMonitor(window, monitor, xpos, ypos, width, height, refreshRate);
+                return;
             }
+
+            // REMOVE BORDER
+            GLFW.glfwSetWindowAttrib(window, GLFW.GLFW_DECORATED, GLFW.GLFW_FALSE);
+
+            // RESOLVE REAL MONITOR CORDINATES
+            int realX = xpos, realY = ypos;
+            if (monitor != 0L) {
+                final int[] mx = new int[1];
+                final int[] my = new int[1];
+                GLFW.glfwGetMonitorPos(monitor, mx, my);
+                realX = mx[0];
+                realY = my[0];
+            }
+
+            // 3. MONITOR DETACH (EXITS EXCLUSIVE FULLSCREEN), GLFW_DONT_CARE PREVENTS FEFRESHRATE RENEGOTIATION
+            GLFW.glfwSetWindowMonitor(window, 0L, realX, realY, width, height, GLFW.GLFW_DONT_CARE);
+
+            // 4. PREVENT MANUAL RESIZE
+            GLFW.glfwSetWindowSizeLimits(window, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE);
         }
 
         @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwGetWindowMonitor(J)J"))
         private long redirect$glfwGetWindowMonitor(final long window) {
-            if (ChlorideConfig.fullScreen.isBorderless()) {
-                return 1L;
-            }
-            return window;
+            return fullScreen.isBorderless() ? 1L : GLFW.glfwGetWindowMonitor(window);
         }
     }
 
