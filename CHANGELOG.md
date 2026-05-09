@@ -1,3 +1,10 @@
+# RELEASE 1.7.6
+- [✨] Added toggles to disable fog per level (overworld, nether, end) separately (keeps global toggle
+- [🛠️] Modpack mode now hides custom fog toggles (disabling fog/custom fog)
+- [🛠️] Reverted fix of true darkness applied on full brightness biomes (like alex caves)
+  - Fixes bugs on true darkness support
+- [🐛] Fixed window border was still shown on borderless mode and fix bad performance
+
 # RELEASE 1.7.5
 - [🐛] Fixed JEI integration crashes on latest versions of JEI
 
@@ -6,7 +13,7 @@
 
 # RELEASE 1.7.3
 - [✨] Added a config option to hide the "Hide JREMI until searching" message
-- [🐛] Fixed darkeness not working with Chloride's entity culling
+- [🐛] Fixed darkness not working with Chloride's entity culling
 - [🐛] Fixed biomes with full brightness (like Alex's Caves) are affected by True Darkness
 - [🐛] Fixed chart was not rendering when BetterF3 is installed
 - [🐛] Fixed player effects (potions like blindness) are not working with custom fog
