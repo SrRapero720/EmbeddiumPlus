@@ -143,7 +143,7 @@ public class ChlorideConfig {
         }
 
         // Ensure no field is null
-        for (Field field: ChlorideConfig.class.getDeclaredFields()) {
+        for (final Field field: ChlorideConfig.class.getDeclaredFields()) {
             if (!Modifier.isStatic(field.getModifiers()) || !field.isAnnotationPresent(ConfigField.class))
                 continue;
 
