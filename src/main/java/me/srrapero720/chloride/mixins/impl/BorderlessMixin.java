@@ -22,8 +22,11 @@ class BorderlessMixin {
 
         @Redirect(method = "setMode", at = @At(value = "INVOKE", remap = false, target = "Lorg/lwjgl/glfw/GLFW;glfwSetWindowMonitor(JJIIIII)V"))
         private void redirect$glfwSetWindowMonitor(final long window, final long monitor, final int xpos, final int ypos, final int width, final int height, final int refreshRate) {
-            final boolean targetBorderless = fullScreen.isBorderless();
             final boolean wasBorderless = Borderless.previousMode.isBorderless();
+            // GATE THE BORDERLESS BRANCH ON VANILLA ACTUALLY WANTING FULLSCREEN (MONITOR != 0L). IF
+            // VANILLA PASSES MONITOR=0L IT WANTS WINDOWED (E.G. STARTUP WITH OPTIONS.FULLSCREEN=FALSE
+            // BUT CHLORIDECONFIG.FULLSCREEN=BORDERLESS DESYNCED) AND WE MUST KEEP DECORATION.
+            final boolean targetBorderless = fullScreen.isBorderless() && monitor != 0L;
 
             if (!targetBorderless) {
                 // BORDERLESS -> FULLSCREEN: GLFW CAN TREAT SETWINDOWMONITOR AS A NO-OP BECAUSE THE

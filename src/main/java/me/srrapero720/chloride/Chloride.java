@@ -1,5 +1,7 @@
 package me.srrapero720.chloride;
 
+import me.srrapero720.chloride.impl.Borderless;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,6 +35,19 @@ public class Chloride {
         if (installed("embeddiumextras")) throw new RuntimeException("Embeddium/Sodium Extras is replaced by cloride, you must remove that mod");
         if (installed("embeddiumplus")) throw new RuntimeException("You have a old-duplicated version of chloride, please remove Embeddium++ (old chloride)");
         LOGGER.info("LOADED CHLORIDE");
+
+        // RECONCILE CHLORIDE CONFIG WITH VANILLA OPTIONS.FULLSCREEN AT BOOT. THE WINDOW IS CONSTRUCTED
+        // USING OPTIONS.FULLSCREEN AS THE INITIAL STATE; IF IT DESYNCS FROM CHLORIDECONFIG.FULLSCREEN
+        // (E.G. MANUAL CONFIG EDIT, MOD INSTALLED OVER EXISTING OPTIONS.TXT) THE WINDOW STARTS IN THE
+        // WRONG MODE. ENQUEUE ON THE MAIN THREAD SO setMode() RUNS AFTER THE WINDOW IS READY.
+        event.enqueueWork(() -> {
+            final Minecraft mc = Minecraft.getInstance();
+            final boolean optsFullscreen = mc.options.fullscreen().get();
+            final boolean configFullscreen = ChlorideConfig.fullScreen != Borderless.Mode.WINDOWED;
+            if (optsFullscreen != configFullscreen) {
+                Borderless.setFullScreenMode(ChlorideConfig.fullScreen);
+            }
+        });
     }
 
     @OnlyIn(Dist.CLIENT)
