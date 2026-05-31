@@ -55,7 +55,7 @@ public class ChlorideConfig {
     @ConfigField public static boolean fogOnEnd = true;
 
     @ConfigField public static boolean blueBand = true;
-    @ConfigField public static boolean customFog = true;
+    @ConfigField public static boolean customFog = false;
     @ConfigField public static int fogStart = 0;
     @ConfigField public static int fogEnd = 192;
     @ConfigField public static FogShape fogShape = FogShape.CYLINDER;
