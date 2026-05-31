@@ -71,7 +71,7 @@ public class EntitiesPage extends OptionPage {
         entityGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.distance.horizontal.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.distance.horizontal.desc"))
-                .setControl(option -> new SliderControl(option, 16, 192, 8, ControlValueFormatter.biomeBlend()))
+                .setControl(option -> new SliderControl(option, 0, 128, 8, ControlValueFormatter.biomeBlend()))
                 .setBinding(
                         (opt, value) -> ChlorideConfig.entityCullingDistanceX = value * value,
                         opt -> Math.toIntExact(Math.round(Math.sqrt(ChlorideConfig.entityCullingDistanceX))))
@@ -82,7 +82,7 @@ public class EntitiesPage extends OptionPage {
         entityGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.distance.vertical.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
-                .setControl(option -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
+                .setControl(option -> new SliderControl(option, 0, 256, 4, ControlValueFormatter.biomeBlend()))
                 .setEnabledPredicate(() -> !EntityCulling.VS_I)
                 .setBinding(
                         (opt, value) -> ChlorideConfig.entityCullingDistanceY = value,
@@ -106,7 +106,7 @@ public class EntitiesPage extends OptionPage {
         monsterGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.monster.distance.horizontal.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.monster.distance.horizontal.desc"))
-                .setControl(option -> new SliderControl(option, 16, 192, 8, ControlValueFormatter.biomeBlend()))
+                .setControl(option -> new SliderControl(option, 0, 128, 8, ControlValueFormatter.biomeBlend()))
                 .setBinding(
                         (opt, value) -> ChlorideConfig.monsterCullingDistanceX = value * value,
                         opt -> Math.toIntExact(Math.round(Math.sqrt(ChlorideConfig.monsterCullingDistanceX))))
@@ -117,7 +117,7 @@ public class EntitiesPage extends OptionPage {
         monsterGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.monster.distance.vertical.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.monster.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
-                .setControl(option -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
+                .setControl(option -> new SliderControl(option, 0, 256, 4, ControlValueFormatter.biomeBlend()))
                 .setEnabledPredicate(() -> !EntityCulling.VS_I)
                 .setBinding(
                         (opt, value) -> ChlorideConfig.monsterCullingDistanceY = value,
@@ -141,7 +141,7 @@ public class EntitiesPage extends OptionPage {
         tileGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.tile.distance.horizontal.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.tile.distance.horizontal.desc"))
-                .setControl(option -> new SliderControl(option, 16, 256, 8, ControlValueFormatter.biomeBlend()))
+                .setControl(option -> new SliderControl(option, 0, 128, 8, ControlValueFormatter.biomeBlend()))
                 .setBinding((opt, value) -> ChlorideConfig.tileEntityCullingDistanceX = value * value,
                         opt -> Math.toIntExact(Math.round(Math.sqrt(ChlorideConfig.tileEntityCullingDistanceX))))
                 .setImpact(OptionImpact.HIGH)
@@ -151,7 +151,7 @@ public class EntitiesPage extends OptionPage {
         tileGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.tile.distance.vertical.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.tile.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
-                .setControl(option -> new SliderControl(option, 16, 64, 4, ControlValueFormatter.biomeBlend()))
+                .setControl(option -> new SliderControl(option, 0, 256, 4, ControlValueFormatter.biomeBlend()))
                 .setEnabledPredicate(() -> !EntityCulling.VS_I)
                 .setBinding((opt, value) -> ChlorideConfig.tileEntityCullingDistanceY = value,
                         opt -> ChlorideConfig.tileEntityCullingDistanceY)

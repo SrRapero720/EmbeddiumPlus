@@ -49,7 +49,9 @@ public class EntityDistanceCullingMixin {
             }
 
             final boolean isWhitelisted = ((IRenderableEntity) entity.getType()).chloride$whitelisted();
-            if (!isWhitelisted && !EntityCulling.isEntityInRange(entity, x, y, z, distY, distX)) {
+            // IF IT NOT WHITELISTED AND (DISTX AND DISTY IS ZERO OR THE ENTITY IS NOT IN RANGE)
+            // CANCEL RENDERING
+            if (!isWhitelisted && (distX + distY == 0 || !EntityCulling.isEntityInRange(entity, x, y, z, distY, distX))) {
                 cir.setReturnValue(false);
             }
         }
@@ -102,10 +104,12 @@ public class EntityDistanceCullingMixin {
             if (!ChlorideConfig.tileEntityDistanceCulling) return;
 
             final boolean isWhitelisted = ((IRenderableEntity) tile.getType()).chloride$whitelisted();
-            if (!isWhitelisted && !EntityCulling.isEntityInRange(tile, this.camera.getPosition(),
+            // IF IT NOT WHITELISTED AND (DISTX AND DISTY IS ZERO OR THE TILE IS NOT IN RANGE)
+            // CANCEL RENDERING
+            if (!isWhitelisted && (ChlorideConfig.tileEntityCullingDistanceY + ChlorideConfig.tileEntityCullingDistanceX == 0 || !EntityCulling.isEntityInRange(tile, this.camera.getPosition(),
                     ChlorideConfig.tileEntityCullingDistanceY,
                     ChlorideConfig.tileEntityCullingDistanceX)
-            ) {
+            )) {
                 ci.cancel();
             }
         }
