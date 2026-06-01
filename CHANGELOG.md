@@ -1,5 +1,16 @@
+# RELEASE 1.7.8
+- [✨] [1.21.1] Added Sable support for entity culling
+- [✨] Added setting to disable Borderless optimization applied by driver (fixes black window blinking, false by default)
+- [✨] Added setting to cap the entity rendering count on screen (entities are sorted by distance, unlimited by default)
+- [🛠️] Changed Maximum horizontal distance culling to 128 and minimum to 0
+- [🛠️] Changed Maximum vertical distance culling to 256 and minimum to 0
+- [🛠️] Disabled customFog by default
+- [🐛] [1.21.5] Fixed crash on neoforge loading unexisting resources
+- [🐛] Fixed chloride's basic zoom stays enabled when other zoom mods are present
+- [🐛] Fix borderless feature removes window borders when chloride settings desyncs with vanilla settings
+
 # RELEASE 1.7.7
-- [🐛] Fixed F11 switching (on attached mode}) stucks you in fullscreen mode
+- [🐛] Fixed F11 switching (on attached mode) stucks you in fullscreen mode
 
 # RELEASE 1.7.6
 - [✨] Added toggles to disable fog per level (overworld, nether, end) separately (keeps global toggle
