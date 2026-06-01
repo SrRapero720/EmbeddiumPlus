@@ -9,6 +9,7 @@
     "BorderlessMixin$KeyboardHandlerMixin",
     "BorderlessMixin$WindowMixin",
     "CloudHeightMixin",
+    "EntityDistanceCullingMixin$LevelRendererEntityMixin",
     "EntityDistanceCullingMixin$EntityDispatcherMixin",
     "EntityDistanceCullingMixin$EntityTypeMixin",
     "EntityDistanceCullingMixin$TileDispatcherMixin",

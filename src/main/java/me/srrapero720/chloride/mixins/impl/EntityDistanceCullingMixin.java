@@ -5,6 +5,9 @@ import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.api.IRenderableEntity;
 import me.srrapero720.chloride.impl.EntityCulling;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -23,12 +26,44 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.*;
 
 import static me.srrapero720.chloride.Chloride.LOGGER;
 
 public class EntityDistanceCullingMixin {
+
+    @Mixin(LevelRenderer.class)
+    public static class LevelRendererEntityMixin {
+        @Redirect(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;entitiesForRendering()Ljava/lang/Iterable;"))
+        public Iterable<Entity> redirect$entitiesForRendering(final ClientLevel instance) {
+            // UNLIMITED
+            if (ChlorideConfig.entityLimit >= 512) return instance.entitiesForRendering();
+            // NONE
+            if (ChlorideConfig.entityLimit <= 0) return Collections.emptyList();
+
+            // GET ALL ENTITIES
+            final List<Entity> copy = new ArrayList<>();
+            for (final Entity entity: instance.entitiesForRendering()) {
+                copy.add(entity);
+            }
+
+            // SORTS TO THE NEAREST ONE
+            copy.sort(EntityCulling.DISTANCE_COMPARATOR);
+
+            // LIMIT ENTITIES
+            final List<Entity> limited = new ArrayList<>(ChlorideConfig.entityLimit);
+            for (final Entity entity: copy) {
+                limited.add(entity);
+                if (limited.size() >= ChlorideConfig.entityLimit) break;
+            }
+
+            return limited;
+        }
+    }
 
     @Mixin(EntityRenderDispatcher.class)
     public static class EntityDispatcherMixin {

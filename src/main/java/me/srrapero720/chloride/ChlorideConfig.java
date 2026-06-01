@@ -97,6 +97,7 @@ public class ChlorideConfig {
     @ConfigField public static int tileEntityCullingDistanceX = 4096;
     @ConfigField public static int tileEntityCullingDistanceY = 32;
     @ConfigField public static boolean entityDistanceCulling = true;
+    @ConfigField public static int entityLimit = 512;
     @ConfigField public static int entityCullingDistanceX = 4096;
     @ConfigField public static int entityCullingDistanceY = 32;
     @ConfigField public static boolean monsterDistanceCulling = false;

@@ -159,6 +159,8 @@
   "chloride.entities.culling.vseureka.warning": "Se detecto VSEureka, la distancia vertical (simple) no se aplicara y usara en su lugar la distancia horizontal (al cuadrado)",
   "chloride.entities.culling.title": "Max. Dist. de Entidades",
   "chloride.entities.culling.desc": "Si se habilita, las entidades se ocultaran en base a la distancia configurada",
+  "chloride.entities.culling.limit.title": "Limite de Entidades",
+  "chloride.entities.culling.limit.desc": "Establece el limite de renderizado de entidades (las entidades se ordenan por distancia)",
   "chloride.entities.culling.distance.horizontal.title": "Max. Dist. de Entidades (Horizontal)",
   "chloride.entities.culling.distance.horizontal.desc": "Oculta y no actualiza las entidades que se encuentran a más de esta distancia. Gran aumento de rendimiento, especialmente alrededor de granjas de XP.",
   "chloride.entities.culling.distance.vertical.title": "Max. Dist. de Entidades (Vertical)",

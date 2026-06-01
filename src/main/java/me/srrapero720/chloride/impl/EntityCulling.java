@@ -1,6 +1,7 @@
 package me.srrapero720.chloride.impl;
 
 import me.srrapero720.chloride.Chloride;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -10,10 +11,17 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.ModList;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class EntityCulling {
     public static final boolean VS_I = Chloride.installed("valkyrienskies");
+    public static final Comparator<Entity> DISTANCE_COMPARATOR = (entityOne, entityTwo) -> {
+        assert Minecraft.getInstance().player != null;
+        final double dist1 = entityOne.distanceTo(Minecraft.getInstance().player);
+        final double dist2 = entityTwo.distanceTo(Minecraft.getInstance().player);
+        return Double.compare(dist1, dist2);
+    };
 
     public static boolean isWhitelisted(final ResourceLocation entityOrTile, final List<ResourceLocation> configValue) {
         for (final ResourceLocation item: configValue) {

@@ -69,6 +69,15 @@ public class EntitiesPage extends OptionPage {
         );
 
         entityGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.limit.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.limit.desc"))
+                .setControl(option -> new SliderControl(option, 0, 512, 1,
+                        (n) -> n >= 512 ? Component.translatable("options.framerateLimit.max") : Component.literal("" + n)))
+                .setBinding((opt, value) -> ChlorideConfig.entityLimit = value, opt -> ChlorideConfig.entityLimit)
+                .build()
+        );
+
+        entityGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
                 .setName(Component.translatable("chloride.entities.culling.distance.horizontal.title"))
                 .setTooltip(Component.translatable("chloride.entities.culling.distance.horizontal.desc"))
                 .setControl(option -> new SliderControl(option, 0, 128, 8, ControlValueFormatter.biomeBlend()))

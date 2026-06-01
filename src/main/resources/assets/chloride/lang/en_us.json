@@ -156,9 +156,11 @@
   "chloride.entities.nametag.items.title": "Nametag on Item Frames",
   "chloride.entities.nametag.items.desc": "Disable it prevents nametag rendering for Items, including items inside item frames",
 
-  "chloride.entities.culling.vseureka.warning": "VSEureka detected, vertical distance (raw) is ignored and uses instead horizontal distance (squared)",
+  "chloride.entities.culling.vseureka.warning": "VSEureka/Sable detected, vertical distance (raw) is ignored and uses instead horizontal distance (squared)",
   "chloride.entities.culling.title": "Max Entity Distance",
   "chloride.entities.culling.desc": "If enabled, Entities will be hidden based on configured distance limit",
+  "chloride.entities.culling.limit.title": "Entity Limit",
+  "chloride.entities.culling.limit.desc": "Sets entity rendering limit (entities are sorted by your distance)",
   "chloride.entities.culling.distance.horizontal.title": "Entities Max Distance (Horizontal)",
   "chloride.entities.culling.distance.horizontal.desc": "Hides and does not tick entities beyond this many blocks. Huge performance increase, especially around modded farms.",
   "chloride.entities.culling.distance.vertical.title": "Entities Max Distance (Vertical)",
