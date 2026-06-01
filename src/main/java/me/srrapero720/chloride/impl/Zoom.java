@@ -24,6 +24,13 @@ public class Zoom {
 
     private static double value = -1;
     private static double mouseSensitivity = -1;
+    private static final String[] ZOOM_MODS = {
+            "justzoom",
+            "zume",
+            "ok_zoomer",
+            "zoomify",
+            "zoomlens"
+    };
 
     public static final KeyMapping KEY = new KeyMapping("chloride.zoom",
                     KeyConflictContext.IN_GAME, KeyModifier.NONE,
@@ -65,7 +72,11 @@ public class Zoom {
     }
 
     public static boolean canUseZoom() {
-        return !ModList.get().isLoaded("justzoom") && !ModList.get().isLoaded("zume");
+        final ModList list = ModList.get();
+        for (final String s: ZOOM_MODS) { // IF ANY ZOOM MOD LISTED IS LOADED, TURN OFF OUR ZOOM
+            if (list.isLoaded(s)) return false;
+        }
+        return true;
     }
 
     @SubscribeEvent
