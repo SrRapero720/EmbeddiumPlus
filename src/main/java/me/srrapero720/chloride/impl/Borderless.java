@@ -8,6 +8,10 @@ import net.minecraft.client.Options;
 public class Borderless {
     public static Mode previousMode = Mode.WINDOWED;
 
+    public static void reloadFullscreenMode() {
+        setFullScreenMode(ChlorideConfig.fullScreen);
+    }
+
     public static void setFullScreenMode(final Mode value) {
         final Minecraft client = Minecraft.getInstance();
         final Options opts = client.options;

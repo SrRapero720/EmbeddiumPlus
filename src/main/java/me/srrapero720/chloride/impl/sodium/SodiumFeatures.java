@@ -56,6 +56,7 @@ public class SodiumFeatures {
                 final var id = options.get(i).getId();
                 if (id != null && id.matches(StandardOptions.Option.FULLSCREEN)) {
                     options.set(i, getFullscreenOption());
+                    options.add(i + 1, getBorderlessOptimizationOption());
                     break;
                 }
             }
@@ -132,8 +133,24 @@ public class SodiumFeatures {
                         Component.translatable("chloride.general.screen.fullscreen")
                 }))
                 .setBinding(
-                        (s, g) -> Borderless.setFullScreenMode(g),
+                        (s, v) -> Borderless.setFullScreenMode(v),
                         (opts) -> ChlorideConfig.fullScreen
+                ).build();
+    }
+
+    private static Option<Boolean> getBorderlessOptimizationOption() {
+        return OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setId(ResourceLocation.tryBuild(Chloride.ID, "borderless_optimizations"))
+                .setName(Component.translatable("chloride.general.screen.borderless.optimization"))
+                .setTooltip(Component.translatable("chloride.general.screen.borderless.optimization.desc"))
+                .setControl(TickBoxControl::new)
+                .setImpact(OptionImpact.HIGH)
+                .setBinding(
+                        (s, v) -> {
+                            ChlorideConfig.disableBorderlessOptimizations = v;
+                            Borderless.reloadFullscreenMode();
+                        },
+                        (opts) -> ChlorideConfig.disableBorderlessOptimizations
                 ).build();
     }
 }

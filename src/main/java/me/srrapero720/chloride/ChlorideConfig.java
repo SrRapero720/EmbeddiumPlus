@@ -41,6 +41,7 @@ public class ChlorideConfig {
 
     @ConfigField public static boolean modpackMode = false;
     @ConfigField public static Borderless.Mode fullScreen = Borderless.Mode.WINDOWED;
+    @ConfigField public static boolean disableBorderlessOptimizations = false;
     @ConfigField public static Overlay.FPS fpsDisplayMode = Overlay.FPS.ADVANCED;
     @ConfigField public static Overlay.FPSAlign fpsDisplayAlign = Overlay.FPSAlign.LEFT;
     @ConfigField public static Overlay.FPSVAlign fpsDisplayVAlign = Overlay.FPSVAlign.TOP;

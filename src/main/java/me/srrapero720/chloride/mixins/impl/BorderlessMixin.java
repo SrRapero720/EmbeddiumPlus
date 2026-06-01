@@ -57,7 +57,7 @@ class BorderlessMixin {
 
             // DETACH FROM MONITOR (EXITS EXCLUSIVE FULLSCREEN). GLFW_DONT_CARE PREVENTS REFRESH
             // RATE RENEGOTIATION.
-            GLFW.glfwSetWindowMonitor(window, 0L, realX, realY, width, height, GLFW.GLFW_DONT_CARE);
+            GLFW.glfwSetWindowMonitor(window, 0L, realX, realY, width, ChlorideConfig.disableBorderlessOptimizations ? height + 1 : height, GLFW.GLFW_DONT_CARE);
             GLFW.glfwSetWindowSizeLimits(window, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE);
         }
 
