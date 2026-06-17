@@ -1,3 +1,6 @@
+# RELEASE 1.7.9
+- [✨] [1.21.1] Updated to sodium 0.8.12-beta.1 (brings back video setting screen)
+
 # RELEASE 1.7.8
 - [✨] [1.21.1] Added Sable support for entity culling
 - [✨] Added setting to disable Borderless optimization applied by driver (fixes black window blinking, false by default)

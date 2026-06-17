@@ -186,7 +186,7 @@ jar {
 
 publishMods {
     displayName = "$modname-${modloader.toUpperCase()}/mc$mcversion/v$modversion"
-    type = STABLE
+    type = BETA
     file = jar.archiveFile
     changelog = getChangelogText()
     modLoaders.add(modloader.toLowerCase())
