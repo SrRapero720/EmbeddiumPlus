@@ -64,6 +64,16 @@ repositories {
     maven { url 'https://jitpack.io' }
     maven {url = "https://maven.ryanhcode.dev/releases"}
 
+    maven {
+        name "caffeinemcRepository"
+        url "https://maven.caffeinemc.net/releases"
+    }
+
+    maven {
+        name = "Sinytra"
+        url = "https://maven.sinytra.org/"
+    }
+
     flatDir {
         dirs 'libs'
     }
@@ -74,7 +84,9 @@ dependencies {
 
     // DEPENDENCIES
     implementation "curse.maven:irisshaders-455508:$irisversion"
-    implementation "curse.maven:sodium-394468:$sodiumversion"
+    implementation "net.caffeinemc:sodium-neoforge:0.8.12-beta.1+mc1.21.1"
+    implementation "net.caffeinemc:sodium-neoforge-mod:0.8.12-beta.1+mc1.21.1"
+    implementation "net.caffeinemc:sodium-neoforge-api:0.8.12-beta.1+mc1.21.1"
 
     // MOD COMPAT
     implementation "curse.maven:jei-238222:$jeiversion"

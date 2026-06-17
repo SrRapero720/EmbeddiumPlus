@@ -2,6 +2,7 @@ package me.srrapero720.chloride;
 
 import me.srrapero720.chloride.impl.Borderless;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -15,7 +16,7 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 @Mod(Chloride.ID)
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT)
 public class Chloride {
     public static final String ID = "chloride";
     public static final Logger LOGGER = LogManager.getLogger("chloride");
@@ -55,5 +56,16 @@ public class Chloride {
 
     public static boolean installed(final String modid) {
         return FMLLoader.getLoadingModList().getModFileById(modid) != null;
+    }
+
+    /** Builds a stable, unique option id from a config field name (camelCase -&gt; chloride:snake_case). */
+    public static ResourceLocation id(final String field) {
+        final String path = field.replaceAll("([a-z0-9])([A-Z])", "$1_$2").toLowerCase();
+        return ResourceLocation.fromNamespaceAndPath(ID, path);
+    }
+
+    /** Builds a unique option id for a per-registry-entry option (e.g. one toggle per particle type). */
+    public static ResourceLocation id(final String prefix, final ResourceLocation key) {
+        return ResourceLocation.fromNamespaceAndPath(ID, prefix + "/" + key.getNamespace() + "/" + key.getPath());
     }
 }

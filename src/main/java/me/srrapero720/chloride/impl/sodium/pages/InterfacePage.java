@@ -1,155 +1,130 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
-import com.google.common.collect.ImmutableList;
-import net.caffeinemc.mods.sodium.client.gui.options.*;
-import net.caffeinemc.mods.sodium.client.gui.options.control.CyclingControl;
-import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
-import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.Borderless;
 import me.srrapero720.chloride.impl.Overlay;
-import me.srrapero720.chloride.impl.sodium.controls.BetterCyclingControl;
+import net.caffeinemc.mods.sodium.api.config.option.OptionImpact;
+import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
+import net.caffeinemc.mods.sodium.api.config.structure.OptionPageBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.List;
+import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.*;
 
-import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
+public class InterfacePage {
+    private static final ResourceLocation HIDE_JREMI = Chloride.id("hideJREMI");
 
-public class InterfacePage extends OptionPage {
-    public InterfacePage() {
-        super(Component.translatable("chloride.interface"), create());
-    }
+    private InterfacePage() {}
 
-    private static ImmutableList<OptionGroup> create() {
-        final List<OptionGroup> groups = new ArrayList<>();
+    public static OptionPageBuilder build(final ConfigBuilder b) {
+        final boolean jremi = Chloride.installed("jei") || Chloride.installed("roughlyenoughitems") || Chloride.installed("emi");
+        final int maxMargin = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
-        final var fps = OptionGroup.createBuilder();
-        fps.add(OptionImpl.createBuilder(Overlay.FPS.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.fps.title"))
-                .setTooltip(Component.translatable("chloride.interface.fps.desc"))
-                .setControl((option) -> new CyclingControl<>(option, Overlay.FPS.class, BetterCyclingControl.tEnumComponent("chloride.interface.fps.mode", Overlay.FPS.class)))
-                .setBinding((opts, value) -> ChlorideConfig.fpsDisplayMode = value, opts -> ChlorideConfig.fpsDisplayMode)
-                .setImpact(OptionImpact.LOW)
-                .build()
-        );
-        fps.add(OptionImpl.createBuilder(Overlay.FPSDetails.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.fps.system.title"))
-                .setTooltip(Component.translatable("chloride.interface.fps.system.desc"))
-                .setControl((option) -> new CyclingControl<>(option, Overlay.FPSDetails.class, BetterCyclingControl.tEnumComponent("chloride.interface.fps.system", Overlay.FPSDetails.class)))
-                .setBinding((options, value) -> ChlorideConfig.fpsDisplaySystemMode = value,
-                        (options) -> ChlorideConfig.fpsDisplaySystemMode)
-                .build()
-        );
-        fps.add(OptionImpl.createBuilder(Overlay.FPSAlign.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.fps.align_x.title"))
-                .setTooltip(Component.translatable("chloride.interface.fps.align_x.desc"))
-                .setControl((option) -> new CyclingControl<>(option, Overlay.FPSAlign.class, BetterCyclingControl.tEnumComponent("chloride.interface.fps.align_x", Overlay.FPSAlign.class)))
-                .setBinding(
-                        (opts, value) -> ChlorideConfig.fpsDisplayAlign = value,
-                        opts -> ChlorideConfig.fpsDisplayAlign)
-                .build()
-        );
-        fps.add(OptionImpl.createBuilder(Integer.TYPE, STORAGE)
-                .setName(Component.translatable("chloride.interface.fps.margin_x.title"))
-                .setTooltip(Component.translatable("chloride.interface.fps.margin_x.desc"))
-                .setControl((option) -> new SliderControl(option, 0, Minecraft.getInstance().getWindow().getGuiScaledHeight(), 1, (v) -> Component.literal(v + "px")))
-                .setImpact(OptionImpact.LOW)
-                .setBinding(
-                        (opts, value) -> ChlorideConfig.fpsDisplayMargin = value,
-                        opts -> ChlorideConfig.fpsDisplayMargin)
-                .build()
-        );
-        fps.add(OptionImpl.createBuilder(Overlay.FPSVAlign.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.fps.align_y.title"))
-                .setTooltip(Component.translatable("chloride.interface.fps.align_y.desc"))
-                .setControl((option) -> new CyclingControl<>(option, Overlay.FPSVAlign.class, BetterCyclingControl.tEnumComponent("chloride.interface.fps.align_y", Overlay.FPSVAlign.class)))
-                .setBinding(
-                        (opts, value) -> ChlorideConfig.fpsDisplayVAlign = value,
-                        opts -> ChlorideConfig.fpsDisplayVAlign)
-                .build()
-        );
-        fps.add(OptionImpl.createBuilder(Integer.TYPE, STORAGE)
-                .setName(Component.translatable("chloride.interface.fps.margin_y.title"))
-                .setTooltip(Component.translatable("chloride.interface.fps.margin_y.desc"))
-                .setControl((option) -> new SliderControl(option, 0, Minecraft.getInstance().getWindow().getGuiScaledHeight(), 1, (v) -> Component.literal(v + "px")))
-                .setImpact(OptionImpact.LOW)
-                .setBinding(
-                        (opts, value) -> ChlorideConfig.fpsDisplayVMargin = value,
-                        opts -> ChlorideConfig.fpsDisplayVMargin)
-                .build()
-        );
-        fps.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.fps.shadow.title"))
-                .setTooltip(Component.translatable("chloride.interface.fps.shadow.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding(
-                        (opt, value) -> ChlorideConfig.fpsDisplayShadow = value,
-                        opt -> ChlorideConfig.fpsDisplayShadow)
-                .build()
+        final OptionPageBuilder page = b.createOptionPage().setName(Component.translatable("chloride.interface"));
+
+        // FPS overlay
+        page.addOptionGroup(b.createOptionGroup()
+                .addOption(b.createEnumOption(Chloride.id("fpsDisplayMode"), Overlay.FPS.class)
+                        .setName(Component.translatable("chloride.interface.fps.title"))
+                        .setTooltip(Component.translatable("chloride.interface.fps.desc"))
+                        .setElementNameProvider(enumNames("chloride.interface.fps.mode"))
+                        .setStorageHandler(STORAGE)
+                        .setImpact(OptionImpact.LOW)
+                        .setDefaultValue(Overlay.FPS.ADVANCED)
+                        .setBinding(v -> ChlorideConfig.fpsDisplayMode = v, () -> ChlorideConfig.fpsDisplayMode))
+                .addOption(b.createEnumOption(Chloride.id("fpsDisplaySystemMode"), Overlay.FPSDetails.class)
+                        .setName(Component.translatable("chloride.interface.fps.system.title"))
+                        .setTooltip(Component.translatable("chloride.interface.fps.system.desc"))
+                        .setElementNameProvider(enumNames("chloride.interface.fps.system"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(Overlay.FPSDetails.OFF)
+                        .setBinding(v -> ChlorideConfig.fpsDisplaySystemMode = v, () -> ChlorideConfig.fpsDisplaySystemMode))
+                .addOption(b.createEnumOption(Chloride.id("fpsDisplayAlign"), Overlay.FPSAlign.class)
+                        .setName(Component.translatable("chloride.interface.fps.align_x.title"))
+                        .setTooltip(Component.translatable("chloride.interface.fps.align_x.desc"))
+                        .setElementNameProvider(enumNames("chloride.interface.fps.align_x"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(Overlay.FPSAlign.LEFT)
+                        .setBinding(v -> ChlorideConfig.fpsDisplayAlign = v, () -> ChlorideConfig.fpsDisplayAlign))
+                .addOption(b.createIntegerOption(Chloride.id("fpsDisplayMargin"))
+                        .setName(Component.translatable("chloride.interface.fps.margin_x.title"))
+                        .setTooltip(Component.translatable("chloride.interface.fps.margin_x.desc"))
+                        .setValueFormatter(suffix("px"))
+                        .setRange(0, maxMargin, 1)
+                        .setStorageHandler(STORAGE)
+                        .setImpact(OptionImpact.LOW)
+                        .setDefaultValue(12)
+                        .setBinding(v -> ChlorideConfig.fpsDisplayMargin = v, () -> ChlorideConfig.fpsDisplayMargin))
+                .addOption(b.createEnumOption(Chloride.id("fpsDisplayVAlign"), Overlay.FPSVAlign.class)
+                        .setName(Component.translatable("chloride.interface.fps.align_y.title"))
+                        .setTooltip(Component.translatable("chloride.interface.fps.align_y.desc"))
+                        .setElementNameProvider(enumNames("chloride.interface.fps.align_y"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(Overlay.FPSVAlign.TOP)
+                        .setBinding(v -> ChlorideConfig.fpsDisplayVAlign = v, () -> ChlorideConfig.fpsDisplayVAlign))
+                .addOption(b.createIntegerOption(Chloride.id("fpsDisplayVMargin"))
+                        .setName(Component.translatable("chloride.interface.fps.margin_y.title"))
+                        .setTooltip(Component.translatable("chloride.interface.fps.margin_y.desc"))
+                        .setValueFormatter(suffix("px"))
+                        .setRange(0, maxMargin, 1)
+                        .setStorageHandler(STORAGE)
+                        .setImpact(OptionImpact.LOW)
+                        .setDefaultValue(12)
+                        .setBinding(v -> ChlorideConfig.fpsDisplayVMargin = v, () -> ChlorideConfig.fpsDisplayVMargin))
+                .addOption(b.createBooleanOption(Chloride.id("fpsDisplayShadow"))
+                        .setName(Component.translatable("chloride.interface.fps.shadow.title"))
+                        .setTooltip(Component.translatable("chloride.interface.fps.shadow.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(false)
+                        .setBinding(v -> ChlorideConfig.fpsDisplayShadow = v, () -> ChlorideConfig.fpsDisplayShadow))
         );
 
-        final var screens = OptionGroup.createBuilder();
-
-        screens.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.font.shadow.title"))
-                .setTooltip(Component.translatable("chloride.interface.font.shadow.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding(
-                        (opts, value) -> ChlorideConfig.fontShadows = value,
-                        (opts) -> ChlorideConfig.fontShadows)
-                .setImpact(OptionImpact.VARIES)
-                .build()
+        // Screens
+        page.addOptionGroup(b.createOptionGroup()
+                .addOption(b.createBooleanOption(Chloride.id("fontShadows"))
+                        .setName(Component.translatable("chloride.interface.font.shadow.title"))
+                        .setTooltip(Component.translatable("chloride.interface.font.shadow.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setImpact(OptionImpact.VARIES)
+                        .setDefaultValue(true)
+                        .setBinding(v -> ChlorideConfig.fontShadows = v, () -> ChlorideConfig.fontShadows))
+                .addOption(b.createBooleanOption(HIDE_JREMI)
+                        .setName(Component.translatable("chloride.interface.jei.title"))
+                        .setTooltip(Component.translatable("chloride.interface.jei.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setImpact(OptionImpact.MEDIUM)
+                        .setEnabled(jremi)
+                        .setDefaultValue(false)
+                        .setBinding(v -> ChlorideConfig.hideJREMI = v, () -> ChlorideConfig.hideJREMI))
+                .addOption(b.createBooleanOption(Chloride.id("hideJREMIHint"))
+                        .setName(Component.translatable("chloride.interface.jei.hint.title"))
+                        .setTooltip(Component.translatable("chloride.interface.jei.hint.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setImpact(OptionImpact.LOW)
+                        .setEnabledProvider(state -> jremi && state.readBooleanOption(HIDE_JREMI), HIDE_JREMI)
+                        .setDefaultValue(false)
+                        .setBinding(v -> ChlorideConfig.hideJREMIHint = v, () -> ChlorideConfig.hideJREMIHint))
         );
 
-        Option<?> hideJREMI = null;
-        screens.add(hideJREMI = OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.jei.title"))
-                .setTooltip(Component.translatable("chloride.interface.jei.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding(
-                        (opts, value) -> ChlorideConfig.hideJREMI = value,
-                        (opts) -> ChlorideConfig.hideJREMI)
-                .setImpact(OptionImpact.MEDIUM)
-                .setEnabled(() -> Chloride.installed("jei") || Chloride.installed("roughlyenoughitems") || Chloride.installed("emi"))
-                .build()
+        // Misc
+        page.addOptionGroup(b.createOptionGroup()
+                .addOption(b.createEnumOption(Chloride.id("borderlessAttachModeF11"), Borderless.AttachMode.class)
+                        .setName(Component.translatable("chloride.interface.borderless.f11.title"))
+                        .setTooltip(Component.translatable("chloride.interface.borderless.f11.desc"))
+                        .setElementNameProvider(enumNames("chloride.interface.borderless.f11"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(Borderless.AttachMode.ATTACH)
+                        .setBinding(v -> ChlorideConfig.borderlessAttachModeF11 = v, () -> ChlorideConfig.borderlessAttachModeF11))
+                .addOption(b.createBooleanOption(Chloride.id("fastLanguageReload"))
+                        .setName(Component.translatable("chloride.interface.language.fast_reload.title"))
+                        .setTooltip(Component.translatable("chloride.interface.language.fast_reload.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(true)
+                        .setBinding(v -> ChlorideConfig.fastLanguageReload = v, () -> ChlorideConfig.fastLanguageReload))
         );
 
-        final Option<?> finalHideJREMI = hideJREMI;
-        screens.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.jei.hint.title"))
-                .setTooltip(Component.translatable("chloride.interface.jei.hint.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding(
-                        (opts, value) -> ChlorideConfig.hideJREMIHint = value,
-                        (opts) -> ChlorideConfig.hideJREMIHint)
-                .setImpact(OptionImpact.LOW)
-                .setEnabled(() -> finalHideJREMI.isAvailable() && (Boolean) finalHideJREMI.getValue())
-                .build()
-        );
-
-        final var misc = OptionGroup.createBuilder();
-        misc.add(OptionImpl.createBuilder(Borderless.AttachMode.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.borderless.f11.title"))
-                .setTooltip(Component.translatable("chloride.interface.borderless.f11.desc"))
-                .setControl(option -> new CyclingControl<>(option, Borderless.AttachMode.class, BetterCyclingControl.tEnumComponent("chloride.interface.borderless.f11", Borderless.AttachMode.class)))
-                .setBinding((options, value) -> ChlorideConfig.borderlessAttachModeF11 = value,
-                        (options) -> ChlorideConfig.borderlessAttachModeF11)
-                .build());
-
-        misc.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.interface.language.fast_reload.title"))
-                .setTooltip(Component.translatable("chloride.interface.language.fast_reload.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((options, value) -> ChlorideConfig.fastLanguageReload = value, (options) -> ChlorideConfig.fastLanguageReload)
-                .build());
-
-        groups.add(fps.build());
-        groups.add(screens.build());
-        groups.add(misc.build());
-
-        return ImmutableList.copyOf(groups);
+        return page;
     }
 }

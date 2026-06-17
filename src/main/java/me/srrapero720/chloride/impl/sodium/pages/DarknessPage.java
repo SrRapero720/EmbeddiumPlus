@@ -1,147 +1,124 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
-import com.google.common.collect.ImmutableList;
-import net.caffeinemc.mods.sodium.client.gui.options.OptionGroup;
-import net.caffeinemc.mods.sodium.client.gui.options.OptionImpl;
-import net.caffeinemc.mods.sodium.client.gui.options.OptionPage;
-import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatter;
-import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
-import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.Darkness;
-import me.srrapero720.chloride.impl.sodium.controls.BetterCyclingControl;
+import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
+import net.caffeinemc.mods.sodium.api.config.structure.OptionPageBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.*;
 
-import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
+public class DarknessPage {
+    private static final ResourceLocation BLOCK_LIGHT_ONLY = Chloride.id("darknessBlockLightOnly");
 
-public class DarknessPage extends OptionPage {
-    public DarknessPage() {
-        super(Component.translatable("chloride.darkness"), create());
-    }
+    private DarknessPage() {}
 
-    private static ImmutableList<OptionGroup> create() {
-        final List<OptionGroup> groups = new ArrayList<>();
+    public static OptionPageBuilder build(final ConfigBuilder b) {
+        final OptionPageBuilder page = b.createOptionPage().setName(Component.translatable("chloride.darkness"));
 
-        final var darknessBasics = OptionGroup.createBuilder();
-        darknessBasics.add(OptionImpl.createBuilder(Darkness.DarkMode.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.level.title"))
-                .setTooltip(Component.translatable("chloride.darkness.level.desc"))
-                .setControl(option -> new BetterCyclingControl<>(option, Darkness.DarkMode.class,"chloride.darkness.level"))
-                .setBinding((opts, value) -> ChlorideConfig.darknessMode = value, opts -> ChlorideConfig.darknessMode)
-                .build()
+        page.addOptionGroup(b.createOptionGroup()
+                .addOption(b.createEnumOption(Chloride.id("darknessMode"), Darkness.DarkMode.class)
+                        .setName(Component.translatable("chloride.darkness.level.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.level.desc"))
+                        .setElementNameProvider(enumNames("chloride.darkness.level"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(Darkness.DarkMode.VANILLA)
+                        .setBinding(v -> ChlorideConfig.darknessMode = v, () -> ChlorideConfig.darknessMode))
+                .addOption(b.createBooleanOption(Chloride.id("darknessOnNoSkyLight"))
+                        .setName(Component.translatable("chloride.darkness.noskylight.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.noskylight.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(false)
+                        .setBinding(v -> ChlorideConfig.darknessOnNoSkyLight = v, () -> ChlorideConfig.darknessOnNoSkyLight))
         );
 
-        darknessBasics.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.noskylight.title"))
-                .setTooltip(Component.translatable("chloride.darkness.noskylight.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((opts, value) -> ChlorideConfig.darknessOnNoSkyLight = value, opts -> ChlorideConfig.darknessOnNoSkyLight)
-                .build()
+        page.addOptionGroup(b.createOptionGroup()
+                .addOption(b.createBooleanOption(Chloride.id("darknessByDefault"))
+                        .setName(Component.translatable("chloride.darkness.others.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.others.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(false)
+                        .setBinding(v -> ChlorideConfig.darknessByDefault = v, () -> ChlorideConfig.darknessByDefault))
+                .addOption(b.createBooleanOption(Chloride.id("darknessOnOverworld"))
+                        .setName(Component.translatable("chloride.darkness.overworld.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.overworld.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(true)
+                        .setBinding(v -> ChlorideConfig.darknessOnOverworld = v, () -> ChlorideConfig.darknessOnOverworld))
         );
 
-        final var darknessOverworld = OptionGroup.createBuilder();
-        darknessOverworld.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.others.title"))
-                .setTooltip(Component.translatable("chloride.darkness.others.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((opts, value) -> ChlorideConfig.darknessByDefault = value, opts -> ChlorideConfig.darknessByDefault)
-                .build()
+        page.addOptionGroup(b.createOptionGroup()
+                .addOption(b.createBooleanOption(Chloride.id("darknessOnNether"))
+                        .setName(Component.translatable("chloride.darkness.nether.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.nether.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(false)
+                        .setBinding(v -> ChlorideConfig.darknessOnNether = v, () -> ChlorideConfig.darknessOnNether))
+                .addOption(b.createIntegerOption(Chloride.id("darknessNetherFogBright"))
+                        .setName(Component.translatable("chloride.darkness.nether.brightness.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.nether.brightness.desc"))
+                        .setValueFormatter(PERCENT)
+                        .setRange(0, 100, 1)
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(50)
+                        .setBinding(v -> ChlorideConfig.darknessNetherFogBright = v / 100d,
+                                () -> Math.toIntExact(Math.round(ChlorideConfig.darknessNetherFogBright * 100))))
         );
 
-
-        darknessOverworld.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.overworld.title"))
-                .setTooltip(Component.translatable("chloride.darkness.overworld.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((opts, value) -> ChlorideConfig.darknessOnOverworld = value, opts -> ChlorideConfig.darknessOnOverworld)
-                .build()
+        page.addOptionGroup(b.createOptionGroup()
+                .addOption(b.createBooleanOption(Chloride.id("darknessOnEnd"))
+                        .setName(Component.translatable("chloride.darkness.end.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.end.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(false)
+                        .setBinding(v -> ChlorideConfig.darknessOnEnd = v, () -> ChlorideConfig.darknessOnEnd))
+                .addOption(b.createIntegerOption(Chloride.id("darknessEndFogBright"))
+                        .setName(Component.translatable("chloride.darkness.end.brightness.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.end.brightness.desc"))
+                        .setValueFormatter(PERCENT)
+                        .setRange(0, 100, 1)
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(50)
+                        .setBinding(v -> ChlorideConfig.darknessEndFogBright = v / 100d,
+                                () -> Math.toIntExact(Math.round(ChlorideConfig.darknessEndFogBright * 100))))
         );
 
-        final var darknessNether = OptionGroup.createBuilder();
-        darknessNether.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.nether.title"))
-                .setTooltip(Component.translatable("chloride.darkness.nether.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((opts, value) -> ChlorideConfig.darknessOnNether = value, opts -> ChlorideConfig.darknessOnNether)
-                .build()
+        page.addOptionGroup(b.createOptionGroup()
+                .addOption(b.createBooleanOption(BLOCK_LIGHT_ONLY)
+                        .setName(Component.translatable("chloride.darkness.blocklightonly.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.blocklightonly.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(false)
+                        .setBinding(v -> ChlorideConfig.darknessBlockLightOnly = v, () -> ChlorideConfig.darknessBlockLightOnly))
+                .addOption(b.createBooleanOption(Chloride.id("darknessAffectedByMoonPhase"))
+                        .setName(Component.translatable("chloride.darkness.moonphase.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.moonphase.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setEnabledProvider(state -> !state.readBooleanOption(BLOCK_LIGHT_ONLY), BLOCK_LIGHT_ONLY)
+                        .setDefaultValue(true)
+                        .setBinding(v -> ChlorideConfig.darknessAffectedByMoonPhase = v, () -> ChlorideConfig.darknessAffectedByMoonPhase))
+                .addOption(b.createIntegerOption(Chloride.id("darknessNewMoonBright"))
+                        .setName(Component.translatable("chloride.darkness.moonphase.fresh.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.moonphase.fresh.desc"))
+                        .setValueFormatter(PERCENT)
+                        .setRange(0, 100, 1)
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(0)
+                        .setBinding(v -> ChlorideConfig.darknessNewMoonBright = v / 100d,
+                                () -> Math.toIntExact(Math.round(ChlorideConfig.darknessNewMoonBright * 100d))))
+                .addOption(b.createIntegerOption(Chloride.id("darknessFullMoonBright"))
+                        .setName(Component.translatable("chloride.darkness.moonphase.full.title"))
+                        .setTooltip(Component.translatable("chloride.darkness.moonphase.full.desc"))
+                        .setValueFormatter(PERCENT)
+                        .setRange(0, 100, 1)
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(25)
+                        .setBinding(v -> ChlorideConfig.darknessFullMoonBright = v / 100d,
+                                () -> Math.toIntExact(Math.round(ChlorideConfig.darknessFullMoonBright * 100))))
         );
 
-        darknessNether.add(OptionImpl.createBuilder(int.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.nether.brightness.title"))
-                .setTooltip(Component.translatable("chloride.darkness.nether.brightness.desc"))
-                .setControl(option -> new SliderControl(option, 0, 100, 1, ControlValueFormatter.percentage()))
-                .setBinding((opts, current) -> ChlorideConfig.darknessNetherFogBright = current / 100d,
-                        opts -> Math.toIntExact(Math.round(ChlorideConfig.darknessNetherFogBright * 100)))
-                .build()
-        );
-
-        final var darknessEnd = OptionGroup.createBuilder();
-        darknessEnd.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.end.title"))
-                .setTooltip(Component.translatable("chloride.darkness.end.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((opts, value) -> ChlorideConfig.darknessOnEnd = value, opts -> ChlorideConfig.darknessOnEnd)
-                .build()
-        );
-
-        darknessEnd.add(OptionImpl.createBuilder(int.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.end.brightness.title"))
-                .setTooltip(Component.translatable("chloride.darkness.end.brightness.desc"))
-                .setControl(option -> new SliderControl(option, 0, 100, 1, ControlValueFormatter.percentage()))
-                .setBinding((opts, current) -> ChlorideConfig.darknessEndFogBright = current / 100d,
-                        opts -> Math.toIntExact(Math.round(ChlorideConfig.darknessEndFogBright * 100)))
-                .build()
-        );
-
-        final var darknessOthers = OptionGroup.createBuilder();
-        darknessOthers.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.blocklightonly.title"))
-                .setTooltip(Component.translatable("chloride.darkness.blocklightonly.desc"))
-                .setControl(TickBoxControl::new)
-                .setBinding((opts, value) -> ChlorideConfig.darknessBlockLightOnly = value, opts -> ChlorideConfig.darknessBlockLightOnly)
-                .build()
-        );
-
-
-        darknessOthers.add(OptionImpl.createBuilder(boolean.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.moonphase.title"))
-                .setTooltip(Component.translatable("chloride.darkness.moonphase.desc"))
-                .setControl(TickBoxControl::new)
-                .setEnabled(() -> !ChlorideConfig.darknessBlockLightOnly)
-                .setBinding((opts, value) -> ChlorideConfig.darknessAffectedByMoonPhase = value, opts -> ChlorideConfig.darknessAffectedByMoonPhase)
-                .build()
-        );
-
-        darknessOthers.add(OptionImpl.createBuilder(int.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.moonphase.fresh.title"))
-                .setTooltip(Component.translatable("chloride.darkness.moonphase.fresh.desc"))
-                .setControl(option -> new SliderControl(option, 0, 100, 1, ControlValueFormatter.percentage()))
-                .setBinding((opts, value) -> ChlorideConfig.darknessNewMoonBright = value / 100d,
-                        opts -> Math.toIntExact(Math.round(ChlorideConfig.darknessNewMoonBright * 100d)))
-                .build()
-        );
-
-        darknessOthers.add(OptionImpl.createBuilder(int.class, STORAGE)
-                .setName(Component.translatable("chloride.darkness.moonphase.full.title"))
-                .setTooltip(Component.translatable("chloride.darkness.moonphase.full.desc"))
-                .setControl(option -> new SliderControl(option, 0, 100, 1, ControlValueFormatter.percentage()))
-                .setBinding((opts, value) -> ChlorideConfig.darknessFullMoonBright = value / 100d,
-                        opts -> Math.toIntExact(Math.round(ChlorideConfig.darknessFullMoonBright * 100)))
-                .build()
-        );
-
-        groups.add(darknessBasics.build());
-        groups.add(darknessOverworld.build());
-        groups.add(darknessNether.build());
-        groups.add(darknessEnd.build());
-        groups.add(darknessOthers.build());
-
-        return ImmutableList.copyOf(groups);
+        return page;
     }
 }
