@@ -8,7 +8,7 @@
   "chloride.general.screen.borderless": "无边框",
   "chloride.general.screen.windowed": "窗口化",
   "chloride.general.screen.borderless.optimization": "禁用无边框优化",
-  "chloride.general.screen.borderless.optimization.desc": "强制禁用驱动程序的无边框优化\n\n修复退出游戏时的黑屏闪烁（在多显示器环境下明显），但禁用后可能会有大幅帧率下降。",
+  "chloride.general.screen.borderless.optimization.desc": "强制禁用驱动程序的无边框优化\n\n修复退出游戏时的黑屏闪烁（在多显示器环境下明显），但禁用后帧率可能会一点程度的有下降。",
   "chloride.interface": "界面",
   "chloride.interface.fps.title": "显示帧率",
   "chloride.interface.fps.desc": "显示当前帧率。高级模式还显示最低帧率、前15秒内的平均帧率，这对评估性能很有用。",
