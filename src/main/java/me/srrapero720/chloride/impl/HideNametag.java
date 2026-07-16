@@ -19,15 +19,15 @@ public class HideNametag {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onRenderNameTagEvent(final RenderNameTagEvent e) {
         final EntityRenderer<?> renderer = e.getEntityRenderer();
-        if (!ChlorideConfig.itemNametagRendering && renderer instanceof ItemFrameRenderer || renderer instanceof ItemEntityRenderer) {
+        if (!ChlorideConfig.nametags.items && renderer instanceof ItemFrameRenderer || renderer instanceof ItemEntityRenderer) {
             e.setCanRender(TriState.FALSE);
             return;
         }
-        if (!ChlorideConfig.playerNametagRendering && renderer instanceof PlayerRenderer) {
+        if (!ChlorideConfig.nametags.players && renderer instanceof PlayerRenderer) {
             e.setCanRender(TriState.FALSE);
             return;
         }
-        if (!ChlorideConfig.entityNametagRendering) {
+        if (!ChlorideConfig.nametags.entities) {
             e.setCanRender(TriState.FALSE);
         }
     }

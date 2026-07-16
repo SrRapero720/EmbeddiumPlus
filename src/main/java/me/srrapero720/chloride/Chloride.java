@@ -42,9 +42,9 @@ public class Chloride {
         event.enqueueWork(() -> {
             final Minecraft mc = Minecraft.getInstance();
             final boolean optsFullscreen = mc.options.fullscreen().get();
-            final boolean configFullscreen = ChlorideConfig.fullScreen != Borderless.Mode.WINDOWED;
+            final boolean configFullscreen = ChlorideConfig.fullscreen.mode != Borderless.Mode.WINDOWED;
             if (optsFullscreen != configFullscreen) {
-                Borderless.setFullScreenMode(ChlorideConfig.fullScreen);
+                Borderless.setFullScreenMode(ChlorideConfig.fullscreen.mode);
             }
         });
     }

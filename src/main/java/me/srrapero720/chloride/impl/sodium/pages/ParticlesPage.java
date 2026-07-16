@@ -28,25 +28,25 @@ public class ParticlesPage {
                         .setTooltip(Component.translatable("chloride.particles.rain.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.rainParticles = v, () -> ChlorideConfig.rainParticles))
+                        .setBinding(v -> ChlorideConfig.particles.rain = v, () -> ChlorideConfig.particles.rain))
                 .addOption(b.createBooleanOption(Chloride.id("rainDropParticles"))
                         .setName(Component.translatable("chloride.particles.rain.drop.title"))
                         .setTooltip(Component.translatable("chloride.particles.rain.drop.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.rainDropParticles = v, () -> ChlorideConfig.rainDropParticles))
+                        .setBinding(v -> ChlorideConfig.particles.rainDrops = v, () -> ChlorideConfig.particles.rainDrops))
                 .addOption(b.createBooleanOption(Chloride.id("crackingBlockParticles"))
                         .setName(Component.translatable("chloride.particles.block.cracking.title"))
                         .setTooltip(Component.translatable("chloride.particles.block.cracking.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.crackingBlockParticles = v, () -> ChlorideConfig.crackingBlockParticles))
+                        .setBinding(v -> ChlorideConfig.particles.blockCracking = v, () -> ChlorideConfig.particles.blockCracking))
                 .addOption(b.createBooleanOption(Chloride.id("destroyedBlockParticles"))
                         .setName(Component.translatable("chloride.particles.block.destroy.title"))
                         .setTooltip(Component.translatable("chloride.particles.block.destroy.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.destroyedBlockParticles = v, () -> ChlorideConfig.destroyedBlockParticles))
+                        .setBinding(v -> ChlorideConfig.particles.blockDestroyed = v, () -> ChlorideConfig.particles.blockDestroyed))
         );
 
         final OptionGroupBuilder enabled = b.createOptionGroup();
@@ -64,7 +64,7 @@ public class ParticlesPage {
                 return I18n.get("chloride.particles.provider.unknown");
             });
 
-            final boolean isDisabled = ChlorideConfig.disabledParticles.contains(key);
+            final boolean isDisabled = ChlorideConfig.particles.disabled.contains(key);
             if (isDisabled) {
                 hasDisabled = true;
             } else {
@@ -78,11 +78,11 @@ public class ParticlesPage {
                     .setDefaultValue(true)
                     .setBinding(v -> {
                         if (v) {
-                            ChlorideConfig.disabledParticles.remove(key);
+                            ChlorideConfig.particles.disabled.remove(key);
                         } else {
-                            ChlorideConfig.disabledParticles.add(key);
+                            ChlorideConfig.particles.disabled.add(key);
                         }
-                    }, () -> !ChlorideConfig.disabledParticles.contains(key)));
+                    }, () -> !ChlorideConfig.particles.disabled.contains(key)));
         }
 
         if (hasDisabled) page.addOptionGroup(disabled);

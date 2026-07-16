@@ -16,6 +16,6 @@ public class CloudHeightMixin {
     @Inject(method = "getCloudHeight", at = @At("HEAD"), cancellable = true)
     private void inject$cloudHeight(final CallbackInfoReturnable<Float> cir) {
         if (this.cloudLevel == 192.0F)
-            cir.setReturnValue((float) ChlorideConfig.cloudsHeight);
+            cir.setReturnValue((float) ChlorideConfig.world.cloudsHeight);
     }
 }

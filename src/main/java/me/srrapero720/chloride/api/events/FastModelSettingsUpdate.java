@@ -17,7 +17,7 @@ public sealed abstract class FastModelSettingsUpdate extends Event {
     public static final class ChestEvent extends FastModelSettingsUpdate {
         @Override
         public boolean isEnabled() {
-            return FastBlocks.canUseOnChests() && ChlorideConfig.fastChests;
+            return FastBlocks.canUseOnChests() && ChlorideConfig.fastBlocks.chests;
         }
     }
 
@@ -31,7 +31,7 @@ public sealed abstract class FastModelSettingsUpdate extends Event {
 
         @Override
         public boolean isEnabled() {
-            return ChlorideConfig.fastBeds;
+            return ChlorideConfig.fastBlocks.beds;
         }
     }
 

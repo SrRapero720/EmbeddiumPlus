@@ -14,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static me.srrapero720.chloride.ChlorideConfig.fullScreen;
-
 class BorderlessMixin {
     @Mixin(Window.class)
     public static class WindowMixin {
@@ -26,7 +24,7 @@ class BorderlessMixin {
             // GATE THE BORDERLESS BRANCH ON VANILLA ACTUALLY WANTING FULLSCREEN (MONITOR != 0L). IF
             // VANILLA PASSES MONITOR=0L IT WANTS WINDOWED (E.G. STARTUP WITH OPTIONS.FULLSCREEN=FALSE
             // BUT CHLORIDECONFIG.FULLSCREEN=BORDERLESS DESYNCED) AND WE MUST KEEP DECORATION.
-            final boolean targetBorderless = fullScreen.isBorderless() && monitor != 0L;
+            final boolean targetBorderless = ChlorideConfig.fullscreen.mode.isBorderless() && monitor != 0L;
 
             if (!targetBorderless) {
                 // BORDERLESS -> FULLSCREEN: GLFW CAN TREAT SETWINDOWMONITOR AS A NO-OP BECAUSE THE
@@ -57,7 +55,7 @@ class BorderlessMixin {
 
             // DETACH FROM MONITOR (EXITS EXCLUSIVE FULLSCREEN). GLFW_DONT_CARE PREVENTS REFRESH
             // RATE RENEGOTIATION.
-            GLFW.glfwSetWindowMonitor(window, 0L, realX, realY, width, ChlorideConfig.disableBorderlessOptimizations ? height + 1 : height, GLFW.GLFW_DONT_CARE);
+            GLFW.glfwSetWindowMonitor(window, 0L, realX, realY, width, ChlorideConfig.fullscreen.disableBorderlessOptimizations ? height + 1 : height, GLFW.GLFW_DONT_CARE);
             GLFW.glfwSetWindowSizeLimits(window, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE, GLFW.GLFW_DONT_CARE);
         }
 
@@ -77,10 +75,10 @@ class BorderlessMixin {
 
         @Inject(method = "keyPress", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;toggleFullScreen()V"), cancellable = true)
         public void redirect$handleFullScreenToggle(final long pWindowPointer, final int pKey, final int pScanCode, final int pAction, final int pModifiers, final CallbackInfo ci) {
-            switch (ChlorideConfig.borderlessAttachModeF11.ordinal()) {
-                case 0 -> Borderless.setFullScreenMode(Borderless.Mode.nextOf(fullScreen));
-                case 1 -> Borderless.setFullScreenMode(Borderless.Mode.nextBorderless(fullScreen));
-                case 2 -> Borderless.setFullScreenMode(Borderless.Mode.nextFullscreen(fullScreen));
+            switch (ChlorideConfig.fullscreen.attachModeF11.ordinal()) {
+                case 0 -> Borderless.setFullScreenMode(Borderless.Mode.nextOf(ChlorideConfig.fullscreen.mode));
+                case 1 -> Borderless.setFullScreenMode(Borderless.Mode.nextBorderless(ChlorideConfig.fullscreen.mode));
+                case 2 -> Borderless.setFullScreenMode(Borderless.Mode.nextFullscreen(ChlorideConfig.fullscreen.mode));
             }
             ci.cancel();
         }

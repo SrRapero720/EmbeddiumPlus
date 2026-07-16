@@ -21,11 +21,11 @@ public class EmiOverlayMixin {
 
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Ldev/emi/emi/screen/EmiScreenManager$SidebarPanel;render(Ldev/emi/emi/runtime/EmiDrawContext;IIF)V"))
     private static void inject$renderStackOverlay(final EmiScreenManager.SidebarPanel instance, final EmiDrawContext ctx, final int i, final int context, final float mouseX, final Operation<Void> original) {
-        if (!ChlorideConfig.hideJREMI) {
+        if (!ChlorideConfig.ui.hideJREMI) {
             original.call(instance, ctx, i, context, mouseX);
         } else {
             if (instance.getType() == SidebarType.INDEX && search.getValue().isEmpty()) {
-                if (!ChlorideConfig.hideJREMIHint) {
+                if (!ChlorideConfig.ui.hideJREMIHint) {
                     final Bounds bounds = instance.getBounds();
                     ctx.drawCenteredTextWithShadow(Component.translatable("chloride.jei.message"), bounds.x() + (bounds.width() / 2), bounds.y() + (bounds.height() / 2), 0xFFFFFF);
                 }

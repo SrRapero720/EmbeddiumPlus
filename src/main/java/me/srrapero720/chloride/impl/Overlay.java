@@ -76,8 +76,8 @@ public class Overlay {
     private static void renderFPSChar(final Minecraft mc, final GuiGraphics graphics, final Font font, final double scale) {
         if (Minecraft.getInstance().getDebugOverlay().showDebugScreen() || Minecraft.getInstance().getDebugOverlay().showProfilerChart()) return; // No render when F3 is open
 
-        final var mode = ChlorideConfig.fpsDisplayMode;
-        final var systemMode = ChlorideConfig.fpsDisplaySystemMode;
+        final var mode = ChlorideConfig.fpsDisplay.mode;
+        final var systemMode = ChlorideConfig.fpsDisplay.systemDetails;
 
         if (mode.off() && systemMode.off()) return; // NOTHING TO DO HERE, BACK TO WORK
 
@@ -108,8 +108,8 @@ public class Overlay {
 
         if (DISPLAY.isEmpty()) DISPLAY.add("FATAL ERROR");
 
-        final float marginX = (scale > 0) ? ChlorideConfig.fpsDisplayMargin / (float) scale : ChlorideConfig.fpsDisplayMargin;
-        final float marginY = (scale > 0) ? ChlorideConfig.fpsDisplayVMargin / (float) scale : ChlorideConfig.fpsDisplayVMargin;
+        final float marginX = (scale > 0) ? ChlorideConfig.fpsDisplay.margin / (float) scale : ChlorideConfig.fpsDisplay.margin;
+        final float marginY = (scale > 0) ? ChlorideConfig.fpsDisplay.verticalMargin / (float) scale : ChlorideConfig.fpsDisplay.verticalMargin;
 
         // Prevent FPS-Display to render outside screenspace
         final String displayString = DISPLAY.toString();
@@ -118,19 +118,19 @@ public class Overlay {
         final float posX;
         final float posY;
 
-        posX = switch (ChlorideConfig.fpsDisplayAlign) {
+        posX = switch (ChlorideConfig.fpsDisplay.align) {
             case LEFT -> marginX;
             case CENTER -> maxPosX / 2;
             case RIGHT -> maxPosX - marginX;
         };
-        posY = switch (ChlorideConfig.fpsDisplayVAlign) {
+        posY = switch (ChlorideConfig.fpsDisplay.verticalAlign) {
             case TOP -> marginY;
             case CENTER -> maxPosY / 2;
             case BOTTOM -> maxPosY - marginY;
         };
 
         graphics.pose().pushPose();
-        if (ChlorideConfig.fpsDisplayShadow) {
+        if (ChlorideConfig.fpsDisplay.shadow) {
             graphics.fill((int) posX - 2, (int) posY - 2, (int) posX + font.width(displayString) + 2, (int) (posY + font.lineHeight) + 1, -1873784752);
             graphics.flush();
         }

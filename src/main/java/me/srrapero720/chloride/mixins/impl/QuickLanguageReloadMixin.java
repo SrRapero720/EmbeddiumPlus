@@ -20,7 +20,7 @@ public abstract class QuickLanguageReloadMixin extends OptionsSubScreen {
 
     @WrapOperation(method = "onDone", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;reloadResourcePacks()Ljava/util/concurrent/CompletableFuture;"))
     public CompletableFuture<Void> redirect$resourcesReload(final Minecraft instance, final Operation<CompletableFuture<Void>> original) {
-        if (ChlorideConfig.fastLanguageReload) {
+        if (ChlorideConfig.ui.fastLanguageReload) {
             this.minecraft.getLanguageManager().onResourceManagerReload(this.minecraft.getResourceManager());
             return null;
         } else {

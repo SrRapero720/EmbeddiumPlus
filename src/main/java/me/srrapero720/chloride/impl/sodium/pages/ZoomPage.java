@@ -32,7 +32,7 @@ public class ZoomPage {
                         .setImpact(OptionImpact.LOW)
                         .setEnabled(Zoom.canUseZoom())
                         .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.enableZoom = v, () -> ChlorideConfig.enableZoom))
+                        .setBinding(v -> ChlorideConfig.zoom.enabled = v, () -> ChlorideConfig.zoom.enabled))
                 .addOption(b.createIntegerOption(Chloride.id("maxZoom"))
                         .setName(Component.translatable("chloride.zoom.max.title"))
                         .setTooltip(Component.translatable("chloride.zoom.max.desc"))
@@ -40,8 +40,8 @@ public class ZoomPage {
                         .setRange(10, 100, 1)
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(50)
-                        .setBinding(v -> ChlorideConfig.maxZoom = (double) v,
-                                () -> Math.toIntExact(Math.round(ChlorideConfig.maxZoom))))
+                        .setBinding(v -> ChlorideConfig.zoom.max = (double) v,
+                                () -> Math.toIntExact(Math.round(ChlorideConfig.zoom.max))))
         );
 
         return page;

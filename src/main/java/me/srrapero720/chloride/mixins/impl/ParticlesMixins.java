@@ -47,14 +47,14 @@ public class ParticlesMixins {
     public static class LevelRendererMixin {
         @Inject(method = "tickRain", at = @At(value = "HEAD"), cancellable = true)
         public void inject$tick(Camera cam, CallbackInfo callbackInfo) {
-            if (!ChlorideConfig.rainDropParticles) {
+            if (!ChlorideConfig.particles.rainDrops) {
                 callbackInfo.cancel();
             }
         }
 
         @Inject(method = "renderSnowAndRain", at = @At(value = "HEAD"), cancellable = true)
         private void inject$render(LightTexture lightTex, float partialTick, double camX, double camY, double camZ, CallbackInfo ci) {
-            if (!ChlorideConfig.rainParticles) {
+            if (!ChlorideConfig.particles.rain) {
                 ci.cancel();
             }
         }
@@ -64,14 +64,14 @@ public class ParticlesMixins {
     public static class EngineMixin {
         @Inject(method = "destroy", at = @At(value = "HEAD"), cancellable = true)
         public void inject$destroy(BlockPos pPos, BlockState pSide, CallbackInfo ci) {
-            if (!ChlorideConfig.destroyedBlockParticles) {
+            if (!ChlorideConfig.particles.blockDestroyed) {
                 ci.cancel();
             }
         }
 
         @Inject(method = "crack", at = @At(value = "HEAD"), cancellable = true)
         public void inject$crack(BlockPos pos, Direction direction, CallbackInfo ci) {
-            if (!ChlorideConfig.crackingBlockParticles) {
+            if (!ChlorideConfig.particles.blockCracking) {
                 ci.cancel();
             }
         }
@@ -79,7 +79,7 @@ public class ParticlesMixins {
         @Inject(method = "createParticle", at = @At(value = "HEAD"), cancellable = true)
         public void inject$create(ParticleOptions parameters, double x, double y, double z, double speeX, double speeY, double speeZ, CallbackInfoReturnable<Particle> cir) {
             final var id = ((IParticleTypeData) parameters.getType()).getId();
-            if (ChlorideConfig.disabledParticles.contains(id)) {
+            if (ChlorideConfig.particles.disabled.contains(id)) {
                 cir.setReturnValue(null);
             }
         }
@@ -96,7 +96,7 @@ public class ParticlesMixins {
 
         @Inject(method = "createParticle", at = @At(value = "HEAD"), cancellable = true)
         public void inject$create(double x, double y, double z, double velocityX, double velocityY, double velocityZ, IntList colors, IntList fadeColors, boolean trail, boolean flicker, CallbackInfo ci) {
-            if (ChlorideConfig.disabledParticles.contains(this.getId())) {
+            if (ChlorideConfig.particles.disabled.contains(this.getId())) {
                 ci.cancel();
             }
         }

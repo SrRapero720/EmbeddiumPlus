@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class DimensionTypeMixin {
     @Inject(method = "hasSkyLight", at = @At("RETURN"), cancellable = true)
     private void inject$hasSkyLight(final CallbackInfoReturnable<Boolean> cir) {
-        if (ChlorideConfig.darknessBlockLightOnly) {
+        if (ChlorideConfig.darkness.blockLightOnly) {
             cir.setReturnValue(true);
         }
     }

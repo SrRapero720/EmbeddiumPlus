@@ -13,7 +13,7 @@ public class LeavesCulling {
 
     public static boolean should(final LeavesBlock block, final IGameLeaves casted, final LeavesBlock neighbor, final IGameLeaves castedNeighbor) {
         if (fastLeaves()) return true;
-        return switch (ChlorideConfig.leavesCulling) {
+        return switch (ChlorideConfig.world.leavesCulling) {
             case ALL -> casted.chloride$getRL().equals(castedNeighbor.chloride$getRL());
             case OFF -> false;
         };

@@ -25,7 +25,7 @@ public class FastBlocksMixins {
 
         @Inject(method = "getRenderShape", at = @At("RETURN"), cancellable = true)
         private void inject$replaceRenderShape(final BlockState state, final CallbackInfoReturnable<RenderShape> cir) {
-            if (ChlorideConfig.fastBeds) {
+            if (ChlorideConfig.fastBlocks.beds) {
                 cir.setReturnValue(RenderShape.MODEL);
             }
         }
@@ -43,14 +43,14 @@ public class FastBlocksMixins {
     public static class ChestsMixin {
         @Inject(method = "getTicker", at = @At("HEAD"), cancellable = true)
         private <T extends BlockEntity> void inject$removeTicker(final Level level, final BlockState state, final BlockEntityType<T> type, final CallbackInfoReturnable<BlockEntityTicker<T>> cir) {
-            if (FastBlocks.canUseOnChests() && ChlorideConfig.fastChests) {
+            if (FastBlocks.canUseOnChests() && ChlorideConfig.fastBlocks.chests) {
                 cir.setReturnValue(null);
             }
         }
 
         @Inject(method = "getRenderShape", at = @At("HEAD"), cancellable = true)
         private void inject$replaceRenderShape(final BlockState state, final CallbackInfoReturnable<RenderShape> cir) {
-            if (FastBlocks.canUseOnChests() && ChlorideConfig.fastChests) {
+            if (FastBlocks.canUseOnChests() && ChlorideConfig.fastBlocks.chests) {
                 cir.setReturnValue(RenderShape.MODEL);
             }
         }
@@ -62,14 +62,14 @@ public class FastBlocksMixins {
         private <E extends BlockEntity> void inject$disableRenderer(final E blockEntity, final CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
             // FAST CHESTS (needs FLYWHEEL HANDLING)
             final Class<?> beClass = blockEntity.getClass();
-            if (ChlorideConfig.fastChests && FastBlocks.canUseOnChests()) {
+            if (ChlorideConfig.fastBlocks.chests && FastBlocks.canUseOnChests()) {
                 if (beClass == ChestBlockEntity.class || beClass == EnderChestBlockEntity.class) {
                     cir.setReturnValue(null);
                 }
             }
 
             // FAST BEDS (OR BETTER BEDS)
-            if (ChlorideConfig.fastBeds) {
+            if (ChlorideConfig.fastBlocks.beds) {
                 if (beClass == BedBlockEntity.class) {
                     cir.setReturnValue(null);
                 }

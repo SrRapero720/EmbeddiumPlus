@@ -67,7 +67,7 @@ public class Zoom {
 
         if (value == -1) value = DEFAULT;
 
-        value = Math.max(Math.min((amount > 0) ? value * 1.1 : (amount < 0) ? value * 0.9 : value, ChlorideConfig.maxZoom), 1);
+        value = Math.max(Math.min((amount > 0) ? value * 1.1 : (amount < 0) ? value * 0.9 : value, ChlorideConfig.zoom.max), 1);
         return true;
     }
 
@@ -81,13 +81,13 @@ public class Zoom {
 
     @SubscribeEvent
     public static void onMouseScrolling(final InputEvent.MouseScrollingEvent e) {
-        if (canUseZoom() && ChlorideConfig.enableZoom)
+        if (canUseZoom() && ChlorideConfig.zoom.enabled)
             e.setCanceled(scroll(e.getScrollDeltaY()));
     }
 
     @SubscribeEvent
     public static void onGetFovEvent(final ViewportEvent.ComputeFov e) {
-        if (canUseZoom() && ChlorideConfig.enableZoom)
+        if (canUseZoom() && ChlorideConfig.zoom.enabled)
             e.setFOV(zoom(e.getFOV()));
     }
 

@@ -25,13 +25,13 @@ public class DarknessPage {
                         .setElementNameProvider(enumNames("chloride.darkness.level"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(Darkness.DarkMode.VANILLA)
-                        .setBinding(v -> ChlorideConfig.darknessMode = v, () -> ChlorideConfig.darknessMode))
+                        .setBinding(v -> ChlorideConfig.darkness.mode = v, () -> ChlorideConfig.darkness.mode))
                 .addOption(b.createBooleanOption(Chloride.id("darknessOnNoSkyLight"))
                         .setName(Component.translatable("chloride.darkness.noskylight.title"))
                         .setTooltip(Component.translatable("chloride.darkness.noskylight.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(false)
-                        .setBinding(v -> ChlorideConfig.darknessOnNoSkyLight = v, () -> ChlorideConfig.darknessOnNoSkyLight))
+                        .setBinding(v -> ChlorideConfig.darkness.onNoSkyLight = v, () -> ChlorideConfig.darkness.onNoSkyLight))
         );
 
         page.addOptionGroup(b.createOptionGroup()
@@ -40,13 +40,13 @@ public class DarknessPage {
                         .setTooltip(Component.translatable("chloride.darkness.others.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(false)
-                        .setBinding(v -> ChlorideConfig.darknessByDefault = v, () -> ChlorideConfig.darknessByDefault))
+                        .setBinding(v -> ChlorideConfig.darkness.byDefault = v, () -> ChlorideConfig.darkness.byDefault))
                 .addOption(b.createBooleanOption(Chloride.id("darknessOnOverworld"))
                         .setName(Component.translatable("chloride.darkness.overworld.title"))
                         .setTooltip(Component.translatable("chloride.darkness.overworld.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.darknessOnOverworld = v, () -> ChlorideConfig.darknessOnOverworld))
+                        .setBinding(v -> ChlorideConfig.darkness.onOverworld = v, () -> ChlorideConfig.darkness.onOverworld))
         );
 
         page.addOptionGroup(b.createOptionGroup()
@@ -55,7 +55,7 @@ public class DarknessPage {
                         .setTooltip(Component.translatable("chloride.darkness.nether.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(false)
-                        .setBinding(v -> ChlorideConfig.darknessOnNether = v, () -> ChlorideConfig.darknessOnNether))
+                        .setBinding(v -> ChlorideConfig.darkness.onNether = v, () -> ChlorideConfig.darkness.onNether))
                 .addOption(b.createIntegerOption(Chloride.id("darknessNetherFogBright"))
                         .setName(Component.translatable("chloride.darkness.nether.brightness.title"))
                         .setTooltip(Component.translatable("chloride.darkness.nether.brightness.desc"))
@@ -63,8 +63,8 @@ public class DarknessPage {
                         .setRange(0, 100, 1)
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(50)
-                        .setBinding(v -> ChlorideConfig.darknessNetherFogBright = v / 100d,
-                                () -> Math.toIntExact(Math.round(ChlorideConfig.darknessNetherFogBright * 100))))
+                        .setBinding(v -> ChlorideConfig.darkness.netherFogBright = v / 100d,
+                                () -> Math.toIntExact(Math.round(ChlorideConfig.darkness.netherFogBright * 100))))
         );
 
         page.addOptionGroup(b.createOptionGroup()
@@ -73,7 +73,7 @@ public class DarknessPage {
                         .setTooltip(Component.translatable("chloride.darkness.end.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(false)
-                        .setBinding(v -> ChlorideConfig.darknessOnEnd = v, () -> ChlorideConfig.darknessOnEnd))
+                        .setBinding(v -> ChlorideConfig.darkness.onEnd = v, () -> ChlorideConfig.darkness.onEnd))
                 .addOption(b.createIntegerOption(Chloride.id("darknessEndFogBright"))
                         .setName(Component.translatable("chloride.darkness.end.brightness.title"))
                         .setTooltip(Component.translatable("chloride.darkness.end.brightness.desc"))
@@ -81,8 +81,8 @@ public class DarknessPage {
                         .setRange(0, 100, 1)
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(50)
-                        .setBinding(v -> ChlorideConfig.darknessEndFogBright = v / 100d,
-                                () -> Math.toIntExact(Math.round(ChlorideConfig.darknessEndFogBright * 100))))
+                        .setBinding(v -> ChlorideConfig.darkness.endFogBright = v / 100d,
+                                () -> Math.toIntExact(Math.round(ChlorideConfig.darkness.endFogBright * 100))))
         );
 
         page.addOptionGroup(b.createOptionGroup()
@@ -91,14 +91,14 @@ public class DarknessPage {
                         .setTooltip(Component.translatable("chloride.darkness.blocklightonly.desc"))
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(false)
-                        .setBinding(v -> ChlorideConfig.darknessBlockLightOnly = v, () -> ChlorideConfig.darknessBlockLightOnly))
+                        .setBinding(v -> ChlorideConfig.darkness.blockLightOnly = v, () -> ChlorideConfig.darkness.blockLightOnly))
                 .addOption(b.createBooleanOption(Chloride.id("darknessAffectedByMoonPhase"))
                         .setName(Component.translatable("chloride.darkness.moonphase.title"))
                         .setTooltip(Component.translatable("chloride.darkness.moonphase.desc"))
                         .setStorageHandler(STORAGE)
                         .setEnabledProvider(state -> !state.readBooleanOption(BLOCK_LIGHT_ONLY), BLOCK_LIGHT_ONLY)
                         .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.darknessAffectedByMoonPhase = v, () -> ChlorideConfig.darknessAffectedByMoonPhase))
+                        .setBinding(v -> ChlorideConfig.darkness.affectedByMoonPhase = v, () -> ChlorideConfig.darkness.affectedByMoonPhase))
                 .addOption(b.createIntegerOption(Chloride.id("darknessNewMoonBright"))
                         .setName(Component.translatable("chloride.darkness.moonphase.fresh.title"))
                         .setTooltip(Component.translatable("chloride.darkness.moonphase.fresh.desc"))
@@ -106,8 +106,8 @@ public class DarknessPage {
                         .setRange(0, 100, 1)
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(0)
-                        .setBinding(v -> ChlorideConfig.darknessNewMoonBright = v / 100d,
-                                () -> Math.toIntExact(Math.round(ChlorideConfig.darknessNewMoonBright * 100d))))
+                        .setBinding(v -> ChlorideConfig.darkness.newMoonBright = v / 100d,
+                                () -> Math.toIntExact(Math.round(ChlorideConfig.darkness.newMoonBright * 100d))))
                 .addOption(b.createIntegerOption(Chloride.id("darknessFullMoonBright"))
                         .setName(Component.translatable("chloride.darkness.moonphase.full.title"))
                         .setTooltip(Component.translatable("chloride.darkness.moonphase.full.desc"))
@@ -115,8 +115,8 @@ public class DarknessPage {
                         .setRange(0, 100, 1)
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(25)
-                        .setBinding(v -> ChlorideConfig.darknessFullMoonBright = v / 100d,
-                                () -> Math.toIntExact(Math.round(ChlorideConfig.darknessFullMoonBright * 100))))
+                        .setBinding(v -> ChlorideConfig.darkness.fullMoonBright = v / 100d,
+                                () -> Math.toIntExact(Math.round(ChlorideConfig.darkness.fullMoonBright * 100))))
         );
 
         return page;

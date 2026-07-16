@@ -23,13 +23,13 @@ public class JeiOverlayMixin {
 
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lmezz/jei/gui/overlay/IngredientGridWithNavigation;draw(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;IIF)V"), cancellable = true)
     public void inject$renderOverlay(final Minecraft minecraft, final GuiGraphics guiGraphics, final int mouseX, final int mouseY, final float partialTicks, final CallbackInfo ci) {
-        if (!ChlorideConfig.hideJREMI) return;
+        if (!ChlorideConfig.ui.hideJREMI) return;
 
         final String value = this.searchField.getValue();
         if (value.isEmpty()) {
             if (this.screenPropertiesCache.hasValidScreen()) {
                 this.configButton.draw(guiGraphics, mouseX, mouseY, partialTicks);
-                if (!ChlorideConfig.hideJREMIHint) {
+                if (!ChlorideConfig.ui.hideJREMIHint) {
                     final IGuiProperties props = this.screenPropertiesCache.getGuiProperties().get();
                     guiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), this.searchField.getX() + (this.searchField.getWidth() / 2), props.screenHeight() / 2, 0xFFFFFF);
                 }
@@ -40,7 +40,7 @@ public class JeiOverlayMixin {
 
     @Inject(method = "drawTooltips", at = @At(value = "HEAD"), cancellable = true)
     public void inject$renderOverlay(final Minecraft minecraft, final GuiGraphics guiGraphics, final int mouseX, final int mouseY, final CallbackInfo ci) {
-        if (!ChlorideConfig.hideJREMI) return;
+        if (!ChlorideConfig.ui.hideJREMI) return;
 
         final String value = this.searchField.getValue();
         if (value.isEmpty()) {

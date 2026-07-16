@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'net.neoforged.gradle.userdev' version '7.+'
+    id 'com.gradleup.shadow' version '8.3.6'
     id "me.modmuss50.mod-publish-plugin" version '0.8.+'
 }
 
@@ -47,6 +48,11 @@ ext.sodiumNeoVersion = "0.8.12-beta.1+mc1.21.1"
 
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+    // Dependencies merged into the final jar by shadowJar (kept as-is, no relocation).
+    // Compile-only on the classpath: in dev runs FML ignores plain jars, so repackWaterConfig
+    // re-manifests it as a GAMELIBRARY (same trick as stripSodiumShell below).
+    shade { transitive = false }
+    compileOnly.extendsFrom shade
     // The production "sodium-neoforge" distributable, resolved only so stripSodiumShell can repackage
     // it into a plain library (see the Sodium dependency notes below). Kept off every other classpath.
     sodiumShell { transitive = false }
@@ -71,6 +77,23 @@ tasks.register('stripSodiumShell', Jar) {
         attributes(
                 'FMLModType': 'LIBRARY',
                 'Automatic-Module-Name': 'sodium_service'
+        )
+    }
+}
+
+// Repackage waterconfig for dev runs: FML skips plain library jars on the userdev classpath, so the
+// jar is re-manifested as a GAMELIBRARY to join the game layer (production instead shades it via shadowJar).
+tasks.register('repackWaterConfig', Jar) {
+    archiveBaseName = 'waterconfig-gamelib'
+    archiveVersion = waterconfigversion
+    destinationDirectory = layout.buildDirectory.dir('waterconfig-lib')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.shade.collect { zipTree(it) } }
+    exclude 'META-INF/MANIFEST.MF'
+    manifest {
+        attributes(
+                'FMLModType': 'GAMELIBRARY',
+                'Automatic-Module-Name': 'me.srrapero720.waterconfig'
         )
     }
 }
@@ -110,6 +133,10 @@ repositories {
 
 dependencies {
     implementation "net.neoforged:neoforge:$forgeversion"
+
+    // CONFIG LIBRARY (shaded without relocation; WaterConfig registers codecs/formats via ServiceLoader)
+    shade "com.github.SrRapero720:waterconfig:$waterconfigversion"
+    runtimeOnly files(tasks.named('repackWaterConfig'))
 
     // DEPENDENCIES
     implementation "curse.maven:irisshaders-455508:$irisversion"
@@ -167,6 +194,8 @@ processResources {
 }
 
 jar {
+    // The plain jar is a building block only; shadowJar produces the distributable (mod + shaded waterconfig).
+    archiveClassifier = 'slim'
     manifest {
         attributes([
                 "Specification-Title"       : modid,
@@ -184,10 +213,23 @@ jar {
     }
 }
 
+shadowJar {
+    archiveClassifier = ''
+    // Only the shade configuration is merged in; waterconfig is shaded AS-IS (no package relocation),
+    // so its META-INF/services files must be merged with ours (ResourceLocationCodec).
+    configurations = [project.configurations.shade]
+    mergeServiceFiles()
+    from("LICENSE") {
+        rename { "${it}_${base.archivesName.get()}"}
+    }
+}
+
+assemble.dependsOn shadowJar
+
 publishMods {
     displayName = "$modname-${modloader.toUpperCase()}/mc$mcversion/v$modversion"
     type = BETA
-    file = jar.archiveFile
+    file = shadowJar.archiveFile
     changelog = getChangelogText()
     modLoaders.add(modloader.toLowerCase())
     maxRetries = 2

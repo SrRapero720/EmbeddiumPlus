@@ -21,22 +21,22 @@ public class Darkness {
 	}
 
     private static boolean isDark(final net.minecraft.world.level.Level world) {
-		if (ChlorideConfig.darknessMode == DarkMode.VANILLA) return false;
+		if (ChlorideConfig.darkness.mode == DarkMode.VANILLA) return false;
 
 		final ResourceKey<net.minecraft.world.level.Level> dimType = world.dimension();
 
 		if (dimType == net.minecraft.world.level.Level.OVERWORLD) {
-			return ChlorideConfig.darknessOnOverworld;
+			return ChlorideConfig.darkness.onOverworld;
 		} else if (dimType == net.minecraft.world.level.Level.NETHER) {
-			return ChlorideConfig.darknessOnNether;
+			return ChlorideConfig.darkness.onNether;
 		} else if (dimType == net.minecraft.world.level.Level.END) {
-			return ChlorideConfig.darknessOnEnd;
-		} else if (EntityCulling.isWhitelisted(dimType.location(), ChlorideConfig.darknessDimensionWhiteList)) {
+			return ChlorideConfig.darkness.onEnd;
+		} else if (EntityCulling.isWhitelisted(dimType.location(), ChlorideConfig.darkness.dimensionWhitelist)) {
             return true;
         } else if (world.dimensionType().hasSkyLight()) {
-			return ChlorideConfig.darknessByDefault;
+			return ChlorideConfig.darkness.byDefault;
 		} else {
-			return ChlorideConfig.darknessOnNoSkyLight;
+			return ChlorideConfig.darkness.onNoSkyLight;
 		}
 	}
 
@@ -50,8 +50,8 @@ public class Darkness {
 
 
 		final float oldWeight = Math.max(0, (Math.abs(angle - 0.5f) - 0.2f)) * 20;
-		final float moon = ChlorideConfig.darknessAffectedByMoonPhase ? world.getMoonBrightness() : 0;
-		final float moonInterpolated = (float) Mth.lerp(moon, ChlorideConfig.darknessNewMoonBright, ChlorideConfig.darknessFullMoonBright);
+		final float moon = ChlorideConfig.darkness.affectedByMoonPhase ? world.getMoonBrightness() : 0;
+		final float moonInterpolated = (float) Mth.lerp(moon, ChlorideConfig.darkness.newMoonBright, ChlorideConfig.darkness.fullMoonBright);
 		return Mth.lerp(oldWeight * oldWeight * oldWeight, moonInterpolated, 1f);
     }
 
@@ -98,7 +98,7 @@ public class Darkness {
             skyFactor = 1 - skyFactor * skyFactor * skyFactor * skyFactor;
             skyFactor *= dimSkyFactor;
 
-            final var value = ChlorideConfig.darknessMode.value;
+            final var value = ChlorideConfig.darkness.mode.value;
             if (value == -1) throw new IllegalStateException("Darkness value can't be negative");
 
             float min = Math.max(skyFactor * 0.05f, value);
@@ -170,7 +170,7 @@ public class Darkness {
                 green = green * (1.0F - gamma) + invGreen * gamma;
                 blue = blue * (1.0F - gamma) + invBlue * gamma;
 
-                min = Math.max(0.03f * f, ChlorideConfig.darknessMode.value);
+                min = Math.max(0.03f * f, ChlorideConfig.darkness.mode.value);
                 red = red * (0.99F - min) + min;
                 green = green * (0.99F - min) + min;
                 blue = blue * (0.99F - min) + min;

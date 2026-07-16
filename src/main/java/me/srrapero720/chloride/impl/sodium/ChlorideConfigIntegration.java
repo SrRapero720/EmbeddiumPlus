@@ -62,7 +62,7 @@ public class ChlorideConfigIntegration implements ConfigEntryPoint {
                         Component.translatable("chloride.general.screen.fullscreen")))
                 .setStorageHandler(STORAGE)
                 .setDefaultValue(Borderless.Mode.WINDOWED)
-                .setBinding(Borderless::setFullScreenMode, () -> ChlorideConfig.fullScreen));
+                .setBinding(Borderless::setFullScreenMode, () -> ChlorideConfig.fullscreen.mode));
 
         // The fullscreen-resolution option originally depended on sodium:general.fullscreen (a boolean). Re-point it
         // at our enum so it (a) keeps a valid dependency and (b) is only usable in true FULLSCREEN mode (borderless

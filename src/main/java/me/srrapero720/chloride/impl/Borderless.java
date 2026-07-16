@@ -9,7 +9,7 @@ public class Borderless {
     public static Mode previousMode = Mode.WINDOWED;
 
     public static void reloadFullscreenMode() {
-        setFullScreenMode(ChlorideConfig.fullScreen);
+        setFullScreenMode(ChlorideConfig.fullscreen.mode);
     }
 
     public static void setFullScreenMode(final Mode value) {
@@ -17,8 +17,8 @@ public class Borderless {
         final Options opts = client.options;
         final Window window = client.getWindow();
 
-        previousMode = ChlorideConfig.fullScreen;
-        ChlorideConfig.fullScreen = value;
+        previousMode = ChlorideConfig.fullscreen.mode;
+        ChlorideConfig.fullscreen.mode = value;
         opts.fullscreen().set(value != Mode.WINDOWED);
 
         // options.fullscreen.set() ALREADY CALLS window.toggleFullscreen() AS A SIDE-EFFECT WHEN THE
@@ -41,7 +41,7 @@ public class Borderless {
         // BUMP PREVIOUSMODE TO THE NEW MODE SO THE NEXT SETMODE (THE DUPLICATE ONE FIRED BY
         // UPDATEDISPLAY -> UPDATEFULLSCREEN ONE FRAME LATER) SEES THE POST-TRANSITION STATE AND
         // WON'T OVERWRITE WINDOWEDX/Y/W/H WITH THE ALREADY-TRANSITIONED COORDS.
-        previousMode = ChlorideConfig.fullScreen;
+        previousMode = ChlorideConfig.fullscreen.mode;
     }
 
     public enum AttachMode {

@@ -37,9 +37,9 @@ public class SodiumConfigBuilderMixin {
                         .setImpact(OptionImpact.HIGH)
                         .setDefaultValue(false)
                         .setBinding(v -> {
-                            ChlorideConfig.disableBorderlessOptimizations = v;
+                            ChlorideConfig.fullscreen.disableBorderlessOptimizations = v;
                             Borderless.reloadFullscreenMode();
-                        }, () -> ChlorideConfig.disableBorderlessOptimizations)));
+                        }, () -> ChlorideConfig.fullscreen.disableBorderlessOptimizations)));
     }
 
     @ModifyReturnValue(method = "buildPerformancePage", at = @At("RETURN"))
@@ -54,9 +54,9 @@ public class SodiumConfigBuilderMixin {
                         .setEnabled(FastBlocks.canUseOnChests())
                         .setDefaultValue(false)
                         .setBinding(v -> {
-                            ChlorideConfig.fastChests = v;
+                            ChlorideConfig.fastBlocks.chests = v;
                             NeoForge.EVENT_BUS.post(new FastModelSettingsUpdate.ChestEvent());
-                        }, () -> ChlorideConfig.fastChests))
+                        }, () -> ChlorideConfig.fastBlocks.chests))
                 .addOption(b.createBooleanOption(id("fastBeds"))
                         .setName(Component.translatable("chloride.performance.fastbeds.title"))
                         .setTooltip(Component.translatable("chloride.performance.fastbeds.desc"))
@@ -65,8 +65,8 @@ public class SodiumConfigBuilderMixin {
                         .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD, OptionFlag.REQUIRES_GAME_RESTART)
                         .setDefaultValue(false)
                         .setBinding(v -> {
-                            ChlorideConfig.fastBeds = v;
+                            ChlorideConfig.fastBlocks.beds = v;
                             NeoForge.EVENT_BUS.post(new FastModelSettingsUpdate.BedEvent());
-                        }, () -> ChlorideConfig.fastBeds)));
+                        }, () -> ChlorideConfig.fastBlocks.beds)));
     }
 }

@@ -1,117 +1,209 @@
 package me.srrapero720.chloride;
 
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import com.mojang.blaze3d.shaders.FogShape;
 import me.srrapero720.chloride.impl.*;
+import me.srrapero720.waterconfig.ConfigSpec;
+import me.srrapero720.waterconfig.WaterConfig;
+import me.srrapero720.waterconfig.api.annotations.Comment;
+import me.srrapero720.waterconfig.api.annotations.NumberConditions;
+import me.srrapero720.waterconfig.api.annotations.Spec;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.common.EventBusSubscriber;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import java.io.*;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static me.srrapero720.chloride.Chloride.LOGGER;
 
+@Spec(value = Chloride.ID, suffix = "client", format = WaterConfig.FORMAT_JSON5)
+@Comment("Chloride client settings, organized by feature")
 public class ChlorideConfig {
     public static final Marker IT = MarkerManager.getMarker("Config");
-    private static final HashMap<String, Object> DEFAULTS = new HashMap<>();
-    private static final Gson GSON = new GsonBuilder()
-            .setPrettyPrinting()
-            .registerTypeAdapter(ResourceLocation.class, new ChlorideResourceLocationSerial())
-            .registerTypeAdapter(new TypeToken<List<ResourceLocation>>(){}.getType(), new ListResourceLocationAdapter())
-            .registerTypeAdapter(ChlorideConfig.class, new ChlorideConfigSerial())
-            .create();
-    private static final ChlorideConfig DUMMY = new ChlorideConfig();
-    private static File configFile;
+    private static volatile ConfigSpec SPEC;
 
-    @ConfigField public static boolean modpackMode = false;
-    @ConfigField public static Borderless.Mode fullScreen = Borderless.Mode.WINDOWED;
-    @ConfigField public static boolean disableBorderlessOptimizations = false;
-    @ConfigField public static Overlay.FPS fpsDisplayMode = Overlay.FPS.ADVANCED;
-    @ConfigField public static Overlay.FPSAlign fpsDisplayAlign = Overlay.FPSAlign.LEFT;
-    @ConfigField public static Overlay.FPSVAlign fpsDisplayVAlign = Overlay.FPSVAlign.TOP;
-    @ConfigField public static Overlay.FPSDetails fpsDisplaySystemMode = Overlay.FPSDetails.OFF;
-    @ConfigField public static int fpsDisplayMargin = 12;
-    @ConfigField public static int fpsDisplayVMargin = 12;
-    @ConfigField public static boolean fpsDisplayShadow = false;
+    // GENERAL (ROOT)
+    @Spec.Field
+    @Comment("Hides non-performance pages and options from the Sodium settings screen (for modpack makers)")
+    public static boolean modpackMode = false;
 
-    @ConfigField public static boolean fog = true;
-    @ConfigField public static boolean fogOnOverworld = true;
-    @ConfigField public static boolean fogOnNether = true;
-    @ConfigField public static boolean fogOnEnd = true;
+    // FEATURE GROUPS
+    @Spec.Field public static final FullscreenConfig fullscreen = new FullscreenConfig();
+    @Spec.Field public static final FpsDisplayConfig fpsDisplay = new FpsDisplayConfig();
+    @Spec.Field public static final FogConfig fog = new FogConfig();
+    @Spec.Field public static final WorldConfig world = new WorldConfig();
+    @Spec.Field public static final NametagsConfig nametags = new NametagsConfig();
+    @Spec.Field public static final DarknessConfig darkness = new DarknessConfig();
+    @Spec.Field public static final InterfaceConfig ui = new InterfaceConfig();
+    @Spec.Field public static final FastBlocksConfig fastBlocks = new FastBlocksConfig();
+    @Spec.Field public static final ParticlesConfig particles = new ParticlesConfig();
+    @Spec.Field public static final CullingConfig culling = new CullingConfig();
+    @Spec.Field public static final ZoomConfig zoom = new ZoomConfig();
 
-    @ConfigField public static boolean blueBand = true;
-    @ConfigField public static boolean customFog = false;
-    @ConfigField public static int fogStart = 0;
-    @ConfigField public static int fogEnd = 192;
-    @ConfigField public static FogShape fogShape = FogShape.CYLINDER;
-    @ConfigField public static int cloudsHeight = 192;
-    @ConfigField public static boolean entityNametagRendering = true;
-    @ConfigField public static boolean playerNametagRendering = true;
-    @ConfigField public static boolean itemNametagRendering = true;
-    @ConfigField public static ChunkFade.Speed chunkFadeSpeed = ChunkFade.Speed.SLOW;
+    @Spec(value = "fullscreen", disableStatic = true)
+    @Comment("Fullscreen and borderless window behavior")
+    public static class FullscreenConfig {
+        @Spec.Field
+        @Comment("Window mode applied at boot and by the fullscreen option")
+        public Borderless.Mode mode = Borderless.Mode.WINDOWED;
 
-    @ConfigField public static Darkness.DarkMode darknessMode = Darkness.DarkMode.VANILLA;
-    @ConfigField public static boolean darknessOnOverworld = true;
-    @ConfigField public static boolean darknessOnNether = false;
-    @ConfigField public static double darknessNetherFogBright = 0.5;
-    @ConfigField public static boolean darknessOnEnd = false;
-    @ConfigField public static double darknessEndFogBright = 0.5;
-    @ConfigField public static boolean darknessByDefault = false;
-    @ConfigField public static List<ResourceLocation> darknessDimensionWhiteList = Collections.emptyList();
-    @ConfigField public static boolean darknessOnNoSkyLight = false;
-    @ConfigField public static boolean darknessBlockLightOnly = false;
-    @ConfigField public static boolean darknessAffectedByMoonPhase = true;
-    @ConfigField public static double darknessNewMoonBright = 0.0;
-    @ConfigField public static double darknessFullMoonBright = 0.25;
+        @Spec.Field
+        @Comment("Adds 1px to the borderless window height, avoiding driver-level exclusive fullscreen optimizations")
+        public boolean disableBorderlessOptimizations = false;
 
-    @ConfigField public static boolean hideJREMI = false;
-    @ConfigField public static boolean hideJREMIHint = false;
-    @ConfigField public static boolean fontShadows = true;
-    @ConfigField public static LeavesCulling.LeavesCullingMode leavesCulling = LeavesCulling.LeavesCullingMode.OFF;
-    @ConfigField public static boolean fastChests = false;
-    @ConfigField public static boolean fastBeds = false;
+        @Spec.Field
+        @Comment("Which window modes the F11 key cycles through")
+        public Borderless.AttachMode attachModeF11 = Borderless.AttachMode.ATTACH;
+    }
 
-    @ConfigField public static boolean rainParticles = true;
-    @ConfigField public static boolean rainDropParticles = true;
-    @ConfigField public static boolean crackingBlockParticles = true;
-    @ConfigField public static boolean destroyedBlockParticles = true;
-    @ConfigField public static List<ResourceLocation> disabledParticles = toId();
+    @Spec(value = "fpsDisplay", disableStatic = true)
+    @Comment("FPS and system details overlay")
+    public static class FpsDisplayConfig {
+        @Spec.Field public Overlay.FPS mode = Overlay.FPS.ADVANCED;
+        @Spec.Field public Overlay.FPSAlign align = Overlay.FPSAlign.LEFT;
+        @Spec.Field public Overlay.FPSVAlign verticalAlign = Overlay.FPSVAlign.TOP;
+        @Spec.Field public Overlay.FPSDetails systemDetails = Overlay.FPSDetails.OFF;
+        @Spec.Field @NumberConditions(minInt = 0) public int margin = 12;
+        @Spec.Field @NumberConditions(minInt = 0) public int verticalMargin = 12;
+        @Spec.Field public boolean shadow = false;
+    }
 
-    @ConfigField public static boolean tileEntityDistanceCulling = true;
-    @ConfigField public static int tileEntityCullingDistanceX = 4096;
-    @ConfigField public static int tileEntityCullingDistanceY = 32;
-    @ConfigField public static boolean entityDistanceCulling = true;
-    @ConfigField public static int entityLimit = 512;
-    @ConfigField public static int entityCullingDistanceX = 4096;
-    @ConfigField public static int entityCullingDistanceY = 32;
-    @ConfigField public static boolean monsterDistanceCulling = false;
-    @ConfigField public static int monsterCullingDistanceX = 16384;
-    @ConfigField public static int monsterCullingDistanceY = 64;
-    @ConfigField public static List<ResourceLocation> entityWhitelist = toId("minecraft:ghast", "minecraft:ender_dragon", "iceandfire:all", "create:all");
-    @ConfigField public static List<ResourceLocation> monsterWhitelist = toId();
-    @ConfigField public static List<ResourceLocation> tileEntityWhitelist = toId("waterframes:all");
+    @Spec(value = "fog", disableStatic = true)
+    @Comment("Fog rendering and the sky blue band")
+    public static class FogConfig {
+        @Spec.Field public boolean enabled = true;
+        @Spec.Field public boolean onOverworld = true;
+        @Spec.Field public boolean onNether = true;
+        @Spec.Field public boolean onEnd = true;
+        @Spec.Field public boolean blueBand = true;
 
-    @ConfigField public static Borderless.AttachMode borderlessAttachModeF11 = Borderless.AttachMode.ATTACH;
-    @ConfigField public static boolean fastLanguageReload = true;
+        @Spec.Field
+        @Comment("Overrides vanilla fog with the start/end/shape values below")
+        public boolean custom = false;
 
-    @ConfigField public static boolean enableZoom = true;
-    @ConfigField public static double maxZoom = 50;
+        @Spec.Field @NumberConditions(minInt = -1000, maxInt = 1000) public int start = 0;
+        @Spec.Field @NumberConditions(minInt = 100, maxInt = 10000) public int end = 192;
+        @Spec.Field public FogShape shape = FogShape.CYLINDER;
+    }
 
+    @Spec(value = "world", disableStatic = true)
+    @Comment("World rendering tweaks")
+    public static class WorldConfig {
+        @Spec.Field @NumberConditions(minInt = 64, maxInt = 364) public int cloudsHeight = 192;
+        @Spec.Field public ChunkFade.Speed chunkFadeSpeed = ChunkFade.Speed.SLOW;
+        @Spec.Field public LeavesCulling.LeavesCullingMode leavesCulling = LeavesCulling.LeavesCullingMode.OFF;
+    }
+
+    @Spec(value = "nametags", disableStatic = true)
+    @Comment("Nametag rendering toggles")
+    public static class NametagsConfig {
+        @Spec.Field public boolean entities = true;
+        @Spec.Field public boolean players = true;
+        @Spec.Field public boolean items = true;
+    }
+
+    @Spec(value = "darkness", disableStatic = true)
+    @Comment("True darkness feature")
+    public static class DarknessConfig {
+        @Spec.Field public Darkness.DarkMode mode = Darkness.DarkMode.VANILLA;
+        @Spec.Field public boolean onOverworld = true;
+        @Spec.Field public boolean onNether = false;
+        @Spec.Field @NumberConditions(minDouble = 0, maxDouble = 1) public double netherFogBright = 0.5;
+        @Spec.Field public boolean onEnd = false;
+        @Spec.Field @NumberConditions(minDouble = 0, maxDouble = 1) public double endFogBright = 0.5;
+
+        @Spec.Field
+        @Comment("Apply darkness on modded dimensions not present in the whitelist below")
+        public boolean byDefault = false;
+
+        @Spec.Field public List<ResourceLocation> dimensionWhitelist = toId();
+        @Spec.Field public boolean onNoSkyLight = false;
+        @Spec.Field public boolean blockLightOnly = false;
+        @Spec.Field public boolean affectedByMoonPhase = true;
+        @Spec.Field @NumberConditions(minDouble = 0, maxDouble = 1) public double newMoonBright = 0.0;
+        @Spec.Field @NumberConditions(minDouble = 0, maxDouble = 1) public double fullMoonBright = 0.25;
+    }
+
+    @Spec(value = "interface", disableStatic = true)
+    @Comment("Interface and HUD tweaks")
+    public static class InterfaceConfig {
+        @Spec.Field
+        @Comment("Hides the JEI/REI/EMI ingredient overlay until the search field is focused")
+        public boolean hideJREMI = false;
+
+        @Spec.Field public boolean hideJREMIHint = false;
+        @Spec.Field public boolean fontShadows = true;
+        @Spec.Field public boolean fastLanguageReload = true;
+    }
+
+    @Spec(value = "fastBlocks", disableStatic = true)
+    @Comment("Renders chests and beds as simple static block models")
+    public static class FastBlocksConfig {
+        @Spec.Field public boolean chests = false;
+        @Spec.Field public boolean beds = false;
+    }
+
+    @Spec(value = "particles", disableStatic = true)
+    @Comment("Particle toggles")
+    public static class ParticlesConfig {
+        @Spec.Field public boolean rain = true;
+        @Spec.Field public boolean rainDrops = true;
+        @Spec.Field public boolean blockCracking = true;
+        @Spec.Field public boolean blockDestroyed = true;
+
+        @Spec.Field
+        @Comment("Particle ids fully disabled; 'modid:all' disables a whole namespace")
+        public List<ResourceLocation> disabled = toId();
+    }
+
+    @Spec(value = "culling", disableStatic = true)
+    @Comment("Entity and tile-entity distance culling")
+    public static class CullingConfig {
+        @Spec.Field public boolean tileEntities = true;
+
+        @Spec.Field
+        @Comment("Squared horizontal distance in blocks")
+        @NumberConditions(minInt = 0, maxInt = 16384)
+        public int tileEntityDistanceX = 4096;
+
+        @Spec.Field @NumberConditions(minInt = 0, maxInt = 256) public int tileEntityDistanceY = 32;
+        @Spec.Field public boolean entities = true;
+
+        @Spec.Field
+        @Comment("Maximum rendered entities; 512 disables the limit")
+        @NumberConditions(minInt = 0, maxInt = 512)
+        public int entityLimit = 512;
+
+        @Spec.Field
+        @Comment("Squared horizontal distance in blocks")
+        @NumberConditions(minInt = 0, maxInt = 16384)
+        public int entityDistanceX = 4096;
+
+        @Spec.Field @NumberConditions(minInt = 0, maxInt = 256) public int entityDistanceY = 32;
+        @Spec.Field public boolean monsters = false;
+
+        @Spec.Field
+        @Comment("Squared horizontal distance in blocks")
+        @NumberConditions(minInt = 0, maxInt = 16384)
+        public int monsterDistanceX = 16384;
+
+        @Spec.Field @NumberConditions(minInt = 0, maxInt = 256) public int monsterDistanceY = 64;
+
+        @Spec.Field
+        @Comment("Entities never culled; 'modid:all' matches a whole namespace")
+        public List<ResourceLocation> entityWhitelist = toId("minecraft:ghast", "minecraft:ender_dragon", "iceandfire:all", "create:all");
+
+        @Spec.Field public List<ResourceLocation> monsterWhitelist = toId();
+        @Spec.Field public List<ResourceLocation> tileEntityWhitelist = toId("waterframes:all");
+    }
+
+    @Spec(value = "zoom", disableStatic = true)
+    @Comment("Zoom keybind")
+    public static class ZoomConfig {
+        @Spec.Field public boolean enabled = true;
+        @Spec.Field @NumberConditions(minDouble = 1, maxDouble = 100) public double max = 50;
+    }
 
     public static List<ResourceLocation> toId(final String... ids) {
         final List<ResourceLocation> result = new ArrayList<>();
@@ -124,143 +216,19 @@ public class ChlorideConfig {
     }
 
     static void load(final Path configPath) {
-        configFile = configPath.resolve("chloride-client.json").toFile();
-        for (Field field: ChlorideConfig.class.getDeclaredFields()) {
-            if (!Modifier.isStatic(field.getModifiers()) || !field.isAnnotationPresent(ConfigField.class))
-                continue;
-
-            try {
-                field.setAccessible(true);
-                DEFAULTS.put(field.getName(), field.get(null));
-            } catch (final IllegalAccessException e) {
-                LOGGER.error(IT,"Cannot access field: {}", field.getName(), e);
-            }
-        }
-        if (!configFile.exists()) {
-            write();
-        } else {
-            read();
-            write();
-        }
-
-        // Ensure no field is null
-        for (final Field field: ChlorideConfig.class.getDeclaredFields()) {
-            if (!Modifier.isStatic(field.getModifiers()) || !field.isAnnotationPresent(ConfigField.class))
-                continue;
-
-            try {
-                field.setAccessible(true);
-                if (field.get(null) == null) {
-                    LOGGER.warn(IT, "Field {} is null, setting to default value", field.getName());
-                    field.set(null, DEFAULTS.get(field.getName()));
-                }
-            } catch (final IllegalAccessException e) {
-                LOGGER.error(IT,"Cannot access field: {}", field.getName(), e);
-            }
+        try {
+            WaterConfig.setPath(configPath);
+            WaterConfig.init();
+            SPEC = WaterConfig.registerBlocking(ChlorideConfig.class);
+        } catch (final Exception e) {
+            LOGGER.error(IT, "Cannot load config, running with default values", e);
         }
     }
 
     public static void write() {
-        try (final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(configFile))) {
-            out.write(GSON.toJson(DUMMY).getBytes(StandardCharsets.UTF_8));
-        } catch (final Exception e) {
-            LOGGER.error("Cannot write file", e);
-        }
-    }
-
-    private static void read() {
-        try (final BufferedInputStream in = new BufferedInputStream(new FileInputStream(configFile))) {
-            GSON.fromJson(new String(in.readAllBytes(), StandardCharsets.UTF_8), ChlorideConfig.class);
-        } catch (final Exception e) {
-            LOGGER.error("Cannot read file, writting to defaults", e);
-            write();
-        }
-    }
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface ConfigField {
-
-    }
-
-    public static class ListResourceLocationAdapter implements JsonSerializer<List<ResourceLocation>>, JsonDeserializer<List<ResourceLocation>> {
-        @Override
-        public JsonElement serialize(final List<ResourceLocation> src, final Type typeOfSrc, final JsonSerializationContext context) {
-            return context.serialize(src.stream().map(ResourceLocation::toString).collect(Collectors.toList()));
-        }
-
-        @Override
-        public List<ResourceLocation> deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
-            if (!json.isJsonArray()) {
-                throw new JsonParseException("Expected a JSON array for List<ResourceLocation>");
-            }
-
-            final JsonArray jsonArray = json.getAsJsonArray();
-            return jsonArray.asList().stream()
-                    .map(e -> (ResourceLocation) context.deserialize(e, ResourceLocation.class))
-                    .collect(Collectors.toList());
-        }
-    }
-
-    private static final class ChlorideResourceLocationSerial implements JsonSerializer<ResourceLocation>, JsonDeserializer<ResourceLocation> {
-
-        @Override
-        public ResourceLocation deserialize(final JsonElement jsonElement, final Type type, final JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-            return ResourceLocation.tryParse(jsonElement.getAsString().replace(":*", ":all"));
-        }
-
-        @Override
-        public JsonElement serialize(final ResourceLocation resourceLocation, final Type type, final JsonSerializationContext jsonSerializationContext) {
-            return new JsonPrimitive(resourceLocation.toString());
-        }
-    }
-
-    private static final class ChlorideConfigSerial implements JsonSerializer<ChlorideConfig>, JsonDeserializer<ChlorideConfig> {
-        @Override
-        public JsonElement serialize(final ChlorideConfig src, final Type typeOfSrc, final JsonSerializationContext context) {
-            final JsonObject jsonObject = new JsonObject();
-
-            for (final Field field: ChlorideConfig.class.getDeclaredFields()) {
-                if (!Modifier.isStatic(field.getModifiers()) || !field.isAnnotationPresent(ConfigField.class))
-                    continue;
-
-                try {
-                    field.setAccessible(true);
-                    jsonObject.add(field.getName(), context.serialize(field.get(null)));
-                } catch (final IllegalAccessException e) {
-                    throw new RuntimeException("Error al acceder al campo: " + field.getName(), e);
-                }
-            }
-
-            return jsonObject;
-        }
-
-        @Override
-        public ChlorideConfig deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
-            final JsonObject jsonObject = json.getAsJsonObject();
-
-            for (final Field field: ChlorideConfig.class.getDeclaredFields()) {
-                if (!field.isAnnotationPresent(ConfigField.class) || !Modifier.isStatic(field.getModifiers()))
-                    continue;
-
-                try {
-                    final JsonElement element = jsonObject.get(field.getName());
-                    if (element == null || element.isJsonNull()) {
-                        if (DEFAULTS.containsKey(field.getName())) {
-                            field.set(null, DEFAULTS.get(field.getName()));
-                            continue;
-                        } else {
-                            throw new JsonParseException("Missing default field: " + field.getName());
-                        }
-                    }
-
-                    field.setAccessible(true);
-                    field.set(null, context.deserialize(element, field.getGenericType()));
-                } catch (final IllegalAccessException e) {
-                    throw new RuntimeException("Error al asignar el valor al campo: " + field.getName(), e);
-                }
-            }
-
-            return new ChlorideConfig(); // Devuelve una instancia vacía; solo usa campos estáticos
-        }
+        final ConfigSpec spec = SPEC;
+        if (spec == null) return;
+        spec.refresh();      // RE-VALIDATES DIRECT (REFLECT-MODE) FIELD MUTATIONS THE SPEC CANNOT SEE
+        spec.setDirty(true); // THE WATERCONFIG WORKER PERSISTS ASYNC; ITS SHUTDOWN HOOK COVERS GAME EXIT
     }
 }
