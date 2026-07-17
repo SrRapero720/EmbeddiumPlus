@@ -67,7 +67,7 @@ public class FastBlocks {
 
                 final Path chestsPath = modFile.getModInfo().getOwningFile().getFile().findResource("custom_packs/solid_chests");
                 SOLID_CHESTS_PACK = Pack.readMetaAndCreate(
-                        new PackLocationInfo(Chloride.ID + "_solid_chests", Component.literal("Chloride: Solid Chests"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_beds", "1.0.0"))),
+                        new PackLocationInfo(Chloride.ID + "_solid_chests", Component.literal("Chloride: Solid Chests"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_chests", "1.0.0"))),
                         BuiltInPackSource.fromName((path) -> getPathResources(path, chestsPath)),
                         PackType.CLIENT_RESOURCES,
                         new PackSelectionConfig(false, Pack.Position.TOP, true)
