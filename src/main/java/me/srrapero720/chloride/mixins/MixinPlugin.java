@@ -19,9 +19,10 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(final String targetClassName, final String mixinClassName) {
-        if (targetClassName.contains("jei_rei_emi.Jei") && !Chloride.installed("jei")) return false;
-        if (targetClassName.contains("jei_rei_emi.Rei") && !Chloride.installed("roughlyenoughitems")) return false;
-        return !targetClassName.contains("jei_rei_emi.Emi") || Chloride.installed("emi");
+        // FIRST PARAM IS THE TARGET (mezz.jei...), THE MOD-PRESENCE GATE MUST CHECK THE MIXIN CLASS NAME
+        if (mixinClassName.contains("jei_rei_emi.Jei") && !Chloride.installed("jei")) return false;
+        if (mixinClassName.contains("jei_rei_emi.Rei") && !Chloride.installed("roughlyenoughitems")) return false;
+        return !mixinClassName.contains("jei_rei_emi.Emi") || Chloride.installed("emi");
 
         // go ahead
     }
