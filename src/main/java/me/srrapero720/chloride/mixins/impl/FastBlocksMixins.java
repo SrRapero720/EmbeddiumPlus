@@ -34,7 +34,7 @@ public class FastBlocksMixins {
         @Override
         @SuppressWarnings("deprecation")
         public boolean skipRendering(final BlockState state, final BlockState neighborState, final Direction direction) {
-            return neighborState.getBlock() instanceof BedBlock;
+            return ChlorideConfig.fastBlocks.beds && neighborState.getBlock() instanceof BedBlock;
         }
     }
 
