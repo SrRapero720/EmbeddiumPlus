@@ -93,6 +93,15 @@ public class ChlorideConfig {
         @Spec.Field @NumberConditions(minInt = 64, maxInt = 364) public int cloudsHeight = 192;
         @Spec.Field public ChunkFade.Speed chunkFadeSpeed = ChunkFade.Speed.SLOW;
         @Spec.Field public LeavesCulling.LeavesCullingMode leavesCulling = LeavesCulling.LeavesCullingMode.OFF;
+
+        @Spec.Field
+        @Comment("Y level where the dark below-horizon void plane starts rendering; 63 keeps vanilla behavior, lower it to remove the dark sky band at low heights")
+        @NumberConditions(minInt = -64, maxInt = 256)
+        public int lowerVoidHorizon = 63;
+
+        @Spec.Field
+        @Comment("Keeps the skybox from clipping on very low render distances by enforcing a minimum sky far-plane")
+        public boolean farSkybox = true;
     }
 
     @Spec(value = "nametags", disableStatic = true)

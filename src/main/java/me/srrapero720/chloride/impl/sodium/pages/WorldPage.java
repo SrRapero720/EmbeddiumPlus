@@ -110,6 +110,20 @@ public class WorldPage {
                         .setStorageHandler(STORAGE)
                         .setDefaultValue(192)
                         .setBinding(v -> ChlorideConfig.world.cloudsHeight = v, () -> ChlorideConfig.world.cloudsHeight))
+                .addOption(b.createIntegerOption(Chloride.id("lowerVoidHorizon"))
+                        .setName(Component.translatable("chloride.world.void_horizon.title"))
+                        .setTooltip(Component.translatable("chloride.world.void_horizon.desc"))
+                        .setValueFormatter(VOID_HORIZON)
+                        .setRange(-64, 256, 1)
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(63)
+                        .setBinding(v -> ChlorideConfig.world.lowerVoidHorizon = v, () -> ChlorideConfig.world.lowerVoidHorizon))
+                .addOption(b.createBooleanOption(Chloride.id("farSkybox"))
+                        .setName(Component.translatable("chloride.world.far_skybox.title"))
+                        .setTooltip(Component.translatable("chloride.world.far_skybox.desc"))
+                        .setStorageHandler(STORAGE)
+                        .setDefaultValue(true)
+                        .setBinding(v -> ChlorideConfig.world.farSkybox = v, () -> ChlorideConfig.world.farSkybox))
         );
 
         // World "amazings" (chunk fade) — kept disabled, mirrors the previous behaviour.

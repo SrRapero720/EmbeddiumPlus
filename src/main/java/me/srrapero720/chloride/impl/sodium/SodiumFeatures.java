@@ -23,7 +23,7 @@ public class SodiumFeatures {
         return e -> Component.translatable(translation + "." + e.name().toLowerCase());
     }
 
-    // The old ControlValueFormatter.number()/percentage()/biomeBlend() helpers no longer exist in the public API.
+    public static final ControlValueFormatter VOID_HORIZON = v -> v == 63.0f ? Component.translatable("chloride.world.void_horizon.vanilla") : Component.literal(String.valueOf(v));
     public static final ControlValueFormatter NUMBER = v -> Component.literal(String.valueOf(v));
     public static final ControlValueFormatter PERCENT = v -> Component.literal(v + "%");
     public static final ControlValueFormatter BLOCKS = v -> Component.literal(v + " blocks");

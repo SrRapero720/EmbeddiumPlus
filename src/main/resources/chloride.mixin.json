@@ -28,6 +28,8 @@
     "ParticlesMixins$LevelRendererMixin",
     "ParticlesMixins$ParticleTypeMixin",
     "QuickLanguageReloadMixin",
+    "SkyMixins$HorizonMixin",
+    "SkyMixins$DepthFarMixin",
     "darkness.DimensionEffectsMixin",
     "darkness.DimensionEffectsMixin$EndMixin",
     "darkness.DimensionEffectsMixin$NetherMixin",
