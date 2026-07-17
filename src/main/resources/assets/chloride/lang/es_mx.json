@@ -137,6 +137,8 @@
   "chloride.darkness.moonphase.full.desc": "Configura el brillo en una luna llena, o el nivel de brillo máximo en la fase de luna llena",
 
   "chloride.particles": "Particulas",
+  "chloride.particles.list": "Lista de particulas",
+  "chloride.particles.list.search": "Buscar particulas...",
   "chloride.particles.rain.title": "Particulas de Lluvia",
   "chloride.particles.rain.desc": "Activa las particulas de agua cayendo de la lluvia.",
   "chloride.particles.rain.drop.title": "Particulas de Gota de Agua",

@@ -81,6 +81,10 @@ public class ChlorideConfigIntegration implements ConfigEntryPoint {
         mod.addPage(WorldPage.build(builder));
         if (!ChlorideConfig.modpackMode) mod.addPage(DarknessPage.build(builder));
         mod.addPage(ParticlesPage.build(builder));
+        // EXTERNAL PAGE: THE PER-PARTICLE TOGGLES OPEN IN THEIR OWN SCROLL-CULLED SCREEN (ISSUE #174)
+        mod.addPage(builder.createExternalPage()
+                .setName(Component.translatable("chloride.particles.list"))
+                .setScreenConsumer(current -> Minecraft.getInstance().setScreen(new ParticleListScreen(current))));
         mod.addPage(EntitiesPage.build(builder));
         if (!ChlorideConfig.modpackMode) mod.addPage(ZoomPage.build(builder));
 

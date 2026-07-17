@@ -137,6 +137,8 @@
   "chloride.darkness.moonphase.full.desc": "Configure brightness on a full moon, or maximum bright level on black moon phase",
 
   "chloride.particles": "Particles",
+  "chloride.particles.list": "Particle List",
+  "chloride.particles.list.search": "Search particles...",
   "chloride.particles.rain.title": "Rain Particles",
   "chloride.particles.rain.desc": "Enables the water falling particles when raining",
   "chloride.particles.rain.drop.title": "Rain Drop Particles",
