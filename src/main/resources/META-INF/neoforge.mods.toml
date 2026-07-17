@@ -33,3 +33,11 @@ issueTrackerURL="https://github.com/${github}/issues"
     versionRange="${sodiumrange}"
     ordering="AFTER"
     side="CLIENT"
+
+[[dependencies.${modid}]]
+    modId="smoothskies"
+    type="incompatible"
+    reason="Chloride ships every Smooth Skies feature natively."
+    versionRange="[0,)"
+    ordering="NONE"
+    side="CLIENT"
