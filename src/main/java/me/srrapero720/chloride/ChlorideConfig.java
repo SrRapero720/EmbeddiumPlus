@@ -17,7 +17,7 @@ import java.util.List;
 
 import static me.srrapero720.chloride.Chloride.LOGGER;
 
-@Spec(value = Chloride.ID, suffix = "client", format = WaterConfig.FORMAT_JSON5)
+@Spec(value = Chloride.ID, suffix = "client", format = WaterConfig.FORMAT_TOML, old = WaterConfig.FORMAT_JSON)
 @Comment("Chloride client settings, organized by feature")
 public class ChlorideConfig {
     public static final Marker IT = MarkerManager.getMarker("Config");
