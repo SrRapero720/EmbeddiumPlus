@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderNameTagEvent;
 import net.neoforged.neoforge.common.util.TriState;
 
-@EventBusSubscriber(modid = Chloride.ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
 public class HideNametag {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

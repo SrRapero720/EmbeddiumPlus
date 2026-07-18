@@ -17,7 +17,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
-@EventBusSubscriber(modid = Chloride.ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
 public class Zoom {
     private static final double EASE_DELTA = 0.15;
     private static final double DEFAULT = 3;
@@ -91,12 +91,9 @@ public class Zoom {
             e.setFOV(zoom(e.getFOV()));
     }
 
-    @EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD, modid = Chloride.ID)
-    public static final class ModEvents {
-        @SubscribeEvent
-        @OnlyIn(Dist.CLIENT)
-        public static void registerKeys(final RegisterKeyMappingsEvent event) {
-            event.register(KEY);
-        }
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void registerKeys(final RegisterKeyMappingsEvent event) {
+        event.register(KEY);
     }
 }
