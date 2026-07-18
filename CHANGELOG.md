@@ -1,3 +1,15 @@
+# RELEASE 1.8.0
+- [✨] Added a void horizon height slider (sets the Y level of the below-horizon void plane, 63 keeps vanilla behavior)
+- [✨] Added a toggle to enhance Skybox looking on low render distances
+- [🛠️] Moved per-particle toggles to a separated screen with an id/mod search box (fixes [#174](https://github.com/SrRapero720/chloride/issues/174))
+- [🛠️] Replaced the custom config with WaterConfig (config is now chloride-client.toml), recovers old settings from .json file and deletes the file once is done.
+- [🛠️] Declared Smooth Skies incompatible (its features are already in chloride) (fixes [#170](https://github.com/SrRapero720/chloride/issues/170))
+- [🛠️] Updated Sodium to 0.8.12
+- [🐛] Fixed bed faces were still culled with Fast Beds disabled (fixes [#126](https://github.com/SrRapero720/chloride/issues/126))
+- [🐛] Fixed JEI integration crash on latest JEI (fixes [#172](https://github.com/SrRapero720/chloride/issues/172))
+- [🐛] Fixed solid chests pack reused the solid beds pack id
+- [🐛] Fixed JEI/REI/EMI mixins applied even when those mods weren't installed
+
 # RELEASE 1.7.9
 - [✨] [1.21.1] Updated to sodium 0.8.12-beta.1 (brings back video setting screen)
 
