@@ -1,6 +1,6 @@
 {
   "pack": {
     "description": "Solid chest pack",
-    "pack_format": ${modpackformat}
+    "pack_format": $modpackformat
   }
 }

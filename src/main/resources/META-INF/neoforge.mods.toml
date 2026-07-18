@@ -1,7 +1,7 @@
-modLoader="javafml" #mandatory
-loaderVersion="${fmlrange}"
-license="${modlicense}"
-issueTrackerURL="https://github.com/${github}/issues"
+modLoader="javafml"
+loaderVersion="$fmlrange"
+license="$modlicense"
+issueTrackerURL="https://github.com/$github/issues"
 
 [[mixins]]
     config="$modid.$mixin_file_suffix"
@@ -10,31 +10,38 @@ issueTrackerURL="https://github.com/${github}/issues"
     file="META-INF/accesstransformer.cfg"
 
 [[mods]]
-    modId="${modid}"
-    version="${modversion}"
-    displayName="${modname}"
+    modId="$modid"
+    version="$modversion"
+    displayName="$modname"
     type="required"
-    logoFile="pack.png" #optional
-    authors="${modauthor}" #optional
-    credits="${modcredits}"
-    displayURL="https://www.curseforge.com/minecraft/mc-mods/${modid}"
-    description='''${moddesc}'''
+    logoFile="pack.png"
+    authors="$modauthor"
+    credits="$modcredits"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/$modid"
+    description='''$moddesc'''
 
-[[dependencies.${modid}]]
-    modId="minecraft"
+[[dependencies.$modid]]
+    modId="neoforge"
     type="required"
-    versionRange="${minecraftrange}"
+    versionRange="$forgerange"
     ordering="NONE"
     side="CLIENT"
 
-[[dependencies.${modid}]]
+[[dependencies.$modid]]
+    modId="minecraft"
+    type="required"
+    versionRange="$minecraftrange"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.$modid]]
     modId="sodium"
     type="required"
-    versionRange="${sodiumrange}"
+    versionRange="$sodiumrange"
     ordering="AFTER"
     side="CLIENT"
 
-[[dependencies.${modid}]]
+[[dependencies.$modid]]
     modId="smoothskies"
     type="incompatible"
     reason="Chloride ships every Smooth Skies feature natively."

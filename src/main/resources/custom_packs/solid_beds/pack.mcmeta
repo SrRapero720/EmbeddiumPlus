@@ -1,6 +1,6 @@
 {
   "pack": {
     "description": "Solid beds pack",
-    "pack_format": ${modpackformat}
+    "pack_format": $modpackformat
   }
 }

@@ -1,34 +1,36 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
-name: Java CI with Gradle
+name: Build Test (everything runs)
 
 on:
   push:
-    branches: [ "1.20.x", "1.20.1", "1.19.2", "1.18.2" ]
+    branches: [ "1.20.1", "1.21.1-neo", "1.21.1-fabric", "1.21.11-neo", "1.21.11-fabric", "26.1.x-neo", "26.1.x-fabric", "26.2.x-neo", "26.2.x-fabric" ]
   pull_request:
-    branches: [ "1.20.x", "1.20.1", "1.19.2", "1.18.2" ]
+    branches: [ "1.20.1", "1.21.1-neo", "1.21.1-fabric", "1.21.11-neo", "1.21.11-fabric", "26.1.x-neo", "26.1.x-fabric", "26.2.x-neo", "26.2.x-fabric" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          java-version: '25'
+          distribution: 'microsoft'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+        run: ./gradlew build --console=plain
+
+      - name: Upload mod jar
+        uses: actions/upload-artifact@v4
         with:
-          arguments: build
+          name: mod-jar
+          path: build/libs/*.jar
