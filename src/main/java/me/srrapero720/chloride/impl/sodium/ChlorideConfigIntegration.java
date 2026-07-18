@@ -1,7 +1,6 @@
 package me.srrapero720.chloride.impl.sodium;
 
 import com.mojang.blaze3d.platform.Monitor;
-import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.Borderless;
 import me.srrapero720.chloride.impl.sodium.pages.*;
@@ -19,21 +18,6 @@ import static me.srrapero720.chloride.Chloride.LOGGER;
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 import static me.srrapero720.chloride.Chloride.id;
 
-/**
- * Registers Chloride's option pages through Sodium's public config API (replaces the old {@code SodiumOptionsGUIMixin}
- * and {@code SodiumOptionsMixin}, which targeted classes that no longer exist as of Sodium 0.8.x).
- *
- * <p>Discovered by Sodium via the {@link ConfigEntryPointForge} annotation. {@code registerConfigLate} runs at
- * Minecraft post-init, which is after {@code Chloride.earlyLoad()} has populated {@link ChlorideConfig}, so the
- * option bindings can safely read the current config values.
- *
- * <p>Sodium's own pages are integrated here: the vanilla fullscreen toggle is swapped for Chloride's three-way
- * borderless mode ({@code registerOptionReplacement}), and the fullscreen-resolution option is re-pointed at that
- * new option via {@code registerOptionOverlay} (otherwise it would depend on the now-removed
- * {@code sodium:general.fullscreen} and Sodium's dependency validation crashes). The additive toggles (borderless
- * optimization, fast chests/beds) are injected with {@code SodiumConfigBuilderMixin}, since the public API can only
- * replace/overlay existing options, not add brand-new ones to another mod's page.
- */
 @ConfigEntryPointForge("chloride")
 public class ChlorideConfigIntegration implements ConfigEntryPoint {
 
@@ -41,7 +25,6 @@ public class ChlorideConfigIntegration implements ConfigEntryPoint {
     private static final ResourceLocation SODIUM_FULLSCREEN_RESOLUTION = ResourceLocation.parse("sodium:general.fullscreen_resolution");
     /** Id of Chloride's replacement option; both the replacement and the resolution overlay's dependency point here. */
     private static final ResourceLocation FULL_SCREEN = id("fullScreen");
-    private static final ResourceLocation ICON = ResourceLocation.fromNamespaceAndPath(Chloride.ID, "textures/gui/logo.png");
     /** Neon green accent, in the spirit of Sodium's mint theme. Sodium derives the lighter/darker shades from it. */
     private static final int NEON_GREEN = 0x39FF14;
 
@@ -49,7 +32,7 @@ public class ChlorideConfigIntegration implements ConfigEntryPoint {
     public void registerConfigLate(final ConfigBuilder builder) {
         // setIcon (not setNonTintedIcon) tints the white logo to the group's theme colour set below.
         final ModOptionsBuilder mod = builder.registerOwnModOptions()
-                .setIcon(ICON)
+                .setIcon(SodiumFeatures.LOGO)
                 .setColorTheme(builder.createColorTheme().setBaseThemeRGB(NEON_GREEN));
 
         // Replace Sodium's vanilla "fullscreen" toggle with Chloride's three-way borderless mode selector.

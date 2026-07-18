@@ -1,24 +1,18 @@
 package me.srrapero720.chloride.impl.sodium;
 
+import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.caffeinemc.mods.sodium.api.config.StorageEventHandler;
 import net.caffeinemc.mods.sodium.api.config.option.ControlValueFormatter;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Function;
 
 public class SodiumFeatures {
-    /**
-     * Shared storage handler. Sodium collects pending handlers in a Set before flushing them, so a single shared
-     * instance guarantees {@link ChlorideConfig#write()} runs exactly once per "Apply", regardless of how many of
-     * our options changed.
-     */
+    public static final ResourceLocation LOGO = ResourceLocation.fromNamespaceAndPath(Chloride.ID, "textures/gui/logo.png");
     public static final StorageEventHandler STORAGE = ChlorideConfig::write;
 
-    /**
-     * Replacement for the old {@code BetterCyclingControl.tEnumComponent}: maps each enum constant to the
-     * translation {@code translation + "." + name().toLowerCase()}. Order independent (keyed by name).
-     */
     public static <E extends Enum<E>> Function<E, Component> enumNames(final String translation) {
         return e -> Component.translatable(translation + "." + e.name().toLowerCase());
     }

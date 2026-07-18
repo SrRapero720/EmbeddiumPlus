@@ -12,6 +12,11 @@
   "chloride.general.screen.borderless.optimization": "Desactivar optimización en sin bordes",
   "chloride.general.screen.borderless.optimization.desc": "Desactiva las optimizaciones del driver\n\nDesactiva el parpadeo negro al cambiar de programa (notable con multiples monitores) pero podrías experimentar una baja considerable de FPS",
 
+  "chloride.settings.coming_soon": "¡Próximamente!",
+  "chloride.settings.chloride": "Ajustes de Chloride",
+  "chloride.settings.textrue": "Ajustes Estilo TexTrue",
+  "chloride.settings.populi": "Ajustes de Populi",
+
   "chloride.interface": "Interfaz",
   "chloride.interface.fps.title": "Mostrar FPS",
   "chloride.interface.fps.desc": "Muestra el overlay de FPS, el modo avanzado tambien muestra el uso de RAM, GPU y el Promedio de FPS de los ultimos 30 segundos, util para juzgar el rendimiento",

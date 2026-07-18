@@ -23,14 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Standalone browser for the per-particle-type toggles, opened from an external page in Sodium's video settings.
- *
- * <p>Replaces the old approach of dumping one Sodium option per registered particle type into the Particles page:
- * Sodium's option list draws every widget of the open page each frame, so on modpacks with hundreds of particle
- * types the whole settings screen dropped to unplayable framerates (issue #174). A vanilla selection list only
- * renders the visible rows, and the search box keeps big packs navigable.
- */
 public class ParticleListScreen extends Screen {
     private final Screen parent;
     private ParticleList list;

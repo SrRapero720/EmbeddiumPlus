@@ -144,6 +144,10 @@ public class ChlorideConfig {
         @Spec.Field public boolean hideJREMIHint = false;
         @Spec.Field public boolean fontShadows = true;
         @Spec.Field public boolean fastLanguageReload = true;
+
+        @Spec.Field
+        @Comment("Settings screen style; non-sodium styles are WIP and only open on dev environments")
+        public SettingsScreens.Style settingsScreen = SettingsScreens.Style.SODIUM;
     }
 
     @Spec(value = "fastBlocks", disableStatic = true)

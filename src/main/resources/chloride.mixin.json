@@ -41,6 +41,7 @@
     "jei_rei_emi.JeiOverlayMixin",
     "jei_rei_emi.ReiOverlayMixin",
     "leaves_culling.LeavesBlockMixin",
-    "sodium.SodiumConfigBuilderMixin"
+    "sodium.SodiumConfigBuilderMixin",
+    "sodium.VideoSettingsScreenMixin"
   ]
 }
