@@ -195,7 +195,7 @@ jar {
 }
 
 publishMods {
-    displayName = "$modname-${modloader.toUpperCase()}/mc$mcversion/v$modversion"
+    displayName = "$modid-$modversion-${modloader.toUpperCase()}-$mcversion"
     type = ReleaseType.valueOf(versiontype.toUpperCase())
     file = tasks.jar.archiveFile
     changelog = getChangelogText()
