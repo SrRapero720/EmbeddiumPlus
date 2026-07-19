@@ -1,8 +1,8 @@
 package me.srrapero720.chloride.api;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public interface IGameLeaves {
-    ResourceLocation chloride$getRL();
+    Identifier chloride$getRL();
     int chloride$neighborCount();
 }

@@ -9,12 +9,12 @@ import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
 import net.caffeinemc.mods.sodium.api.config.structure.OptionPageBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.*;
 
 public class InterfacePage {
-    private static final ResourceLocation HIDE_JREMI = Chloride.id("hideJREMI");
+    private static final Identifier HIDE_JREMI = Chloride.id("hideJREMI");
 
     private InterfacePage() {}
 

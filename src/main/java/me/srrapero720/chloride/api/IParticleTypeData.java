@@ -1,7 +1,7 @@
 package me.srrapero720.chloride.api;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public interface IParticleTypeData {
-    ResourceLocation getId();
+    Identifier getId();
 }

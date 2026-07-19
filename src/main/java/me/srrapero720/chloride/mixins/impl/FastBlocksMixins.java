@@ -4,6 +4,7 @@ import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.FastBlocks;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
@@ -58,8 +59,8 @@ public class FastBlocksMixins {
 
     @Mixin(BlockEntityRenderDispatcher.class)
     public static class TileRenderMixin {
-        @Inject(method = "getRenderer", at = @At("HEAD"), cancellable = true)
-        private <E extends BlockEntity> void inject$disableRenderer(final E blockEntity, final CallbackInfoReturnable<BlockEntityRenderer<E>> cir) {
+        @Inject(method = "getRenderer(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderer;", at = @At("HEAD"), cancellable = true)
+        private <E extends BlockEntity, S extends BlockEntityRenderState> void inject$disableRenderer(final E blockEntity, final CallbackInfoReturnable<BlockEntityRenderer<E, S>> cir) {
             // FAST CHESTS (needs FLYWHEEL HANDLING)
             final Class<?> beClass = blockEntity.getClass();
             if (ChlorideConfig.fastBlocks.chests && FastBlocks.canUseOnChests()) {

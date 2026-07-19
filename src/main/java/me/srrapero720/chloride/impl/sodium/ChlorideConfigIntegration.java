@@ -9,10 +9,10 @@ import net.caffeinemc.mods.sodium.api.config.ConfigEntryPointForge;
 import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
 import net.caffeinemc.mods.sodium.api.config.structure.EnumOptionBuilder;
 import net.caffeinemc.mods.sodium.api.config.structure.ModOptionsBuilder;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import static me.srrapero720.chloride.Chloride.LOGGER;
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
@@ -21,10 +21,10 @@ import static me.srrapero720.chloride.Chloride.id;
 @ConfigEntryPointForge("chloride")
 public class ChlorideConfigIntegration implements ConfigEntryPoint {
 
-    private static final ResourceLocation SODIUM_FULLSCREEN = ResourceLocation.parse("sodium:general.fullscreen");
-    private static final ResourceLocation SODIUM_FULLSCREEN_RESOLUTION = ResourceLocation.parse("sodium:general.fullscreen_resolution");
+    private static final Identifier SODIUM_FULLSCREEN = Identifier.parse("sodium:general.fullscreen");
+    private static final Identifier SODIUM_FULLSCREEN_RESOLUTION = Identifier.parse("sodium:general.fullscreen_resolution");
     /** Id of Chloride's replacement option; both the replacement and the resolution overlay's dependency point here. */
-    private static final ResourceLocation FULL_SCREEN = id("fullScreen");
+    private static final Identifier FULL_SCREEN = id("fullScreen");
     /** Neon green accent, in the spirit of Sodium's mint theme. Sodium derives the lighter/darker shades from it. */
     private static final int NEON_GREEN = 0x39FF14;
 

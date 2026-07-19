@@ -25,7 +25,7 @@ public class ReiOverlayMixin {
             } else {
                 if (!ChlorideConfig.ui.hideJREMIHint) {
                     final Rectangle rectangle = widget.getBounds();
-                    graphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), rectangle.getCenterX(), rectangle.getCenterY(), 0xFFFFFF);
+                    graphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("chloride.jei.message"), rectangle.getCenterX(), rectangle.getCenterY(), 0xFFFFFFFF);
                 }
             }
         } else {

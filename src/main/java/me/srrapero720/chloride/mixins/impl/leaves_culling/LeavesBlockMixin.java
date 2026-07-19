@@ -5,7 +5,7 @@ import me.srrapero720.chloride.api.IGameLeaves;
 import me.srrapero720.chloride.impl.LeavesCulling;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(value = LeavesBlock.class, priority = 1100)
 public class LeavesBlockMixin extends Block implements IGameLeaves {
     // TODO: cull less leaves (maybe delegate to 2.0.0)
-    @Unique private ResourceLocation chloride$id;
+    @Unique private Identifier chloride$id;
     @Unique private int leaves_neighbor;
 
     public LeavesBlockMixin(final Properties pProperties) {
@@ -32,7 +32,7 @@ public class LeavesBlockMixin extends Block implements IGameLeaves {
     }
 
     @Override
-    public ResourceLocation chloride$getRL() {
+    public Identifier chloride$getRL() {
         return this.chloride$id != null ? this.chloride$id : (this.chloride$id = BuiltInRegistries.BLOCK.getKey(this));
     }
 

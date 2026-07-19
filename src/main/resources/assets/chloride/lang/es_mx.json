@@ -193,6 +193,7 @@
   "chloride.entities.culling.tile.distance.vertical.desc": "Oculta los bloques de entidades que se encuentran a más de esta distancia, mejorando el rendimiento sobre cuevas. Esto debería configurarse idealmente más bajo que la distancia horizontal.",
 
   "chloride.zoom": "Zoom",
+  "key.category.chloride.chloride": "Chloride",
   "chloride.zoom.title": "Activar Zoom",
   "chloride.zoom.desc": "Activa el zoom, puedes usar la rueda del mouse para hacer zoom y el boton derecho para alejarte",
   "chloride.zoom.forbidden": "JustZoom o Zume detectado, el zoom de Chloride no se activara",

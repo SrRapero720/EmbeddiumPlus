@@ -5,12 +5,12 @@ import me.srrapero720.chloride.ChlorideConfig;
 import net.caffeinemc.mods.sodium.api.config.StorageEventHandler;
 import net.caffeinemc.mods.sodium.api.config.option.ControlValueFormatter;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Function;
 
 public class SodiumFeatures {
-    public static final ResourceLocation LOGO = ResourceLocation.fromNamespaceAndPath(Chloride.ID, "textures/gui/logo.png");
+    public static final Identifier LOGO = Identifier.fromNamespaceAndPath(Chloride.ID, "textures/gui/logo.png");
     public static final StorageEventHandler STORAGE = ChlorideConfig::write;
 
     public static <E extends Enum<E>> Function<E, Component> enumNames(final String translation) {

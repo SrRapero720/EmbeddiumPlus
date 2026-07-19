@@ -15,7 +15,7 @@ import net.neoforged.fml.loading.FMLEnvironment;
  */
 public class SettingsScreens {
     /** True on dev environments; the custom screen styles only activate behind this flag. */
-    public static final boolean DEV = !FMLEnvironment.production;
+    public static final boolean DEV = !FMLEnvironment.isProduction();
 
     /**
      * Switches from the current settings screen style to the next one, persisting the choice.

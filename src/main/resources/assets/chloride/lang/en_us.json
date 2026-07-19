@@ -193,6 +193,7 @@
   "chloride.entities.culling.tile.distance.vertical.desc": "Hides block entities underneath this many blocks, improving performance above caves (if you have your machines in caves, for some reason). This should ideally be set lower than the horizontal distance.",
 
   "chloride.zoom": "Zoom",
+  "key.category.chloride.chloride": "Chloride",
   "chloride.zoom.title": "Enable Zoom",
   "chloride.zoom.desc": "Turns on Zoom feature, can be activated by pressing",
   "chloride.zoom.forbidden": "JustZoom or Zume detected, chloride zoom its now disabled",

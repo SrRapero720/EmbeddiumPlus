@@ -6,12 +6,12 @@ import me.srrapero720.chloride.impl.Darkness;
 import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
 import net.caffeinemc.mods.sodium.api.config.structure.OptionPageBuilder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.*;
 
 public class DarknessPage {
-    private static final ResourceLocation BLOCK_LIGHT_ONLY = Chloride.id("darknessBlockLightOnly");
+    private static final Identifier BLOCK_LIGHT_ONLY = Chloride.id("darknessBlockLightOnly");
 
     private DarknessPage() {}
 

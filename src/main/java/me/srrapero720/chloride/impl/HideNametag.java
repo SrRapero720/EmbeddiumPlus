@@ -5,25 +5,25 @@ import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.client.renderer.entity.ItemFrameRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
+import net.minecraft.util.TriState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderNameTagEvent;
-import net.neoforged.neoforge.common.util.TriState;
 
 @EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
 public class HideNametag {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onRenderNameTagEvent(final RenderNameTagEvent e) {
-        final EntityRenderer<?> renderer = e.getEntityRenderer();
+    public static void onRenderNameTagEvent(final RenderNameTagEvent.CanRender e) {
+        final EntityRenderer<?, ?> renderer = e.getEntityRenderer();
         if (!ChlorideConfig.nametags.items && (renderer instanceof ItemFrameRenderer || renderer instanceof ItemEntityRenderer)) {
             e.setCanRender(TriState.FALSE);
             return;
         }
-        if (!ChlorideConfig.nametags.players && renderer instanceof PlayerRenderer) {
+        if (!ChlorideConfig.nametags.players && renderer instanceof AvatarRenderer) {
             e.setCanRender(TriState.FALSE);
             return;
         }

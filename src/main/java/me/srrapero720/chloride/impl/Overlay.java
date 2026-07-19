@@ -129,15 +129,14 @@ public class Overlay {
             case BOTTOM -> maxPosY - marginY;
         };
 
-        graphics.pose().pushPose();
+        graphics.pose().pushMatrix();
         if (ChlorideConfig.fpsDisplay.shadow) {
             graphics.fill((int) posX - 2, (int) posY - 2, (int) posX + font.width(displayString) + 2, (int) (posY + font.lineHeight) + 1, -1873784752);
-            graphics.flush();
         }
 
-        graphics.drawString(font, displayString, posX, posY, 0xffffffff, true);
+        graphics.drawString(font, displayString, (int) posX, (int) posY, 0xffffffff, true);
         DISPLAY.release();
-        graphics.pose().popPose();
+        graphics.pose().popMatrix();
     }
 
     private static String fix(final int value) {

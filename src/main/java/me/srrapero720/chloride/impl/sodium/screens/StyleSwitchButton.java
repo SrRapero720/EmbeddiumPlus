@@ -29,11 +29,9 @@ public class StyleSwitchButton extends FlatButtonWidget {
             // SAME FLAT LOOK AS SODIUM'S TOOLTIPS, LIFTED +400 SO IT DRAWS OVER SIBLING WIDGETS
             final int x = this.getX();
             final int y = this.getLimitY() + 3;
-            graphics.pose().pushPose();
-            graphics.pose().translate(0.0f, 0.0f, 400.0f);
+            graphics.nextStratum();
             graphics.fill(x, y, x + this.font.width(COMING_SOON) + 8, y + this.font.lineHeight + 8, Colors.BACKGROUND_OVERLAY);
             this.drawString(graphics, COMING_SOON, x + 4, y + 4, Colors.FOREGROUND);
-            graphics.pose().popPose();
         }
     }
 

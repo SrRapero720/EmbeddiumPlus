@@ -1,5 +1,6 @@
 package me.srrapero720.chloride.impl;
 
+import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -7,18 +8,41 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ViewportEvent;
 
-
+@EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
 public class Darkness {
 	public static final double MIN = 0.03D;
 
-	public static Vec3 getFogColor(final Vec3 vanilla, final double factor) {
-		if (factor == 1.0) return vanilla;
-        return new Vec3(Math.max(MIN, vanilla.x * factor), Math.max(MIN, vanilla.y * factor), Math.max(MIN, vanilla.z * factor));
-	}
+    // NETHER/END FOG DIMMING: DimensionSpecialEffects#getBrightnessDependentFogColor IS GONE IN 1.21.11,
+    // SO THE SAME DIM IS NOW APPLIED AT THE END OF THE FOG COLOR PIPELINE
+    @SubscribeEvent
+    public static void onComputeFogColor(final ViewportEvent.ComputeFogColor e) {
+        if (ChlorideConfig.darkness.mode == DarkMode.VANILLA) return;
+
+        final ClientLevel level = Minecraft.getInstance().level;
+        if (level == null) return;
+
+        final double factor;
+        if (level.dimension() == net.minecraft.world.level.Level.NETHER && ChlorideConfig.darkness.onNether) {
+            factor = ChlorideConfig.darkness.netherFogBright;
+        } else if (level.dimension() == net.minecraft.world.level.Level.END && ChlorideConfig.darkness.onEnd) {
+            factor = ChlorideConfig.darkness.endFogBright;
+        } else {
+            return;
+        }
+        if (factor == 1.0) return;
+
+        e.setRed((float) Math.max(MIN, e.getRed() * factor));
+        e.setGreen((float) Math.max(MIN, e.getGreen() * factor));
+        e.setBlue((float) Math.max(MIN, e.getBlue() * factor));
+    }
 
     private static boolean isDark(final net.minecraft.world.level.Level world) {
 		if (ChlorideConfig.darkness.mode == DarkMode.VANILLA) return false;
@@ -31,7 +55,7 @@ public class Darkness {
 			return ChlorideConfig.darkness.onNether;
 		} else if (dimType == net.minecraft.world.level.Level.END) {
 			return ChlorideConfig.darkness.onEnd;
-		} else if (EntityCulling.isWhitelisted(dimType.location(), ChlorideConfig.darkness.dimensionWhitelist)) {
+		} else if (EntityCulling.isWhitelisted(dimType.identifier(), ChlorideConfig.darkness.dimensionWhitelist)) {
             return true;
         } else if (world.dimensionType().hasSkyLight()) {
 			return ChlorideConfig.darkness.byDefault;
@@ -43,14 +67,17 @@ public class Darkness {
 	private static float skyFactor(final net.minecraft.world.level.Level world) {
         if (!isDark(world)) return 1;
 
-        if (!world.dimensionType().hasSkyLight()) return 0; // alrweady checks for block light only
+        if (!world.dimensionType().hasSkyLight()) return 0;
 
-		final float angle = world.getTimeOfDay(0);
+        // SUN_ANGLE IS 0 AT NOON AND 180 AT MIDNIGHT
+        final var probe = Minecraft.getInstance().gameRenderer.getMainCamera().attributeProbe();
+        final float angle = Mth.positiveModulo(probe.getValue(EnvironmentAttributes.SUN_ANGLE, 0f) / 360f, 1f);
         if (!(angle > 0.25f) || !(angle < 0.75f)) return 1;
 
-
 		final float oldWeight = Math.max(0, (Math.abs(angle - 0.5f) - 0.2f)) * 20;
-		final float moon = ChlorideConfig.darkness.affectedByMoonPhase ? world.getMoonBrightness() : 0;
+        // FULL MOON (INDEX 0) = 1.0 BRIGHTNESS DOWN TO NEW MOON (INDEX 4) = 0.0
+		final float moon = ChlorideConfig.darkness.affectedByMoonPhase
+                ? Math.abs(probe.getValue(EnvironmentAttributes.MOON_PHASE, 0f).index() - 4) * 0.25f : 0;
 		final float moonInterpolated = (float) Mth.lerp(moon, ChlorideConfig.darkness.newMoonBright, ChlorideConfig.darkness.fullMoonBright);
 		return Mth.lerp(oldWeight * oldWeight * oldWeight, moonInterpolated, 1f);
     }
@@ -84,13 +111,13 @@ public class Darkness {
 				|| client.player.hasEffect(MobEffects.NIGHT_VISION)
 				|| (client.player.hasEffect(MobEffects.CONDUIT_POWER) && client.player.getWaterVision() > 0)
 				|| level.getSkyFlashTime() > 0
-                || level.effects().forceBrightLightmap()
         );
 
         if (!enabled) return;
 
         final float dimSkyFactor = Darkness.skyFactor(level);
-        final float ambient = level.getSkyDarken(1.0F);
+        // SKY_LIGHT_FACTOR IS THE 1.21.11 ANALOG OF THE OLD getSkyDarken(1.0F) DAYLIGHT FACTOR
+        final float ambient = client.gameRenderer.getMainCamera().attributeProbe().getValue(EnvironmentAttributes.SKY_LIGHT_FACTOR, tickDelta);
         final DimensionType dim = level.dimensionType();
 
         for (int skyIndex = 0; skyIndex < 16; ++skyIndex) {
@@ -194,9 +221,5 @@ public class Darkness {
 
         public final float value;
         DarkMode(final float value) { this.value = value; }
-    }
-
-    public interface DynamicTextureHook {
-        void chloride$enableDarkness();
     }
 }

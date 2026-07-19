@@ -1,13 +1,12 @@
 package me.srrapero720.chloride;
 
-import com.mojang.blaze3d.shaders.FogShape;
 import me.srrapero720.chloride.impl.*;
 import me.srrapero720.waterconfig.ConfigSpec;
 import me.srrapero720.waterconfig.WaterConfig;
 import me.srrapero720.waterconfig.api.annotations.Comment;
 import me.srrapero720.waterconfig.api.annotations.NumberConditions;
 import me.srrapero720.waterconfig.api.annotations.Spec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
@@ -79,12 +78,11 @@ public class ChlorideConfig {
         @Spec.Field public boolean blueBand = true;
 
         @Spec.Field
-        @Comment("Overrides vanilla fog with the start/end/shape values below")
+        @Comment("Overrides vanilla fog with the start/end values below")
         public boolean custom = false;
 
         @Spec.Field @NumberConditions(minInt = -1000, maxInt = 1000) public int start = 0;
         @Spec.Field @NumberConditions(minInt = 100, maxInt = 10000) public int end = 192;
-        @Spec.Field public FogShape shape = FogShape.CYLINDER;
     }
 
     @Spec(value = "world", disableStatic = true)
@@ -126,7 +124,7 @@ public class ChlorideConfig {
         @Comment("Apply darkness on modded dimensions not present in the whitelist below")
         public boolean byDefault = false;
 
-        @Spec.Field public List<ResourceLocation> dimensionWhitelist = toId();
+        @Spec.Field public List<Identifier> dimensionWhitelist = toId();
         @Spec.Field public boolean onNoSkyLight = false;
         @Spec.Field public boolean blockLightOnly = false;
         @Spec.Field public boolean affectedByMoonPhase = true;
@@ -167,7 +165,7 @@ public class ChlorideConfig {
 
         @Spec.Field
         @Comment("Particle ids fully disabled; 'modid:all' disables a whole namespace")
-        public List<ResourceLocation> disabled = toId();
+        public List<Identifier> disabled = toId();
     }
 
     @Spec(value = "culling", disableStatic = true)
@@ -205,10 +203,10 @@ public class ChlorideConfig {
 
         @Spec.Field
         @Comment("Entities never culled; 'modid:all' matches a whole namespace")
-        public List<ResourceLocation> entityWhitelist = toId("minecraft:ghast", "minecraft:ender_dragon", "iceandfire:all", "create:all");
+        public List<Identifier> entityWhitelist = toId("minecraft:ghast", "minecraft:ender_dragon", "iceandfire:all", "create:all");
 
-        @Spec.Field public List<ResourceLocation> monsterWhitelist = toId();
-        @Spec.Field public List<ResourceLocation> tileEntityWhitelist = toId("waterframes:all");
+        @Spec.Field public List<Identifier> monsterWhitelist = toId();
+        @Spec.Field public List<Identifier> tileEntityWhitelist = toId("waterframes:all");
     }
 
     @Spec(value = "zoom", disableStatic = true)
@@ -218,11 +216,11 @@ public class ChlorideConfig {
         @Spec.Field @NumberConditions(minDouble = 1, maxDouble = 100) public double max = 50;
     }
 
-    public static List<ResourceLocation> toId(final String... ids) {
-        final List<ResourceLocation> result = new ArrayList<>();
+    public static List<Identifier> toId(final String... ids) {
+        final List<Identifier> result = new ArrayList<>();
         for (String id: ids) {
             if (id.endsWith(":*")) id = id.replace(":*", ":all");
-            result.add(ResourceLocation.tryParse(id));
+            result.add(Identifier.tryParse(id));
         }
 
         return result;

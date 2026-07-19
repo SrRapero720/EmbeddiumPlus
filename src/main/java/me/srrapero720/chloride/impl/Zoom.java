@@ -6,7 +6,6 @@ import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -32,9 +31,10 @@ public class Zoom {
             "zoomlens"
     };
 
+    public static final KeyMapping.Category CATEGORY = new KeyMapping.Category(Chloride.id("chloride"));
     public static final KeyMapping KEY = new KeyMapping("chloride.zoom",
                     KeyConflictContext.IN_GAME, KeyModifier.NONE,
-                    InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, "Chloride"
+                    InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, CATEGORY
     );
 
     public static double zoom(final double fov) {
@@ -88,12 +88,12 @@ public class Zoom {
     @SubscribeEvent
     public static void onGetFovEvent(final ViewportEvent.ComputeFov e) {
         if (canUseZoom() && ChlorideConfig.zoom.enabled)
-            e.setFOV(zoom(e.getFOV()));
+            e.setFOV((float) zoom(e.getFOV()));
     }
 
     @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
     public static void registerKeys(final RegisterKeyMappingsEvent event) {
+        event.registerCategory(CATEGORY);
         event.register(KEY);
     }
 }

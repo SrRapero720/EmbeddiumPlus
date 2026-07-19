@@ -15,9 +15,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.jarcontents.JarContents;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.neoforge.resource.JarContentsPackResources;
 
-import java.nio.file.Path;
 import java.util.Optional;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = Chloride.ID)
@@ -52,19 +53,18 @@ public class FastBlocks {
         Chloride.LOGGER.info("Registering CHLORIDE built-in packs");
         if (e.getPackType() == PackType.CLIENT_RESOURCES) {
             final ModContainer modFile = ModList.get().getModContainerById(Chloride.ID).get();
+            final JarContents contents = modFile.getModInfo().getOwningFile().getFile().getContents();
 
-            final Path bedsPath = modFile.getModInfo().getOwningFile().getFile().findResource("custom_packs/solid_beds");
             SOLID_BEDS_PACK = Pack.readMetaAndCreate(
                     new PackLocationInfo(Chloride.ID + "_solid_beds", Component.literal("Chloride: Solid Beds"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_beds", "1.0.0"))),
-                    BuiltInPackSource.fromName((path) -> getPathResources(path, bedsPath)),
+                    BuiltInPackSource.fromName((path) -> getJarResources(path, contents, "custom_packs/solid_beds")),
                     PackType.CLIENT_RESOURCES,
                     new PackSelectionConfig(false, Pack.Position.TOP, true)
             );
 
-            final Path chestsPath = modFile.getModInfo().getOwningFile().getFile().findResource("custom_packs/solid_chests");
             SOLID_CHESTS_PACK = Pack.readMetaAndCreate(
                     new PackLocationInfo(Chloride.ID + "_solid_chests", Component.literal("Chloride: Solid Chests"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_chests", "1.0.0"))),
-                    BuiltInPackSource.fromName((path) -> getPathResources(path, chestsPath)),
+                    BuiltInPackSource.fromName((path) -> getJarResources(path, contents, "custom_packs/solid_chests")),
                     PackType.CLIENT_RESOURCES,
                     new PackSelectionConfig(false, Pack.Position.TOP, true)
             );
@@ -76,8 +76,8 @@ public class FastBlocks {
         }
     }
 
-    private static PathPackResources getPathResources(PackLocationInfo info, Path path) {
-        return new PathPackResources(info, path) {
+    private static PackResources getJarResources(PackLocationInfo info, JarContents contents, String prefix) {
+        return new JarContentsPackResources(info, contents, prefix) {
 
             @Override public boolean isHidden() {
                 return false;

@@ -1,6 +1,5 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
-import com.mojang.blaze3d.shaders.FogShape;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.ChunkFade;
@@ -82,13 +81,6 @@ public class WorldPage {
                             .setStorageHandler(STORAGE)
                             .setDefaultValue(192)
                             .setBinding(v -> ChlorideConfig.fog.end = v, () -> ChlorideConfig.fog.end))
-                    .addOption(b.createEnumOption(Chloride.id("fogShape"), FogShape.class)
-                            .setName(Component.translatable("chloride.world.custom_fog.shape.title"))
-                            .setTooltip(Component.translatable("chloride.world.custom_fog.shape.desc"))
-                            .setElementNameProvider(enumNames("chloride.world.custom_fog.shape"))
-                            .setStorageHandler(STORAGE)
-                            .setDefaultValue(FogShape.CYLINDER)
-                            .setBinding(v -> ChlorideConfig.fog.shape = v, () -> ChlorideConfig.fog.shape))
             );
         }
 

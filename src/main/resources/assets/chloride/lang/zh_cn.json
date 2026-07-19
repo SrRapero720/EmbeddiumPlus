@@ -159,6 +159,7 @@
   "chloride.entities.culling.tile.distance.vertical.title": "方块实体最大渲染距离（垂直）",
   "chloride.entities.culling.tile.distance.vertical.desc": "隐藏此范围下方的方块实体，提高位于洞穴（哦，出于某种原因，你把机器放在洞穴里了）上方时的性能。理想情况下，该值应低于水平距离。",
   "chloride.zoom": "缩放",
+  "key.category.chloride.chloride": "Chloride",
   "chloride.zoom.title": "启用缩放",
   "chloride.zoom.desc": "启用缩放功能，可按下绑定的键位激活。",
   "chloride.zoom.forbidden": "检测到JustZoom或Zume，Chloride缩放现已禁用。",

@@ -14,7 +14,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.fml.ModList;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class ParticleListScreen extends Screen {
     @Override
     public void render(final GuiGraphics graphics, final int mouseX, final int mouseY, final float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
-        graphics.drawCenteredString(this.font, this.title, this.width / 2, 9, 0xFFFFFF);
+        graphics.drawCenteredString(this.font, this.title, this.width / 2, 9, 0xFFFFFFFF);
     }
 
     @Override
@@ -74,11 +74,11 @@ public class ParticleListScreen extends Screen {
 
         public void refresh(final String filter) {
             final String query = filter.trim().toLowerCase(Locale.ROOT);
-            final List<ResourceLocation> keys = new ArrayList<>(BuiltInRegistries.PARTICLE_TYPE.keySet());
-            keys.sort(Comparator.comparing(ResourceLocation::toString));
+            final List<Identifier> keys = new ArrayList<>(BuiltInRegistries.PARTICLE_TYPE.keySet());
+            keys.sort(Comparator.comparing(Identifier::toString));
 
             this.clearEntries();
-            for (final ResourceLocation key: keys) {
+            for (final Identifier key: keys) {
                 if (!query.isEmpty() && !key.toString().contains(query) && !this.providerName(key).toLowerCase(Locale.ROOT).contains(query))
                     continue;
                 this.addEntry(new Entry(key));
@@ -86,7 +86,7 @@ public class ParticleListScreen extends Screen {
             this.setScrollAmount(0);
         }
 
-        private String providerName(final ResourceLocation key) {
+        private String providerName(final Identifier key) {
             return this.providerNames.computeIfAbsent(key.getNamespace(), namespace -> {
                 final var mod = ModList.get().getModFileById(namespace);
                 if (mod != null) {
@@ -102,15 +102,15 @@ public class ParticleListScreen extends Screen {
         }
 
         @Override
-        protected int getScrollbarPosition() {
+        protected int scrollBarX() {
             return this.width / 2 + (this.getRowWidth() / 2) + 8;
         }
 
         private class Entry extends ContainerObjectSelectionList.Entry<Entry> {
-            private final ResourceLocation key;
+            private final Identifier key;
             private final CycleButton<Boolean> toggle;
 
-            Entry(final ResourceLocation key) {
+            Entry(final Identifier key) {
                 this.key = key;
                 this.toggle = CycleButton.onOffBuilder(!ChlorideConfig.particles.disabled.contains(key))
                         .displayOnlyValue()
@@ -125,8 +125,11 @@ public class ParticleListScreen extends Screen {
             }
 
             @Override
-            public void render(final GuiGraphics graphics, final int index, final int top, final int left, final int width, final int height, final int mouseX, final int mouseY, final boolean hovering, final float partialTick) {
-                graphics.drawString(ParticleListScreen.this.font, this.key.toString(), left + 2, top + 4, 0xFFFFFF);
+            public void renderContent(final GuiGraphics graphics, final int mouseX, final int mouseY, final boolean hovering, final float partialTick) {
+                final int left = this.getX();
+                final int top = this.getY();
+                final int width = this.getWidth();
+                graphics.drawString(ParticleListScreen.this.font, this.key.toString(), left + 2, top + 4, 0xFFFFFFFF);
                 graphics.drawString(ParticleListScreen.this.font, ParticleList.this.providerName(this.key), left + 2, top + 16, 0xFFAAAAAA);
 
                 this.toggle.setX(left + width - 48);
