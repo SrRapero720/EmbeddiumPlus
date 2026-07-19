@@ -9,7 +9,7 @@ import me.shedaniel.rei.impl.client.gui.ScreenOverlayImpl;
 import me.shedaniel.rei.impl.client.gui.widget.entrylist.EntryListWidget;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import me.shedaniel.rei.api.client.gui.compat.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(value = ScreenOverlayImpl.class, priority = 500, remap = false)
 @Pseudo
 public class ReiOverlayMixin {
-    @WrapOperation(method = "renderWidgets", at = @At(value = "INVOKE", target = "Lme/shedaniel/rei/api/client/gui/widgets/Widget;render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"))
+    @WrapOperation(method = "renderWidgets", at = @At(value = "INVOKE", target = "Lme/shedaniel/rei/api/client/gui/widgets/Widget;render(Lme/shedaniel/rei/api/client/gui/compat/GuiGraphics;IIF)V"))
     private void redirect$rendering(final Widget instance, final GuiGraphics graphics, final int mouseX, final int mouseY, final float deltaTick, final Operation<Void> original) {
         if (instance instanceof final EntryListWidget widget) {
             if (!ChlorideConfig.ui.hideJREMI || !REIRuntimeImpl.getSearchField().getText().isEmpty()) {

@@ -5,7 +5,6 @@ import me.srrapero720.chloride.api.events.FastModelSettingsUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.*;
-import net.minecraft.server.packs.repository.BuiltInPackSource;
 import net.minecraft.server.packs.repository.KnownPack;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -57,14 +56,20 @@ public class FastBlocks {
 
             SOLID_BEDS_PACK = Pack.readMetaAndCreate(
                     new PackLocationInfo(Chloride.ID + "_solid_beds", Component.literal("Chloride: Solid Beds"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_beds", "1.0.0"))),
-                    BuiltInPackSource.fromName((path) -> getJarResources(path, contents, "custom_packs/solid_beds")),
+                    new Pack.ResourcesSupplier() {
+                        @Override public PackResources openPrimary(final PackLocationInfo location) { return getJarResources(location, contents, "custom_packs/solid_beds"); }
+                        @Override public PackResources openFull(final PackLocationInfo location, final Pack.Metadata metadata) { return getJarResources(location, contents, "custom_packs/solid_beds"); }
+                    },
                     PackType.CLIENT_RESOURCES,
                     new PackSelectionConfig(false, Pack.Position.TOP, true)
             );
 
             SOLID_CHESTS_PACK = Pack.readMetaAndCreate(
                     new PackLocationInfo(Chloride.ID + "_solid_chests", Component.literal("Chloride: Solid Chests"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_chests", "1.0.0"))),
-                    BuiltInPackSource.fromName((path) -> getJarResources(path, contents, "custom_packs/solid_chests")),
+                    new Pack.ResourcesSupplier() {
+                        @Override public PackResources openPrimary(final PackLocationInfo location) { return getJarResources(location, contents, "custom_packs/solid_chests"); }
+                        @Override public PackResources openFull(final PackLocationInfo location, final Pack.Metadata metadata) { return getJarResources(location, contents, "custom_packs/solid_chests"); }
+                    },
                     PackType.CLIENT_RESOURCES,
                     new PackSelectionConfig(false, Pack.Position.TOP, true)
             );

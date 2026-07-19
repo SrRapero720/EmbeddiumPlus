@@ -14,7 +14,6 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(Integer.valueOf(javaversion))
 
-// PARCHMENT COMES FROM THE neoForge.parchment.* KEYS IN gradle.properties;
 // THE ACCESS TRANSFORMER IS PICKED UP AUTOMATICALLY FROM META-INF/accesstransformer.cfg
 neoForge {
     version = forgeversion
@@ -164,7 +163,7 @@ dependencies {
     // runtimeOnly "org.sinytra.forgified-fabric-api:fabric-block-view-api-v2:$ffapiblockviewversion"
 
     // RECIPE VIEWERS (FULL JARS — WE MIX INTO GUI INTERNALS): JEI RUNS, SWAP REI/EMI TO runtimeOnly TO TEST, ONE AT A TIME
-    implementation("mezz.jei:jei-1.21.11-neoforge:$jeiversion") { transitive = false }
+    implementation("mezz.jei:jei-26.1.2-neoforge:$jeiversion") { transitive = false }
     compileOnly("me.shedaniel:RoughlyEnoughItems-neoforge:$reiversion") { transitive = false }
     // compileOnly("dev.emi:emi-neoforge:$emiversion") { transitive = false }
 

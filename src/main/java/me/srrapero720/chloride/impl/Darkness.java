@@ -4,8 +4,7 @@ import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.Lightmap;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.attribute.EnvironmentAttributes;
@@ -100,7 +99,7 @@ public class Darkness {
 		return r * 0.2126f + g * 0.7152f + b * 0.0722f;
 	}
 
-	public static void updateLuminance(final float tickDelta, final Minecraft client, final GameRenderer gameRenderer, final float prevFlicker) {
+	public static void updateLuminance(final Minecraft client, final float ambient, final float bossDarkening, final float prevFlicker) {
 		final ClientLevel level = client.level;
         if (level == null) return;
 
@@ -116,8 +115,6 @@ public class Darkness {
         if (!enabled) return;
 
         final float dimSkyFactor = Darkness.skyFactor(level);
-        // SKY_LIGHT_FACTOR IS THE 1.21.11 ANALOG OF THE OLD getSkyDarken(1.0F) DAYLIGHT FACTOR
-        final float ambient = client.gameRenderer.getMainCamera().attributeProbe().getValue(EnvironmentAttributes.SKY_LIGHT_FACTOR, tickDelta);
         final DimensionType dim = level.dimensionType();
 
         for (int skyIndex = 0; skyIndex < 16; ++skyIndex) {
@@ -131,7 +128,7 @@ public class Darkness {
             float min = Math.max(skyFactor * 0.05f, value);
             final float rawAmbient = ambient * skyFactor;
             final float minAmbient = rawAmbient * (1 - min) + min;
-            final float skyBase = LightTexture.getBrightness(dim, skyIndex) * minAmbient;
+            final float skyBase = Lightmap.getBrightness(dim, skyIndex) * minAmbient;
 
             min = Math.max(0.35f * skyFactor, value);
             final float v = skyBase * (rawAmbient * (1 - min) + min);
@@ -139,8 +136,8 @@ public class Darkness {
             float skyGreen = v;
             float skyBlue = skyBase;
 
-            if (gameRenderer.getDarkenWorldAmount(tickDelta) > 0.0F) {
-                final float skyDarkness = gameRenderer.getDarkenWorldAmount(tickDelta);
+            if (bossDarkening > 0.0F) {
+                final float skyDarkness = bossDarkening;
                 skyRed = skyRed * (1.0F - skyDarkness) + skyRed * 0.7F * skyDarkness;
                 skyGreen = skyGreen * (1.0F - skyDarkness) + skyGreen * 0.6F * skyDarkness;
                 skyBlue = skyBlue * (1.0F - skyDarkness) + skyBlue * 0.6F * skyDarkness;
@@ -152,7 +149,7 @@ public class Darkness {
                 blockFactor = 1f - blockIndex / 15f;
                 blockFactor = 1 - blockFactor * blockFactor * blockFactor * blockFactor;
 
-                final float blockBase = blockFactor * LightTexture.getBrightness(dim, blockIndex) * (prevFlicker * 0.1F + 1.5F);
+                final float blockBase = blockFactor * Lightmap.getBrightness(dim, blockIndex) * (prevFlicker * 0.1F + 1.5F);
                 min = 0.4f * blockFactor;
                 final float blockGreen = blockBase * ((blockBase * (1 - min) + min) * (1 - min) + min);
                 final float blockBlue = blockBase * (blockBase * blockBase * (1 - min) + min);

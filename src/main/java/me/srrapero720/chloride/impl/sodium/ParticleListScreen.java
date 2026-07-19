@@ -2,7 +2,7 @@ package me.srrapero720.chloride.impl.sodium;
 
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.CycleButton;
@@ -52,9 +52,9 @@ public class ParticleListScreen extends Screen {
     }
 
     @Override
-    public void render(final GuiGraphics graphics, final int mouseX, final int mouseY, final float partialTick) {
-        super.render(graphics, mouseX, mouseY, partialTick);
-        graphics.drawCenteredString(this.font, this.title, this.width / 2, 9, 0xFFFFFFFF);
+    public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float partialTick) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
+        graphics.centeredText(this.font, this.title, this.width / 2, 9, 0xFFFFFFFF);
     }
 
     @Override
@@ -125,16 +125,16 @@ public class ParticleListScreen extends Screen {
             }
 
             @Override
-            public void renderContent(final GuiGraphics graphics, final int mouseX, final int mouseY, final boolean hovering, final float partialTick) {
+            public void extractContent(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final boolean hovering, final float partialTick) {
                 final int left = this.getX();
                 final int top = this.getY();
                 final int width = this.getWidth();
-                graphics.drawString(ParticleListScreen.this.font, this.key.toString(), left + 2, top + 4, 0xFFFFFFFF);
-                graphics.drawString(ParticleListScreen.this.font, ParticleList.this.providerName(this.key), left + 2, top + 16, 0xFFAAAAAA);
+                graphics.text(ParticleListScreen.this.font, this.key.toString(), left + 2, top + 4, 0xFFFFFFFF);
+                graphics.text(ParticleListScreen.this.font, ParticleList.this.providerName(this.key), left + 2, top + 16, 0xFFAAAAAA);
 
                 this.toggle.setX(left + width - 48);
                 this.toggle.setY(top + 4);
-                this.toggle.render(graphics, mouseX, mouseY, partialTick);
+                this.toggle.extractRenderState(graphics, mouseX, mouseY, partialTick);
             }
 
             @Override

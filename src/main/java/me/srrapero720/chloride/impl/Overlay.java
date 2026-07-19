@@ -5,7 +5,7 @@ import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.debugchart.LocalSampleLogger;
 import net.neoforged.api.distmarker.Dist;
@@ -73,7 +73,7 @@ public class Overlay {
         renderFPSChar(mc, event.getGuiGraphics(), mc.font, mc.getWindow().getGuiScale());
     }
 
-    private static void renderFPSChar(final Minecraft mc, final GuiGraphics graphics, final Font font, final double scale) {
+    private static void renderFPSChar(final Minecraft mc, final GuiGraphicsExtractor graphics, final Font font, final double scale) {
         if (Minecraft.getInstance().getDebugOverlay().showDebugScreen() || Minecraft.getInstance().getDebugOverlay().showProfilerChart()) return; // No render when F3 is open
 
         final var mode = ChlorideConfig.fpsDisplay.mode;
@@ -134,7 +134,7 @@ public class Overlay {
             graphics.fill((int) posX - 2, (int) posY - 2, (int) posX + font.width(displayString) + 2, (int) (posY + font.lineHeight) + 1, -1873784752);
         }
 
-        graphics.drawString(font, displayString, (int) posX, (int) posY, 0xffffffff, true);
+        graphics.text(font, displayString, (int) posX, (int) posY, 0xffffffff, true);
         DISPLAY.release();
         graphics.pose().popMatrix();
     }

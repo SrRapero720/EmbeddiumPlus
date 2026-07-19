@@ -1,9 +1,10 @@
 package me.srrapero720.chloride.mixins.impl;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import me.srrapero720.chloride.ChlorideConfig;
+import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,11 +22,11 @@ public class SkyMixins {
         }
     }
 
-    @Mixin(GameRenderer.class)
+    @Mixin(Camera.class)
     public static class DepthFarMixin {
         @Unique private static final float MIN_SKY_DEPTH = 2048.0F;
 
-        @ModifyReturnValue(method = "getDepthFar", at = @At("RETURN"))
+        @ModifyExpressionValue(method = "update", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"))
         private float inject$farSkybox(final float original) {
             return ChlorideConfig.world.farSkybox && original < MIN_SKY_DEPTH ? MIN_SKY_DEPTH : original;
         }

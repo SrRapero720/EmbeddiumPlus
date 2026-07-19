@@ -21,7 +21,7 @@ import static me.srrapero720.chloride.Chloride.id;
 @ConfigEntryPointForge("chloride")
 public class ChlorideConfigIntegration implements ConfigEntryPoint {
 
-    private static final Identifier SODIUM_FULLSCREEN = Identifier.parse("sodium:general.fullscreen");
+    private static final Identifier SODIUM_FULLSCREEN = Identifier.parse("sodium:general.fullscreen_mode");
     private static final Identifier SODIUM_FULLSCREEN_RESOLUTION = Identifier.parse("sodium:general.fullscreen_resolution");
     /** Id of Chloride's replacement option; both the replacement and the resolution overlay's dependency point here. */
     private static final Identifier FULL_SCREEN = id("fullScreen");
@@ -42,7 +42,8 @@ public class ChlorideConfigIntegration implements ConfigEntryPoint {
                 .setElementNameProvider(EnumOptionBuilder.nameProviderFrom(
                         Component.translatable("chloride.general.screen.windowed"),
                         Component.translatable("chloride.general.screen.borderless"),
-                        Component.translatable("chloride.general.screen.fullscreen")))
+                        Component.translatable("chloride.general.screen.fullscreen"),
+                        Component.translatable("chloride.general.screen.exclusive_fullscreen")))
                 .setStorageHandler(STORAGE)
                 .setDefaultValue(Borderless.Mode.WINDOWED)
                 .setBinding(Borderless::setFullScreenMode, () -> ChlorideConfig.fullscreen.mode));
@@ -57,7 +58,7 @@ public class ChlorideConfigIntegration implements ConfigEntryPoint {
                     if (monitor == null || monitor.getModeCount() <= 0) return false;
                     final Util.OS os = Util.getPlatform();
                     if (os != Util.OS.WINDOWS && os != Util.OS.OSX) return false;
-                    return state.readEnumOption(FULL_SCREEN, Borderless.Mode.class) == Borderless.Mode.FULLSCREEN;
+                    return state.readEnumOption(FULL_SCREEN, Borderless.Mode.class) == Borderless.Mode.EXCLUSIVE_FULLSCREEN;
                 }, FULL_SCREEN));
 
         mod.addPage(InterfacePage.build(builder));

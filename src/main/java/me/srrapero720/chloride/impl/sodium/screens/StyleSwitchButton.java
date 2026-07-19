@@ -6,7 +6,7 @@ import net.caffeinemc.mods.sodium.client.gui.Colors;
 import net.caffeinemc.mods.sodium.client.gui.VideoSettingsScreen;
 import net.caffeinemc.mods.sodium.client.gui.widgets.FlatButtonWidget;
 import net.caffeinemc.mods.sodium.client.util.Dim2i;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -19,9 +19,9 @@ public class StyleSwitchButton extends FlatButtonWidget {
     }
 
     @Override
-    public void render(final GuiGraphics graphics, final int mouseX, final int mouseY, final float delta) {
+    public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float delta) {
         if (!this.isVisible()) return;
-        super.render(graphics, mouseX, mouseY, delta);
+        super.extractRenderState(graphics, mouseX, mouseY, delta);
         // MONOCHROME MASK: THE WHITE LOGO IS TINTED LIKE LABEL TEXT (WHITE, GRAYED OUT WHEN DISABLED)
         VideoSettingsScreen.renderIconWithSpacing(graphics, SodiumFeatures.LOGO, this.getTextColor(), true, this.getX(), this.getY(), this.getHeight(), 2);
 

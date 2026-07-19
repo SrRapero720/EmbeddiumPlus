@@ -4,8 +4,9 @@
   "chloride.performance.fastbeds.title": "Camas Rapidas",
   "chloride.performance.fastbeds.desc": "Remplaza las camas por un modelo de bloque solido sin animacion. Puede romper las camas de otros mods.",
 
-  "chloride.general.screen.desc": "VENTANA - El juego se muestra en una ventana.\nSIN BORDES - El juego se muestra en una \"Ventana\" sin borders y expandida a la maxima resolucion de la pantalla sin reajustarla. \nPANTALLA COMPLETA - El juego se muestra en pantalla completa nativa, reajustando la resolucion de tu pantalla a la configuracion del juego",
+  "chloride.general.screen.desc": "VENTANA - El juego se muestra en una ventana.\nSIN BORDES - Ventana sin bordes estirada sobre el monitor; conserva el compositor del escritorio (alt-tab instantáneo, overlays), sin cambiar la resolución.\nPANTALLA COMPLETA - Pantalla completa no exclusiva de Minecraft (lo que Sodium llama \"Sin bordes\"): cubre el monitor sin tomar propiedad exclusiva, sin cambiar la resolución.\nPANTALLA COMPLETA EXCLUSIVA - Pantalla completa exclusiva real con propiedad del display y cambio de resolución/refresco (ver Resolución de pantalla completa). Requiere reiniciar para activarse por completo.",
   "chloride.general.screen.fullscreen": "Pantalla Completa",
+  "chloride.general.screen.exclusive_fullscreen": "Pantalla Completa Exclusiva",
   "chloride.general.screen.borderless": "Sin bordes",
   "chloride.general.screen.windowed": "Ventana",
 

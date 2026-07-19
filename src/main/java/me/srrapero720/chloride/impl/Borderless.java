@@ -20,6 +20,8 @@ public class Borderless {
         previousMode = ChlorideConfig.fullscreen.mode;
         ChlorideConfig.fullscreen.mode = value;
         opts.fullscreen().set(value != Mode.WINDOWED);
+        // EXCLUSIVE IS A RENDER-BACKEND FLAG (BackendOptions AT STARTUP), SO THE SWITCH TAKES FULL EFFECT NEXT LAUNCH
+        opts.exclusiveFullscreen().set(value == Mode.EXCLUSIVE_FULLSCREEN);
 
         // options.fullscreen.set() ALREADY CALLS window.toggleFullscreen() AS A SIDE-EFFECT WHEN THE
         // BOOLEAN CHANGES, SO THIS BRANCH USUALLY NO-OPS. IT ONLY FIRES FOR BORDERLESS <-> FULLSCREEN
@@ -48,29 +50,27 @@ public class Borderless {
         ATTACH, REPLACE, OFF
     }
 
+    // WINDOWED: plain window. BORDERLESS: Chloride's true borderless (undecorated window covering the monitor, keeps the
+    // compositor). FULLSCREEN: Minecraft's non-exclusive fullscreen (what Sodium mislabels "Borderless"; glfwSetWindowMonitor
+    // at the desktop mode, no resolution switch). EXCLUSIVE_FULLSCREEN: real exclusive fullscreen with a mode switch.
     public enum Mode {
-        WINDOWED, BORDERLESS, FULLSCREEN;
+        WINDOWED, BORDERLESS, FULLSCREEN, EXCLUSIVE_FULLSCREEN;
 
         public static Mode nextOf(final Mode current) {
             return switch (current) {
                 case WINDOWED -> BORDERLESS;
                 case BORDERLESS -> FULLSCREEN;
-                case FULLSCREEN -> WINDOWED;
+                case FULLSCREEN -> EXCLUSIVE_FULLSCREEN;
+                case EXCLUSIVE_FULLSCREEN -> WINDOWED;
             };
         }
 
         public static Mode nextBorderless(final Mode current) {
-            return switch (current) {
-                case FULLSCREEN, BORDERLESS -> WINDOWED;
-                case WINDOWED -> BORDERLESS;
-            };
+            return current == WINDOWED ? BORDERLESS : WINDOWED;
         }
 
         public static Mode nextFullscreen(final Mode current) {
-            return switch (current) {
-                case FULLSCREEN, BORDERLESS -> WINDOWED;
-                case WINDOWED -> FULLSCREEN;
-            };
+            return current == WINDOWED ? FULLSCREEN : WINDOWED;
         }
 
         public static Mode getVanillaConfig() {

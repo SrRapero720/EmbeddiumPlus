@@ -10,7 +10,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.EnderChestBlock;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,13 +22,6 @@ public class FastBlocksMixins {
     @Mixin(BedBlock.class)
     public static abstract class BedMixin extends BlockBehaviour {
         public BedMixin(final Properties pProperties) { super(pProperties); }
-
-        @Inject(method = "getRenderShape", at = @At("RETURN"), cancellable = true)
-        private void inject$replaceRenderShape(final BlockState state, final CallbackInfoReturnable<RenderShape> cir) {
-            if (ChlorideConfig.fastBlocks.beds) {
-                cir.setReturnValue(RenderShape.MODEL);
-            }
-        }
 
         // I DON'T LIKE DO THIS WITH MIXINS, BUT IS NECESSARY :P
         @Override
@@ -46,13 +38,6 @@ public class FastBlocksMixins {
         private <T extends BlockEntity> void inject$removeTicker(final Level level, final BlockState state, final BlockEntityType<T> type, final CallbackInfoReturnable<BlockEntityTicker<T>> cir) {
             if (FastBlocks.canUseOnChests() && ChlorideConfig.fastBlocks.chests) {
                 cir.setReturnValue(null);
-            }
-        }
-
-        @Inject(method = "getRenderShape", at = @At("HEAD"), cancellable = true)
-        private void inject$replaceRenderShape(final BlockState state, final CallbackInfoReturnable<RenderShape> cir) {
-            if (FastBlocks.canUseOnChests() && ChlorideConfig.fastBlocks.chests) {
-                cir.setReturnValue(RenderShape.MODEL);
             }
         }
     }

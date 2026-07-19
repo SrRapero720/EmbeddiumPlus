@@ -1,5 +1,3 @@
-modLoader="javafml"
-loaderVersion="$fmlrange"
 license="$modlicense"
 issueTrackerURL="https://github.com/$github/issues"
 

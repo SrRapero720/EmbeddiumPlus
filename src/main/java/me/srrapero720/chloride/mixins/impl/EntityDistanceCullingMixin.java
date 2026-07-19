@@ -158,7 +158,7 @@ public class EntityDistanceCullingMixin {
         @Override
         public boolean chloride$whitelisted() {
             if (this.chloride$checked) return this.chloride$whitelisted;
-            final Identifier resource = BlockEntityType.getKey((BlockEntityType<?>) ((Object) this));
+            final Identifier resource = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey((BlockEntityType<?>) ((Object) this));
             if (resource == null) {
                 LOGGER.warn(e$IT, "BlockEntity key for '{}' is null, not whitelisting a broken mod block", this.getClass().getName());
                 return false;

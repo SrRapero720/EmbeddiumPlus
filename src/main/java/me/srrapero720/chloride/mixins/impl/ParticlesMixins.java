@@ -9,13 +9,10 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.FireworkParticles;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.WeatherEffectRenderer;
-import net.minecraft.client.renderer.state.LevelRenderState;
-import net.minecraft.client.renderer.state.WeatherRenderState;
+import net.minecraft.client.renderer.state.level.WeatherRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
@@ -23,13 +20,11 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ParticleStatus;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -58,8 +53,8 @@ public class ParticlesMixins {
             }
         }
 
-        @Inject(method = "render(Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/WeatherRenderState;Lnet/minecraft/client/renderer/state/LevelRenderState;)V", at = @At(value = "HEAD"), cancellable = true)
-        private void inject$render(MultiBufferSource bufferSource, Vec3 cameraPosition, WeatherRenderState renderState, LevelRenderState levelRenderState, CallbackInfo ci) {
+        @Inject(method = "render(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V", at = @At(value = "HEAD"), cancellable = true)
+        private void inject$render(Vec3 cameraPosition, WeatherRenderState renderState, CallbackInfo ci) {
             if (!ChlorideConfig.particles.rain) {
                 ci.cancel();
             }
@@ -75,11 +70,6 @@ public class ParticlesMixins {
                 cir.setReturnValue(null);
             }
         }
-
-        @Redirect(method = "makeParticle", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/Registry;getKey(Ljava/lang/Object;)Lnet/minecraft/resources/Identifier;"))
-        public Identifier redirect$particleRegistry(Registry instance, Object t) {
-            return ((IParticleTypeData) t).getId();
-        }
     }
 
     // BLOCK-BREAK/HIT PARTICLE TOGGLES LIVE IN ClientLevel, NOT IN ParticleEngine
@@ -92,9 +82,8 @@ public class ParticlesMixins {
             }
         }
 
-        // 3-ARG OVERLOAD (THE REAL IMPL; THE DEPRECATED 2-ARG DELEGATES HERE) — TARGET BY DESCRIPTOR TO DISAMBIGUATE
-        @Inject(method = "addBreakingBlockEffect(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/phys/HitResult;)V", at = @At(value = "HEAD"), cancellable = true)
-        public void inject$crack(BlockPos pos, Direction direction, HitResult hitResult, CallbackInfo ci) {
+        @Inject(method = "addBreakingBlockEffect(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)V", at = @At(value = "HEAD"), cancellable = true)
+        public void inject$crack(BlockPos pos, Direction direction, CallbackInfo ci) {
             if (!ChlorideConfig.particles.blockCracking) {
                 ci.cancel();
             }

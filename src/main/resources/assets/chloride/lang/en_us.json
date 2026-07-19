@@ -4,8 +4,9 @@
   "chloride.performance.fastbeds.title": "Fast Beds",
   "chloride.performance.fastbeds.desc": "Replaces bed models with solid block models. Might break modded beds",
 
-  "chloride.general.screen.desc": "WINDOWED - Game is shown in a window.\nBORDERLESS - Game is shown in \"Windowed\" mode without borders and expanded to max screen size without readjust resolution. \nFULLSCREEN - the game will display in native fullscreen mode, readjusting screen resolution to game settings",
+  "chloride.general.screen.desc": "WINDOWED - Game is shown in a window.\nBORDERLESS - Undecorated window stretched over the monitor; keeps the desktop compositor (instant alt-tab, overlays), no resolution change.\nFULLSCREEN - Minecraft's non-exclusive fullscreen (what Sodium labels \"Borderless\"): covers the monitor without taking exclusive ownership, no resolution change.\nEXCLUSIVE FULLSCREEN - Real exclusive fullscreen with display ownership and a resolution/refresh switch (see Fullscreen Resolution). Needs a restart to fully engage.",
   "chloride.general.screen.fullscreen": "Fullscreen",
+  "chloride.general.screen.exclusive_fullscreen": "Exclusive Fullscreen",
   "chloride.general.screen.borderless": "Borderless",
   "chloride.general.screen.windowed": "Windowed",
 
