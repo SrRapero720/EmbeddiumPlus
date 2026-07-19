@@ -12,10 +12,10 @@ import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -87,13 +87,10 @@ public class ParticleListScreen extends Screen {
         }
 
         private String providerName(final ResourceLocation key) {
-            return this.providerNames.computeIfAbsent(key.getNamespace(), namespace -> {
-                final var mod = ModList.get().getModFileById(namespace);
-                if (mod != null) {
-                    return mod.getMods().get(0).getDisplayName();
-                }
-                return I18n.get("chloride.particles.provider.unknown");
-            });
+            return this.providerNames.computeIfAbsent(key.getNamespace(), namespace -> FabricLoader.getInstance()
+                    .getModContainer(namespace)
+                    .map(mod -> mod.getMetadata().getName())
+                    .orElseGet(() -> I18n.get("chloride.particles.provider.unknown")));
         }
 
         @Override

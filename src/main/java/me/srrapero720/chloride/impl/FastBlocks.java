@@ -1,87 +1,44 @@
 package me.srrapero720.chloride.impl;
 
 import me.srrapero720.chloride.Chloride;
-import me.srrapero720.chloride.api.events.FastModelSettingsUpdate;
+import me.srrapero720.chloride.ChlorideConfig;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.*;
-import net.minecraft.server.packs.repository.BuiltInPackSource;
-import net.minecraft.server.packs.repository.KnownPack;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.minecraft.resources.ResourceLocation;
 
-import java.nio.file.Path;
-import java.util.Optional;
-
-@EventBusSubscriber(value = Dist.CLIENT, modid = Chloride.ID)
 public class FastBlocks {
-    public static Pack SOLID_BEDS_PACK;
-    public static Pack SOLID_CHESTS_PACK;
+    // REPOSITORY IDS FABRIC ASSIGNS TO THE BUILT-IN PACKS (THE ResourceLocation#toString OF EACH)
+    private static final String BEDS = Chloride.ID + ":solid_beds";
+    private static final String CHESTS = Chloride.ID + ":solid_chests";
 
     public static boolean canUseOnChests() {
         return !Chloride.installed("enhancedblockentities");
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onChestSettingUpdateEvent(FastModelSettingsUpdate.ChestEvent e) {
-        if (e.isEnabled()) {
-            Minecraft.getInstance().getResourcePackRepository().addPack(SOLID_CHESTS_PACK.getId());
-        } else {
-            Minecraft.getInstance().getResourcePackRepository().removePack(SOLID_CHESTS_PACK.getId());
-        }
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onBedSettingUpdateEvent(FastModelSettingsUpdate.BedEvent e) {
-        if (e.isEnabled()) {
-            Minecraft.getInstance().getResourcePackRepository().addPack(SOLID_BEDS_PACK.getId());
-        } else {
-            Minecraft.getInstance().getResourcePackRepository().removePack(SOLID_BEDS_PACK.getId());
-        }
-    }
-
-    @SubscribeEvent
-    public static void registerResourcePacks(AddPackFindersEvent e) {
+    // REGISTER THE resourcepacks/solid_beds AND resourcepacks/solid_chests PACKS AS TOGGLEABLE BUILT-INS AT INIT
+    public static void registerPacks() {
         Chloride.LOGGER.info("Registering CHLORIDE built-in packs");
-        if (e.getPackType() == PackType.CLIENT_RESOURCES) {
-            final ModContainer modFile = ModList.get().getModContainerById(Chloride.ID).get();
-
-            final Path bedsPath = modFile.getModInfo().getOwningFile().getFile().findResource("custom_packs/solid_beds");
-            SOLID_BEDS_PACK = Pack.readMetaAndCreate(
-                    new PackLocationInfo(Chloride.ID + "_solid_beds", Component.literal("Chloride: Solid Beds"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_beds", "1.0.0"))),
-                    BuiltInPackSource.fromName((path) -> getPathResources(path, bedsPath)),
-                    PackType.CLIENT_RESOURCES,
-                    new PackSelectionConfig(false, Pack.Position.TOP, true)
-            );
-
-            final Path chestsPath = modFile.getModInfo().getOwningFile().getFile().findResource("custom_packs/solid_chests");
-            SOLID_CHESTS_PACK = Pack.readMetaAndCreate(
-                    new PackLocationInfo(Chloride.ID + "_solid_chests", Component.literal("Chloride: Solid Chests"), PackSource.BUILT_IN, Optional.of(new KnownPack(Chloride.ID, "solid_chests", "1.0.0"))),
-                    BuiltInPackSource.fromName((path) -> getPathResources(path, chestsPath)),
-                    PackType.CLIENT_RESOURCES,
-                    new PackSelectionConfig(false, Pack.Position.TOP, true)
-            );
-
-            e.addRepositorySource(consumer -> {
-                consumer.accept(SOLID_BEDS_PACK);
-                consumer.accept(SOLID_CHESTS_PACK);
-            });
-        }
+        final var mod = FabricLoader.getInstance().getModContainer(Chloride.ID).orElseThrow();
+        ResourceManagerHelper.registerBuiltinResourcePack(ResourceLocation.fromNamespaceAndPath(Chloride.ID, "solid_beds"),
+                mod, Component.literal("Chloride: Solid Beds"), ResourcePackActivationType.NORMAL);
+        ResourceManagerHelper.registerBuiltinResourcePack(ResourceLocation.fromNamespaceAndPath(Chloride.ID, "solid_chests"),
+                mod, Component.literal("Chloride: Solid Chests"), ResourcePackActivationType.NORMAL);
     }
 
-    private static PathPackResources getPathResources(PackLocationInfo info, Path path) {
-        return new PathPackResources(info, path) {
+    public static void applyChests() {
+        toggle(CHESTS, canUseOnChests() && ChlorideConfig.fastBlocks.chests);
+    }
 
-            @Override public boolean isHidden() {
-                return false;
-            }
-        };
+    public static void applyBeds() {
+        toggle(BEDS, ChlorideConfig.fastBlocks.beds);
+    }
+
+    private static void toggle(final String id, final boolean enabled) {
+        final var repo = Minecraft.getInstance().getResourcePackRepository();
+        if (enabled) repo.addPack(id);
+        else repo.removePack(id);
     }
 }

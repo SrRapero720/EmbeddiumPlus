@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "$modid",
+  "version": "$modversion",
+  "name": "$modname",
+  "description": "$moddesc",
+  "authors": [ "$modauthor" ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/$modid",
+    "issues": "https://github.com/$github/issues",
+    "sources": "https://github.com/$github"
+  },
+  "license": "$modlicense",
+  "icon": "pack.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [ "me.srrapero720.chloride.Chloride" ],
+    "sodium:config_api_user": [ "me.srrapero720.chloride.impl.sodium.ChlorideConfigIntegration" ]
+  },
+  "mixins": [
+    { "config": "$modid.$mixin_file_suffix", "environment": "client" }
+  ],
+  "accessWidener": "${modid}.accesswidener",
+  "depends": {
+    "fabricloader": "$loaderrange",
+    "minecraft": "$minecraftrange",
+    "fabric-api": "*",
+    "sodium": "$sodiumrange"
+  },
+  "breaks": {
+    "smoothskies": "*"
+  }
+}

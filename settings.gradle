@@ -2,12 +2,12 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        maven { url = 'https://maven.neoforged.net/releases' }
+        maven { url = 'https://maven.fabricmc.net/' }
     }
     // PLUGIN VERSIONS LIVE IN gradle.properties; build.gradle APPLIES THEM VERSION-LESS
     plugins {
         id 'org.gradle.toolchains.foojay-resolver-convention' version foojayversion
-        id 'net.neoforged.moddev' version moddevversion
+        id 'fabric-loom' version loomversion
         id 'me.modmuss50.mod-publish-plugin' version publishpluginversion
     }
 }

@@ -1,0 +1,22 @@
+accessWidener v2 named
+
+# CLASSES
+accessible	class	net/minecraft/client/gui/Font$StringRenderOutput
+accessible	class	net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList
+accessible	class	net/minecraft/client/renderer/FogRenderer$FogData
+accessible	class	net/minecraft/client/renderer/FogRenderer$MobEffectFogFunction
+accessible	class	net/minecraft/client/resources/model/ModelManager$ReloadState
+accessible	class	net/minecraft/client/particle/FireworkParticles$SparkParticle
+
+# METHODS
+accessible	method	net/minecraft/client/renderer/LevelRenderer	setSectionDirty	(IIIZ)V
+
+# FIELDS
+accessible	field	net/minecraft/client/Minecraft	fps	I
+accessible	field	net/minecraft/client/Options	fullscreen	Lnet/minecraft/client/OptionInstance;
+accessible	field	net/minecraft/client/renderer/LightTexture	blockLightRedFlicker	F
+accessible	field	net/minecraft/client/renderer/LightTexture	updateLightTexture	Z
+accessible	field	net/minecraft/client/gui/components/DebugScreenOverlay	frameTimeLogger	Lnet/minecraft/util/debugchart/LocalSampleLogger;
+# WINDOW.dirty IS WRITTEN BY Borderless, SO IT ALSO NEEDS mutable (STRIP final)
+accessible	field	com/mojang/blaze3d/platform/Window	dirty	Z
+mutable		field	com/mojang/blaze3d/platform/Window	dirty	Z

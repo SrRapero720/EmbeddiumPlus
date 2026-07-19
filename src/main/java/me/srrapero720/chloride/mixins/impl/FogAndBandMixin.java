@@ -2,6 +2,7 @@ package me.srrapero720.chloride.mixins.impl;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.shaders.FogShape;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.Camera;
@@ -21,27 +22,27 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = FogRenderer.class, priority = 910)
 public abstract class FogAndBandMixin {
     @Unique private static final float FOG_END = 1_000_000.0F;
 
-    @Inject(method = "setupFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void inject$fogToggle_fogDistance(final Camera camera, final FogRenderer.FogMode fogType, final float viewDistance, final boolean thickFog, final float tickDelta, final CallbackInfo ci, final FogType fogtype, final Entity entity, final FogRenderer.FogData fogrenderer$fogdata, final FogRenderer.MobEffectFogFunction fogrenderer$mobeffectfogfunction) {
+    // MIXINEXTRAS @Local CAPTURES THE LOCALS BY TYPE, RESILIENT TO LVT DIFFERENCES ACROSS TOOLCHAINS
+    @Inject(method = "setupFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V", shift = At.Shift.BEFORE))
+    private static void inject$fogToggle_fogDistance(final Camera camera, final FogRenderer.FogMode fogType, final float viewDistance, final boolean thickFog, final float tickDelta, final CallbackInfo ci,
+            @Local final Entity entity, @Local final FogRenderer.FogData fogData, @Local final FogRenderer.MobEffectFogFunction mobEffect) {
         if (camera.getFluidInCamera() != FogType.NONE) return;
-        if (fogrenderer$mobeffectfogfunction != null)  return;
-
+        if (mobEffect != null) return;
 
         if (!ChlorideConfig.fog.enabled) { // FOG IS DISABLED
-            fogrenderer$fogdata.start = FOG_END;
-            fogrenderer$fogdata.end = FOG_END;
-            fogrenderer$fogdata.shape = FogShape.SPHERE;
+            fogData.start = FOG_END;
+            fogData.end = FOG_END;
+            fogData.shape = FogShape.SPHERE;
             return;
         } else if (ChlorideConfig.fog.custom) { // OVERRIDE FOG AT ALL
-            fogrenderer$fogdata.start = ChlorideConfig.fog.start;
-            fogrenderer$fogdata.end = ChlorideConfig.fog.end;
-            fogrenderer$fogdata.shape = ChlorideConfig.fog.shape;
+            fogData.start = ChlorideConfig.fog.start;
+            fogData.end = ChlorideConfig.fog.end;
+            fogData.shape = ChlorideConfig.fog.shape;
             return;
         }
 
@@ -51,9 +52,9 @@ public abstract class FogAndBandMixin {
             if ((level.dimension() == Level.OVERWORLD && !ChlorideConfig.fog.onOverworld)
                     || (level.dimension() == Level.NETHER && !ChlorideConfig.fog.onNether)
                     || (level.dimension() == Level.END && !ChlorideConfig.fog.onEnd)) {
-                fogrenderer$fogdata.start = FOG_END;
-                fogrenderer$fogdata.end = FOG_END;
-                fogrenderer$fogdata.shape = FogShape.SPHERE;
+                fogData.start = FOG_END;
+                fogData.end = FOG_END;
+                fogData.shape = FogShape.SPHERE;
             }
 
         }

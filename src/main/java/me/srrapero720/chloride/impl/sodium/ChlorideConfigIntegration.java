@@ -5,7 +5,6 @@ import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.Borderless;
 import me.srrapero720.chloride.impl.sodium.pages.*;
 import net.caffeinemc.mods.sodium.api.config.ConfigEntryPoint;
-import net.caffeinemc.mods.sodium.api.config.ConfigEntryPointForge;
 import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
 import net.caffeinemc.mods.sodium.api.config.structure.EnumOptionBuilder;
 import net.caffeinemc.mods.sodium.api.config.structure.ModOptionsBuilder;
@@ -18,7 +17,7 @@ import static me.srrapero720.chloride.Chloride.LOGGER;
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 import static me.srrapero720.chloride.Chloride.id;
 
-@ConfigEntryPointForge("chloride")
+// REGISTERED VIA THE "sodium:config_api_user" ENTRYPOINT IN fabric.mod.json; THE OWNING MOD ID IS INFERRED BY SODIUM
 public class ChlorideConfigIntegration implements ConfigEntryPoint {
 
     private static final ResourceLocation SODIUM_FULLSCREEN = ResourceLocation.parse("sodium:general.fullscreen");
