@@ -78,7 +78,7 @@ public class ParticleListScreen extends Screen {
             keys.sort(Comparator.comparing(ResourceLocation::toString));
 
             this.clearEntries();
-            for (final ResourceLocation key : keys) {
+            for (final ResourceLocation key: keys) {
                 if (!query.isEmpty() && !key.toString().contains(query) && !this.providerName(key).toLowerCase(Locale.ROOT).contains(query))
                     continue;
                 this.addEntry(new Entry(key));
