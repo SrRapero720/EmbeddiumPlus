@@ -17,8 +17,10 @@
     "FastBlocksMixins$ChestsMixin",
     "FastBlocksMixins$TileRenderMixin",
     "FogAndBandMixin",
+    "FogRendererMixin",
     "FontShadowMixin",
     "MinecraftMixin",
+    "NameTagToggleMixin",
     "OverlayMixin",
     "ParticlesMixins$EngineMixin",
     "ParticlesMixins$ClientLevelMixin",
@@ -29,11 +31,14 @@
     "SkyMixins$HorizonMixin",
     "SkyMixins$DepthFarMixin",
     "darkness.DimensionTypeMixin",
+    "darkness.FogColorMixin",
     "darkness.LightmapMixin",
     "jei_rei_emi.JeiOverlayMixin",
     "jei_rei_emi.ReiOverlayMixin",
     "leaves_culling.LeavesBlockMixin",
     "sodium.SodiumConfigBuilderMixin",
-    "sodium.VideoSettingsScreenMixin"
+    "sodium.VideoSettingsScreenMixin",
+    "ZoomMixins$CameraMixin",
+    "ZoomMixins$MouseMixin"
   ]
 }

@@ -1,0 +1,17 @@
+accessWidener v2 official
+
+# CLASSES
+accessible	class	net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList
+accessible	class	net/minecraft/client/resources/model/ModelManager$ReloadState
+accessible	class	net/minecraft/client/particle/FireworkParticles$SparkParticle
+
+# METHODS
+accessible	method	net/minecraft/client/renderer/LevelRenderer	setSectionDirty	(IIIZ)V
+accessible	method	net/minecraft/client/multiplayer/ClientLevel	getSkyFlashTime	()I
+
+# FIELDS
+accessible	field	net/minecraft/client/Minecraft	fps	I
+accessible	field	net/minecraft/client/Options	fullscreen	Lnet/minecraft/client/OptionInstance;
+accessible	field	net/minecraft/client/gui/components/DebugScreenOverlay	frameTimeLogger	Lnet/minecraft/util/debugchart/LocalSampleLogger;
+accessible	field	com/mojang/blaze3d/platform/Window	dirty	Z
+mutable		field	com/mojang/blaze3d/platform/Window	dirty	Z

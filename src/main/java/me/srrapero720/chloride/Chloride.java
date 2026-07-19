@@ -1,44 +1,34 @@
 package me.srrapero720.chloride;
 
 import me.srrapero720.chloride.impl.Borderless;
-import net.minecraft.client.Minecraft;
+import me.srrapero720.chloride.impl.FastBlocks;
+import me.srrapero720.chloride.impl.Overlay;
+import me.srrapero720.chloride.impl.Zoom;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-@Mod(Chloride.ID)
-@EventBusSubscriber(value = Dist.CLIENT)
-public class Chloride {
+public class Chloride implements ClientModInitializer {
     public static final String ID = "chloride";
     public static final Logger LOGGER = LogManager.getLogger("chloride");
     public static final Marker IT = MarkerManager.getMarker("Main");
 
-    public Chloride() {
-        if (FMLLoader.getCurrent().getDist().isClient()) {
-            LOGGER.info(IT, "Chloride is here, lets make your experience taste-able");
-        } else {
-            LOGGER.info(IT, "Chloride is not intended to be on servers, loaded in inner mode");
-        }
-    }
+    @Override
+    public void onInitializeClient() {
+        LOGGER.info(IT, "Chloride is here, lets make your experience taste-able");
 
-    @SubscribeEvent
-    public static void load(final FMLClientSetupEvent event) {
-        LOGGER.info("LOADED CHLORIDE");
+        KeyMappingHelper.registerKeyMapping(Zoom.KEY);
+        HudElementRegistry.addLast(id("fps"), Overlay::onRenderOverlay);
+        FastBlocks.registerPacks();
 
-        // RECONCILE CHLORIDE CONFIG WITH VANILLA OPTIONS.FULLSCREEN AT BOOT. THE WINDOW IS CONSTRUCTED
-        // USING OPTIONS.FULLSCREEN AS THE INITIAL STATE; IF IT DESYNCS FROM CHLORIDECONFIG.FULLSCREEN
-        // (E.G. MANUAL CONFIG EDIT, MOD INSTALLED OVER EXISTING OPTIONS.TXT) THE WINDOW STARTS IN THE
-        // WRONG MODE. ENQUEUE ON THE MAIN THREAD SO setMode() RUNS AFTER THE WINDOW IS READY.
-        event.enqueueWork(() -> {
-            final Minecraft mc = Minecraft.getInstance();
+        ClientLifecycleEvents.CLIENT_STARTED.register(mc -> {
             final boolean optsFullscreen = mc.options.fullscreen().get();
             final boolean configFullscreen = ChlorideConfig.fullscreen.mode != Borderless.Mode.WINDOWED;
             if (optsFullscreen != configFullscreen) {
@@ -48,11 +38,11 @@ public class Chloride {
     }
 
     public static void earlyLoad() {
-        ChlorideConfig.load(FMLLoader.getCurrent().getGameDir().resolve("config"));
+        ChlorideConfig.load(FabricLoader.getInstance().getGameDir().resolve("config"));
     }
 
     public static boolean installed(final String modid) {
-        return FMLLoader.getCurrent().getLoadingModList().getModFileById(modid) != null;
+        return FabricLoader.getInstance().isModLoaded(modid);
     }
 
     /** Builds a stable, unique option id from a config field name (camelCase -&gt; chloride:snake_case). */
