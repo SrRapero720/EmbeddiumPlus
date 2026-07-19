@@ -1,3 +1,7 @@
+# RELEASE 1.8.1
+- [🐛] Fixed chloride mixins for Leaves Block collides with sodiums mixins (only warns, but breaks our culling)
+- [🐛] Fixed Nametag of item entities never got renderer despite being enabled on settings
+
 # RELEASE 1.8.0
 - [✨] Added a void horizon height slider (sets the Y level of the below-horizon void plane, 63 keeps vanilla behavior)
 - [✨] Added a toggle to enhance Skybox looking on low render distances
