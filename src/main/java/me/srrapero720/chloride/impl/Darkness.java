@@ -1,6 +1,5 @@
 package me.srrapero720.chloride.impl;
 
-import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -11,23 +10,18 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ViewportEvent;
+import org.joml.Vector4f;
 
-@EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
 public class Darkness {
 	public static final double MIN = 0.03D;
 
     // NETHER/END FOG DIMMING: DimensionSpecialEffects#getBrightnessDependentFogColor IS GONE IN 1.21.11,
     // SO THE SAME DIM IS NOW APPLIED AT THE END OF THE FOG COLOR PIPELINE
-    @SubscribeEvent
-    public static void onComputeFogColor(final ViewportEvent.ComputeFogColor e) {
-        if (ChlorideConfig.darkness.mode == DarkMode.VANILLA) return;
+    public static Vector4f dimFog(final Vector4f color) {
+        if (ChlorideConfig.darkness.mode == DarkMode.VANILLA) return color;
 
         final ClientLevel level = Minecraft.getInstance().level;
-        if (level == null) return;
+        if (level == null) return color;
 
         final double factor;
         if (level.dimension() == net.minecraft.world.level.Level.NETHER && ChlorideConfig.darkness.onNether) {
@@ -35,13 +29,14 @@ public class Darkness {
         } else if (level.dimension() == net.minecraft.world.level.Level.END && ChlorideConfig.darkness.onEnd) {
             factor = ChlorideConfig.darkness.endFogBright;
         } else {
-            return;
+            return color;
         }
-        if (factor == 1.0) return;
+        if (factor == 1.0) return color;
 
-        e.setRed((float) Math.max(MIN, e.getRed() * factor));
-        e.setGreen((float) Math.max(MIN, e.getGreen() * factor));
-        e.setBlue((float) Math.max(MIN, e.getBlue() * factor));
+        color.x = (float) Math.max(MIN, color.x * factor);
+        color.y = (float) Math.max(MIN, color.y * factor);
+        color.z = (float) Math.max(MIN, color.z * factor);
+        return color;
     }
 
     private static boolean isDark(final net.minecraft.world.level.Level world) {

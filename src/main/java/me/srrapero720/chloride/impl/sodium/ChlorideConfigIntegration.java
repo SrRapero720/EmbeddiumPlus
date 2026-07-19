@@ -5,7 +5,6 @@ import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.Borderless;
 import me.srrapero720.chloride.impl.sodium.pages.*;
 import net.caffeinemc.mods.sodium.api.config.ConfigEntryPoint;
-import net.caffeinemc.mods.sodium.api.config.ConfigEntryPointForge;
 import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
 import net.caffeinemc.mods.sodium.api.config.structure.EnumOptionBuilder;
 import net.caffeinemc.mods.sodium.api.config.structure.ModOptionsBuilder;
@@ -18,7 +17,6 @@ import static me.srrapero720.chloride.Chloride.LOGGER;
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 import static me.srrapero720.chloride.Chloride.id;
 
-@ConfigEntryPointForge("chloride")
 public class ChlorideConfigIntegration implements ConfigEntryPoint {
 
     private static final Identifier SODIUM_FULLSCREEN = Identifier.parse("sodium:general.fullscreen");

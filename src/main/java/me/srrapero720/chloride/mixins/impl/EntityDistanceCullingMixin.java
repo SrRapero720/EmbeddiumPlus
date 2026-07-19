@@ -133,8 +133,8 @@ public class EntityDistanceCullingMixin {
     public static class TileDispatcherMixin {
         @Shadow private Vec3 cameraPos;
 
-        @Inject(at = @At("HEAD"), method = "tryExtractRenderState(Lnet/minecraft/world/level/block/entity/BlockEntity;FLnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;Lnet/minecraft/client/renderer/culling/Frustum;)Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;", cancellable = true)
-        public <E extends BlockEntity, S extends BlockEntityRenderState> void render(final E tile, final float partialTick, final ModelFeatureRenderer.CrumblingOverlay breakProgress, final Frustum frustum, final CallbackInfoReturnable<S> cir) {
+        @Inject(at = @At("HEAD"), method = "tryExtractRenderState(Lnet/minecraft/world/level/block/entity/BlockEntity;FLnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;", cancellable = true)
+        public <E extends BlockEntity, S extends BlockEntityRenderState> void render(final E tile, final float partialTick, final ModelFeatureRenderer.CrumblingOverlay breakProgress, final CallbackInfoReturnable<S> cir) {
             if (!ChlorideConfig.culling.tileEntities) return;
 
             final boolean isWhitelisted = ((IRenderableEntity) tile.getType()).chloride$whitelisted();

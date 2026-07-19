@@ -4,7 +4,6 @@
   "package": "me.srrapero720.chloride.mixins.impl",
   "plugin": "me.srrapero720.chloride.mixins.MixinPlugin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "chloride.mixin-refmap.json",
   "client": [
     "BorderlessMixin$KeyboardHandlerMixin",
     "BorderlessMixin$WindowMixin",
@@ -18,8 +17,10 @@
     "FastBlocksMixins$ChestsMixin",
     "FastBlocksMixins$TileRenderMixin",
     "FogAndBandMixin",
+    "FogRendererMixin",
     "FontShadowMixin",
     "MinecraftMixin",
+    "NameTagToggleMixin",
     "OverlayMixin",
     "ParticlesMixins$EngineMixin",
     "ParticlesMixins$ClientLevelMixin",
@@ -30,12 +31,15 @@
     "SkyMixins$HorizonMixin",
     "SkyMixins$DepthFarMixin",
     "darkness.DimensionTypeMixin",
+    "darkness.FogColorMixin",
     "darkness.GameRendererMixin",
     "darkness.LightTextureMixin",
     "jei_rei_emi.JeiOverlayMixin",
     "jei_rei_emi.ReiOverlayMixin",
     "leaves_culling.LeavesBlockMixin",
     "sodium.SodiumConfigBuilderMixin",
-    "sodium.VideoSettingsScreenMixin"
+    "sodium.VideoSettingsScreenMixin",
+    "ZoomMixins$GameRendererMixin",
+    "ZoomMixins$MouseMixin"
   ]
 }

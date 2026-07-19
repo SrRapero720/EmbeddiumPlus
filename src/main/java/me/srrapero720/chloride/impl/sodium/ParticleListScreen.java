@@ -15,7 +15,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.neoforged.fml.ModList;
+import net.fabricmc.loader.api.FabricLoader;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -87,13 +87,10 @@ public class ParticleListScreen extends Screen {
         }
 
         private String providerName(final Identifier key) {
-            return this.providerNames.computeIfAbsent(key.getNamespace(), namespace -> {
-                final var mod = ModList.get().getModFileById(namespace);
-                if (mod != null) {
-                    return mod.getMods().get(0).getDisplayName();
-                }
-                return I18n.get("chloride.particles.provider.unknown");
-            });
+            return this.providerNames.computeIfAbsent(key.getNamespace(), namespace -> FabricLoader.getInstance()
+                    .getModContainer(namespace)
+                    .map(mod -> mod.getMetadata().getName())
+                    .orElseGet(() -> I18n.get("chloride.particles.provider.unknown")));
         }
 
         @Override
