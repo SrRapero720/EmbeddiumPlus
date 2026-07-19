@@ -1,151 +1,178 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
+import com.google.common.collect.ImmutableList;
+import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
+import me.jellysquid.mods.sodium.client.gui.options.OptionImpact;
+import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
+import me.jellysquid.mods.sodium.client.gui.options.OptionPage;
+import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.EntityCulling;
-import net.caffeinemc.mods.sodium.api.config.option.ControlValueFormatter;
-import net.caffeinemc.mods.sodium.api.config.option.OptionImpact;
-import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
-import net.caffeinemc.mods.sodium.api.config.structure.OptionPageBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
 
-import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-public class EntitiesPage {
-    private EntitiesPage() {}
+import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 
-    public static OptionPageBuilder build(final ConfigBuilder b) {
-        final OptionPageBuilder page = b.createOptionPage().setName(Component.translatable("chloride.entities"));
-        final Component vsWarning = Component.translatable("chloride.entities.culling.vseureka.warning").withStyle(ChatFormatting.GOLD);
-        final ControlValueFormatter entityLimit = n -> n >= 512
-                ? Component.translatable("options.framerateLimit.max")
-                : Component.literal(String.valueOf(n));
+public class EntitiesPage extends OptionPage {
+    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "culling")));
+    public EntitiesPage() {
+        super(ID, Component.translatable("chloride.entities"), create());
+    }
 
+    private static ImmutableList<OptionGroup> create() {
+        final List<OptionGroup> groups = new ArrayList<>();
+
+        final var nametags = OptionGroup.createBuilder();
         if (!ChlorideConfig.modpackMode) {
-            page.addOptionGroup(b.createOptionGroup()
-                    .addOption(b.createBooleanOption(Chloride.id("entityNametagRendering"))
-                            .setName(Component.translatable("chloride.entities.nametag.entities.title"))
-                            .setTooltip(Component.translatable("chloride.entities.nametag.entities.desc"))
-                            .setStorageHandler(STORAGE)
-                            .setDefaultValue(true)
-                            .setBinding(v -> ChlorideConfig.nametags.entities = v, () -> ChlorideConfig.nametags.entities))
-                    .addOption(b.createBooleanOption(Chloride.id("playerNametagRendering"))
-                            .setName(Component.translatable("chloride.entities.nametag.players.title"))
-                            .setTooltip(Component.translatable("chloride.entities.nametag.players.desc"))
-                            .setStorageHandler(STORAGE)
-                            .setDefaultValue(true)
-                            .setBinding(v -> ChlorideConfig.nametags.players = v, () -> ChlorideConfig.nametags.players))
-                    .addOption(b.createBooleanOption(Chloride.id("itemNametagRendering"))
-                            .setName(Component.translatable("chloride.entities.nametag.items.title"))
-                            .setTooltip(Component.translatable("chloride.entities.nametag.items.desc"))
-                            .setStorageHandler(STORAGE)
-                            .setDefaultValue(true)
-                            .setBinding(v -> ChlorideConfig.nametags.items = v, () -> ChlorideConfig.nametags.items))
+            nametags.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                    .setName(Component.translatable("chloride.entities.nametag.entities.title"))
+                    .setTooltip(Component.translatable("chloride.entities.nametag.entities.desc"))
+                    .setControl(TickBoxControl::new)
+                    .setBinding((opt, v) -> ChlorideConfig.nametags.entities = v, opt -> ChlorideConfig.nametags.entities)
+                    .build()
+            );
+            nametags.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                    .setName(Component.translatable("chloride.entities.nametag.players.title"))
+                    .setTooltip(Component.translatable("chloride.entities.nametag.players.desc"))
+                    .setControl(TickBoxControl::new)
+                    .setBinding((opt, v) -> ChlorideConfig.nametags.players = v, opt -> ChlorideConfig.nametags.players)
+                    .build()
+            );
+
+            nametags.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                    .setName(Component.translatable("chloride.entities.nametag.items.title"))
+                    .setTooltip(Component.translatable("chloride.entities.nametag.items.desc"))
+                    .setControl(TickBoxControl::new)
+                    .setBinding((opt, v) -> ChlorideConfig.nametags.items = v, opt -> ChlorideConfig.nametags.items)
+                    .build()
             );
         }
 
-        page.addOptionGroup(b.createOptionGroup()
-                .addOption(b.createBooleanOption(Chloride.id("entityDistanceCulling"))
-                        .setName(Component.translatable("chloride.entities.culling.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.desc"))
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.culling.entities = v, () -> ChlorideConfig.culling.entities))
-                .addOption(b.createIntegerOption(Chloride.id("entityLimit"))
-                        .setName(Component.translatable("chloride.entities.culling.limit.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.limit.desc"))
-                        .setValueFormatter(entityLimit)
-                        .setRange(0, 512, 1)
-                        .setStorageHandler(STORAGE)
-                        .setDefaultValue(512)
-                        .setBinding(v -> ChlorideConfig.culling.entityLimit = v, () -> ChlorideConfig.culling.entityLimit))
-                .addOption(b.createIntegerOption(Chloride.id("entityCullingDistanceX"))
-                        .setName(Component.translatable("chloride.entities.culling.distance.horizontal.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.distance.horizontal.desc"))
-                        .setValueFormatter(BLOCKS)
-                        .setRange(0, 128, 8)
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setDefaultValue(64)
-                        .setBinding(v -> ChlorideConfig.culling.entityDistanceX = v * v,
-                                () -> Math.toIntExact(Math.round(Math.sqrt(ChlorideConfig.culling.entityDistanceX)))))
-                .addOption(b.createIntegerOption(Chloride.id("entityCullingDistanceY"))
-                        .setName(Component.translatable("chloride.entities.culling.distance.vertical.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.distance.vertical.desc")
-                                .append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
-                        .setValueFormatter(BLOCKS)
-                        .setRange(0, 256, 4)
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setEnabled(!EntityCulling.VS_I)
-                        .setDefaultValue(32)
-                        .setBinding(v -> ChlorideConfig.culling.entityDistanceY = v, () -> ChlorideConfig.culling.entityDistanceY))
+        final var entityGroup = OptionGroup.createBuilder();
+        final var vsWarning = Component.translatable("chloride.entities.culling.vseureka.warning").withStyle(ChatFormatting.GOLD);
+        entityGroup.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.culling.entities = value, opt -> ChlorideConfig.culling.entities)
+                .setImpact(OptionImpact.HIGH)
+                .build()
         );
 
-        page.addOptionGroup(b.createOptionGroup()
-                .addOption(b.createBooleanOption(Chloride.id("monsterDistanceCulling"))
-                        .setName(Component.translatable("chloride.entities.culling.monster.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.monster.desc"))
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setDefaultValue(false)
-                        .setBinding(v -> ChlorideConfig.culling.monsters = v, () -> ChlorideConfig.culling.monsters))
-                .addOption(b.createIntegerOption(Chloride.id("monsterCullingDistanceX"))
-                        .setName(Component.translatable("chloride.entities.culling.monster.distance.horizontal.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.monster.distance.horizontal.desc"))
-                        .setValueFormatter(BLOCKS)
-                        .setRange(0, 128, 8)
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setDefaultValue(128)
-                        .setBinding(v -> ChlorideConfig.culling.monsterDistanceX = v * v,
-                                () -> Math.toIntExact(Math.round(Math.sqrt(ChlorideConfig.culling.monsterDistanceX)))))
-                .addOption(b.createIntegerOption(Chloride.id("monsterCullingDistanceY"))
-                        .setName(Component.translatable("chloride.entities.culling.monster.distance.vertical.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.monster.distance.vertical.desc")
-                                .append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
-                        .setValueFormatter(BLOCKS)
-                        .setRange(0, 256, 4)
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setEnabled(!EntityCulling.VS_I)
-                        .setDefaultValue(64)
-                        .setBinding(v -> ChlorideConfig.culling.monsterDistanceY = v, () -> ChlorideConfig.culling.monsterDistanceY))
+        entityGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.limit.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.limit.desc"))
+                .setControl(option -> new SliderControl(option, 0, 512, 1,
+                        (n) -> n >= 512 ? Component.translatable("options.framerateLimit.max") : Component.literal("" + n)))
+                .setBinding((opt, value) -> ChlorideConfig.culling.entityLimit = value, opt -> ChlorideConfig.culling.entityLimit)
+                .build()
         );
 
-        page.addOptionGroup(b.createOptionGroup()
-                .addOption(b.createBooleanOption(Chloride.id("tileEntityDistanceCulling"))
-                        .setName(Component.translatable("chloride.entities.culling.tiles.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.tiles.desc"))
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.culling.tileEntities = v, () -> ChlorideConfig.culling.tileEntities))
-                .addOption(b.createIntegerOption(Chloride.id("tileEntityCullingDistanceX"))
-                        .setName(Component.translatable("chloride.entities.culling.tile.distance.horizontal.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.tile.distance.horizontal.desc"))
-                        .setValueFormatter(BLOCKS)
-                        .setRange(0, 128, 8)
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setDefaultValue(64)
-                        .setBinding(v -> ChlorideConfig.culling.tileEntityDistanceX = v * v,
-                                () -> Math.toIntExact(Math.round(Math.sqrt(ChlorideConfig.culling.tileEntityDistanceX)))))
-                .addOption(b.createIntegerOption(Chloride.id("tileEntityCullingDistanceY"))
-                        .setName(Component.translatable("chloride.entities.culling.tile.distance.vertical.title"))
-                        .setTooltip(Component.translatable("chloride.entities.culling.tile.distance.vertical.desc")
-                                .append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
-                        .setValueFormatter(BLOCKS)
-                        .setRange(0, 256, 4)
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setEnabled(!EntityCulling.VS_I)
-                        .setDefaultValue(32)
-                        .setBinding(v -> ChlorideConfig.culling.tileEntityDistanceY = v, () -> ChlorideConfig.culling.tileEntityDistanceY))
+        entityGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.distance.horizontal.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.distance.horizontal.desc"))
+                .setControl(option -> new SliderControl(option, 0, 128, 8, ControlValueFormatter.biomeBlend()))
+                .setBinding(
+                        (opt, value) -> ChlorideConfig.culling.entityDistanceX = value * value,
+                        opt -> Math.toIntExact(Math.round(Math.sqrt(ChlorideConfig.culling.entityDistanceX))))
+                .setImpact(OptionImpact.HIGH)
+                .build()
         );
 
-        return page;
+        entityGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.distance.vertical.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
+                .setControl(option -> new SliderControl(option, 0, 256, 4, ControlValueFormatter.biomeBlend()))
+                .setEnabledPredicate(() -> !EntityCulling.VS_I)
+                .setBinding(
+                        (opt, value) -> ChlorideConfig.culling.entityDistanceY = value,
+                        opt -> ChlorideConfig.culling.entityDistanceY)
+                .setImpact(OptionImpact.HIGH)
+                .build()
+        );
+
+        final var monsterGroup = OptionGroup.createBuilder();
+        monsterGroup.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.monster.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.monster.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (opt, value) -> ChlorideConfig.culling.monsters = value,
+                        opt -> ChlorideConfig.culling.monsters)
+                .setImpact(OptionImpact.HIGH)
+                .build()
+        );
+
+        monsterGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.monster.distance.horizontal.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.monster.distance.horizontal.desc"))
+                .setControl(option -> new SliderControl(option, 0, 128, 8, ControlValueFormatter.biomeBlend()))
+                .setBinding(
+                        (opt, value) -> ChlorideConfig.culling.monsterDistanceX = value * value,
+                        opt -> Math.toIntExact(Math.round(Math.sqrt(ChlorideConfig.culling.monsterDistanceX))))
+                .setImpact(OptionImpact.HIGH)
+                .build()
+        );
+
+        monsterGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.monster.distance.vertical.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.monster.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
+                .setControl(option -> new SliderControl(option, 0, 256, 4, ControlValueFormatter.biomeBlend()))
+                .setEnabledPredicate(() -> !EntityCulling.VS_I)
+                .setBinding(
+                        (opt, value) -> ChlorideConfig.culling.monsterDistanceY = value,
+                        opt -> ChlorideConfig.culling.monsterDistanceY)
+                .setImpact(OptionImpact.HIGH)
+                .build()
+        );
+
+        final var tileGroup = OptionGroup.createBuilder();
+        tileGroup.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.tiles.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.tiles.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding(
+                        (opt, value) -> ChlorideConfig.culling.tileEntities = value,
+                        opt -> ChlorideConfig.culling.tileEntities)
+                .setImpact(OptionImpact.HIGH)
+                .build()
+        );
+
+        tileGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.tile.distance.horizontal.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.tile.distance.horizontal.desc"))
+                .setControl(option -> new SliderControl(option, 0, 128, 8, ControlValueFormatter.biomeBlend()))
+                .setBinding((opt, value) -> ChlorideConfig.culling.tileEntityDistanceX = value * value,
+                        opt -> Math.toIntExact(Math.round(Math.sqrt(ChlorideConfig.culling.tileEntityDistanceX))))
+                .setImpact(OptionImpact.HIGH)
+                .build()
+        );
+
+        tileGroup.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.entities.culling.tile.distance.vertical.title"))
+                .setTooltip(Component.translatable("chloride.entities.culling.tile.distance.vertical.desc").append(EntityCulling.VS_I ? Component.literal("\n\n").append(vsWarning) : Component.empty()))
+                .setControl(option -> new SliderControl(option, 0, 256, 4, ControlValueFormatter.biomeBlend()))
+                .setEnabledPredicate(() -> !EntityCulling.VS_I)
+                .setBinding((opt, value) -> ChlorideConfig.culling.tileEntityDistanceY = value,
+                        opt -> ChlorideConfig.culling.tileEntityDistanceY)
+                .setImpact(OptionImpact.HIGH)
+                .build()
+        );
+
+        groups.add(nametags.build());
+        groups.add(entityGroup.build());
+        groups.add(monsterGroup.build());
+        groups.add(tileGroup.build());
+
+        return ImmutableList.copyOf(groups);
     }
 }

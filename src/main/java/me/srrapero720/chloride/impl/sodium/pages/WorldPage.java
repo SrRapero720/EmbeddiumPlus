@@ -1,147 +1,179 @@
 package me.srrapero720.chloride.impl.sodium.pages;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.shaders.FogShape;
+import me.jellysquid.mods.sodium.client.gui.options.*;
+import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.ChunkFade;
 import me.srrapero720.chloride.impl.LeavesCulling;
-import net.caffeinemc.mods.sodium.api.config.option.OptionFlag;
-import net.caffeinemc.mods.sodium.api.config.option.OptionImpact;
-import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
-import net.caffeinemc.mods.sodium.api.config.structure.EnumOptionBuilder;
-import net.caffeinemc.mods.sodium.api.config.structure.OptionPageBuilder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import org.embeddedt.embeddium.client.gui.options.OptionIdentifier;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.*;
 
-public class WorldPage {
-    private WorldPage() {}
+public class WorldPage extends OptionPage {
+    public static final OptionIdentifier<Void> ID = OptionIdentifier.create(Objects.requireNonNull(ResourceLocation.tryBuild(Chloride.ID, "skies")));
+    public WorldPage() {
+        super(ID, Component.translatable("chloride.world"), create());
+    }
 
-    public static OptionPageBuilder build(final ConfigBuilder b) {
-        final OptionPageBuilder page = b.createOptionPage().setName(Component.translatable("chloride.world"));
+    private static ImmutableList<OptionGroup> create() {
+        final List<OptionGroup> groups = new ArrayList<>();
 
-        page.addOptionGroup(b.createOptionGroup()
-                .addOption(b.createBooleanOption(Chloride.id("blueBand"))
-                        .setName(Component.translatable("chloride.world.blueband.title"))
-                        .setTooltip(Component.translatable("chloride.world.blueband.desc"))
-                        .setStorageHandler(STORAGE)
-                        .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.fog.blueBand = v, () -> ChlorideConfig.fog.blueBand))
+        final var band = OptionGroup.createBuilder();
+        band.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.world.blueband.title"))
+                .setTooltip(Component.translatable("chloride.world.blueband.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, v) -> ChlorideConfig.fog.blueBand = v, opt -> ChlorideConfig.fog.blueBand)
+                .build()
         );
 
+
+        final var customFog = OptionGroup.createBuilder();
+        customFog.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.world.fog.title"))
+                .setTooltip(Component.translatable("chloride.world.fog.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.fog.enabled = value, opt -> ChlorideConfig.fog.enabled)
+                .setImpact(OptionImpact.LOW)
+                .build()
+        );
+        customFog.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.world.fog.overworld.title"))
+                .setTooltip(Component.translatable("chloride.world.fog.overworld.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.fog.onOverworld = value, opt -> ChlorideConfig.fog.onOverworld)
+                .setImpact(OptionImpact.LOW)
+                .build()
+        );
+        customFog.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.world.fog.nether.title"))
+                .setTooltip(Component.translatable("chloride.world.fog.nether.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.fog.onNether = value, opt -> ChlorideConfig.fog.onNether)
+                .setImpact(OptionImpact.LOW)
+                .build()
+        );
+        customFog.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.world.fog.end.title"))
+                .setTooltip(Component.translatable("chloride.world.fog.end.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.fog.onEnd = value, opt -> ChlorideConfig.fog.onEnd)
+                .setImpact(OptionImpact.LOW)
+                .build()
+        );
+        customFog.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setName(Component.translatable("chloride.world.custom_fog.title"))
+                .setTooltip(Component.translatable("chloride.world.custom_fog.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.fog.custom = value,
+                        opt -> ChlorideConfig.fog.custom)
+                .setImpact(OptionImpact.LOW)
+                .build()
+        );
+
+        customFog.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.world.custom_fog.start.title"))
+                .setTooltip(Component.translatable("chloride.world.custom_fog.start.desc"))
+                .setControl(option -> new SliderControl(option, -1000, 1000, 10, ControlValueFormatter.number()))
+                .setBinding((options, current) -> ChlorideConfig.fog.start = current,
+                        options -> ChlorideConfig.fog.start)
+                .build()
+        );
+
+        customFog.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.world.custom_fog.end.title"))
+                .setTooltip(Component.translatable("chloride.world.custom_fog.end.desc"))
+                .setControl(option -> new SliderControl(option, 100, 10000, 50, ControlValueFormatter.number()))
+                .setBinding((options, current) -> ChlorideConfig.fog.end = current, options -> ChlorideConfig.fog.end)
+                .build()
+        );
+
+        customFog.add(OptionImpl.createBuilder(FogShape.class, STORAGE)
+                .setName(Component.translatable("chloride.world.custom_fog.shape.title"))
+                .setTooltip(Component.translatable("chloride.world.custom_fog.shape.desc"))
+                .setControl(option -> new CyclingControl<>(option, FogShape.class, enumNames("chloride.world.custom_fog.shape", FogShape.class)))
+                .setBinding((opts, value) -> ChlorideConfig.fog.shape = value, opts -> ChlorideConfig.fog.shape)
+                .build()
+        );
+
+        final var worldVisuals = OptionGroup.createBuilder();
+        worldVisuals.add(OptionImpl.createBuilder(LeavesCulling.LeavesCullingMode.class, STORAGE)
+                .setId(ResourceLocation.tryBuild(Chloride.ID, "leaves_culling"))
+                .setName(Component.translatable("chloride.world.leaves_culling.title"))
+                .setTooltip(Component.translatable("chloride.world.leaves_culling.desc"))
+                .setControl(opt -> new CyclingControl<>(opt, LeavesCulling.LeavesCullingMode.class, enumNames("chloride.world.leaves_culling", LeavesCulling.LeavesCullingMode.class)))
+                .setBinding((opt, v) -> ChlorideConfig.world.leavesCulling = v, opts -> ChlorideConfig.world.leavesCulling)
+                .setImpact(OptionImpact.HIGH)
+                .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
+                .build()
+        );
+        worldVisuals.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setName(Component.translatable("chloride.world.clouds.height.title"))
+                .setTooltip(Component.translatable("chloride.world.clouds.height.desc"))
+                .setControl(opt -> new SliderControl(opt, 64, 364, 4, ControlValueFormatter.biomeBlend()))
+                .setBinding((opt, value) -> ChlorideConfig.world.cloudsHeight = value,
+                        opt -> ChlorideConfig.world.cloudsHeight)
+                .build()
+        );
+
+        // LOWER VOID HORIZON: Y LEVEL WHERE THE DARK VOID PLANE STARTS; VOID_HORIZON SHOWS "VANILLA" AT 63
+        worldVisuals.add(OptionImpl.createBuilder(int.class, STORAGE)
+                .setId(ResourceLocation.tryBuild(Chloride.ID, "lower_void_horizon"))
+                .setName(Component.translatable("chloride.world.void_horizon.title"))
+                .setTooltip(Component.translatable("chloride.world.void_horizon.desc"))
+                .setControl(opt -> new SliderControl(opt, -64, 256, 1, VOID_HORIZON))
+                .setBinding((opt, value) -> ChlorideConfig.world.lowerVoidHorizon = value,
+                        opt -> ChlorideConfig.world.lowerVoidHorizon)
+                .build()
+        );
+
+        // ENFORCES THE 32-CHUNK SKY FAR-PLANE SO THE SKYBOX DOES NOT CLIP AT LOW RENDER DISTANCES
+        worldVisuals.add(OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setId(ResourceLocation.tryBuild(Chloride.ID, "far_skybox"))
+                .setName(Component.translatable("chloride.world.far_skybox.title"))
+                .setTooltip(Component.translatable("chloride.world.far_skybox.desc"))
+                .setControl(TickBoxControl::new)
+                .setBinding((opt, value) -> ChlorideConfig.world.farSkybox = value,
+                        opt -> ChlorideConfig.world.farSkybox)
+                .build()
+        );
+
+        final var worldAmazings = OptionGroup.createBuilder();
+        worldAmazings.add(OptionImpl.createBuilder(ChunkFade.Speed.class, STORAGE)
+                .setName(Component.translatable("chloride.world.fade.title"))
+                .setTooltip(Component.translatable("chloride.world.fade.desc"))
+                .setControl(option -> new CyclingControl<>(option, ChunkFade.Speed.class, new Component[]{
+                        Component.translatable("options.off"),
+                        Component.translatable("options.graphics.fast"), // a literal fade
+                        Component.translatable("options.graphics.fancy") // chunks comes from the ground
+                }))
+                .setBinding((opts, value) -> ChlorideConfig.world.chunkFadeSpeed = value,
+                        opts -> ChlorideConfig.world.chunkFadeSpeed)
+                .setImpact(OptionImpact.LOW)
+                .setEnabled(false)
+                .build()
+        );
+
+
+        groups.add(band.build());
         if (!ChlorideConfig.modpackMode) {
-            page.addOptionGroup(b.createOptionGroup()
-                    .addOption(b.createBooleanOption(Chloride.id("fog"))
-                            .setName(Component.translatable("chloride.world.fog.title"))
-                            .setTooltip(Component.translatable("chloride.world.fog.desc"))
-                            .setStorageHandler(STORAGE)
-                            .setImpact(OptionImpact.LOW)
-                            .setDefaultValue(true)
-                            .setBinding(v -> ChlorideConfig.fog.enabled = v, () -> ChlorideConfig.fog.enabled))
-                    .addOption(b.createBooleanOption(Chloride.id("fogOnOverworld"))
-                            .setName(Component.translatable("chloride.world.fog.overworld.title"))
-                            .setTooltip(Component.translatable("chloride.world.fog.overworld.desc"))
-                            .setStorageHandler(STORAGE)
-                            .setImpact(OptionImpact.LOW)
-                            .setDefaultValue(true)
-                            .setBinding(v -> ChlorideConfig.fog.onOverworld = v, () -> ChlorideConfig.fog.onOverworld))
-                    .addOption(b.createBooleanOption(Chloride.id("fogOnNether"))
-                            .setName(Component.translatable("chloride.world.fog.nether.title"))
-                            .setTooltip(Component.translatable("chloride.world.fog.nether.desc"))
-                            .setStorageHandler(STORAGE)
-                            .setImpact(OptionImpact.LOW)
-                            .setDefaultValue(true)
-                            .setBinding(v -> ChlorideConfig.fog.onNether = v, () -> ChlorideConfig.fog.onNether))
-                    .addOption(b.createBooleanOption(Chloride.id("fogOnEnd"))
-                            .setName(Component.translatable("chloride.world.fog.end.title"))
-                            .setTooltip(Component.translatable("chloride.world.fog.end.desc"))
-                            .setStorageHandler(STORAGE)
-                            .setImpact(OptionImpact.LOW)
-                            .setDefaultValue(true)
-                            .setBinding(v -> ChlorideConfig.fog.onEnd = v, () -> ChlorideConfig.fog.onEnd))
-                    .addOption(b.createBooleanOption(Chloride.id("customFog"))
-                            .setName(Component.translatable("chloride.world.custom_fog.title"))
-                            .setTooltip(Component.translatable("chloride.world.custom_fog.desc"))
-                            .setStorageHandler(STORAGE)
-                            .setImpact(OptionImpact.LOW)
-                            .setDefaultValue(false)
-                            .setBinding(v -> ChlorideConfig.fog.custom = v, () -> ChlorideConfig.fog.custom))
-                    .addOption(b.createIntegerOption(Chloride.id("fogStart"))
-                            .setName(Component.translatable("chloride.world.custom_fog.start.title"))
-                            .setTooltip(Component.translatable("chloride.world.custom_fog.start.desc"))
-                            .setValueFormatter(NUMBER)
-                            .setRange(-1000, 1000, 10)
-                            .setStorageHandler(STORAGE)
-                            .setDefaultValue(0)
-                            .setBinding(v -> ChlorideConfig.fog.start = v, () -> ChlorideConfig.fog.start))
-                    .addOption(b.createIntegerOption(Chloride.id("fogEnd"))
-                            .setName(Component.translatable("chloride.world.custom_fog.end.title"))
-                            .setTooltip(Component.translatable("chloride.world.custom_fog.end.desc"))
-                            .setValueFormatter(NUMBER)
-                            .setRange(100, 10000, 50)
-                            .setStorageHandler(STORAGE)
-                            .setDefaultValue(192)
-                            .setBinding(v -> ChlorideConfig.fog.end = v, () -> ChlorideConfig.fog.end))
-                    .addOption(b.createEnumOption(Chloride.id("fogShape"), FogShape.class)
-                            .setName(Component.translatable("chloride.world.custom_fog.shape.title"))
-                            .setTooltip(Component.translatable("chloride.world.custom_fog.shape.desc"))
-                            .setElementNameProvider(enumNames("chloride.world.custom_fog.shape"))
-                            .setStorageHandler(STORAGE)
-                            .setDefaultValue(FogShape.CYLINDER)
-                            .setBinding(v -> ChlorideConfig.fog.shape = v, () -> ChlorideConfig.fog.shape))
-            );
+            groups.add(customFog.build());
         }
+        groups.add(worldVisuals.build());
+        groups.add(worldAmazings.build());
 
-        page.addOptionGroup(b.createOptionGroup()
-                .addOption(b.createEnumOption(Chloride.id("leavesCulling"), LeavesCulling.LeavesCullingMode.class)
-                        .setName(Component.translatable("chloride.world.leaves_culling.title"))
-                        .setTooltip(Component.translatable("chloride.world.leaves_culling.desc"))
-                        .setElementNameProvider(enumNames("chloride.world.leaves_culling"))
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.HIGH)
-                        .setFlags(OptionFlag.REQUIRES_RENDERER_RELOAD)
-                        .setDefaultValue(LeavesCulling.LeavesCullingMode.OFF)
-                        .setBinding(v -> ChlorideConfig.world.leavesCulling = v, () -> ChlorideConfig.world.leavesCulling))
-                .addOption(b.createIntegerOption(Chloride.id("cloudsHeight"))
-                        .setName(Component.translatable("chloride.world.clouds.height.title"))
-                        .setTooltip(Component.translatable("chloride.world.clouds.height.desc"))
-                        .setValueFormatter(BLOCKS)
-                        .setRange(64, 364, 4)
-                        .setStorageHandler(STORAGE)
-                        .setDefaultValue(192)
-                        .setBinding(v -> ChlorideConfig.world.cloudsHeight = v, () -> ChlorideConfig.world.cloudsHeight))
-                .addOption(b.createIntegerOption(Chloride.id("lowerVoidHorizon"))
-                        .setName(Component.translatable("chloride.world.void_horizon.title"))
-                        .setTooltip(Component.translatable("chloride.world.void_horizon.desc"))
-                        .setValueFormatter(VOID_HORIZON)
-                        .setRange(-64, 256, 1)
-                        .setStorageHandler(STORAGE)
-                        .setDefaultValue(63)
-                        .setBinding(v -> ChlorideConfig.world.lowerVoidHorizon = v, () -> ChlorideConfig.world.lowerVoidHorizon))
-                .addOption(b.createBooleanOption(Chloride.id("farSkybox"))
-                        .setName(Component.translatable("chloride.world.far_skybox.title"))
-                        .setTooltip(Component.translatable("chloride.world.far_skybox.desc"))
-                        .setStorageHandler(STORAGE)
-                        .setDefaultValue(true)
-                        .setBinding(v -> ChlorideConfig.world.farSkybox = v, () -> ChlorideConfig.world.farSkybox))
-        );
-
-        // World "amazings" (chunk fade) — kept disabled, mirrors the previous behaviour.
-        page.addOptionGroup(b.createOptionGroup()
-                .addOption(b.createEnumOption(Chloride.id("chunkFadeSpeed"), ChunkFade.Speed.class)
-                        .setName(Component.translatable("chloride.world.fade.title"))
-                        .setTooltip(Component.translatable("chloride.world.fade.desc"))
-                        .setElementNameProvider(EnumOptionBuilder.nameProviderFrom(
-                                Component.translatable("options.off"),
-                                Component.translatable("options.graphics.fast"),
-                                Component.translatable("options.graphics.fancy")))
-                        .setStorageHandler(STORAGE)
-                        .setImpact(OptionImpact.LOW)
-                        .setEnabled(false)
-                        .setDefaultValue(ChunkFade.Speed.SLOW)
-                        .setBinding(v -> ChlorideConfig.world.chunkFadeSpeed = v, () -> ChlorideConfig.world.chunkFadeSpeed))
-        );
-
-        return page;
+        return ImmutableList.copyOf(groups);
     }
 }

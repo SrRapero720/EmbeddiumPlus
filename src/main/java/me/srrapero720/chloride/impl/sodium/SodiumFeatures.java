@@ -1,28 +1,178 @@
 package me.srrapero720.chloride.impl.sodium;
 
+import me.jellysquid.mods.sodium.client.gui.options.*;
+import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import me.jellysquid.mods.sodium.client.gui.options.control.CyclingControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
+import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
 import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
-import net.caffeinemc.mods.sodium.api.config.StorageEventHandler;
-import net.caffeinemc.mods.sodium.api.config.option.ControlValueFormatter;
+import me.srrapero720.chloride.impl.Borderless;
+import me.srrapero720.chloride.impl.Borderless.Mode;
+import me.srrapero720.chloride.api.events.FastModelSettingsUpdate;
+import me.srrapero720.chloride.impl.FastBlocks;
+import me.srrapero720.chloride.impl.sodium.pages.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import org.embeddedt.embeddium.api.OptionGUIConstructionEvent;
+import org.embeddedt.embeddium.api.OptionGroupConstructionEvent;
+import org.embeddedt.embeddium.api.OptionPageConstructionEvent;
+import org.embeddedt.embeddium.client.gui.options.StandardOptions;
 
-import java.util.function.Function;
+import static me.srrapero720.chloride.Chloride.*;
 
+@Mod.EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SodiumFeatures {
-    public static final ResourceLocation LOGO = ResourceLocation.fromNamespaceAndPath(Chloride.ID, "textures/gui/logo.png");
-    public static final StorageEventHandler STORAGE = ChlorideConfig::write;
+    public static final OptionStorage<?> STORAGE = new OptionStorage<>() {
+        @Override public Object getData() { return new Object(); }
+        @Override public void save() { ChlorideConfig.write(); }
+    };
 
-    public static <E extends Enum<E>> Function<E, Component> enumNames(final String translation) {
-        return e -> Component.translatable(translation + "." + e.name().toLowerCase());
-    }
+    // OLD-EMBEDDIUM FORMATTERS/HELPERS (EQUIVALENT TO THE NEO SodiumFeatures SURFACE, ADAPTED TO ControlValueFormatter#format(int))
 
-    public static final ControlValueFormatter VOID_HORIZON = v -> v == 63.0f ? Component.translatable("chloride.world.void_horizon.vanilla") : Component.literal(String.valueOf(v));
-    public static final ControlValueFormatter NUMBER = v -> Component.literal(String.valueOf(v));
-    public static final ControlValueFormatter PERCENT = v -> Component.literal(v + "%");
-    public static final ControlValueFormatter BLOCKS = v -> Component.literal(v + " blocks");
+    // SLIDER LABEL: SHOWS "VANILLA" AT THE VANILLA Y=63 PLANE, THE RAW BLOCK Y OTHERWISE
+    public static final ControlValueFormatter VOID_HORIZON = v -> v == 63
+            ? Component.translatable("chloride.world.void_horizon.vanilla")
+            : Component.literal(String.valueOf(v));
 
     public static ControlValueFormatter suffix(final String suffix) {
         return v -> Component.literal(v + suffix);
+    }
+
+    // BUILDS THE PER-CONSTANT DISPLAY NAMES A CyclingControl EXPECTS (chloride.x.<enum_lowercase>)
+    public static <E extends Enum<E>> Component[] enumNames(final String translation, final Class<E> type) {
+        final E[] constants = type.getEnumConstants();
+        final Component[] names = new Component[constants.length];
+        for (int i = 0; i < constants.length; i++) {
+            names[i] = Component.translatable(translation + "." + constants[i].name().toLowerCase());
+        }
+        return names;
+    }
+
+    @SubscribeEvent
+    public static void onSodiumPagesRegister(final OptionGUIConstructionEvent e) {
+        final var pages = e.getPages();
+
+        pages.add(new InterfacePage());
+        pages.add(new WorldPage());
+        if (!ChlorideConfig.modpackMode) pages.add(new DarknessPage());
+        pages.add(new ParticlesPage());
+        pages.add(new EntitiesPage());
+        if (!ChlorideConfig.modpackMode) pages.add(new ZoomPage());
+        if (ChlorideConfig.modpackMode) {
+            LOGGER.info("Modpack Mode is enabled, skipping chloride True Darkness and Zoom page registration");
+        }
+    }
+
+    private static Option<?> particles;
+
+    @SubscribeEvent
+    public static void onSodiumPagesRegister(final OptionGroupConstructionEvent e) {
+        if (e.getId() != null && e.getId().toString().equals(StandardOptions.Group.WINDOW.toString())) {
+            final var options = e.getOptions();
+            for (int i = 0; i < options.size(); i++) {
+                final var id = options.get(i).getId();
+                if (id != null && id.matches(StandardOptions.Option.FULLSCREEN)) {
+                    options.set(i, getFullscreenOption());
+                    options.add(i + 1, getBorderlessOptimizationOption());
+                    break;
+                }
+            }
+        }
+        if (e.getId() != null && e.getId().toString().equals(StandardOptions.Group.DETAILS.toString())) {
+            final var options = e.getOptions();
+            for (final Option<?> option: options) {
+                final var id = option.getId();
+                if (id != null && id.matches(StandardOptions.Option.PARTICLES)) {
+                    particles = option;
+                    options.remove(option);
+                    break;
+                }
+            }
+        }
+
+        if (e.getId() != null && e.getId().equals(ParticlesPage.PARTICLE_BASE_PAGE)) {
+            final var options = e.getOptions();
+            options.add(0, particles);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onSodiumGroupRegister(final OptionPageConstructionEvent e) {
+        if (e.getId() != null && e.getId().equals(StandardOptions.Pages.PERFORMANCE)) {
+            final var builder = OptionGroup.createBuilder();
+
+            final var fastChest = OptionImpl.createBuilder(boolean.class, STORAGE)
+                    .setId(ResourceLocation.tryBuild(Chloride.ID, "fast_chests"))
+                    .setName(Component.translatable("chloride.performance.fastchest.title"))
+                    .setTooltip(Component.translatable("chloride.performance.fastchest.desc"))
+                    .setControl(TickBoxControl::new)
+                    .setBinding(
+                            (opts, value) -> {
+                                ChlorideConfig.fastBlocks.chests = value;
+                                MinecraftForge.EVENT_BUS.post(new FastModelSettingsUpdate.ChestEvent());
+                            },
+                            (opts) -> ChlorideConfig.fastBlocks.chests)
+                    .setImpact(OptionImpact.MEDIUM)
+                    .setEnabledPredicate(FastBlocks::canUseOnChests)
+                    .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD, OptionFlag.REQUIRES_GAME_RESTART)
+                    .build();
+
+            final var fastBeds = OptionImpl.createBuilder(boolean.class, STORAGE)
+                    .setId(ResourceLocation.tryBuild(ID, "fast_beds"))
+                    .setName(Component.translatable("chloride.performance.fastbeds.title"))
+                    .setTooltip(Component.translatable("chloride.performance.fastbeds.desc"))
+                    .setControl(TickBoxControl::new)
+                    .setBinding(
+                            (opts, value) -> {
+                                ChlorideConfig.fastBlocks.beds = value;
+                                MinecraftForge.EVENT_BUS.post(new FastModelSettingsUpdate.BedEvent());
+                            },
+                            (opts) -> ChlorideConfig.fastBlocks.beds)
+                    .setImpact(OptionImpact.MEDIUM)
+                    .setFlags(OptionFlag.REQUIRES_ASSET_RELOAD, OptionFlag.REQUIRES_GAME_RESTART)
+                    .build();
+
+            builder.add(fastChest);
+            builder.add(fastBeds);
+
+            e.addGroup(builder.build());
+        }
+    }
+
+    private static Option<Mode> getFullscreenOption() {
+        return OptionImpl.createBuilder(Mode.class, STORAGE)
+                .setId(ResourceLocation.tryBuild(Chloride.ID, "fullscreen"))
+                .setName(Component.translatable("options.fullscreen"))
+                .setTooltip(Component.translatable("chloride.general.screen.desc"))
+                .setControl((opt) -> new CyclingControl<>(opt, Mode.class, new Component[] {
+                        Component.translatable("chloride.general.screen.windowed"),
+                        Component.translatable("chloride.general.screen.borderless"),
+                        Component.translatable("chloride.general.screen.fullscreen")
+                }))
+                .setBinding(
+                        (s, v) -> Borderless.setFullScreenMode(v),
+                        (opts) -> ChlorideConfig.fullscreen.mode
+                ).build();
+    }
+
+    private static Option<Boolean> getBorderlessOptimizationOption() {
+        return OptionImpl.createBuilder(boolean.class, STORAGE)
+                .setId(ResourceLocation.tryBuild(Chloride.ID, "borderless_optimizations"))
+                .setName(Component.translatable("chloride.general.screen.borderless.optimization"))
+                .setTooltip(Component.translatable("chloride.general.screen.borderless.optimization.desc"))
+                .setControl(TickBoxControl::new)
+                .setImpact(OptionImpact.HIGH)
+                .setBinding(
+                        (s, v) -> {
+                            ChlorideConfig.fullscreen.disableBorderlessOptimizations = v;
+                            Borderless.reloadFullscreenMode();
+                        },
+                        (opts) -> ChlorideConfig.fullscreen.disableBorderlessOptimizations
+                ).build();
     }
 }

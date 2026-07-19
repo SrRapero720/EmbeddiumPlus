@@ -3,7 +3,8 @@ import me.modmuss50.mpp.ReleaseType
 plugins {
     id 'java'
     id 'idea'
-    id 'net.neoforged.moddev'
+    id 'net.minecraftforge.gradle'
+    id 'net.minecraftforge.renamer'
     id 'me.modmuss50.mod-publish-plugin'
 }
 
@@ -14,34 +15,23 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(Integer.valueOf(javaversion))
 
-// PARCHMENT COMES FROM THE neoForge.parchment.* KEYS IN gradle.properties;
-// THE ACCESS TRANSFORMER IS PICKED UP AUTOMATICALLY FROM META-INF/accesstransformer.cfg
-neoForge {
-    version = forgeversion
+minecraft {
+    mappings channel: mappingschannel, version: mappingsversion
+    // FG7: THE AT IS A ConfigurableFileCollection ON THE MINECRAFT DEPENDENCY (APPLIED BY THE MAVENIZER)
+    accessTransformer.from file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         configureEach {
+            workingDir.convention layout.projectDirectory.dir('run')
             systemProperty 'forge.logging.console.level', 'debug'
-            systemProperty 'log4j.appender.Console', 'org.apache.log4j.ConsoleAppender'
             systemProperty 'terminal.jline', 'true'
-            // COMMA-SEPARATED NAMESPACES TO LOAD GAMETESTS FROM; EMPTY = ALL NAMESPACES
-            systemProperty 'forge.enabledGameTestNamespaces', modid
+            // FG7 DEV RUNTIME IS MOJMAP, BUT 3RD-PARTY MODS SHIP SRG MIXIN REFMAPS; LET MIXIN REMAP THEM AT
+            // RUNTIME WITH THE GENERATED SRG->mojmap FILE (SAME MECHANISM FG6 USED IN DEV)
+            systemProperty 'mixin.env.remapRefMap', 'true'
+            systemProperty 'mixin.env.refMapRemappingFile', layout.buildDirectory.file('mixin-srg2mojmap.srg').get().asFile.absolutePath
         }
-
-        client {
-            client()
-        }
-
-        server {
-            server()
-            programArgument '--nogui'
-        }
-    }
-
-    mods {
-        register(modid) {
-            sourceSet sourceSets.main
-        }
+        register('client')
+        register('server')
     }
 }
 
@@ -50,11 +40,14 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 configurations {
     // WATERCONFIG RESOLVED STANDALONE SO repackWaterConfig CAN REBUILD IT; COMPILE-ONLY BECAUSE
-    // BOTH DEV AND PRODUCTION LOAD THE REPACKED JAR INSTEAD
+    // BOTH DEV AND PRODUCTION LOAD THE REPACKED GAMELIBRARY JAR INSTEAD
     waterconfig { transitive = false }
     compileOnly.extendsFrom waterconfig
-    // PRODUCTION SODIUM SHELL, RESOLVED ONLY SO stripSodiumShell CAN REPACKAGE IT
-    sodiumShell { transitive = false }
+}
+
+// WE DELIBERATELY DROPPED CURSEMAVEN; DROP ANY MOD'S CURSE-ONLY TRANSITIVES (E.G. VS -> vanillin) GLOBALLY
+configurations.all {
+    exclude group: 'curse.maven'
 }
 
 // RE-MANIFEST WATERCONFIG AS A GAMELIBRARY SO IT JOINS THE GAME LAYER, WHERE ITS ServiceLoader
@@ -76,7 +69,7 @@ tasks.register('repackWaterConfig', Jar) {
 }
 
 // JAR-IN-JAR DESCRIPTOR FOR THE NESTED WATERCONFIG (FML READS META-INF/jarjar/metadata.json).
-// HAND-ROLLED BECAUSE MODDEV'S jarJar CAN ONLY NEST THE RAW ARTIFACT, WHICH LACKS FMLModType
+// HAND-ROLLED BECAUSE THE TOOLCHAIN'S jarJar CAN ONLY NEST THE RAW ARTIFACT, WHICH LACKS FMLModType
 tasks.register('waterConfigJarJarMetadata') {
     def metadataFile = layout.buildDirectory.file('waterconfig-lib/metadata.json')
     inputs.property 'waterconfigversion', waterconfigversion
@@ -93,95 +86,111 @@ tasks.register('waterConfigJarJarMetadata') {
     }
 }
 
-// REPACK THE PRODUCTION SODIUM SHELL INTO A PLAIN LIBRARY: DROP THE MOD METADATA SO IT NO LONGER
-// CLAIMS MODID "sodium" ON THE DEV CLASSPATH, WHILE KEEPING THE SUPPORT CLASSES THE MOD REFERENCES
-tasks.register('stripSodiumShell', Jar) {
-    archiveBaseName = 'wsodium-neoforge-shell-lib'
-    archiveVersion = sodiumversion.replace('+', '-')
-    destinationDirectory = layout.buildDirectory.dir('sodium-shell-lib')
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from { configurations.sodiumShell.collect { zipTree(it) } }
-    exclude 'META-INF/MANIFEST.MF'
-    exclude 'META-INF/neoforge.mods.toml'
-    exclude 'META-INF/jarjar/**'
-    exclude 'META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator'
-    manifest {
-        attributes(
-                'FMLModType': 'LIBRARY',
-                'Automatic-Module-Name': 'sodium_service'
-        )
-    }
-}
-
 repositories {
-    maven { url = 'https://maven.neoforged.net/releases' }
-    maven { url = 'https://maven.caffeinemc.net/releases' } // SODIUM
-    maven { url = 'https://maven.sinytra.org/' } // FORGIFIED FABRIC API (DEV RUNTIME)
-    maven { url = 'https://maven.ryanhcode.dev/releases' } // SABLE + SABLE COMPANION
+    // FORGEGRADLE 7 MAVENIZER: GENERATES THE MINECRAFT/FORGE ARTIFACTS ON THE FLY
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+
     maven { url = 'https://maven.blamejared.com' } // JEI
-    maven { url = 'https://maven.shedaniel.me' } // REI
-    maven { url = 'https://maven.architectury.dev' } // ARCHITECTURY API + CLOTH CONFIG
-    maven { url = 'https://maven.terraformersmc.com/releases' } // EMI
-    maven { // IRIS — MODRINTH IS A UNIVERSAL PROXY, SO FILTER IT TO ITS OWN GROUP
+    maven { // EMBEDDIUM + OCULUS — MODRINTH IS A UNIVERSAL PROXY, SO FILTER IT TO ITS OWN GROUP
         url = 'https://api.modrinth.com/maven'
         content { includeGroup 'maven.modrinth' }
     }
+    maven { url = 'https://maven.shedaniel.me' } // REI + CLOTH CONFIG
+    maven { url = 'https://maven.architectury.dev' } // ARCHITECTURY API
+    maven { url = 'https://maven.terraformersmc.com/releases' } // EMI
+    maven { url = 'https://maven.createmod.net' } // CREATE + FLYWHEEL + PONDER
+    maven { url = 'https://maven.tterrag.com' } // REGISTRATE
+    maven { // VALKYRIEN SKIES — GREEDY PROXY MAVEN, FILTER TO ITS OWN GROUP
+        url = 'https://maven.valkyrienskies.org'
+        content { includeGroupByRegex 'org\\.valkyrienskies.*' }
+    }
     maven { url = 'https://jitpack.io' } // WATERCONFIG
+    maven { url = 'https://repo.spongepowered.org/maven' } // MIXIN AP
+    maven { url = 'https://maven.fabricmc.net/' } // SPONGE-MIXIN AP
+    mavenCentral()
 }
 
 dependencies {
+    // VS'S POM HARD-CODES A CURSEMAVEN COORDINATE FOR vanillin; renamer's DETACHED CONFIGS IGNORE THE GLOBAL
+    // curse.maven EXCLUDE, SO STRIP THE CURSE DEP FROM VS'S METADATA BEFORE THE MAVENIZER/RENAMER RESOLVES IT
+    components {
+        withModule('org.valkyrienskies:valkyrienskies-120-forge') {
+            allVariants {
+                withDependencies { removeAll { it.group == 'curse.maven' } }
+            }
+        }
+    }
+
+    // MINECRAFT/FORGE VIA THE FG7 MAVENIZER
+    implementation minecraft.dependency("net.minecraftforge:forge:$mcversion-$forgeversion")
+
+    // MIXIN ANNOTATION PROCESSOR (GENERATES THE REFMAP). NO MIXINGRADLE ON FG7, SO THE SRG REMAP OF THE
+    // REFMAP IS WIRED BY HAND FURTHER DOWN
+    annotationProcessor "net.fabricmc:sponge-mixin:$mixin_fabric_version+mixin.$mixin_version"
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:$mixinextra_version"))
+
     // CONFIG LIBRARY (JAR-IN-JAR; WATERCONFIG REGISTERS CODECS/FORMATS VIA ServiceLoader)
     waterconfig "com.github.SrRapero720:waterconfig:$waterconfigversion"
     runtimeOnly files(tasks.named('repackWaterConfig'))
 
-    // IRIS: RUNTIME-ONLY, NON-TRANSITIVE (KEEPS ITS BUNDLED SODIUM OUT)
-    runtimeOnly("maven.modrinth:iris:$irisversion") { transitive = false }
-
-    // SODIUM SHIPS 3 ARTIFACTS: -neoforge (PRODUCTION SHELL: LIBRARY THAT JARJARS THE REAL MOD),
-    // -neoforge-mod (THE REAL MOD, CLAIMS MODID "sodium") AND -neoforge-api (COMPILE-ONLY API).
-    // ON THE DEV CLASSPATH THE SHELL ITSELF BINDS MODID "sodium" AS A LIBRARY INSTEAD OF EXTRACTING
-    // THE NESTED MOD, KILLING THE RUN WITH "sodium is not installed". FIX: LOAD -mod DIRECTLY, ADD
-    // THE SHELL SUPPORT CLASSES STRIPPED OF MOD METADATA (stripSodiumShell) AND RE-ADD THE
-    // FORGIFIED FABRIC API SHIMS THE SHELL WOULD OTHERWISE NEST
-    compileOnly "net.caffeinemc:sodium-neoforge-api:$sodiumversion"
-    compileOnly "net.caffeinemc:sodium-neoforge-mod:$sodiumversion"
-
-    sodiumShell "net.caffeinemc:sodium-neoforge:$sodiumversion"
-    runtimeOnly "net.caffeinemc:sodium-neoforge-mod:$sodiumversion"
-    runtimeOnly files(tasks.named('stripSodiumShell'))
-    runtimeOnly "org.sinytra.forgified-fabric-api:fabric-api-base:$ffapibaseversion"
-    runtimeOnly "org.sinytra.forgified-fabric-api:fabric-renderer-api-v1:$ffapirendererversion"
-    runtimeOnly "org.sinytra.forgified-fabric-api:fabric-rendering-data-attachment-v1:$ffapirenderdataversion"
-    runtimeOnly "org.sinytra.forgified-fabric-api:fabric-block-view-api-v2:$ffapiblockviewversion"
+    // RENDERING — renamer.dependency DEOBFUSCATES 3RD-PARTY MODS FROM SRG TO OUR MAPPINGS (fg.deobf REPLACEMENT)
+    implementation renamer.dependency("maven.modrinth:embeddium:$sodiumversion")
+    implementation renamer.dependency("maven.modrinth:oculus:$irisversion")
 
     // RECIPE VIEWERS (FULL JARS — WE MIX INTO GUI INTERNALS): JEI RUNS, SWAP REI/EMI TO runtimeOnly TO TEST, ONE AT A TIME
-    implementation("mezz.jei:jei-1.21.1-neoforge:$jeiversion") { transitive = false }
-    compileOnly("me.shedaniel:RoughlyEnoughItems-neoforge:$reiversion") { transitive = false }
-    compileOnly("dev.emi:emi-neoforge:$emiversion") { transitive = false }
+    implementation renamer.dependency("mezz.jei:jei-1.20.1-forge:$jeiversion")
+    compileOnly renamer.dependency("me.shedaniel:RoughlyEnoughItems-forge:$reiversion")
+    compileOnly renamer.dependency("dev.emi:emi-forge:$emiversion")
 
     // REI COMPILE DEPS: ARCHITECTURY + CLOTH CONFIG (CLOTH ALSO SUPPLIES me.shedaniel.math)
-    compileOnly "dev.architectury:architectury-neoforge:$archversion"
-    compileOnly("me.shedaniel.cloth:cloth-config-neoforge:$clothversion") { transitive = false }
+    compileOnly renamer.dependency("dev.architectury:architectury-forge:$archversion")
+    compileOnly renamer.dependency("me.shedaniel.cloth:cloth-config-forge:$clothversion")
 
-    // SABLE: FULL MERGED JAR (JARJARS VEIL/RAPIER/COMPANION); NON-TRANSITIVE + ALONE AVOIDS UNHOSTED foundry.veil AND DUPLICATE COMMON CLASSES
-    implementation("dev.ryanhcode.sable:sable-neoforge-1.21.1:$sableversion") { transitive = false }
+    // MOD SUPPORT: CREATE + ITS MANDATORY DEV MODS (flywheel/ponder MODS, registrate LIBRARY)
+    implementation renamer.dependency("com.simibubi.create:create-1.20.1:$createversion:slim")
+    implementation renamer.dependency("dev.engine-room.flywheel:flywheel-forge-1.20.1:$flywheelversion")
+    implementation renamer.dependency("net.createmod.ponder:Ponder-Forge-1.20.1:$ponderversion")
+    implementation renamer.dependency("com.tterrag.registrate:Registrate:$registrateversion")
 
-    // SABLE COMPANION: COMPILE-ONLY (JARJAR'D IN SABLE, SO INVISIBLE AT COMPILE)
-    compileOnly("dev.ryanhcode.sable-companion:sable-companion-common-$mcversion:$sablecompanionversion") {
-        transitive = false
+    // MOD SUPPORT: VALKYRIEN SKIES (COMPILE-ONLY, NON-TRANSITIVE)
+    compileOnly renamer.dependency("org.valkyrienskies:valkyrienskies-120-forge:$valkyrienskiesversion")
+}
+
+// DEFAULT MAPPINGS FOR RENAMER TASKS (INCLUDING THE DEPENDENCY DEOBFUSCATION ABOVE): NAMED -> SRG
+renamer.mappings.from minecraft.dependency.toSrgFile
+
+// SRG->mojmap MAPPING CONSUMED BY MIXIN'S REFMAP REMAPPER IN THE DEV RUNS (SEE THE runs BLOCK). THE
+// MAVENIZER'S toSrgFile IS mojmap->SRG SO IT IS REVERSED; MIXIN ONLY REMAPS METHODS FROM THE CLASSIC SRG FORMAT
+renamer.convert('mixinRemapFile') {
+    map minecraft.dependency.toSrgFile
+    reverse = true
+    format = 'SRG'
+    output = layout.buildDirectory.file('mixin-srg2mojmap.srg')
+}
+tasks.matching { it.name == 'runClient' || it.name == 'runServer' }.configureEach { dependsOn 'mixinRemapFile' }
+
+// FG7 NATIVE MIXIN REFMAP SUPPORT (REPLACES MIXINGRADLE): CONFIGURES THE SPONGE-MIXIN AP AND REMAPS THE
+// GENERATED REFMAP TO SRG SO THE MIXINS APPLY IN PRODUCTION
+renamer.enableMixinRefmaps {
+    source(sourceSets.main) {
+        refMap = "$modid.$mixin_refmap_suffix"
     }
 }
 
 // ALWAYS RE-EXPAND: GRADLE DOES NOT TRACK EVERY PROJECT PROPERTY AS A TASK INPUT
 tasks.processResources.outputs.upToDateWhen { false }
 processResources {
-    filesMatching(['META-INF/neoforge.mods.toml', 'custom_packs/**/pack.mcmeta', 'pack.mcmeta']) {
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta', 'custom_packs/**/pack.mcmeta']) {
         expand project.properties
     }
 }
 
-// THE JAR TASK PRODUCES THE DISTRIBUTABLE DIRECTLY: MOD CLASSES + WATERCONFIG NESTED VIA JAR-IN-JAR
+// THE DISTRIBUTABLE MOD JAR MUST BE SRG-NAMED FOR PRODUCTION. THE dev `jar` IS BUILT NAMED, THEN renamer.classes
+// PRODUCES THE SRG JAR AS THE MAIN ARTIFACT (NO CLASSIFIER); NESTS WATERCONFIG + SETS THE MOD MANIFEST
 jar {
+    archiveClassifier = 'dev'
     manifest {
         attributes([
                 "Specification-Title"    : modid,
@@ -199,10 +208,17 @@ jar {
     }
 }
 
+renamer.classes('reobfJar', tasks.named('jar', Jar)) {
+    map.from minecraft.dependency.toSrgFile
+    archiveClassifier = ''
+    // REOBFUSCATE THE SHIPPED META-INF/accesstransformer.cfg FROM MOJMAP TO SRG FOR THE FORGE 1.20.1 RUNTIME
+    accessTransformers = true
+}
+
 publishMods {
     displayName = "$modid-$modversion-${modloader.toUpperCase()}-$mcversion"
     type = ReleaseType.valueOf(versiontype.toUpperCase())
-    file = tasks.jar.archiveFile
+    file = tasks.named('reobfJar').flatMap { it.archiveFile }
     changelog = getChangelogText()
     modLoaders.add(modloader.toLowerCase())
     maxRetries = 10
@@ -215,15 +231,15 @@ publishMods {
         javaVersions.add(JavaVersion.toVersion(javaversion))
         clientRequired = true
         serverRequired = false
-        requires('sodium')
-        incompatible('smooth-skies')
+        requires('embeddium')
+        incompatible('magnesium-extras', 'xenon', 'distraction-free-recipes', 'smooth-skies')
     }
 
     modrinth {
         accessToken = providers.environmentVariable('MODRINTH_TOKEN')
         projectId = modrinthid
         minecraftVersions.add(mcversion)
-        requires('sodium')
+        requires('embeddium')
         incompatible('smooth-skies')
     }
 }

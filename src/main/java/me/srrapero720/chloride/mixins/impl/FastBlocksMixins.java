@@ -31,6 +31,7 @@ public class FastBlocksMixins {
         }
 
         // I DON'T LIKE DO THIS WITH MIXINS, BUT IS NECESSARY :P
+        // GATE ON THE TOGGLE SO BED FACES STOP CULLING WHEN FAST BEDS IS DISABLED
         @Override
         @SuppressWarnings("deprecation")
         public boolean skipRendering(final BlockState state, final BlockState neighborState, final Direction direction) {

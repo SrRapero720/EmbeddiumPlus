@@ -4,11 +4,11 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import me.srrapero720.chloride.api.IGameLeaves;
 import me.srrapero720.chloride.impl.LeavesCulling;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,8 +23,8 @@ public class LeavesBlockMixin extends Block implements IGameLeaves {
         super(pProperties);
     }
 
-    // SODIUM OVERRIDES LeavesBlock#skipRendering IN ITS OWN MIXIN (DEFAULT PRIORITY 1000). A SECOND
-    // OVERRIDE HERE WOULD COLLIDE, SO WE RAISE OUR PRIORITY TO APPLY AFTER SODIUM AND AUGMENT ITS RESULT
+    // EMBEDDIUM (SODIUM FORK) OVERRIDES LeavesBlock#skipRendering IN ITS OWN MIXIN (DEFAULT PRIORITY 1000).
+    // A SECOND OVERRIDE HERE WOULD COLLIDE, SO WE RAISE OUR PRIORITY TO APPLY AFTER EMBEDDIUM AND AUGMENT ITS RESULT
     @ModifyReturnValue(method = "skipRendering", at = @At("RETURN"))
     private boolean chloride$cullLeaves(final boolean sodiumReturned, final BlockState state, final BlockState neighborState, final Direction direction) {
         if (sodiumReturned) return true;
@@ -33,7 +33,7 @@ public class LeavesBlockMixin extends Block implements IGameLeaves {
 
     @Override
     public ResourceLocation chloride$getRL() {
-        return this.chloride$id != null ? this.chloride$id : (this.chloride$id = BuiltInRegistries.BLOCK.getKey(this));
+        return this.chloride$id != null ? this.chloride$id : (this.chloride$id = ForgeRegistries.BLOCKS.getKey(this));
     }
 
     @Override

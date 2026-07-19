@@ -15,7 +15,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.fml.ModList;
+import net.minecraftforge.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,7 +42,8 @@ public class ParticleListScreen extends Screen {
         this.search.setResponder(text -> this.list.refresh(text));
         this.addRenderableWidget(this.search);
 
-        this.list = new ParticleList(this.minecraft, this.width, this.height - 52 - 36, 52, 32);
+        // 1.20.1 SELECTION LIST TAKES (mc, width, height, top, bottom, itemHeight) INSTEAD OF THE 1.21 (mc, width, height, y, itemHeight)
+        this.list = new ParticleList(this.minecraft, this.width, this.height, 52, this.height - 36, 32);
         this.addRenderableWidget(this.list);
         this.list.refresh(this.search.getValue());
 
@@ -53,6 +54,7 @@ public class ParticleListScreen extends Screen {
 
     @Override
     public void render(final GuiGraphics graphics, final int mouseX, final int mouseY, final float partialTick) {
+        this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, partialTick);
         graphics.drawCenteredString(this.font, this.title, this.width / 2, 9, 0xFFFFFF);
     }
@@ -68,8 +70,8 @@ public class ParticleListScreen extends Screen {
     private class ParticleList extends ContainerObjectSelectionList<ParticleList.Entry> {
         private final HashMap<String, String> providerNames = new HashMap<>();
 
-        public ParticleList(final Minecraft minecraft, final int width, final int height, final int y, final int itemHeight) {
-            super(minecraft, width, height, y, itemHeight);
+        public ParticleList(final Minecraft minecraft, final int width, final int height, final int top, final int bottom, final int itemHeight) {
+            super(minecraft, width, height, top, bottom, itemHeight);
         }
 
         public void refresh(final String filter) {

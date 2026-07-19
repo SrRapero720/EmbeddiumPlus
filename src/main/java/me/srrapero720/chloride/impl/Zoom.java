@@ -5,19 +5,19 @@ import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.event.ViewportEvent;
-import net.neoforged.neoforge.client.settings.KeyConflictContext;
-import net.neoforged.neoforge.client.settings.KeyModifier;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.ViewportEvent;
+import net.minecraftforge.client.settings.KeyConflictContext;
+import net.minecraftforge.client.settings.KeyModifier;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 
-@EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class Zoom {
     private static final double EASE_DELTA = 0.15;
     private static final double DEFAULT = 3;
@@ -82,7 +82,7 @@ public class Zoom {
     @SubscribeEvent
     public static void onMouseScrolling(final InputEvent.MouseScrollingEvent e) {
         if (canUseZoom() && ChlorideConfig.zoom.enabled)
-            e.setCanceled(scroll(e.getScrollDeltaY()));
+            e.setCanceled(scroll(e.getScrollDelta()));
     }
 
     @SubscribeEvent
@@ -91,9 +91,12 @@ public class Zoom {
             e.setFOV(zoom(e.getFOV()));
     }
 
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void registerKeys(final RegisterKeyMappingsEvent event) {
-        event.register(KEY);
+    @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD, modid = Chloride.ID)
+    public static final class ModEvents {
+        @SubscribeEvent
+        @OnlyIn(Dist.CLIENT)
+        public static void registerKeys(final RegisterKeyMappingsEvent event) {
+            event.register(KEY);
+        }
     }
 }

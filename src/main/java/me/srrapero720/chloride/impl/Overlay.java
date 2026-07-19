@@ -7,15 +7,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.debugchart.LocalSampleLogger;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderGuiEvent;
+import net.minecraft.util.FrameTimer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderGuiEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.Arrays;
 
-@EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Chloride.ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class Overlay {
     private static final FPSDisplayBuilder DISPLAY = new FPSDisplayBuilder();
 
@@ -62,7 +64,8 @@ public class Overlay {
     public static void onRenderOverlay(final RenderGuiEvent.Pre event) {
         final var mc = Minecraft.getInstance();
 
-        if (mc.gui.getDebugOverlay().showDebugScreen() || mc.options.hideGui) return;
+        // SKIP WHEN THE DEBUG SCREEN (F3) IS OPEN OR THE HUD IS HIDDEN (F1), AVOIDING THE PRECALC COST
+        if (mc.options.renderDebug || mc.options.hideGui) return;
 
         // PRECALCULATE
         fps = mc.getFps();
@@ -70,11 +73,11 @@ public class Overlay {
         memUsage = (int) ((ramUsed() * 100) / Runtime.getRuntime().maxMemory());
         gpuPercent = Math.min((int) mc.getGpuUtilization(), 100);
         avgFPS = calculateAverage();
-        renderFPSChar(mc, event.getGuiGraphics(), mc.font, mc.getWindow().getGuiScale());
+        renderFPSChar(mc, event.getGuiGraphics(), mc.font, event.getWindow().getGuiScale());
     }
 
     private static void renderFPSChar(final Minecraft mc, final GuiGraphics graphics, final Font font, final double scale) {
-        if (Minecraft.getInstance().getDebugOverlay().showDebugScreen() || Minecraft.getInstance().getDebugOverlay().showProfilerChart()) return; // No render when F3 is open
+        if (mc.options.renderDebug || mc.options.renderFpsChart) return; // No render when F3 is open
 
         final var mode = ChlorideConfig.fpsDisplay.mode;
         final var systemMode = ChlorideConfig.fpsDisplay.systemDetails;
@@ -145,22 +148,29 @@ public class Overlay {
     }
 
     private static int minFPS(final Minecraft mc) {
+        final FrameTimer timer = mc.getFrameTimer();
 
-        final LocalSampleLogger timer = mc.getDebugOverlay().frameTimeLogger;
-        final int size = timer.size();
+        final int start = timer.getLogStart();
+        final int end = timer.getLogEnd();
 
-        if (size == 0) return minFPS;
+        if (end == start) return minFPS;
 
         int fps = mc.getFps();
         if (fps <= 0) fps = 1;
 
+        final long[] frames = timer.getLog();
         long maxNS = (long) (1 / (double) fps * 1000000000);
         long totalNS = 0;
 
-        for (int i = size - 1; i >= 0 && totalNS < 1_000_000_000L; i--) {
-            final long timeNs = timer.get(i, 0); // dim 0 = tiempo total del frame
-            if (timeNs > maxNS) maxNS = timeNs;
+        int index = Math.floorMod(end - 1, frames.length);
+        while (index != start && (double) totalNS < 1000000000) {
+            final long timeNs = frames[index];
+            if (timeNs > maxNS) {
+                maxNS = timeNs;
+            }
+
             totalNS += timeNs;
+            index = Math.floorMod(index - 1, frames.length);
         }
 
         return (int) (1 / ((double) maxNS / 1000000000));

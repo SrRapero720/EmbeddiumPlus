@@ -3,20 +3,19 @@ package me.srrapero720.chloride;
 import me.srrapero720.chloride.impl.Borderless;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.loading.FMLLoader;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 @Mod(Chloride.ID)
-@EventBusSubscriber(value = Dist.CLIENT)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class Chloride {
     public static final String ID = "chloride";
     public static final Logger LOGGER = LogManager.getLogger("chloride");
@@ -33,6 +32,9 @@ public class Chloride {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void load(final FMLClientSetupEvent event) {
+        if (installed("xenon")) throw new RuntimeException("Xenon is incompatible with Chloride, please use Embeddium or Sodium instead");
+        if (installed("embeddiumextras")) throw new RuntimeException("Embeddium/Sodium Extras is replaced by cloride, you must remove that mod");
+        if (installed("embeddiumplus")) throw new RuntimeException("You have a old-duplicated version of chloride, please remove Embeddium++ (old chloride)");
         LOGGER.info("LOADED CHLORIDE");
 
         // RECONCILE CHLORIDE CONFIG WITH VANILLA OPTIONS.FULLSCREEN AT BOOT. THE WINDOW IS CONSTRUCTED
@@ -61,11 +63,11 @@ public class Chloride {
     /** Builds a stable, unique option id from a config field name (camelCase -&gt; chloride:snake_case). */
     public static ResourceLocation id(final String field) {
         final String path = field.replaceAll("([a-z0-9])([A-Z])", "$1_$2").toLowerCase();
-        return ResourceLocation.fromNamespaceAndPath(ID, path);
+        return new ResourceLocation(ID, path);
     }
 
     /** Builds a unique option id for a per-registry-entry option (e.g. one toggle per particle type). */
     public static ResourceLocation id(final String prefix, final ResourceLocation key) {
-        return ResourceLocation.fromNamespaceAndPath(ID, prefix + "/" + key.getNamespace() + "/" + key.getPath());
+        return new ResourceLocation(ID, prefix + "/" + key.getNamespace() + "/" + key.getPath());
     }
 }

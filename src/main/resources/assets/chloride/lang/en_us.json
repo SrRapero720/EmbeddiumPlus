@@ -12,11 +12,6 @@
   "chloride.general.screen.borderless.optimization": "Disable Borderless optimization",
   "chloride.general.screen.borderless.optimization.desc": "Force-Disables Borderless optimizations by the driver\n\nThis fixes the black blink leaving the game (noticeable having multiple monitors) but you might experiment a huge frame drop disabling it",
 
-  "chloride.settings.coming_soon": "Coming Soon!",
-  "chloride.settings.chloride": "Chloride Settings",
-  "chloride.settings.textrue": "TexTrue Style Settings",
-  "chloride.settings.populi": "Populi Settings",
-
   "chloride.interface": "Interface",
   "chloride.interface.fps.title": "Show FPS",
   "chloride.interface.fps.desc": "Shows the FPS overlay. Advanced mode shows minimum FPS, as well as 30 second average FPS, useful for judging performance.",
@@ -149,6 +144,7 @@
   "chloride.particles": "Particles",
   "chloride.particles.list": "Particle List",
   "chloride.particles.list.search": "Search particles...",
+  "chloride.particles.list.desc": "Opens the per-particle toggle list. Disable individual particle types here.",
   "chloride.particles.rain.title": "Rain Particles",
   "chloride.particles.rain.desc": "Enables the water falling particles when raining",
   "chloride.particles.rain.drop.title": "Rain Drop Particles",

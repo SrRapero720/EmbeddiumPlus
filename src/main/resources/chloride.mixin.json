@@ -3,7 +3,7 @@
   "minVersion": "0.8.5",
   "package": "me.srrapero720.chloride.mixins.impl",
   "plugin": "me.srrapero720.chloride.mixins.MixinPlugin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_17",
   "refmap": "chloride.mixin-refmap.json",
   "client": [
     "BorderlessMixin$KeyboardHandlerMixin",
@@ -40,8 +40,6 @@
     "jei_rei_emi.EmiOverlayMixin",
     "jei_rei_emi.JeiOverlayMixin",
     "jei_rei_emi.ReiOverlayMixin",
-    "leaves_culling.LeavesBlockMixin",
-    "sodium.SodiumConfigBuilderMixin",
-    "sodium.VideoSettingsScreenMixin"
+    "leaves_culling.LeavesBlockMixin"
   ]
 }
