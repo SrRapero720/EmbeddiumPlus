@@ -1,5 +1,6 @@
 package me.srrapero720.chloride.mixins.impl.leaves_culling;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import me.srrapero720.chloride.api.IGameLeaves;
 import me.srrapero720.chloride.impl.LeavesCulling;
 import net.minecraft.core.Direction;
@@ -8,12 +9,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
 
-@SuppressWarnings("deprecation")
-@Mixin(LeavesBlock.class)
+@Mixin(value = LeavesBlock.class, priority = 1100)
 public class LeavesBlockMixin extends Block implements IGameLeaves {
     // TODO: cull less leaves (maybe delegate to 2.0.0)
     @Unique private ResourceLocation chloride$id;
@@ -23,12 +23,12 @@ public class LeavesBlockMixin extends Block implements IGameLeaves {
         super(pProperties);
     }
 
-    @Override
-    public boolean skipRendering(final BlockState state, final BlockState neighborState, final Direction direction) {
-        if (neighborState.getBlock() instanceof final IGameLeaves leaves) {
-            return LeavesCulling.should(this.chloride$cast(), this, (LeavesBlock) leaves, leaves) || super.skipRendering(state, neighborState, direction);
-        }
-        return super.skipRendering(state, neighborState, direction);
+    // SODIUM OVERRIDES LeavesBlock#skipRendering IN ITS OWN MIXIN (DEFAULT PRIORITY 1000). A SECOND
+    // OVERRIDE HERE WOULD COLLIDE, SO WE RAISE OUR PRIORITY TO APPLY AFTER SODIUM AND AUGMENT ITS RESULT
+    @ModifyReturnValue(method = "skipRendering", at = @At("RETURN"))
+    private boolean chloride$cullLeaves(final boolean sodiumReturned, final BlockState state, final BlockState neighborState, final Direction direction) {
+        if (sodiumReturned) return true;
+        return neighborState.getBlock() instanceof final IGameLeaves neighbor && LeavesCulling.should(this.chloride$cast(), this, (LeavesBlock) neighbor, neighbor);
     }
 
     @Override
@@ -46,6 +46,3 @@ public class LeavesBlockMixin extends Block implements IGameLeaves {
         return (LeavesBlock) (Object) this;
     }
 }
-
-
-
