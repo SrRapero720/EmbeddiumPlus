@@ -115,16 +115,18 @@ tasks.register('stripSodiumShell', Jar) {
 
 repositories {
     maven { url = 'https://maven.neoforged.net/releases' }
-    maven {
-        url = 'https://www.cursemaven.com'
-        content { includeGroup 'curse.maven' }
-    }
     maven { url = 'https://maven.caffeinemc.net/releases' } // SODIUM
     maven { url = 'https://maven.sinytra.org/' } // FORGIFIED FABRIC API (DEV RUNTIME)
-    maven { url = 'https://maven.ryanhcode.dev/releases' } // SABLE COMPANION
+    maven { url = 'https://maven.ryanhcode.dev/releases' } // SABLE + SABLE COMPANION
+    maven { url = 'https://maven.blamejared.com' } // JEI
+    maven { url = 'https://maven.shedaniel.me' } // REI
+    maven { url = 'https://maven.architectury.dev' } // ARCHITECTURY API + CLOTH CONFIG
+    maven { url = 'https://maven.terraformersmc.com/releases' } // EMI
+    maven { // IRIS — MODRINTH IS A UNIVERSAL PROXY, SO FILTER IT TO ITS OWN GROUP
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
     maven { url = 'https://jitpack.io' } // WATERCONFIG
-
-    flatDir { dirs 'libs' }
 }
 
 dependencies {
@@ -132,8 +134,8 @@ dependencies {
     waterconfig "com.github.SrRapero720:waterconfig:$waterconfigversion"
     runtimeOnly files(tasks.named('repackWaterConfig'))
 
-    // DEPENDENCIES
-    implementation "curse.maven:irisshaders-455508:$irisversion"
+    // IRIS: RUNTIME-ONLY, NON-TRANSITIVE (KEEPS ITS BUNDLED SODIUM OUT)
+    runtimeOnly("maven.modrinth:iris:$irisversion") { transitive = false }
 
     // SODIUM SHIPS 3 ARTIFACTS: -neoforge (PRODUCTION SHELL: LIBRARY THAT JARJARS THE REAL MOD),
     // -neoforge-mod (THE REAL MOD, CLAIMS MODID "sodium") AND -neoforge-api (COMPILE-ONLY API).
@@ -152,16 +154,19 @@ dependencies {
     runtimeOnly "org.sinytra.forgified-fabric-api:fabric-rendering-data-attachment-v1:$ffapirenderdataversion"
     runtimeOnly "org.sinytra.forgified-fabric-api:fabric-block-view-api-v2:$ffapiblockviewversion"
 
-    // MOD COMPAT
-    implementation "curse.maven:jei-238222:$jeiversion"
-    compileOnly "curse.maven:roughly-enough-items-310111:$reiversion"
-    compileOnly "curse.maven:architectury-api-419699:$archversion"
-    compileOnly "curse.maven:cloth-config-348521:$clothversion"
-    compileOnly "curse.maven:emi-580555:$emiversion"
-    implementation "curse.maven:sable-1312371:$sableversion" // SABLE 2.0.2 — FIRST BUILD COMPATIBLE WITH SODIUM 0.8.X
-//    implementation "blank:betterf3:7.0.2"
+    // RECIPE VIEWERS (FULL JARS — WE MIX INTO GUI INTERNALS): JEI RUNS, SWAP REI/EMI TO runtimeOnly TO TEST, ONE AT A TIME
+    implementation("mezz.jei:jei-1.21.1-neoforge:$jeiversion") { transitive = false }
+    compileOnly("me.shedaniel:RoughlyEnoughItems-neoforge:$reiversion") { transitive = false }
+    compileOnly("dev.emi:emi-neoforge:$emiversion") { transitive = false }
 
-    // MOD SUPPORT
+    // REI COMPILE DEPS: ARCHITECTURY + CLOTH CONFIG (CLOTH ALSO SUPPLIES me.shedaniel.math)
+    compileOnly "dev.architectury:architectury-neoforge:$archversion"
+    compileOnly("me.shedaniel.cloth:cloth-config-neoforge:$clothversion") { transitive = false }
+
+    // SABLE: FULL MERGED JAR (JARJARS VEIL/RAPIER/COMPANION); NON-TRANSITIVE + ALONE AVOIDS UNHOSTED foundry.veil AND DUPLICATE COMMON CLASSES
+    implementation("dev.ryanhcode.sable:sable-neoforge-1.21.1:$sableversion") { transitive = false }
+
+    // SABLE COMPANION: COMPILE-ONLY (JARJAR'D IN SABLE, SO INVISIBLE AT COMPILE)
     compileOnly("dev.ryanhcode.sable-companion:sable-companion-common-$mcversion:$sablecompanionversion") {
         transitive = false
     }
