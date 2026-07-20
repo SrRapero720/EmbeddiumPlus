@@ -1,0 +1,95 @@
+accessWidener v2 official
+
+accessible	class	net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList
+accessible	class	net/minecraft/client/resources/model/ModelManager$ReloadState
+accessible	class	net/minecraft/client/particle/FireworkParticles$SparkParticle
+accessible	class	com/mojang/blaze3d/opengl/GlStateManager$BlendState
+accessible	class	com/mojang/blaze3d/opengl/GlStateManager$BooleanState
+accessible	class	com/mojang/blaze3d/opengl/GlStateManager$ColorLogicState
+accessible	class	com/mojang/blaze3d/opengl/GlStateManager$CullState
+accessible	class	com/mojang/blaze3d/opengl/GlStateManager$DepthState
+accessible	class	com/mojang/blaze3d/opengl/GlStateManager$PolygonOffsetState
+accessible	class	com/mojang/blaze3d/opengl/GlStateManager$ScissorState
+accessible	class	com/mojang/blaze3d/opengl/GlStateManager$TextureState
+
+accessible	method	net/minecraft/client/multiplayer/ClientLevel	getSkyFlashTime	()I
+accessible	method	net/minecraft/client/Minecraft	createTitle	()Ljava/lang/String;
+accessible	method	net/minecraft/client/Minecraft	loadCriticalShaders	()V
+accessible	method	net/minecraft/client/renderer/texture/AbstractTexture	releaseTextures	()V
+accessible	method	net/minecraft/client/renderer/texture/TextureAtlas	releaseTextures	()V
+
+accessible	field	net/minecraft/client/Minecraft	fps	I
+accessible	field	net/minecraft/client/Options	fullscreen	Lnet/minecraft/client/OptionInstance;
+accessible	field	net/minecraft/client/gui/components/DebugScreenOverlay	frameTimeLogger	Lnet/minecraft/util/debugchart/LocalSampleLogger;
+accessible	field	com/mojang/blaze3d/platform/Window	dirty	Z
+
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager$BooleanState	enabled	Z
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	BLEND	[Lcom/mojang/blaze3d/opengl/GlStateManager$BlendState;
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	DEPTH	Lcom/mojang/blaze3d/opengl/GlStateManager$DepthState;
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	CULL	Lcom/mojang/blaze3d/opengl/GlStateManager$CullState;
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	POLY_OFFSET	Lcom/mojang/blaze3d/opengl/GlStateManager$PolygonOffsetState;
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	COLOR_LOGIC	Lcom/mojang/blaze3d/opengl/GlStateManager$ColorLogicState;
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	SCISSOR	Lcom/mojang/blaze3d/opengl/GlStateManager$ScissorState;
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	TEXTURES	[Lcom/mojang/blaze3d/opengl/GlStateManager$TextureState;
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	COLOR_MASK	[I
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	activeTexture	I
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	readFbo	I
+accessible	field	com/mojang/blaze3d/opengl/GlStateManager	writeFbo	I
+
+accessible	field	net/minecraft/client/Options	preferredGraphicsBackendFromStartup	Lnet/minecraft/client/PreferredGraphicsApi;
+accessible	field	net/minecraft/client/Options	exclusiveFullscreenFromStartup	Z
+accessible	field	com/mojang/blaze3d/platform/Window	exclusiveFullscreen	Z
+
+accessible	field	net/minecraft/client/Minecraft	window	Lcom/mojang/blaze3d/platform/Window;
+mutable		field	net/minecraft/client/Minecraft	window	Lcom/mojang/blaze3d/platform/Window;
+accessible	field	net/minecraft/client/Minecraft	windowSurface	Lcom/mojang/blaze3d/systems/GpuSurface;
+mutable		field	net/minecraft/client/Minecraft	windowSurface	Lcom/mojang/blaze3d/systems/GpuSurface;
+accessible	field	net/minecraft/client/Minecraft	textInputManager	Lcom/mojang/blaze3d/platform/TextInputManager;
+mutable		field	net/minecraft/client/Minecraft	textInputManager	Lcom/mojang/blaze3d/platform/TextInputManager;
+accessible	field	net/minecraft/client/Minecraft	gameRenderer	Lnet/minecraft/client/renderer/GameRenderer;
+mutable		field	net/minecraft/client/Minecraft	gameRenderer	Lnet/minecraft/client/renderer/GameRenderer;
+accessible	field	net/minecraft/client/Minecraft	timerQuery	Lcom/mojang/blaze3d/systems/TimerQuery;
+mutable		field	net/minecraft/client/Minecraft	timerQuery	Lcom/mojang/blaze3d/systems/TimerQuery;
+accessible	field	net/minecraft/client/Minecraft	windowSurfaceNeedsReconfiguring	Z
+accessible	field	net/minecraft/client/Minecraft	surfaceIsInvalid	Z
+accessible	field	net/minecraft/client/Minecraft	monitorManager	Lcom/mojang/blaze3d/platform/MonitorManager;
+accessible	field	net/minecraft/client/Minecraft	vanillaPackResources	Lnet/minecraft/server/packs/VanillaPackResources;
+accessible	field	net/minecraft/client/Minecraft	reloadStateTracker	Lnet/minecraft/client/ResourceLoadStateTracker;
+
+accessible	field	net/minecraft/client/renderer/GameRenderer	globalSettingsUniform	Lnet/minecraft/client/renderer/GlobalSettingsUniform;
+accessible	field	net/minecraft/client/renderer/GameRenderer	mainCamera	Lnet/minecraft/client/Camera;
+mutable		field	net/minecraft/client/renderer/GameRenderer	mainCamera	Lnet/minecraft/client/Camera;
+accessible	field	net/minecraft/client/renderer/ShaderManager	postChainProjectionMatrixBuffer	Lnet/minecraft/client/renderer/ProjectionMatrixBuffer;
+mutable		field	net/minecraft/client/renderer/ShaderManager	postChainProjectionMatrixBuffer	Lnet/minecraft/client/renderer/ProjectionMatrixBuffer;
+
+accessible	field	net/minecraft/client/renderer/LevelRenderer	gameRenderer	Lnet/minecraft/client/renderer/GameRenderer;
+mutable		field	net/minecraft/client/renderer/LevelRenderer	gameRenderer	Lnet/minecraft/client/renderer/GameRenderer;
+accessible	field	net/minecraft/client/renderer/LevelRenderer	renderBuffers	Lnet/minecraft/client/renderer/RenderBuffers;
+mutable		field	net/minecraft/client/renderer/LevelRenderer	renderBuffers	Lnet/minecraft/client/renderer/RenderBuffers;
+accessible	field	net/minecraft/client/renderer/LevelRenderer	featureRenderDispatcher	Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher;
+mutable		field	net/minecraft/client/renderer/LevelRenderer	featureRenderDispatcher	Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher;
+accessible	field	net/minecraft/client/renderer/LevelRenderer	levelRenderState	Lnet/minecraft/client/renderer/state/level/LevelRenderState;
+mutable		field	net/minecraft/client/renderer/LevelRenderer	levelRenderState	Lnet/minecraft/client/renderer/state/level/LevelRenderState;
+accessible	field	net/minecraft/client/renderer/LevelRenderer	optionsRenderState	Lnet/minecraft/client/renderer/state/OptionsRenderState;
+mutable		field	net/minecraft/client/renderer/LevelRenderer	optionsRenderState	Lnet/minecraft/client/renderer/state/OptionsRenderState;
+accessible	field	net/minecraft/client/renderer/LevelRenderer	worldBorderRenderer	Lnet/minecraft/client/renderer/WorldBorderRenderer;
+mutable		field	net/minecraft/client/renderer/LevelRenderer	worldBorderRenderer	Lnet/minecraft/client/renderer/WorldBorderRenderer;
+accessible	field	net/minecraft/client/renderer/LevelRenderer	weatherEffectRenderer	Lnet/minecraft/client/renderer/WeatherEffectRenderer;
+mutable		field	net/minecraft/client/renderer/LevelRenderer	weatherEffectRenderer	Lnet/minecraft/client/renderer/WeatherEffectRenderer;
+accessible	field	net/minecraft/client/renderer/LevelRenderer	entityOutlineTarget	Lcom/mojang/blaze3d/pipeline/RenderTarget;
+accessible	field	net/minecraft/client/renderer/LevelRenderer	skyRenderer	Lnet/minecraft/client/renderer/SkyRenderer;
+accessible	field	net/minecraft/client/renderer/LevelRenderer	chunkLayerSampler	Lcom/mojang/blaze3d/textures/GpuSampler;
+
+accessible	field	net/minecraft/client/renderer/CloudRenderer	ubo	Lnet/minecraft/client/renderer/MappableRingBuffer;
+mutable		field	net/minecraft/client/renderer/CloudRenderer	ubo	Lnet/minecraft/client/renderer/MappableRingBuffer;
+accessible	field	net/minecraft/client/renderer/CloudRenderer	utb	Lnet/minecraft/client/renderer/MappableRingBuffer;
+
+accessible	field	net/minecraft/client/renderer/extract/LevelExtractor	levelRenderState	Lnet/minecraft/client/renderer/state/level/LevelRenderState;
+mutable		field	net/minecraft/client/renderer/extract/LevelExtractor	levelRenderState	Lnet/minecraft/client/renderer/state/level/LevelRenderState;
+accessible	field	net/minecraft/client/gui/Gui	guiRenderState	Lnet/minecraft/client/renderer/state/gui/GuiRenderState;
+mutable		field	net/minecraft/client/gui/Gui	guiRenderState	Lnet/minecraft/client/renderer/state/gui/GuiRenderState;
+
+accessible	field	net/minecraft/client/renderer/texture/TextureManager	byPath	Ljava/util/Map;
+accessible	field	net/minecraft/client/renderer/texture/AbstractTexture	texture	Lcom/mojang/blaze3d/textures/GpuTexture;
+accessible	field	net/minecraft/client/renderer/texture/AbstractTexture	textureView	Lcom/mojang/blaze3d/textures/GpuTextureView;
+accessible	field	net/minecraft/client/renderer/texture/AbstractTexture	sampler	Lcom/mojang/blaze3d/textures/GpuSampler;

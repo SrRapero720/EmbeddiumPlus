@@ -5,9 +5,9 @@ import me.srrapero720.chloride.impl.sodium.screens.ChlorideSettingsScreen;
 import me.srrapero720.chloride.impl.sodium.screens.PopuliSettingsScreen;
 import me.srrapero720.chloride.impl.sodium.screens.TexTrueSettingsScreen;
 import net.caffeinemc.mods.sodium.client.gui.VideoSettingsScreen;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.neoforged.fml.loading.FMLEnvironment;
 
 /**
  * Alternative settings screen styles for Sodium's video settings. The non-sodium styles are
@@ -15,7 +15,7 @@ import net.neoforged.fml.loading.FMLEnvironment;
  */
 public class SettingsScreens {
     /** True on dev environments; the custom screen styles only activate behind this flag. */
-    public static final boolean DEV = !FMLEnvironment.isProduction();
+    public static final boolean DEV = FabricLoader.getInstance().isDevelopmentEnvironment();
 
     /**
      * Switches from the current settings screen style to the next one, persisting the choice.

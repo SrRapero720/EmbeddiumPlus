@@ -26,6 +26,7 @@ import me.srrapero720.chloride.mixins.impl.sodium.DrawBackendAccessor;
 import me.srrapero720.chloride.mixins.impl.sodium.GlBufferArenaAccessor;
 import me.srrapero720.chloride.mixins.impl.sodium.SodiumWorldRendererInvoker;
 import net.caffeinemc.mods.sodium.client.render.SodiumWorldRenderer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.PreferredGraphicsApi;
@@ -46,62 +47,27 @@ import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.util.Unit;
 import net.minecraft.util.Util;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.loading.EarlyLoadingScreenController;
-import net.neoforged.fml.loading.FMLConfig;
-import net.neoforged.fml.loading.FMLLoader;
-import net.neoforged.neoforge.client.event.FlipFrameEvent;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
 
 import static me.srrapero720.chloride.Chloride.LOGGER;
 
-@EventBusSubscriber(value = Dist.CLIENT)
 public class GraphicsEngine {
     public static final Marker IT = MarkerManager.getMarker("GraphicsEngine");
     private static final String AUTO_SWAP = System.getenv("CHLORIDE_HOTSWAP_AUTO");
 
-    private static boolean hotswapping;
-    private static boolean orphanEarlyWindow;
     private static boolean irisSwapNotified;
     private static boolean fullscreenReconciled;
-    private static long orphanHandle;
-    private static long autoSwapAt = AUTO_SWAP != null && !FMLLoader.getCurrent().isProduction() ? 0 : -1;
+    private static long autoSwapAt = AUTO_SWAP != null && FabricLoader.getInstance().isDevelopmentEnvironment() ? 0 : -1;
 
-    public static EarlyLoadingScreenController earlyWindow(final GpuBackend backend, final Supplier<EarlyLoadingScreenController> original) {
-        if (hotswapping) return null;
-        if (!(backend instanceof VulkanBackend)) return original.get();
-        if (original.get() != null) orphanEarlyWindow = true;
-        return null;
-    }
-
-    public static void prepareEarlyWindowClose() {
-        if (!orphanEarlyWindow) return;
-        orphanEarlyWindow = false;
-        final EarlyLoadingScreenController early = EarlyLoadingScreenController.current();
-        if (early == null) return;
-        try {
-            orphanHandle = early.takeOverGlfwWindow();
-            GL.createCapabilities();
-        } catch (final Throwable t) {
-            LOGGER.warn(IT, "Could not prepare the FML early loading window for close", t);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onFlipFrame(final FlipFrameEvent event) {
+    public static void onFrame() {
         final Minecraft mc = Minecraft.getInstance();
-        releaseOrphanEarlyWindow();
         if (mc.gui.overlay() != null) return;
 
         if (!fullscreenReconciled) {
@@ -147,20 +113,6 @@ public class GraphicsEngine {
         } catch (final Throwable t) {
             LOGGER.error(IT, "Graphics backend hotswap failed", t);
             throw t;
-        }
-    }
-
-    private static void releaseOrphanEarlyWindow() {
-        if (orphanHandle == 0L) return;
-        try {
-            GLFW.glfwMakeContextCurrent(0L);
-            GL.setCapabilities(null);
-            GLFW.glfwDestroyWindow(orphanHandle);
-            LOGGER.info(IT, "Released the leftover FML early loading window");
-        } catch (final Throwable t) {
-            LOGGER.warn(IT, "Could not release the FML early loading window", t);
-        } finally {
-            orphanHandle = 0L;
         }
     }
 
@@ -231,12 +183,11 @@ public class GraphicsEngine {
             accessor.setIndexCount(0);
         }
 
-        hotswapping = true;
         oldWindow.close();
 
         Window window = null;
         GpuDevice device = null;
-        final boolean debugGl = FMLConfig.getBoolConfigValue(FMLConfig.ConfigValue.DEBUG_OPENGL);
+        final boolean debugGl = false;
         final GpuDebugOptions debugOptions = new GpuDebugOptions(mc.options.glDebugVerbosity, debugGl, debugGl, false);
         final DisplayData displayData = new DisplayData(width, height, OptionalInt.empty(), OptionalInt.empty(), fullscreen);
         final GpuBackend[] candidates = toVulkan
@@ -258,7 +209,6 @@ public class GraphicsEngine {
                 }
             }
         }
-        hotswapping = false;
         if (window == null || device == null) throw new IllegalStateException("Hotswap could not create any graphics backend");
 
         final DeviceInfo info = device.getDeviceInfo();
@@ -369,20 +319,6 @@ public class GraphicsEngine {
         GlStateManager.COLOR_LOGIC.enable.enabled = false;
         GlStateManager.COLOR_LOGIC.op = 5379;
         GlStateManager.SCISSOR.mode.enabled = false;
-        GlStateManager.STENCIL.mode.enabled = false;
-        GlStateManager.STENCIL.frontFunc = 519;
-        GlStateManager.STENCIL.frontRef = 0;
-        GlStateManager.STENCIL.frontReadMask = -1;
-        GlStateManager.STENCIL.backFunc = 519;
-        GlStateManager.STENCIL.backRef = 0;
-        GlStateManager.STENCIL.backReadMask = -1;
-        GlStateManager.STENCIL.writeMask = -1;
-        GlStateManager.STENCIL.frontStencilFail = 7680;
-        GlStateManager.STENCIL.frontDepthFail = 7680;
-        GlStateManager.STENCIL.frontPass = 7680;
-        GlStateManager.STENCIL.backStencilFail = 7680;
-        GlStateManager.STENCIL.backDepthFail = 7680;
-        GlStateManager.STENCIL.backPass = 7680;
     }
 
     private static void revert(final Minecraft mc) {

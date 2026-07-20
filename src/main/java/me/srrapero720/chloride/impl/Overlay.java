@@ -1,21 +1,16 @@
 package me.srrapero720.chloride.impl;
 
-import me.srrapero720.chloride.Chloride;
 import me.srrapero720.chloride.ChlorideConfig;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.debugchart.LocalSampleLogger;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 import java.util.Arrays;
 
-@EventBusSubscriber(modid = Chloride.ID, value = Dist.CLIENT)
 public class Overlay {
     private static final FPSDisplayBuilder DISPLAY = new FPSDisplayBuilder();
 
@@ -58,8 +53,7 @@ public class Overlay {
         return times / avgCount.length;
     }
 
-    @SubscribeEvent
-    public static void onRenderOverlay(final RenderGuiEvent.Pre event) {
+    public static void onRenderOverlay(final GuiGraphicsExtractor graphics, final DeltaTracker tickCounter) {
         final var mc = Minecraft.getInstance();
 
         if (mc.getDebugOverlay().showDebugScreen() || mc.gui.hud.isHidden()) return;
@@ -70,7 +64,7 @@ public class Overlay {
         memUsage = (int) ((ramUsed() * 100) / Runtime.getRuntime().maxMemory());
         gpuPercent = Math.min((int) mc.getGpuUtilization(), 100);
         avgFPS = calculateAverage();
-        renderFPSChar(mc, event.getGuiGraphics(), mc.font, mc.getWindow().getGuiScale());
+        renderFPSChar(mc, graphics, mc.font, mc.getWindow().getGuiScale());
     }
 
     private static void renderFPSChar(final Minecraft mc, final GuiGraphicsExtractor graphics, final Font font, final double scale) {
