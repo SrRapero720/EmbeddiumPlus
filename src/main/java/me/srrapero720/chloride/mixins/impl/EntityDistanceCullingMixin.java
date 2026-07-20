@@ -5,7 +5,7 @@ import me.srrapero720.chloride.api.IRenderableEntity;
 import me.srrapero720.chloride.impl.EntityCulling;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.extract.LevelExtractor;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -35,8 +35,8 @@ import static me.srrapero720.chloride.Chloride.LOGGER;
 
 public class EntityDistanceCullingMixin {
 
-    @Mixin(LevelRenderer.class)
-    public static class LevelRendererEntityMixin {
+    @Mixin(LevelExtractor.class)
+    public static class LevelExtractorEntityMixin {
         @Redirect(method = "extractVisibleEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;entitiesForRendering()Ljava/lang/Iterable;"))
         public Iterable<Entity> redirect$entitiesForRendering(final ClientLevel instance) {
             // UNLIMITED
@@ -133,8 +133,8 @@ public class EntityDistanceCullingMixin {
     public static class TileDispatcherMixin {
         @Shadow private Vec3 cameraPos;
 
-        @Inject(at = @At("HEAD"), method = "tryExtractRenderState(Lnet/minecraft/world/level/block/entity/BlockEntity;FLnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;Lnet/minecraft/client/renderer/culling/Frustum;)Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;", cancellable = true)
-        public <E extends BlockEntity, S extends BlockEntityRenderState> void render(final E tile, final float partialTick, final ModelFeatureRenderer.CrumblingOverlay breakProgress, final Frustum frustum, final CallbackInfoReturnable<S> cir) {
+        @Inject(at = @At("HEAD"), method = "tryExtractRenderState(Lnet/minecraft/world/level/block/entity/BlockEntity;FLnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;Z)Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;", cancellable = true)
+        public <E extends BlockEntity, S extends BlockEntityRenderState> void render(final E tile, final float partialTick, final ModelFeatureRenderer.CrumblingOverlay breakProgress, final boolean isGloballyRendered, final CallbackInfoReturnable<S> cir) {
             if (!ChlorideConfig.culling.tileEntities) return;
 
             final boolean isWhitelisted = ((IRenderableEntity) tile.getType()).chloride$whitelisted();

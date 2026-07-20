@@ -134,12 +134,7 @@ dependencies {
     runtimeOnly files(tasks.named('repackWaterConfig'))
 
     // IRIS: RUNTIME-ONLY, NON-TRANSITIVE (KEEPS ITS BUNDLED SODIUM OUT)
-    // TEMPORARILY DEV-EXCLUDED (kept on purpose for future Iris integrations; no critical ones depend on it now).
-    // Iris + Sodium 0.8.13 WORK IN PRODUCTION but crash ONLY in the NeoForge dev runClient: the production Sodium
-    // jar's mixin refmap + Iris trigger a strict @Overwrite conflict on BufferBuilder.putBulkData that dev enforces
-    // and prod does not (confirmed not chloride, not fixed by any Iris version). This line only affects the dev
-    // runClient classpath — never the shipped jar nor the user's own production Iris install. Uncomment to re-enable.
-    // runtimeOnly("maven.modrinth:iris:$irisversion") { transitive = false }
+    runtimeOnly("maven.modrinth:iris:$irisversion") { transitive = false }
 
     // SODIUM SHIPS 3 ARTIFACTS: -neoforge (PRODUCTION SHELL: LIBRARY THAT JARJARS THE REAL MOD),
     // -neoforge-mod (THE REAL MOD, CLAIMS MODID "sodium") AND -neoforge-api (COMPILE-ONLY API).
@@ -163,7 +158,7 @@ dependencies {
     // runtimeOnly "org.sinytra.forgified-fabric-api:fabric-block-view-api-v2:$ffapiblockviewversion"
 
     // RECIPE VIEWERS (FULL JARS — WE MIX INTO GUI INTERNALS): JEI RUNS, SWAP REI/EMI TO runtimeOnly TO TEST, ONE AT A TIME
-    implementation("mezz.jei:jei-26.1.2-neoforge:$jeiversion") { transitive = false }
+    implementation("mezz.jei:jei-26.2-neoforge:$jeiversion") { transitive = false }
     compileOnly("me.shedaniel:RoughlyEnoughItems-neoforge:$reiversion") { transitive = false }
     // compileOnly("dev.emi:emi-neoforge:$emiversion") { transitive = false }
 

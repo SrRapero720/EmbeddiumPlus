@@ -69,7 +69,7 @@ public class Darkness {
         if (!world.dimensionType().hasSkyLight()) return 0;
 
         // SUN_ANGLE IS 0 AT NOON AND 180 AT MIDNIGHT
-        final var probe = Minecraft.getInstance().gameRenderer.getMainCamera().attributeProbe();
+        final var probe = Minecraft.getInstance().gameRenderer.mainCamera().attributeProbe();
         final float angle = Mth.positiveModulo(probe.getValue(EnvironmentAttributes.SUN_ANGLE, 0f) / 360f, 1f);
         if (!(angle > 0.25f) || !(angle < 0.75f)) return 1;
 

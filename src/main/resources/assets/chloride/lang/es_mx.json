@@ -10,6 +10,8 @@
   "chloride.general.screen.borderless": "Sin bordes",
   "chloride.general.screen.windowed": "Ventana",
 
+  "chloride.general.hotswap": "Hotswap de API gráfica",
+  "chloride.general.hotswap.desc": "Aplica los cambios de API gráfica y pantalla completa exclusiva en vivo, reconstruyendo la ventana y el contexto de GPU en el momento (~1-2s de pausa) en lugar de pedir reiniciar el juego.\n\nCon Iris instalado, los cambios en vivo desde un contexto OpenGL activo no son posibles y siguen requiriendo reinicio.",
   "chloride.general.screen.borderless.optimization": "Desactivar optimización en sin bordes",
   "chloride.general.screen.borderless.optimization.desc": "Desactiva las optimizaciones del driver\n\nDesactiva el parpadeo negro al cambiar de programa (notable con multiples monitores) pero podrías experimentar una baja considerable de FPS",
 

@@ -10,6 +10,8 @@
   "chloride.general.screen.borderless": "Borderless",
   "chloride.general.screen.windowed": "Windowed",
 
+  "chloride.general.hotswap": "Graphics API Hotswap",
+  "chloride.general.hotswap.desc": "Applies Graphics API and Exclusive Fullscreen changes live, rebuilding the window and GPU context in-place (~1-2s freeze) instead of requiring a game restart.\n\nWith Iris installed, live changes from an active OpenGL context are not possible and still require a restart.",
   "chloride.general.screen.borderless.optimization": "Disable Borderless optimization",
   "chloride.general.screen.borderless.optimization.desc": "Force-Disables Borderless optimizations by the driver\n\nThis fixes the black blink leaving the game (noticeable having multiple monitors) but you might experiment a huge frame drop disabling it",
 

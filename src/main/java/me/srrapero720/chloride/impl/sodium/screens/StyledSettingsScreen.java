@@ -32,6 +32,6 @@ public abstract class StyledSettingsScreen extends Screen {
 
     @Override
     public void onClose() {
-        this.minecraft.setScreen(this.prev);
+        this.minecraft.gui.setScreen(this.prev);
     }
 }

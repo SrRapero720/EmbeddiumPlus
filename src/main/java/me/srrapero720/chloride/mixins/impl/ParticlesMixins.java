@@ -3,7 +3,6 @@ package me.srrapero720.chloride.mixins.impl;
 import it.unimi.dsi.fastutil.ints.IntList;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.api.IParticleTypeData;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.FireworkParticles;
@@ -18,7 +17,6 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ParticleStatus;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -46,13 +44,6 @@ public class ParticlesMixins {
 
     @Mixin(WeatherEffectRenderer.class)
     public static class LevelRendererMixin {
-        @Inject(method = "tickRainParticles", at = @At(value = "HEAD"), cancellable = true)
-        public void inject$tick(ClientLevel level, Camera camera, int ticks, ParticleStatus particleStatus, int weatherRadius, CallbackInfo callbackInfo) {
-            if (!ChlorideConfig.particles.rainDrops) {
-                callbackInfo.cancel();
-            }
-        }
-
         @Inject(method = "render(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/state/level/WeatherRenderState;)V", at = @At(value = "HEAD"), cancellable = true)
         private void inject$render(Vec3 cameraPosition, WeatherRenderState renderState, CallbackInfo ci) {
             if (!ChlorideConfig.particles.rain) {
@@ -75,6 +66,13 @@ public class ParticlesMixins {
     // BLOCK-BREAK/HIT PARTICLE TOGGLES LIVE IN ClientLevel, NOT IN ParticleEngine
     @Mixin(ClientLevel.class)
     public static class ClientLevelMixin {
+        @Inject(method = "tickWeatherEffects", at = @At(value = "HEAD"), cancellable = true)
+        public void inject$tickRain(CallbackInfo ci) {
+            if (!ChlorideConfig.particles.rainDrops) {
+                ci.cancel();
+            }
+        }
+
         @Inject(method = "addDestroyBlockEffect", at = @At(value = "HEAD"), cancellable = true)
         public void inject$destroy(BlockPos pos, BlockState state, CallbackInfo ci) {
             if (!ChlorideConfig.particles.blockDestroyed) {

@@ -1,6 +1,8 @@
 package me.srrapero720.chloride.mixins.impl.sodium;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.api.events.FastModelSettingsUpdate;
@@ -9,12 +11,15 @@ import me.srrapero720.chloride.impl.FastBlocks;
 import net.caffeinemc.mods.sodium.api.config.option.OptionFlag;
 import net.caffeinemc.mods.sodium.api.config.option.OptionImpact;
 import net.caffeinemc.mods.sodium.api.config.structure.ConfigBuilder;
+import net.caffeinemc.mods.sodium.api.config.structure.OptionBuilder;
+import net.caffeinemc.mods.sodium.api.config.structure.OptionGroupBuilder;
 import net.caffeinemc.mods.sodium.api.config.structure.OptionPageBuilder;
 import net.caffeinemc.mods.sodium.client.gui.SodiumConfigBuilder;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.common.NeoForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Slice;
 
 import static me.srrapero720.chloride.impl.sodium.SodiumFeatures.STORAGE;
 import static me.srrapero720.chloride.Chloride.id;
@@ -26,6 +31,21 @@ import static me.srrapero720.chloride.Chloride.id;
  */
 @Mixin(SodiumConfigBuilder.class)
 public class SodiumConfigBuilderMixin {
+
+    @WrapOperation(
+            method = "buildGeneralPage",
+            slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=general.graphics_api")),
+            at = @At(value = "INVOKE", target = "Lnet/caffeinemc/mods/sodium/api/config/structure/OptionGroupBuilder;addOption(Lnet/caffeinemc/mods/sodium/api/config/structure/OptionBuilder;)Lnet/caffeinemc/mods/sodium/api/config/structure/OptionGroupBuilder;", ordinal = 0)
+    )
+    private OptionGroupBuilder chloride$hotswapToggle(final OptionGroupBuilder group, final OptionBuilder option, final Operation<OptionGroupBuilder> original, @Local(argsOnly = true) final ConfigBuilder b) {
+        original.call(group, option);
+        return group.addOption(b.createBooleanOption(id("hotswap"))
+                .setName(Component.translatable("chloride.general.hotswap"))
+                .setTooltip(Component.translatable("chloride.general.hotswap.desc"))
+                .setStorageHandler(STORAGE)
+                .setDefaultValue(false)
+                .setBinding(v -> ChlorideConfig.hotswap = v, () -> ChlorideConfig.hotswap));
+    }
 
     @ModifyReturnValue(method = "buildGeneralPage", at = @At("RETURN"))
     private OptionPageBuilder chloride$general(final OptionPageBuilder page, @Local(argsOnly = true) final ConfigBuilder b) {

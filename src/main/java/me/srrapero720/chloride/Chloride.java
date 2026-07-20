@@ -1,7 +1,5 @@
 package me.srrapero720.chloride;
 
-import me.srrapero720.chloride.impl.Borderless;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -32,19 +30,6 @@ public class Chloride {
     @SubscribeEvent
     public static void load(final FMLClientSetupEvent event) {
         LOGGER.info("LOADED CHLORIDE");
-
-        // RECONCILE CHLORIDE CONFIG WITH VANILLA OPTIONS.FULLSCREEN AT BOOT. THE WINDOW IS CONSTRUCTED
-        // USING OPTIONS.FULLSCREEN AS THE INITIAL STATE; IF IT DESYNCS FROM CHLORIDECONFIG.FULLSCREEN
-        // (E.G. MANUAL CONFIG EDIT, MOD INSTALLED OVER EXISTING OPTIONS.TXT) THE WINDOW STARTS IN THE
-        // WRONG MODE. ENQUEUE ON THE MAIN THREAD SO setMode() RUNS AFTER THE WINDOW IS READY.
-        event.enqueueWork(() -> {
-            final Minecraft mc = Minecraft.getInstance();
-            final boolean optsFullscreen = mc.options.fullscreen().get();
-            final boolean configFullscreen = ChlorideConfig.fullscreen.mode != Borderless.Mode.WINDOWED;
-            if (optsFullscreen != configFullscreen) {
-                Borderless.setFullScreenMode(ChlorideConfig.fullscreen.mode);
-            }
-        });
     }
 
     public static void earlyLoad() {

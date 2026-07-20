@@ -27,6 +27,10 @@ public class ChlorideConfig {
     @Comment("Hides non-performance pages and options from the Sodium settings screen (for modpack makers)")
     public static boolean modpackMode = false;
 
+    @Spec.Field
+    @Comment("Applies Graphics API and exclusive fullscreen changes live, rebuilding the window and GPU context without restarting the game")
+    public static boolean hotswap = false;
+
     // FEATURE GROUPS
     @Spec.Field public static final FullscreenConfig fullscreen = new FullscreenConfig();
     @Spec.Field public static final FpsDisplayConfig fpsDisplay = new FpsDisplayConfig();

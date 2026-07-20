@@ -53,13 +53,6 @@ public class FastBlocksMixins {
                     cir.setReturnValue(null);
                 }
             }
-
-            // FAST BEDS (OR BETTER BEDS)
-            if (ChlorideConfig.fastBlocks.beds) {
-                if (beClass == BedBlockEntity.class) {
-                    cir.setReturnValue(null);
-                }
-            }
         }
     }
 }

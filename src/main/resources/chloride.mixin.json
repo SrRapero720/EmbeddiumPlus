@@ -5,10 +5,10 @@
   "plugin": "me.srrapero720.chloride.mixins.MixinPlugin",
   "compatibilityLevel": "JAVA_25",
   "client": [
-    "BorderlessMixin$KeyboardHandlerMixin",
+    "BorderlessMixin$FullscreenToggleMixin",
     "BorderlessMixin$WindowMixin",
     "CloudHeightMixin",
-    "EntityDistanceCullingMixin$LevelRendererEntityMixin",
+    "EntityDistanceCullingMixin$LevelExtractorEntityMixin",
     "EntityDistanceCullingMixin$EntityDispatcherMixin",
     "EntityDistanceCullingMixin$EntityTypeMixin",
     "EntityDistanceCullingMixin$TileDispatcherMixin",
@@ -18,6 +18,10 @@
     "FastBlocksMixins$TileRenderMixin",
     "FogAndBandMixin",
     "FontShadowMixin",
+    "HotswapMixins$EarlyFinishMixin",
+    "HotswapMixins$WindowMixin",
+    "HotswapMixins$RenderSystemAccessor",
+    "HotswapMixins$AutoIndexBufferAccessor",
     "MinecraftMixin",
     "OverlayMixin",
     "ParticlesMixins$EngineMixin",
@@ -33,7 +37,12 @@
     "jei_rei_emi.JeiOverlayMixin",
     "jei_rei_emi.ReiOverlayMixin",
     "leaves_culling.LeavesBlockMixin",
+    "sodium.DrawBackendAccessor",
+    "sodium.GlBufferArenaAccessor",
+    "sodium.OptionAccessor",
     "sodium.SodiumConfigBuilderMixin",
+    "sodium.StatefulOptionMixin",
+    "sodium.SodiumWorldRendererInvoker",
     "sodium.VideoSettingsScreenMixin"
   ]
 }

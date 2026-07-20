@@ -35,7 +35,7 @@ public class EntityCulling {
     }
 
     public static boolean isEntityInRange(final BlockEntity tile, final Vec3 cam, final int maxHeight, final int maxDistanceSqr) {
-        return isEntityInRange(tile.getLevel(), tile.getBlockPos().getCenter(), cam, maxHeight, maxDistanceSqr);
+        return isEntityInRange(tile.getLevel(), Vec3.atCenterOf(tile.getBlockPos()), cam, maxHeight, maxDistanceSqr);
     }
 
     public static boolean isEntityInRange(final Entity entity, final double camX, final double camY, final double camZ, final int maxHeight, final int maxDistanceSqr) {

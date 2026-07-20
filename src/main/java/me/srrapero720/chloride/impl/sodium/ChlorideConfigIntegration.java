@@ -55,7 +55,7 @@ public class ChlorideConfigIntegration implements ConfigEntryPoint {
         mod.registerOptionOverlay(SODIUM_FULLSCREEN_RESOLUTION, builder.createIntegerOption(SODIUM_FULLSCREEN_RESOLUTION)
                 .setEnabledProvider(state -> {
                     final Monitor monitor = Minecraft.getInstance().getWindow().findBestMonitor();
-                    if (monitor == null || monitor.getModeCount() <= 0) return false;
+                    if (monitor == null || monitor.modeCount() <= 0) return false;
                     final Util.OS os = Util.getPlatform();
                     if (os != Util.OS.WINDOWS && os != Util.OS.OSX) return false;
                     return state.readEnumOption(FULL_SCREEN, Borderless.Mode.class) == Borderless.Mode.EXCLUSIVE_FULLSCREEN;
@@ -68,7 +68,7 @@ public class ChlorideConfigIntegration implements ConfigEntryPoint {
         // EXTERNAL PAGE: THE PER-PARTICLE TOGGLES OPEN IN THEIR OWN SCROLL-CULLED SCREEN (ISSUE #174)
         mod.addPage(builder.createExternalPage()
                 .setName(Component.translatable("chloride.particles.list"))
-                .setScreenConsumer(current -> Minecraft.getInstance().setScreen(new ParticleListScreen(current))));
+                .setScreenConsumer(current -> Minecraft.getInstance().gui.setScreen(new ParticleListScreen(current))));
         mod.addPage(EntitiesPage.build(builder));
         if (!ChlorideConfig.modpackMode) mod.addPage(ZoomPage.build(builder));
 

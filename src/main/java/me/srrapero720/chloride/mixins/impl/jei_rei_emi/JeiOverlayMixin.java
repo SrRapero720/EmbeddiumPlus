@@ -47,7 +47,7 @@ public class JeiOverlayMixin {
         if (!ChlorideConfig.ui.hideJREMI) return;
         if (!this.searchField.getValue().isEmpty()) return;
 
-        if (minecraft.screen != null) {
+        if (minecraft.gui.screen() != null) {
             this.configButton.draw(guiGraphics, mouseX, mouseY, partialTicks);
             if (!ChlorideConfig.ui.hideJREMIHint) {
                 guiGraphics.centeredText(minecraft.font, Component.translatable("chloride.jei.message"), this.searchField.getX() + (this.searchField.getWidth() / 2), guiGraphics.guiHeight() / 2, 0xFFFFFFFF);

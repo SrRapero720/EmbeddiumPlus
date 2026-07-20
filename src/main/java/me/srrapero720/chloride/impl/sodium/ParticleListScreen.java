@@ -62,7 +62,7 @@ public class ParticleListScreen extends Screen {
         if (this.dirty) {
             ChlorideConfig.write();
         }
-        this.minecraft.setScreen(this.parent);
+        this.minecraft.gui.setScreen(this.parent);
     }
 
     private class ParticleList extends ContainerObjectSelectionList<ParticleList.Entry> {

@@ -27,7 +27,7 @@ public class SettingsScreens {
         final Style next = styles[(current.ordinal() + 1) % styles.length];
         ChlorideConfig.ui.settingsScreen = next;
         ChlorideConfig.write();
-        Minecraft.getInstance().setScreen(next.screen(prev));
+        Minecraft.getInstance().gui.setScreen(next.screen(prev));
     }
 
     public enum Style {

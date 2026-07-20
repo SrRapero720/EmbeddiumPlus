@@ -3,13 +3,9 @@ package me.srrapero720.chloride.mixins.impl;
 import com.mojang.blaze3d.platform.Window;
 import me.srrapero720.chloride.ChlorideConfig;
 import me.srrapero720.chloride.impl.Borderless;
-import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.input.KeyEvent;
 import org.lwjgl.glfw.GLFW;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -70,12 +66,10 @@ class BorderlessMixin {
         }
     }
 
-    @Mixin(KeyboardHandler.class)
-    public static class KeyboardHandlerMixin {
-        @Shadow @Final public Minecraft minecraft;
-
-        @Inject(method = "keyPress", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;toggleFullScreen()V"), cancellable = true)
-        public void redirect$handleFullScreenToggle(final long pWindowPointer, final int pAction, final KeyEvent pEvent, final CallbackInfo ci) {
+    @Mixin(Minecraft.class)
+    public static class FullscreenToggleMixin {
+        @Inject(method = "toggleFullscreen", at = @At("HEAD"), cancellable = true)
+        public void inject$handleFullScreenToggle(final CallbackInfo ci) {
             switch (ChlorideConfig.fullscreen.attachModeF11.ordinal()) {
                 case 0 -> Borderless.setFullScreenMode(Borderless.Mode.nextOf(ChlorideConfig.fullscreen.mode));
                 case 1 -> Borderless.setFullScreenMode(Borderless.Mode.nextBorderless(ChlorideConfig.fullscreen.mode));

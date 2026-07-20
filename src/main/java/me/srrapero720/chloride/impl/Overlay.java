@@ -62,7 +62,7 @@ public class Overlay {
     public static void onRenderOverlay(final RenderGuiEvent.Pre event) {
         final var mc = Minecraft.getInstance();
 
-        if (mc.gui.getDebugOverlay().showDebugScreen() || mc.options.hideGui) return;
+        if (mc.getDebugOverlay().showDebugScreen() || mc.gui.hud.isHidden()) return;
 
         // PRECALCULATE
         fps = mc.getFps();
