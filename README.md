@@ -1,9 +1,9 @@
 [![CF Downloads](https://cf.way2muchnoise.eu/chloride.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/chloride-mod)
 [![CF Available for](https://cf.way2muchnoise.eu/versions/chloride.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/chloride-mod/files)
 [![CF Latest Version](https://img.shields.io/curseforge/v/931925?style=for-the-badge&label=curseforge&labelColor=%232d2d2d&color=%23e04e14)](https://www.curseforge.com/minecraft/mc-mods/chloride-mod/files)
-[![Discord Server](https://dcbadge.vercel.app/api/server/cuYAzzZ)](https://discord.gg/cuYAzzZ)
+[![Discord Server](https://img.shields.io/discord/486853064284831744?style=for-the-badge&label=DISCORD&color=7289da)](https://discord.gg/cuYAzzZ)
 
-# 🧪 CHLORIDE MOD
+# 🧂 CHLORIDE MOD
 Chloride is a **performance addon/mod** for **Sodium** that aims to improve
 the performance of the game and the quality of sodium itself.
 Offers a lot of features to customize and improve your experience with sodium, making it
@@ -23,7 +23,7 @@ a tasteful experience (`NaCl`).
   - 📋 Features a slider to set how many leaves you want to cull
 
 - **[👟] FAST MODELS** 
-  - 📐 Replaces suboptimal animated **Chest** and **Bed** models to use solid models
+  - 📐 Replaces suboptimal animated **Chest** and **Bed  (below mc26.2)** models to use solid models
   - 📋 Toggle each individually
 
 - **[🔦] HIDE JEI/REI/EMI OVERLAY** 
@@ -32,6 +32,11 @@ a tasteful experience (`NaCl`).
 
 - **[🌎] FAST LANGUAGE RELOAD** 
   - 📐 Reload quick as possible the language (less than 1 second).
+
+- **[🔁] [26.2] ENGINE HOTSWAP (VK/GL)**
+  - 📐 Enables hotswap of rendering engines (GL/VK) in-game.
+  - 📋 Disabled by default, can be enabled, compatible with sodium, incompatible with iris.
+  - ✨ No need to restart the game, perfect to compare instantly the game perf.
 
 ### 🛠️ VISUAL UTILITY
 - **[🕯️] TRUE DARKNESS**
