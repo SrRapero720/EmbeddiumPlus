@@ -33,6 +33,8 @@
     "QuickLanguageReloadMixin",
     "SkyMixins$HorizonMixin",
     "SkyMixins$DepthFarMixin",
+    "ZoomMixins$CameraMixin",
+    "ZoomMixins$MouseMixin",
     "darkness.DimensionTypeMixin",
     "darkness.FogColorMixin",
     "darkness.LightmapMixin",
